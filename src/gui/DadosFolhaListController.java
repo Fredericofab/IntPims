@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import application.Main;
 import db.DbIntegridadeException;
 import gui.listeners.DadosAlteradosListener;
 import gui.util.Alertas;
@@ -81,7 +80,7 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 	public void onBtSairAction(ActionEvent evento) {
 		Utilitarios.atualStage(evento).close();
 	}
-	
+
 	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
 		Stage parentStage = Utilitarios.atualStage(evento);
@@ -89,7 +88,7 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		DadosFolha entidade = new DadosFolha();
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
-	
+
 	public void setDadosFolhaServico(DadosFolhaService servico) {
 		this.servico = servico;
 	}
@@ -109,10 +108,6 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		Utilitarios.formatarTableColumnDouble(tableColumnValorVerba, 2);
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
 		tableColumnObservacao.setCellValueFactory(new PropertyValueFactory<>("observacao"));
-
-		Stage stage = (Stage) Main.getMainScene().getWindow();
-		tableViewDadosFolha.prefHeightProperty().bind(stage.heightProperty());
-
 	}
 
 	public void atualizarTableView() {
@@ -182,7 +177,6 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<DadosFolha, DadosFolha>() {
 			private final Button button = new Button("Excluir");
-
 
 			@Override
 			protected void updateItem(DadosFolha obj, boolean empty) {

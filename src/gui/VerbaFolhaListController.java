@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import application.Main;
 import db.DbIntegridadeException;
 import gui.listeners.DadosAlteradosListener;
 import gui.util.Alertas;
@@ -88,10 +87,6 @@ public class VerbaFolhaListController implements Initializable, DadosAlteradosLi
 		tableColumnCodVerba.setCellValueFactory(new PropertyValueFactory<>("codVerba"));
 		tableColumnDescVerba.setCellValueFactory(new PropertyValueFactory<>("descVerba"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
-
-		Stage stage = (Stage) Main.getMainScene().getWindow();
-		tableViewVerbaFolha.prefHeightProperty().bind(stage.heightProperty());
-
 	}
 
 	public void atualizarTableView() {
