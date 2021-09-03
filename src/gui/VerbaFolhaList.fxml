@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="349.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.VerbaFolhaListController">
+   <children>
+      <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" prefHeight="25.0" prefWidth="50.0" text="Incluir" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="335.0" text="Button" visible="false" />
+            <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="50.0" text="Sair" />
+        </items>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </ToolBar>
+      <TableView fx:id="tableViewVerbaFolha" prefHeight="200.0" prefWidth="533.0">
+        <columns>
+            <TableColumn fx:id="tableColumnCodVerba" prefWidth="63.0" text="Verba" />
+            <TableColumn fx:id="tableColumnDescVerba" prefWidth="186.0" text="Desc. Verba" />
+            <TableColumn fx:id="tableColumnImportar" minWidth="0.0" prefWidth="82.0" text="Importar" />
+            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="63.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="63.0" />
+        </columns>
+      </TableView>
+   </children>
+   <padding>
+      <Insets left="5.0" top="5.0" />
+   </padding>
+</VBox>
