@@ -46,7 +46,24 @@ public class ImportarFolhaDaoJDBC implements ImportarFolhaDao {
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao do Movimento " + anoMes + "\n" + e.getMessage());
+			throw new DbException("erro na delecao do Movimento da Folha " + anoMes + "\n" + e.getMessage());
+		}
+		finally {
+			DB.fecharStatement(st);
+		}
+	}
+
+	@Override
+	public Integer deletarSumarioFolhaAnoMes(String anoMes) {
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement("DELETE FROM sumario_folha WHERE Ano_Mes = ? ");
+			st.setString(1, anoMes);
+			st.executeUpdate();
+			Integer contagem = st.getUpdateCount();
+			return contagem;
+		} catch (SQLException e) {
+			throw new DbException("erro na delecao do Sumario da Movimento " + anoMes + "\n" + e.getMessage());
 		}
 		finally {
 			DB.fecharStatement(st);

@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.services.DadosFolhaService;
+import model.services.SumarioFolhaService;
 import model.services.VerbaFolhaService;
 
 public class MainViewController implements Initializable {
@@ -26,7 +27,11 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	private MenuItem menuItemDadosFolha;
+		
+	@FXML
+	private MenuItem menuItemSumarioFolha;
 	
+
 	@FXML
 	private MenuItem menuItemVerbaFolha;
 	
@@ -49,6 +54,16 @@ public class MainViewController implements Initializable {
 		});
 	}
 	
+	@FXML
+	private void onMenuItemSumarioFolhaAction() {
+		Stage paiStage = paiStage();
+		
+		criarJanelaFilha("/gui/SumarioFolhaList.fxml","Sumario do Movimento Dados da Folha", paiStage, (SumarioFolhaListController controle) -> {
+			controle.setSumarioFolhaServico(new SumarioFolhaService());
+			controle.atualizarTableView();
+		});
+	}
+
 	@FXML
 	private void onMenuItemVerbaFolhaAction() {
 		Stage paiStage = paiStage();

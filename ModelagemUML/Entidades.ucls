@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="model.entities.DadosFolha" project="intPims" 
     file="/intPims/src/model/entities/DadosFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="621" width="341" x="60" y="-172"/>    
+    <position height="-1" width="-1" x="237" y="-94"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,16 @@
   </class>  
   <class id="2" language="java" name="model.entities.VerbaFolha" project="intPims" 
     file="/intPims/src/model/entities/VerbaFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="351" width="179" x="441" y="-172"/>    
+    <position height="-1" width="-1" x="531" y="-227"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="model.entities.SumarioFolha" project="intPims" 
+    file="/intPims/src/model/entities/SumarioFolha.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="806" y="-130"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
