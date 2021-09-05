@@ -9,16 +9,16 @@ public class SumarioFolha implements Serializable {
 	private String anoMes;
 	private String codCentroCustos;
 	private String descCentroCustos;
-	private Double qdteImportarSim;
-	private Double qdteImportarNao;
+	private Integer qdteImportarSim;
+	private Integer qdteImportarNao;
 	private Double totalImportarSim;
 	private Double totalImportarNao;
 
 	public SumarioFolha() {
 	}
 
-	public SumarioFolha(String anoMes, String codCentroCustos, String descCentroCustos, Double qdteImportarSim,
-			Double qdteImportarNao, Double totalImportarSim, Double totalImportarNao) {
+	public SumarioFolha(String anoMes, String codCentroCustos, String descCentroCustos, Integer qdteImportarSim,
+			Integer qdteImportarNao, Double totalImportarSim, Double totalImportarNao) {
 		super();
 		this.anoMes = anoMes;
 		this.codCentroCustos = codCentroCustos;
@@ -53,19 +53,19 @@ public class SumarioFolha implements Serializable {
 		this.descCentroCustos = descCentroCustos;
 	}
 
-	public Double getQdteImportarSim() {
+	public Integer getQdteImportarSim() {
 		return qdteImportarSim;
 	}
 
-	public void setQdteImportarSim(Double qdteImportarSim) {
+	public void setQdteImportarSim(Integer qdteImportarSim) {
 		this.qdteImportarSim = qdteImportarSim;
 	}
 
-	public Double getQdteImportarNao() {
+	public Integer getQdteImportarNao() {
 		return qdteImportarNao;
 	}
 
-	public void setQdteImportarNao(Double qdteImportarNao) {
+	public void setQdteImportarNao(Integer qdteImportarNao) {
 		this.qdteImportarNao = qdteImportarNao;
 	}
 

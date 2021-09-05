@@ -108,6 +108,9 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		Utilitarios.formatarTableColumnDouble(tableColumnValorVerba, 2);
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
 		tableColumnObservacao.setCellValueFactory(new PropertyValueFactory<>("observacao"));
+		tableColumnCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
+		tableColumnCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		tableColumnValorVerba.setStyle("-fx-alignment: CENTER-RIGHT");
 	}
 
 	public void atualizarTableView() {

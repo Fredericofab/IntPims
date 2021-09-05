@@ -78,7 +78,7 @@ public class ImportarFolhaViewController implements Initializable {
 
 	private void inicializarComponentes() {
 		txtPastaOrigem.setText("C:\\Projeto Itapecuru Custag\\IGP TG\\entrada\\");
-		txtArquivoOrigem.setText("FolhaAAAAMM.TXT");
+		txtArquivoOrigem.setText("Folha202109.TXT");
 		txtAnoMes.setText("202109");
 	}
 	
@@ -110,8 +110,8 @@ public class ImportarFolhaViewController implements Initializable {
 		txtVerbasSemDefinicao.setText(qtdeVerbasSemDefinicao.toString());
 		txtRegDeletados.setText(qtdeDeletadas.toString());
 		txtRegIncluidos.setText(qtdeIncluidas.toString());
-		
-		if (qtdeLidas ==  qtdeIncluidas) {
+
+		if ((qtdeLidas - qtdeIncluidas) == 0 ) {
 			labelMsgGeral.setText("Processo Concluido com Sucesso");
 			labelMsgGeral.setTextFill(Color.BLUE);
 		}

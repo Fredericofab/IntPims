@@ -87,6 +87,7 @@ public class VerbaFolhaListController implements Initializable, DadosAlteradosLi
 		tableColumnCodVerba.setCellValueFactory(new PropertyValueFactory<>("codVerba"));
 		tableColumnDescVerba.setCellValueFactory(new PropertyValueFactory<>("descVerba"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
+		tableColumnCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
 	}
 
 	public void atualizarTableView() {

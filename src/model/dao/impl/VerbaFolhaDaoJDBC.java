@@ -46,7 +46,7 @@ public class VerbaFolhaDaoJDBC implements VerbaFolhaDao {
 			st = conexao.prepareStatement("UPDATE verba_folha "
 										+ "SET Importar = ?, Desc_Verba = ?" 
 										+ "WHERE Cod_Verba = ? ");
-			st.setString(1, objeto.getImportar());
+			st.setString(1, objeto.getImportar().toUpperCase());
 			st.setString(2, objeto.getDescVerba());
 
 			st.setString(3, objeto.getCodVerba());
@@ -103,7 +103,7 @@ public class VerbaFolhaDaoJDBC implements VerbaFolhaDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conexao.prepareStatement("SELECT * FROM verba_folha ");
+			st = conexao.prepareStatement("SELECT * FROM verba_folha ORDER BY Cod_Verba");
 			rs = st.executeQuery();
 			List<VerbaFolha> lista = new ArrayList<VerbaFolha>();
 			while (rs.next()) {

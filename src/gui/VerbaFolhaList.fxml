@@ -13,14 +13,15 @@
       <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" prefHeight="25.0" prefWidth="50.0" text="Incluir" />
-            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="335.0" text="Button" visible="false" />
+            <Button mnemonicParsing="false" text="GerarTXT" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="269.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="50.0" text="Sair" />
         </items>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ToolBar>
-      <TableView fx:id="tableViewVerbaFolha" prefHeight="200.0" prefWidth="533.0">
+      <TableView fx:id="tableViewVerbaFolha" prefHeight="305.0" prefWidth="560.0">
         <columns>
             <TableColumn fx:id="tableColumnCodVerba" prefWidth="63.0" text="Verba" />
             <TableColumn fx:id="tableColumnDescVerba" prefWidth="186.0" text="Desc. Verba" />

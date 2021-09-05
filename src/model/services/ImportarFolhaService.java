@@ -5,10 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import gui.util.Alertas;
@@ -16,7 +14,6 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.FabricaDeDao;
 import model.dao.ImportarFolhaDao;
 import model.entities.DadosFolha;
-import model.entities.SumarioFolha;
 import model.entities.VerbaFolha;
 
 public class ImportarFolhaService {
@@ -25,24 +22,18 @@ public class ImportarFolhaService {
 
 	List<DadosFolha> lista;
 	Set<VerbaFolha> set;
-	Map<String, SumarioFolha> map;
 	Integer qtdeLidas = 0;
 	Integer qtdeCorrompidas = 0;
 	Integer qtdeVerbasDistintas = 0;
 	Integer qtdeVerbasSemDefinicao = 0;
 	Integer qtdeDeletadas = 0;
 	Integer qtdeIncluidas = 0;
-	Integer qtdeSumarioDeletadas = 0;
-	Integer qtdeSumarioIncluidas  = 0;
 
 	public List<DadosFolha> getLista() {
 		return lista;
 	}
 	public Set<VerbaFolha> getSet() {
 		return set;
-	}
-	public Map<String, SumarioFolha> getMap() {
-		return map;
 	}
 
 	public Integer getQtdeLidas() {
@@ -71,7 +62,7 @@ public class ImportarFolhaService {
 	}
 
 	public void processarTXT(String entrada, String anoMes) {
-		alimentarColecoes(entrada, anoMes);
+		lerFolhaTXT(entrada, anoMes);
 		if (set.size() > 0) {
 			qtdeVerbasDistintas = set.size();
 			gravarVerbasNovas();
@@ -80,18 +71,12 @@ public class ImportarFolhaService {
 		if (qtdeVerbasSemDefinicao == 0 && qtdeCorrompidas == 0) {
 			deletarDadosFolhaAnoMes(anoMes);
 			gravarDadosFolha();
-			sumarizarFolha();
-			deletarSumarioFolhaAnoMes(anoMes);
-			gravarSumarioFolha();
 		}
 	}
 
 
 	private void deletarDadosFolhaAnoMes(String anoMes) {
 		qtdeDeletadas = dao.deletarDadosFolhaAnoMes(anoMes);
-	}
-	private void deletarSumarioFolhaAnoMes(String anoMes) {
-		qtdeSumarioDeletadas = dao.deletarSumarioFolhaAnoMes(anoMes);
 	}
 	
 	private void gravarVerbasNovas() {
@@ -119,54 +104,13 @@ public class ImportarFolhaService {
 	}
 	
 
-	private void gravarSumarioFolha() {
-		SumarioFolhaService sumarioFolhaService = new SumarioFolhaService();
-		qtdeSumarioIncluidas = 0;
-		for ( String chave : map.keySet() ) {
-			sumarioFolhaService.salvarOuAtualizar(map.get(chave));
-			qtdeSumarioIncluidas = qtdeSumarioIncluidas + 1;
-		}
-	}
-
-	private void sumarizarFolha() {
-		String codCCusto;
-		map = new HashMap<String, SumarioFolha>();
-		for (DadosFolha dadosFolha : lista) {
-			
-			codCCusto = dadosFolha.getCodCentroCustos();
-			
-			SumarioFolha sumarioFolha = new SumarioFolha();
-			if (map.containsKey(codCCusto)) {
-				sumarioFolha = map.get(codCCusto);
-			}
-			else {
-				sumarioFolha.setAnoMes(dadosFolha.getAnoMes());
-				sumarioFolha.setCodCentroCustos(dadosFolha.getCodCentroCustos());
-				sumarioFolha.setDescCentroCustos(dadosFolha.getDescCentroCustos());
-				sumarioFolha.setQdteImportarSim(0.00);
-				sumarioFolha.setTotalImportarSim(0.00);
-				sumarioFolha.setQdteImportarNao(0.00);
-				sumarioFolha.setTotalImportarNao(0.00);
-			}
-			
-			if (dadosFolha.getImportar().equals("S")) {
-				sumarioFolha.setQdteImportarSim(sumarioFolha.getQdteImportarSim() + 1);
-				sumarioFolha.setTotalImportarSim(sumarioFolha.getTotalImportarSim() + dadosFolha.getValorVerba());
-			}
-			else {
-				sumarioFolha.setQdteImportarNao(sumarioFolha.getQdteImportarNao() + 1);
-				sumarioFolha.setTotalImportarNao(sumarioFolha.getTotalImportarNao() + dadosFolha.getValorVerba());
-			}
-			map.put(codCCusto, sumarioFolha);
-		}
-	}
 
 	private void contarVerbasSemDefinicao() {
 		qtdeVerbasSemDefinicao = dao.contarVerbasSemDefinicao();
 	}
 
 
-	private void alimentarColecoes(String entrada, String anoMesReferencia) {
+	private void lerFolhaTXT(String entrada, String anoMesReferencia) {
 		String linha = null;
 		lista = new ArrayList<DadosFolha>();
 		set = new HashSet<>();

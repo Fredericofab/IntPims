@@ -153,6 +153,9 @@ public class DadosFolhaFormController implements Initializable {
 		txtValorVerba.setText(String.format("%.2f", entidade.getValorVerba()));
 		txtImportar.setText(entidade.getImportar());
 		txtObservacao.setText(entidade.getObservacao());
+		txtCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtValorVerba.setStyle("-fx-alignment: CENTER-RIGHT");
 	}
 	
 	private DadosFolha getDadosDoForm() {

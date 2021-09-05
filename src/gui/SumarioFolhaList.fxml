@@ -16,7 +16,7 @@
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" text="Sair" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewSumarioFolha" prefHeight="200.0" prefWidth="667.0">
+      <TableView fx:id="tableViewSumarioFolha" prefHeight="364.0" prefWidth="759.0">
         <columns>
           <TableColumn fx:id="tableColumnAnoMes" prefWidth="75.0" text="AnoMes" />
           <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="75.0" text="C.Custos" />

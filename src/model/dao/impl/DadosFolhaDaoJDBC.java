@@ -34,7 +34,7 @@ public class DadosFolhaDaoJDBC implements DadosFolhaDao {
 			st.setString(4, objeto.getCodVerba());
 			st.setString(5, objeto.getDescVerba());
 			st.setDouble(6, objeto.getValorVerba());
-			st.setString(7, objeto.getImportar());
+			st.setString(7, objeto.getImportar().toUpperCase());
 			st.setString(8, objeto.getObservacao());
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -53,7 +53,7 @@ public class DadosFolhaDaoJDBC implements DadosFolhaDao {
 										+ "SET Importar = ?, Observacao = ?, "
 										+ "    Desc_Centro_Custos =?, Desc_Verba = ?, Valor_Verba = ?" 
 										+ "WHERE Ano_Mes = ? AND Cod_Centro_Custos = ? AND Cod_Verba = ? ");
-			st.setString(1, objeto.getImportar());
+			st.setString(1, objeto.getImportar().toUpperCase());
 			st.setString(2, objeto.getObservacao());
 			st.setString(3, objeto.getDescCentroCustos());
 			st.setString(4, objeto.getDescVerba());
@@ -119,7 +119,7 @@ public class DadosFolhaDaoJDBC implements DadosFolhaDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conexao.prepareStatement("SELECT * FROM dados_folha ");
+			st = conexao.prepareStatement("SELECT * FROM dados_folha ORDER BY Ano_Mes, Cod_Centro_Custos, Cod_Verba");
 			rs = st.executeQuery();
 			List<DadosFolha> lista = new ArrayList<DadosFolha>();
 			while (rs.next()) {

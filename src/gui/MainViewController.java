@@ -24,44 +24,69 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	private MenuBar menuBarPrincipal;
-	
-	@FXML
-	private MenuItem menuItemDadosFolha;
-		
-	@FXML
-	private MenuItem menuItemSumarioFolha;
-	
 
 	@FXML
-	private MenuItem menuItemVerbaFolha;
-	
+	private MenuItem menuItemControleProcesso;
 	@FXML
 	private MenuItem menuItemImportarFolha;
-
+	@FXML
+	private MenuItem menuItemImportarFuncionarios;
+	@FXML
+	private MenuItem menuItemSumarizarFolha;
+	@FXML
+	private MenuItem menuItemSumarizarFuncionarios;
+	@FXML
+	private MenuItem menuItemExportarFolha;
 	@FXML
 	private MenuItem menuItemSair;
-
-	@FXML
-	private MenuItem menuItemSobre;
-		
-	@FXML
-	private void onMenuItemDadosFolhaAction() {
-		Stage paiStage = paiStage();
-		
-		criarJanelaFilha("/gui/DadosFolhaList.fxml","Movimento Dados da Folha", paiStage, (DadosFolhaListController controle) -> {
-			controle.setDadosFolhaServico(new DadosFolhaService());
-			controle.atualizarTableView();
-		});
-	}
 	
 	@FXML
-	private void onMenuItemSumarioFolhaAction() {
+	private MenuItem menuItemVerbaFolha;
+	@FXML
+	private MenuItem menuItemParametros;
+
+	@FXML
+	private MenuItem menuItemDadosFolha;
+	@FXML
+	private MenuItem menuItemFuncionarios;
+	@FXML
+	private MenuItem menuItemFolhaSumarizada;
+	@FXML
+	private MenuItem menuItemFuncionariosSumarizados;
+			
+	@FXML
+	private MenuItem menuItemSobre;
+
+	@FXML
+	private void onMenuItemControleProcessoAction() {
+		System.out.println("onMenuItemControleProcessoAction");		
+	}
+	@FXML
+	private void onMenuItemImportarFolhaAction() {
 		Stage paiStage = paiStage();
-		
-		criarJanelaFilha("/gui/SumarioFolhaList.fxml","Sumario do Movimento Dados da Folha", paiStage, (SumarioFolhaListController controle) -> {
-			controle.setSumarioFolhaServico(new SumarioFolhaService());
-			controle.atualizarTableView();
-		});
+		criarJanelaFilha("/gui/ImportarFolhaView.fxml", "Importação Dados da Folha de Pagamento", paiStage, x -> {});
+	}
+	@FXML
+	private void onMenuItemImportarFuncionariosAction() {
+		System.out.println("onMenuItemImportarFuncionariosAction");		
+	}
+	@FXML
+	private void onMenuItemSumarizarDadosFolhaAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/SumarizarFolhaView.fxml", "Sumarização da Folha", paiStage, x -> {});
+	}
+	@FXML
+	private void onMenuItemSumarizarFuncionariosAction() {
+		System.out.println("onMenuItemSumarizarFuncionariosAction");		
+	}
+	@FXML
+	private void onMenuItemExportarDadosFolhaAction() {
+		System.out.println("onMenuItemExportarDadosFolhaAction");		
+	}
+	@FXML
+	private void onMenuItemSairAction() {
+		Stage paiStage = paiStage();
+		paiStage.close();
 	}
 
 	@FXML
@@ -72,58 +97,48 @@ public class MainViewController implements Initializable {
 			controle.atualizarTableView();
 		});
 	}
-
-	
 	@FXML
-	private void onMenuItemImportarFolhaAction() {
-		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ImportarFolhaView.fxml", "Importação Dados da Folha de Pagamento", paiStage, x -> {});
+	private void onMenuItemParametrosAction() {
+		System.out.println("onMenuItemParametrosAction");		
 	}
 	
+	@FXML
+	private void onMenuItemDadosFolhaAction() {
+		Stage paiStage = paiStage();
+		
+		criarJanelaFilha("/gui/DadosFolhaList.fxml","Movimento Dados da Folha", paiStage, (DadosFolhaListController controle) -> {
+			controle.setDadosFolhaServico(new DadosFolhaService());
+			controle.atualizarTableView();
+		});
+	}
+	@FXML
+	private void onMenuItemFuncionariosAction() {
+		System.out.println("onMenuItemFuncionariosAction");		
+	}
+	@FXML
+	private void onMenuItemFolhaSumarizadaAction() {
+		Stage paiStage = paiStage();
+		
+		criarJanelaFilha("/gui/SumarioFolhaList.fxml","Sumario do Movimento Dados da Folha", paiStage, (SumarioFolhaListController controle) -> {
+			controle.setSumarioFolhaServico(new SumarioFolhaService());
+			controle.atualizarTableView();
+		});
+	}
+	@FXML
+	private void onMenuItemFuncionariosSumarizadosAction() {
+		System.out.println("onMenuItemFuncionariosSumarizadosAction");		
+	}
+
 	@FXML
 	private void onMenuItemSobreAction() {
 		Stage paiStage = paiStage();
 		criarJanelaFilha("/gui/SobreView.fxml", "Sobre", paiStage, x -> {});
 	}
 
-	@FXML
-	private void onMenuItemSairAction() {
-		Stage paiStage = paiStage();
-		paiStage.close();
-	}
-
-	private Stage paiStage() {
-		Stage telaPrincial  = (Stage) menuBarPrincipal.getScene().getWindow();
-		return 	telaPrincial;
-	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 	}
-	
-//	private synchronized <T> void carregarView(String caminhoDaView, Consumer<T> acaoDeInicializacao) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
-//			VBox novoVbox = loader.load();
-//
-// 			Scene mainScene = Main.getMainScene();
-//			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-//
-//			Node mainMenu = mainVBox.getChildren().get(0);
-//			mainVBox.getChildren().clear();
-//			mainVBox.getChildren().add(mainMenu);
-//			mainVBox.getChildren().addAll(novoVbox.getChildren());
-//				
-//			T controller = loader.getController();
-//			acaoDeInicializacao.accept(controller);
-//
-//			}
-//			catch (IOException e) {
-//				Alertas.mostrarAlertas("IOException", "Erro carregando a View",
-//									   e.getMessage(), AlertType.ERROR);
-//			e.printStackTrace();
-//			}
-//		}
 	
 	private <T> void criarJanelaFilha(String caminhoDaView, String titulo, Stage paiStage,  Consumer<T> acaoDeInicializacao) {
 		try {
@@ -147,6 +162,12 @@ public class MainViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+
+	private Stage paiStage() {
+		Stage telaPrincial  = (Stage) menuBarPrincipal.getScene().getWindow();
+		return 	telaPrincial;
+	}
+
 }
 
 

@@ -115,7 +115,7 @@ public class SumarioFolhaDaoJDBC implements SumarioFolhaDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conexao.prepareStatement("SELECT * FROM sumario_folha ");
+			st = conexao.prepareStatement("SELECT * FROM sumario_folha ORDER BY Ano_Mes, Cod_Centro_Custos");
 			rs = st.executeQuery();
 			List<SumarioFolha> lista = new ArrayList<SumarioFolha>();
 			while (rs.next()) {
@@ -139,9 +139,9 @@ public class SumarioFolhaDaoJDBC implements SumarioFolhaDao {
 		sumarioFolha.setAnoMes(rs.getString("Ano_Mes"));
 		sumarioFolha.setCodCentroCustos(rs.getString("Cod_Centro_Custos"));
 		sumarioFolha.setDescCentroCustos(rs.getString("Desc_Centro_Custos"));
-		sumarioFolha.setQdteImportarSim(rs.getDouble("Qtde_Importar_Sim"));
+		sumarioFolha.setQdteImportarSim(rs.getInt("Qtde_Importar_Sim"));
 		sumarioFolha.setTotalImportarSim(rs.getDouble("Total_Importar_Sim"));
-		sumarioFolha.setQdteImportarNao(rs.getDouble("Qtde_Importar_Nao"));
+		sumarioFolha.setQdteImportarNao(rs.getInt("Qtde_Importar_Nao"));
 		sumarioFolha.setTotalImportarNao(rs.getDouble("Total_Importar_Nao"));
 		return sumarioFolha;
 	}

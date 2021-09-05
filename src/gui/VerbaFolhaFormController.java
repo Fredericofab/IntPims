@@ -114,6 +114,7 @@ public class VerbaFolhaFormController implements Initializable {
 		txtCodVerba.setText(entidade.getCodVerba());
 		txtDescVerba.setText(entidade.getDescVerba());
 		txtImportar.setText(entidade.getImportar());
+		txtCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
 	}
 	
 	private VerbaFolha getDadosDoForm() {
