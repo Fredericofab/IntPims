@@ -195,7 +195,7 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 	}
 
 	private void removeEntity(DadosFolha objeto) {
-		Optional<ButtonType> clicado = Alertas.mostrarConfirmacao("Confirmacao", "Tem certeza da delecao?");
+		Optional<ButtonType> clicado = Alertas.mostrarConfirmacao("Confirmacao", null, "Tem certeza da delecao?", AlertType.CONFIRMATION );
 		if (clicado.get() == ButtonType.OK) {
 			if (servico == null) {
 				throw new IllegalStateException("O service foi passado nulo pelo outro programador!");

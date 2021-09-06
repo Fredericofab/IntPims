@@ -15,7 +15,6 @@ public class Main extends Application {
 
 	public void start(Stage primaryStage) {
 		
-
 	//	TestesDeDesenvolvimento.testesDeDesenvolvimento();
 		
 		try {

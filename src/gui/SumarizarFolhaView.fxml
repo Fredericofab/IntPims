@@ -10,24 +10,24 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox prefHeight="175.0" prefWidth="255.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<VBox prefHeight="175.0" prefWidth="301.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SumarizarFolhaViewController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-            <Button mnemonicParsing="false" text="Sumarizar" />
-          <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Button" visible="false" />
-            <Button mnemonicParsing="false" text="Sair" />
+            <Button fx:id="btSumarizar" mnemonicParsing="false" onAction="#onBtSumarizarAction" text="Sumarizar" />
+          <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="171.0" text="Button" visible="false" />
+            <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" text="Sair" />
         </items>
       </ToolBar>
       <GridPane>
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="177.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="540.0" minWidth="10.0" prefWidth="78.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="181.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="540.0" minWidth="10.0" prefWidth="120.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -42,36 +42,46 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Valor Total Para Exportar" GridPane.rowIndex="2">
+            <Label text="Valor Total Para Exportar" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Valor Total Não Exportado" GridPane.rowIndex="3">
+            <Label text="Valor Total Não Exportado" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1">
+            <TextField fx:id="txtRegLidos" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="txtQtdeCCustos" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="txtValortotal" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="txtValorExportarSim" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
+            <TextField fx:id="txtValorExportarNao" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text="Valor Total Sumarizado" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </children>

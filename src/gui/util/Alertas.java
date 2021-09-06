@@ -14,13 +14,12 @@ public class Alertas {
 		alerta.setHeaderText(cabecalho);
 		alerta.setContentText(conteudo);
 		alerta.setAlertType(tipo);
-//		alerta.show();
 		alerta.showAndWait();
 	}
 
 
-	public static Optional<ButtonType> mostrarConfirmacao(String titulo, String conteudo) {
-		Alert alerta = new Alert(AlertType.CONFIRMATION);
+	public static Optional<ButtonType> mostrarConfirmacao(String titulo, String cabecalho, String conteudo, AlertType tipo) {
+		Alert alerta = new Alert(tipo);
 		alerta.setTitle(titulo);
 		alerta.setHeaderText(null);
 		alerta.setContentText(conteudo);

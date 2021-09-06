@@ -54,14 +54,10 @@ public class ImportarFolhaService {
 	public Integer getQtdeIncluidas() {
 		return qtdeIncluidas;
 	}
-	public Integer getQtdeSumarioDeletadas() {
-		return qtdeDeletadas;
-	}
-	public Integer getQtdeSumarioIncluidas() {
-		return qtdeIncluidas;
-	}
 
 	public void processarTXT(String entrada, String anoMes) {
+		deletarDadosFolhaAnoMes(anoMes);
+		deletarSumarioFolhaAnoMes(anoMes);
 		lerFolhaTXT(entrada, anoMes);
 		if (set.size() > 0) {
 			qtdeVerbasDistintas = set.size();
@@ -69,44 +65,16 @@ public class ImportarFolhaService {
 		}
 		contarVerbasSemDefinicao();
 		if (qtdeVerbasSemDefinicao == 0 && qtdeCorrompidas == 0) {
-			deletarDadosFolhaAnoMes(anoMes);
 			gravarDadosFolha();
 		}
 	}
 
-
 	private void deletarDadosFolhaAnoMes(String anoMes) {
 		qtdeDeletadas = dao.deletarDadosFolhaAnoMes(anoMes);
 	}
-	
-	private void gravarVerbasNovas() {
-		VerbaFolhaService servico = new VerbaFolhaService();
-		for (VerbaFolha verbaFolha : set) {
-			if (servico.pesquisarPorChave(verbaFolha.getCodVerba()) == null) {
-				servico.salvarOuAtualizar(verbaFolha);
-			}
-		}
-	}
 
-	private void gravarDadosFolha() {
-		DadosFolhaService dadosFolhaService = new DadosFolhaService();
-		VerbaFolhaService verbaFolhaService = new VerbaFolhaService();
-		VerbaFolha verbaFolha;
-		qtdeIncluidas = 0;
-		String codVerba;
-		for (DadosFolha dadosFolha : lista) {
-			codVerba = dadosFolha.getCodVerba();
-			verbaFolha = verbaFolhaService.pesquisarPorChave(codVerba);
-			dadosFolha.setImportar(verbaFolha.getImportar());
-			dadosFolhaService.salvarOuAtualizar(dadosFolha);
-			qtdeIncluidas = qtdeIncluidas + 1;
-		}
-	}
-	
-
-
-	private void contarVerbasSemDefinicao() {
-		qtdeVerbasSemDefinicao = dao.contarVerbasSemDefinicao();
+	protected void deletarSumarioFolhaAnoMes(String anoMes) {
+		dao.deletarSumarioFolhaAnoMes(anoMes);
 	}
 
 
@@ -136,8 +104,36 @@ public class ImportarFolhaService {
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Importacao Dados da Folha", e.getMessage(), AlertType.ERROR);
 		} catch (RuntimeException e) {
-			System.out.println("FRED");
 			e.printStackTrace();
+		}
+	}
+
+	private void gravarVerbasNovas() {
+		VerbaFolhaService servico = new VerbaFolhaService();
+		for (VerbaFolha verbaFolha : set) {
+			if (servico.pesquisarPorChave(verbaFolha.getCodVerba()) == null) {
+				servico.salvarOuAtualizar(verbaFolha);
+			}
+		}
+	}
+
+	private void contarVerbasSemDefinicao() {
+		qtdeVerbasSemDefinicao = dao.contarVerbasSemDefinicao();
+	}
+
+
+	private void gravarDadosFolha() {
+		DadosFolhaService dadosFolhaService = new DadosFolhaService();
+		VerbaFolhaService verbaFolhaService = new VerbaFolhaService();
+		VerbaFolha verbaFolha;
+		qtdeIncluidas = 0;
+		String codVerba;
+		for (DadosFolha dadosFolha : lista) {
+			codVerba = dadosFolha.getCodVerba();
+			verbaFolha = verbaFolhaService.pesquisarPorChave(codVerba);
+			dadosFolha.setImportar(verbaFolha.getImportar());
+			dadosFolhaService.salvarOuAtualizar(dadosFolha);
+			qtdeIncluidas = qtdeIncluidas + 1;
 		}
 	}
 

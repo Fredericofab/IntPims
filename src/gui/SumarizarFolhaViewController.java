@@ -1,6 +1,7 @@
 package gui;
 
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import gui.util.Utilitarios;
@@ -21,39 +22,49 @@ public class SumarizarFolhaViewController implements Initializable {
 	@FXML
 	private TextField txtRegLidos;
 	@FXML
-	private TextField txQtdeCCustos;
+	private TextField txtQtdeCCustos;
+	@FXML
+	private TextField txtValortotal;
 	@FXML
 	private TextField txtValorExportarSim;
 	@FXML
 	private TextField txtValorExportarNao;
 
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-//		inicializarComponentes();
 	}
 
-//	private void inicializarComponentes() {
-//		txtPastaOrigem.setText("C:\\Projeto Itapecuru Custag\\IGP TG\\entrada\\");
-//		txtArquivoOrigem.setText("Folha202109.TXT");
-//		txtAnoMes.setText("202109");
-//	}
-	
-	@FXML
-	public void onBtSairAction(ActionEvent evento) {
-		Utilitarios.atualStage(evento).close();
-	}
-	
 	@FXML
 	public void onBtSumarizarAction(ActionEvent evento) {
 		SumarizarFolhaService servico = new SumarizarFolhaService();
 		servico.processar();
 		atualizarTela(servico);
 	}
-
+	@FXML
+	public void onBtSairAction(ActionEvent evento) {
+		Utilitarios.atualStage(evento).close();
+	}
+	
 	private void atualizarTela(SumarizarFolhaService servico) {
 		Integer qtdeLidas = servico.getQtdeLidas();
+		Integer qtdeCCustos = servico.getQtdeCCustos();
+		Double valorTotal = servico.getValorTotal();
+
+		Double valorExportarSim = servico.getValorExportarSim();
+		Double valorExportarNao = servico.getValorExportarNao();
 		
 		txtRegLidos.setText(qtdeLidas.toString());
+		txtQtdeCCustos.setText(qtdeCCustos.toString());
+
+		Locale.setDefault(Locale.US);
+		txtValortotal.setText(String.format("%.2f", valorTotal));
+		txtValorExportarSim.setText(String.format("%.2f", valorExportarSim));
+		txtValorExportarNao.setText(String.format("%.2f", valorExportarNao));
+
+		txtRegLidos.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtQtdeCCustos.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtValortotal.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtValorExportarSim.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtValorExportarNao.setStyle("-fx-alignment: CENTER-RIGHT");
 	}
 }
