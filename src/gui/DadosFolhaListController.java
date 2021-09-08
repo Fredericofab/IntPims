@@ -70,16 +70,13 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 
 	@FXML
 	private Button btIncluir;
-
+	@FXML
+	private Button btGerarTxt;
 	@FXML
 	private Button btSair;
 
 	private ObservableList<DadosFolha> obsLista;
 
-	@FXML
-	public void onBtSairAction(ActionEvent evento) {
-		Utilitarios.atualStage(evento).close();
-	}
 
 	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
@@ -89,6 +86,17 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
 
+	@FXML
+	public void onGerarTxtAction(ActionEvent evento) {
+		servico.gerarTxt();
+	}
+
+	@FXML
+	public void onBtSairAction(ActionEvent evento) {
+		Utilitarios.atualStage(evento).close();
+	}
+
+	
 	public void setDadosFolhaServico(DadosFolhaService servico) {
 		this.servico = servico;
 	}

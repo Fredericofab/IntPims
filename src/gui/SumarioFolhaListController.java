@@ -23,39 +23,32 @@ public class SumarioFolhaListController implements Initializable {
 
 	@FXML
 	private TableView<SumarioFolha> tableViewSumarioFolha;
-
 	@FXML
 	private TableColumn<SumarioFolha, String> tableColumnAnoMes;
-
 	@FXML
 	private TableColumn<SumarioFolha, String> tableColumnCodCentroCustos;
-
 	@FXML
 	private TableColumn<SumarioFolha, String> tableColumnDescCentroCustos;
-
 	@FXML
 	private TableColumn<SumarioFolha, Integer> tableColumnQtdeImportarSim;
-
 	@FXML
 	private TableColumn<SumarioFolha, Double> tableColumnTotalImportarSim;
-
-
 	@FXML
 	private TableColumn<SumarioFolha, Integer> tableColumnQtdeImportarNao;
-
 	@FXML
 	private TableColumn<SumarioFolha, Double> tableColumnTotalImportarNao;
 
 	@FXML
 	private Button btGerarTxt;
-
 	@FXML
 	private Button btSair;
 	
-
 	private ObservableList<SumarioFolha> obsLista;
 
-
+	@FXML
+	public void onGerarTxtAction(ActionEvent evento) {
+		servico.gerarTxt();
+	}
 
 	@FXML
 	public void onBtSairAction(ActionEvent evento) {

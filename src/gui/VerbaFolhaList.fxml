@@ -13,7 +13,7 @@
       <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" prefHeight="25.0" prefWidth="50.0" text="Incluir" />
-            <Button mnemonicParsing="false" text="GerarTXT" />
+            <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="GerarTXT" />
             <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="269.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="50.0" text="Sair" />
         </items>

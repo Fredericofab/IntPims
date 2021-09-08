@@ -37,41 +37,42 @@ public class VerbaFolhaListController implements Initializable, DadosAlteradosLi
 
 	@FXML
 	private TableView<VerbaFolha> tableViewVerbaFolha;
-
 	@FXML
 	private TableColumn<VerbaFolha, String> tableColumnCodVerba;
-
 	@FXML
 	private TableColumn<VerbaFolha, String> tableColumnDescVerba;
-
 	@FXML
 	private TableColumn<VerbaFolha, String> tableColumnImportar;
-
 	@FXML
 	private TableColumn<VerbaFolha, VerbaFolha> tableColumnEDIT;
-
 	@FXML
 	private TableColumn<VerbaFolha, VerbaFolha> tableColumnREMOVE;
-
+	
 	@FXML
 	private Button btIncluir;
-
+	@FXML
+	private Button btGerarTxt;
 	@FXML
 	private Button btSair;
 
 	private ObservableList<VerbaFolha> obsLista;
 
 	@FXML
-	public void onBtSairAction(ActionEvent evento) {
-		Utilitarios.atualStage(evento).close();
-	}
-	
-	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
 		Stage parentStage = Utilitarios.atualStage(evento);
 		String caminhoDaView = "/gui/VerbaFolhaForm.fxml";
 		VerbaFolha entidade = new VerbaFolha();
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
+	}
+
+	@FXML
+	public void onGerarTxtAction(ActionEvent evento) {
+		servico.gerarTxt();
+	}
+
+	@FXML
+	public void onBtSairAction(ActionEvent evento) {
+		Utilitarios.atualStage(evento).close();
 	}
 
 	public void setVerbaFolhaServico(VerbaFolhaService servico) {

@@ -7,14 +7,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import gui.util.Alertas;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import model.dao.FabricaDeDao;
 import model.dao.ImportarFolhaDao;
 import model.entities.DadosFolha;
 import model.entities.VerbaFolha;
+import model.exceptions.TxtIntegridadeException;
 
 public class ImportarFolhaService {
 
@@ -32,6 +35,7 @@ public class ImportarFolhaService {
 	public List<DadosFolha> getLista() {
 		return lista;
 	}
+
 	public Set<VerbaFolha> getSet() {
 		return set;
 	}
@@ -39,18 +43,23 @@ public class ImportarFolhaService {
 	public Integer getQtdeLidas() {
 		return qtdeLidas;
 	}
+
 	public Integer getQtdeCorrompidas() {
 		return qtdeCorrompidas;
 	}
+
 	public Integer getqtdeVerbasDistintas() {
 		return qtdeVerbasDistintas;
 	}
+
 	public Integer getQtdeVerbasSemDefinicao() {
 		return qtdeVerbasSemDefinicao;
 	}
+
 	public Integer getQtdeDeletadas() {
 		return qtdeDeletadas;
 	}
+
 	public Integer getQtdeIncluidas() {
 		return qtdeIncluidas;
 	}
@@ -77,7 +86,6 @@ public class ImportarFolhaService {
 		dao.deletarSumarioFolhaAnoMes(anoMes);
 	}
 
-
 	private void lerFolhaTXT(String entrada, String anoMesReferencia) {
 		String linha = null;
 		lista = new ArrayList<DadosFolha>();
@@ -85,11 +93,10 @@ public class ImportarFolhaService {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(entrada))) {
 			linha = br.readLine();
-
 			while (linha != null) {
 				qtdeLidas = qtdeLidas + 1;
 				DadosFolha dadosFolha = null;
-				dadosFolha = converteRegistro(linha, anoMesReferencia);
+				dadosFolha = converteRegistro(linha, anoMesReferencia,qtdeLidas);
 				if (dadosFolha != null) {
 					lista.add(dadosFolha);
 					VerbaFolha verbaFolha = new VerbaFolha(dadosFolha.getCodVerba(), dadosFolha.getDescVerba(), null);
@@ -97,10 +104,12 @@ public class ImportarFolhaService {
 				}
 				linha = br.readLine();
 			}
+		} catch (TxtIntegridadeException e) {
+			Alertas.mostrarAlertas("TxtIntegridadeException", "Processo de Leitura do TXT interrompido", e.getMessage(),
+					AlertType.ERROR);
 		} catch (FileNotFoundException e) {
 			Alertas.mostrarAlertas("FileNotFoundException", "Erro na Importacao Dados da Folha",
-					"Arquivo não encontrado \n \n" + e.getMessage(),
-					AlertType.ERROR);
+					"Arquivo não encontrado \n \n" + e.getMessage(), AlertType.ERROR);
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Importacao Dados da Folha", e.getMessage(), AlertType.ERROR);
 		} catch (RuntimeException e) {
@@ -121,7 +130,6 @@ public class ImportarFolhaService {
 		qtdeVerbasSemDefinicao = dao.contarVerbasSemDefinicao();
 	}
 
-
 	private void gravarDadosFolha() {
 		DadosFolhaService dadosFolhaService = new DadosFolhaService();
 		VerbaFolhaService verbaFolhaService = new VerbaFolhaService();
@@ -137,8 +145,9 @@ public class ImportarFolhaService {
 		}
 	}
 
-	private DadosFolha converteRegistro(String linha, String anoMesReferencia) {
+	private DadosFolha converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha) throws TxtIntegridadeException {
 		String[] campos = linha.split(",");
+		Optional<ButtonType> continuar = null;
 		try {
 			if (campos.length == 6) {
 				String anoMes = campos[0];
@@ -150,38 +159,35 @@ public class ImportarFolhaService {
 				String importar = null;
 				String observacao = null;
 				if (!anoMes.equals(anoMesReferencia)) {
-					qtdeCorrompidas = qtdeCorrompidas + 1;
-					Integer numeroLinhaErro = lista.size();
-					Alertas.mostrarAlertas("Integridade", "Registro nao Coerente com o Mês de Referencia",
-							"AnoMes de Referencia = " + anoMesReferencia + "\n" +
-							"AnoMes no Arquivo    = " + anoMes + "\n" +
-							"na linha No.: " + numeroLinhaErro.toString() + "\n" + "\n" +
-							linha,	AlertType.ERROR);
+					throw new TxtIntegridadeException("Registro nao Coerente com o Mês de Referencia");
 				}
 				DadosFolha dadosFolha = new DadosFolha(anoMes, codCentroCustos, descCentroCustos, codVerba, descVerba,
 						valorVerba, importar, observacao);
 				return dadosFolha;
 			} else {
-				qtdeCorrompidas = qtdeCorrompidas + 1;
-				Integer numeroLinhaErro = lista.size();
-				Alertas.mostrarAlertas("Integridade", "Quantidade de Campos Diferente do Esperado (6) ",
-						"Quantidade de Campos Encontrados: " + campos.length + "\n" + "na linha No.: "
-								+ numeroLinhaErro.toString() + "\n" + "\n" + linha,
-						AlertType.ERROR);
+				throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (6)");
 			}
+		} catch (TxtIntegridadeException e) {
+			qtdeCorrompidas = qtdeCorrompidas + 1;
+			continuar = Alertas.mostrarConfirmacao("Erro de Integridade no Arquivo", "Continuar Processo de Leitura do TXT ?",
+					e.getMessage() + "\n \n" +
+					"na linha No.: " + numeroLinha.toString() + "\n" + "\n" + linha,
+					AlertType.CONFIRMATION);
 		} catch (NumberFormatException e) {
 			qtdeCorrompidas = qtdeCorrompidas + 1;
-			Integer numeroLinhaErro = lista.size();
-			Alertas.mostrarAlertas("RuntimeException", "Erro na Importacao Dados da Folha", 
-					"Campo numerico esperado. \n" + e.getMessage() + "\n"
-					+ "na linha No.: " + numeroLinhaErro.toString() + "\n" + "\n" + linha, AlertType.ERROR);
+			continuar = Alertas.mostrarConfirmacao("NumberFormatException", "Continuar Processo de Leitura do TXT ?", 
+					"Campo numerico esperado. \n" + e.getMessage() + "\n \n" +
+					"na linha No.: " + numeroLinha.toString() + "\n" + "\n" + linha,
+					AlertType.CONFIRMATION);
 		} catch (RuntimeException e) {
 			qtdeCorrompidas = qtdeCorrompidas + 1;
-			Alertas.mostrarAlertas("RuntimeException", "Erro na Importacao Dados da Folha",
-					e.getClass() + "\n" + e.getMessage() , AlertType.ERROR);
+			continuar = Alertas.mostrarConfirmacao("RuntimeException", "Erro na Importacao Dados da Folha",
+					e.getClass() + "\n" + e.getMessage(), AlertType.CONFIRMATION);
 //			e.printStackTrace();
 		} finally {
-
+			if ((continuar != null) && (continuar.get() == ButtonType.CANCEL)) {
+				throw new TxtIntegridadeException("Processo Interrompido pelo usuário");
+			}
 		}
 		return null;
 	}

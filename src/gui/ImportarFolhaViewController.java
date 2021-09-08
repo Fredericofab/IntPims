@@ -111,7 +111,7 @@ public class ImportarFolhaViewController implements Initializable {
 		txtRegDeletados.setText(qtdeDeletadas.toString());
 		txtRegIncluidos.setText(qtdeIncluidas.toString());
 
-		if ((qtdeLidas - qtdeIncluidas) == 0 ) {
+		if ( (qtdeLidas > 0) && (qtdeLidas - qtdeIncluidas) == 0 ) {
 			labelMsgGeral.setText("Processo Concluido com Sucesso");
 			labelMsgGeral.setTextFill(Color.BLUE);
 		}
@@ -128,7 +128,7 @@ public class ImportarFolhaViewController implements Initializable {
 		labelMsgRegIncluidos.setText(null);
 
 		if (qtdeLidas > 0) {
-			labelMsgRegLidos.setText("Informação: Qtde de linhas no Arquivo TXT");
+			labelMsgRegLidos.setText("Informação: Qtde de linhas lidas do Arquivo TXT");
 		}
 		if (qtdeCorrompidas > 0) {
 			labelMsgRegCorrompidos.setText("PENDENCIA: Fazer correções no arquivo TXT gerado pela Folha");

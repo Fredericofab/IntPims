@@ -11,7 +11,7 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
             <Button disable="true" mnemonicParsing="false" text="Button" visible="false" />
-          <Button fx:id="btGerarTxt" mnemonicParsing="false" text="Gerar TXT" />
+          <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="Gerar TXT" />
             <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="403.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" text="Sair" />
         </items>

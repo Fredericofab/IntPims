@@ -12,7 +12,7 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" text="Incluir" />
-            <Button mnemonicParsing="false" text="GerarTXT" />
+            <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="GerarTXT" />
             <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="539.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
         </items>
@@ -27,8 +27,8 @@
             <TableColumn fx:id="tableColumnValorVerba" prefWidth="87.0" text="Valor" />
             <TableColumn fx:id="tableColumnImportar" prefWidth="58.0" text="Importar" />
             <TableColumn fx:id="tableColumnObservacao" prefWidth="72.0" text="Observacao" />
-            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="49.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="65.0" />
+            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="63.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="64.0" />
         </columns>
       </TableView>
    </children>
