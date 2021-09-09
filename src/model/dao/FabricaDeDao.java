@@ -2,7 +2,7 @@ package model.dao;
 
 import db.DB;
 import model.dao.impl.DadosFolhaDaoJDBC;
-import model.dao.impl.ImportarFolhaDaoJDBC;
+import model.dao.impl.ProcessarFolhaDaoJDBC;
 import model.dao.impl.SumarioFolhaDaoJDBC;
 import model.dao.impl.VerbaFolhaDaoJDBC;
 
@@ -16,8 +16,8 @@ public class FabricaDeDao {
 		return new VerbaFolhaDaoJDBC(DB.abrirConexao());
 	}
 	
-	public static ImportarFolhaDao criarImportarFolhaDao() {
-		return new ImportarFolhaDaoJDBC(DB.abrirConexao());
+	public static ProcessarFolhaDao criarImportarFolhaDao() {
+		return new ProcessarFolhaDaoJDBC(DB.abrirConexao());
 	}
 
 	public static SumarioFolhaDao criarSumarioFolhaDao() {

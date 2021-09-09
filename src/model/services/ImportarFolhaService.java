@@ -14,14 +14,14 @@ import gui.util.Alertas;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import model.dao.FabricaDeDao;
-import model.dao.ImportarFolhaDao;
+import model.dao.ProcessarFolhaDao;
 import model.entities.DadosFolha;
 import model.entities.VerbaFolha;
 import model.exceptions.TxtIntegridadeException;
 
 public class ImportarFolhaService {
 
-	private ImportarFolhaDao dao = FabricaDeDao.criarImportarFolhaDao();
+	private ProcessarFolhaDao dao = FabricaDeDao.criarImportarFolhaDao();
 
 	List<DadosFolha> lista;
 	Set<VerbaFolha> set;

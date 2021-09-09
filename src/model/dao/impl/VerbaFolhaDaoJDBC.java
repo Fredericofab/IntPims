@@ -23,7 +23,6 @@ public class VerbaFolhaDaoJDBC implements VerbaFolhaDao {
 	public void inserir(VerbaFolha objeto) {
 		PreparedStatement st = null;
 		try {
-//			System.out.println(objeto.toString());
 			st = conexao.prepareStatement("INSERT INTO verba_folha "
 										+ "(Cod_Verba, Desc_Verba, Importar) "
 										+ " VALUES (?,?,?)" );

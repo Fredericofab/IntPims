@@ -50,7 +50,7 @@ public class VerbaFolhaService {
 				bw.write(linha);
 				bw.newLine();
 			}
-			Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.ERROR);
+			Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 		}

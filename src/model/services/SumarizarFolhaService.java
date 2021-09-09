@@ -17,10 +17,10 @@ public class SumarizarFolhaService {
 	Double valorExportarNao = 0.00;
 	Double valorTotal = 0.00;
 
-
 	public List<DadosFolha> getLista() {
 		return lista;
 	}
+
 	public Map<String, SumarioFolha> getMap() {
 		return map;
 	}
@@ -28,25 +28,29 @@ public class SumarizarFolhaService {
 	public Integer getQtdeLidas() {
 		return qtdeLidas;
 	}
+
 	public Integer getQtdeCCustos() {
 		return qtdeCCustos;
 	}
+
 	public Double getValorTotal() {
 		return valorTotal;
 	}
+
 	public Double getValorExportarSim() {
 		return valorExportarSim;
 	}
+
 	public Double getValorExportarNao() {
 		return valorExportarNao;
 	}
-	
-	
+
 	public void processar() {
-		String AnoMes = "Fred";
-			deletarSumarioFolhaAnoMes(AnoMes);
-			sumarizarFolha();
-			gravarSumarioFolha();
+		String anoMes = "202109";
+		System.out.println("colocar parametro aqui");
+		deletarSumarioFolhaAnoMes(anoMes);
+		sumarizarFolha();
+		gravarSumarioFolha();
 	}
 
 	private void deletarSumarioFolhaAnoMes(String anoMes) {
@@ -60,14 +64,14 @@ public class SumarizarFolhaService {
 		String codCCusto;
 		map = new HashMap<String, SumarioFolha>();
 		for (DadosFolha dadosFolha : lista) {
-			qtdeLidas = qtdeLidas + 1;;
+			qtdeLidas = qtdeLidas + 1;
+			;
 			codCCusto = dadosFolha.getCodCentroCustos();
-			
+
 			SumarioFolha sumarioFolha = new SumarioFolha();
 			if (map.containsKey(codCCusto)) {
 				sumarioFolha = map.get(codCCusto);
-			}
-			else {
+			} else {
 				sumarioFolha.setAnoMes(dadosFolha.getAnoMes());
 				sumarioFolha.setCodCentroCustos(dadosFolha.getCodCentroCustos());
 				sumarioFolha.setDescCentroCustos(dadosFolha.getDescCentroCustos());
@@ -75,15 +79,15 @@ public class SumarizarFolhaService {
 				sumarioFolha.setTotalImportarSim(0.00);
 				sumarioFolha.setQdteImportarNao(0);
 				sumarioFolha.setTotalImportarNao(0.00);
-				qtdeCCustos = qtdeCCustos + 1;;
+				qtdeCCustos = qtdeCCustos + 1;
+				;
 			}
-			
+
 			if (dadosFolha.getImportar().equals("S")) {
 				sumarioFolha.setQdteImportarSim(sumarioFolha.getQdteImportarSim() + 1);
 				sumarioFolha.setTotalImportarSim(sumarioFolha.getTotalImportarSim() + dadosFolha.getValorVerba());
 				valorExportarSim = valorExportarSim + dadosFolha.getValorVerba();
-			}
-			else {
+			} else {
 				sumarioFolha.setQdteImportarNao(sumarioFolha.getQdteImportarNao() + 1);
 				sumarioFolha.setTotalImportarNao(sumarioFolha.getTotalImportarNao() + dadosFolha.getValorVerba());
 				valorExportarNao = valorExportarNao + dadosFolha.getValorVerba();
@@ -92,9 +96,10 @@ public class SumarizarFolhaService {
 		}
 		valorTotal = valorExportarSim + valorExportarNao;
 	}
+
 	private void gravarSumarioFolha() {
 		SumarioFolhaService sumarioFolhaService = new SumarioFolhaService();
-		for ( String chave : map.keySet() ) {
+		for (String chave : map.keySet()) {
 			sumarioFolhaService.salvarOuAtualizar(map.get(chave));
 		}
 	}
