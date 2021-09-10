@@ -19,6 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.services.DadosFolhaService;
 import model.services.ExportarFolhaService;
+import model.services.ParametrosService;
 import model.services.SumarioFolhaService;
 import model.services.VerbaFolhaService;
 
@@ -117,7 +118,12 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	private void onMenuItemParametrosAction() {
-		System.out.println("onMenuItemParametrosAction");
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/ParametrosList.fxml", "Parametros do Sistema", paiStage,
+				(ParametrosListController controle) -> {
+					controle.setParametrosServico(new ParametrosService());
+					controle.atualizarTableView();
+				});
 	}
 
 	@FXML

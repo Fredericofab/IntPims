@@ -14,6 +14,9 @@ import model.entities.SumarioFolha;
 public class SumarioFolhaService {
 	
 	private SumarioFolhaDao dao = FabricaDeDao.criarSumarioFolhaDao();
+
+//	parametros
+	String saida;
 	
 	public List<SumarioFolha> pesquisarTodos(){
 		return dao.listarTodos();
@@ -34,12 +37,8 @@ public class SumarioFolhaService {
 	}
 	
 	public void gerarTxt() {
+		lerParametros();
 		List<SumarioFolha> lista = pesquisarTodos();
-		String caminho = "C:\\Projeto Itapecuru Custag\\IGP TG\\saida\\";
-		String arquivo = "SumarioFolha";
-		String anoMes = "202109";
-		String extensao = ".txt";
-		String saida = caminho + arquivo + anoMes + extensao;
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
 			bw.write("AnoMes,CodCCustos,DescCCustos,QtdeImportarSim,TotalImportarSim,QtdeImportarNao,TotalImportarNao");
 			bw.newLine();
@@ -55,6 +54,15 @@ public class SumarioFolhaService {
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		String anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+		String arqSaidaPasta = (parametrosService.pesquisarPorChave("SumarioFolha", "ArqSaidaPasta")).getValor();
+		String arqSaidaNome  = (parametrosService.pesquisarPorChave("SumarioFolha", "ArqSaidaNome")).getValor();
+		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("SumarioFolha", "ArqSaidaTipo")).getValor();
+		saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
 	}
 
 }

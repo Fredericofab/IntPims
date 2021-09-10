@@ -14,6 +14,9 @@ import model.entities.VerbaFolha;
 public class VerbaFolhaService {
 
 	private VerbaFolhaDao dao = FabricaDeDao.criarVerbaFolhaDao();
+	
+//	parametros
+	String saida;
 
 	public List<VerbaFolha> pesquisarTodos() {
 		return dao.listarTodos();
@@ -36,12 +39,8 @@ public class VerbaFolhaService {
 	}
 
 	public void gerarTxt() {
+		lerParametros();
 		List<VerbaFolha> lista = pesquisarTodos();
-		String caminho = "C:\\Projeto Itapecuru Custag\\IGP TG\\saida\\";
-		String arquivo = "VerbaFolha";
-		String anoMes = "202109";
-		String extensao = ".txt";
-		String saida = caminho + arquivo + anoMes + extensao;
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
 			bw.write("Codverba,DescricaoVerba,FlagImportar");
 			bw.newLine();
@@ -54,5 +53,14 @@ public class VerbaFolhaService {
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		String anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+		String arqSaidaPasta = (parametrosService.pesquisarPorChave("VerbaFolha", "ArqSaidaPasta")).getValor();
+		String arqSaidaNome  = (parametrosService.pesquisarPorChave("VerbaFolha", "ArqSaidaNome")).getValor();
+		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("VerbaFolha", "ArqSaidaTipo")).getValor();
+		saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
 	}
 }

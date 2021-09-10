@@ -16,60 +16,37 @@ import model.services.ImportarFolhaService;
 public class ImportarFolhaViewController implements Initializable {
 
 	@FXML
-	private TextField txtPastaOrigem;
-
-	@FXML
-	private TextField txtArquivoOrigem;
-
-	@FXML
-	private TextField txtAnoMes;
-
-	@FXML
 	private Label labelMsgGeral;
-
+	@FXML
+	private Label labelMsgArqEntrada;
 	@FXML
 	private Label labelMsgRegLidos;
-
 	@FXML
 	private Label labelMsgRegCorrompidos;
-
 	@FXML
 	private Label labelMsgVerbasDistintas;
-
 	@FXML
 	private Label labelMsgVerbasSemDefinicao;
-
 	@FXML
 	private Label labelMsgRegDeletados;
-
 	@FXML
 	private Label labelMsgRegIncluidos;
-
 	@FXML
 	private Button btImportar;
-
 	@FXML
 	private Button btSair;
-
 	@FXML
 	private TextField txtRegLidos;
-	
-
 	@FXML
 	private TextField txtRegCorrompidos;
-	
 	@FXML
 	private TextField txtVerbasDistintas;
-
 	@FXML
 	private TextField txtVerbasSemDefinicao;
-
 	@FXML
 	private TextField txtRegDeletados;
-	
 	@FXML
 	private TextField txtRegIncluidos;
-
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -77,9 +54,6 @@ public class ImportarFolhaViewController implements Initializable {
 	}
 
 	private void inicializarComponentes() {
-		txtPastaOrigem.setText("C:\\Projeto Itapecuru Custag\\IGP TG\\entrada\\");
-		txtArquivoOrigem.setText("Folha202109.TXT");
-		txtAnoMes.setText("202109");
 	}
 	
 	@FXML
@@ -90,9 +64,7 @@ public class ImportarFolhaViewController implements Initializable {
 	@FXML
 	public void onBtImportarAction(ActionEvent evento) {
 		ImportarFolhaService servico = new ImportarFolhaService();
-		String entrada = txtPastaOrigem.getText() + txtArquivoOrigem.getText();
-		String anoMes = txtAnoMes.getText();
-		servico.processarTXT(entrada, anoMes);
+		servico.processarTXT();
 		atualizarTela(servico);
 	}
 
@@ -103,6 +75,7 @@ public class ImportarFolhaViewController implements Initializable {
 		Integer qtdeVerbasSemDefinicao = servico.getQtdeVerbasSemDefinicao();
 		Integer qtdeDeletadas = servico.getQtdeDeletadas();
 		Integer qtdeIncluidas = servico.getQtdeIncluidas();
+		String arqEntrada = servico.getEntrada();
 		
 		txtRegLidos.setText(qtdeLidas.toString());
 		txtRegCorrompidos.setText(qtdeCorrompidas.toString());
@@ -119,6 +92,8 @@ public class ImportarFolhaViewController implements Initializable {
 			labelMsgGeral.setText("Processo Terminado com Pendencias.");
 			labelMsgGeral.setTextFill(Color.RED);
 		}
+		
+		labelMsgArqEntrada.setText(arqEntrada);
 		
 		labelMsgRegLidos.setText(null);
 		labelMsgRegCorrompidos.setText(null);

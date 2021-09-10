@@ -12,47 +12,56 @@ import model.dao.FabricaDeDao;
 import model.entities.DadosFolha;
 
 public class DadosFolhaService {
-	
+
 	private DadosFolhaDao dao = FabricaDeDao.criarDadosFolhaDao();
-	
-	public List<DadosFolha> pesquisarTodos(){
+
+//	parametros
+	String saida;
+
+	public List<DadosFolha> pesquisarTodos() {
 		return dao.listarTodos();
-			
 	}
 
 	public void salvarOuAtualizar(DadosFolha objeto) {
-		if (dao.pesquisarPorChave(objeto.getAnoMes(), objeto.getCodCentroCustos(), objeto.getCodVerba()) == null ) {
+		if (dao.pesquisarPorChave(objeto.getAnoMes(), objeto.getCodCentroCustos(), objeto.getCodVerba()) == null) {
 			dao.inserir(objeto);
-		}
-		else {
+		} else {
 			dao.atualizar(objeto);
 		}
 	}
-	
+
 	public void remover(DadosFolha objeto) {
 		dao.deletarPorChave(objeto.getAnoMes(), objeto.getCodCentroCustos(), objeto.getCodVerba());
 	}
 
 	public void gerarTxt() {
+		lerParametros();
 		List<DadosFolha> lista = pesquisarTodos();
-		String caminho = "C:\\Projeto Itapecuru Custag\\IGP TG\\saida\\";
-		String arquivo = "DadosFolha";
-		String anoMes = "202109";
-		String extensao = ".txt";
-		String saida = caminho + arquivo + anoMes + extensao;
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
 			bw.write("AnoMes,CodCCustos,DescCCustos,Codverba,DescVerba,ValorVerba,FlagImportar,Observacao");
 			bw.newLine();
 			for (DadosFolha dadosFolha : lista) {
-				String linha = dadosFolha.getAnoMes() + "," + 
-							   dadosFolha.getCodCentroCustos() + "," + dadosFolha.getDescCentroCustos() + "," +
-						       dadosFolha.getCodVerba() + "," + dadosFolha.getDescVerba() + "," +
-							   dadosFolha.getValorVerba() + "," + dadosFolha.getImportar() + "," + dadosFolha.getObservacao(); 					; 			; 
+				String linha = dadosFolha.getAnoMes() + "," + dadosFolha.getCodCentroCustos() + ","
+						+ dadosFolha.getDescCentroCustos() + "," + dadosFolha.getCodVerba() + ","
+						+ dadosFolha.getDescVerba() + "," + dadosFolha.getValorVerba() + "," + dadosFolha.getImportar()
+						+ "," + dadosFolha.getObservacao();
+				;
+				;
 				bw.write(linha);
 				bw.newLine();
 			}
-			Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
+			Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 		}
-	}}
+	}
+
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		String anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+		String arqSaidaPasta = (parametrosService.pesquisarPorChave("DadosFolha", "ArqSaidaPasta")).getValor();
+		String arqSaidaNome  = (parametrosService.pesquisarPorChave("DadosFolha", "ArqSaidaNome")).getValor();
+		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("DadosFolha", "ArqSaidaTipo")).getValor();
+		saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+	}
+}

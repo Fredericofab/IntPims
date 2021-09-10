@@ -75,7 +75,7 @@
   </class>  
   <interface id="9" language="java" name="model.dao.DadosFolhaDao" project="intPims" 
     file="/intPims/src/model/dao/DadosFolhaDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="68" y="925"/>    
+    <position height="-1" width="-1" x="75" y="1051"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -84,7 +84,7 @@
   </interface>  
   <interface id="10" language="java" name="model.dao.ProcessarFolhaDao" project="intPims" 
     file="/intPims/src/model/dao/ProcessarFolhaDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="600" y="927"/>    
+    <position height="-1" width="-1" x="607" y="1053"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -93,7 +93,7 @@
   </interface>  
   <class id="11" language="java" name="model.dao.impl.DadosFolhaDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/DadosFolhaDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="58" y="1080"/>    
+    <position height="-1" width="-1" x="60" y="1236"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -102,7 +102,7 @@
   </class>  
   <class id="12" language="java" name="model.dao.impl.ProcessarFolhaDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/ProcessarFolhaDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="592" y="1082"/>    
+    <position height="-1" width="-1" x="594" y="1238"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -111,7 +111,7 @@
   </class>  
   <class id="13" language="java" name="model.dao.impl.VerbaFolhaDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/VerbaFolhaDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="836" y="1080"/>    
+    <position height="-1" width="-1" x="838" y="1236"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -120,7 +120,7 @@
   </class>  
   <class id="14" language="java" name="model.services.DadosFolhaService" project="intPims" 
     file="/intPims/src/model/services/DadosFolhaService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="69" y="750"/>    
+    <position height="-1" width="-1" x="71" y="808"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -129,7 +129,7 @@
   </class>  
   <class id="15" language="java" name="model.services.ImportarFolhaService" project="intPims" 
     file="/intPims/src/model/services/ImportarFolhaService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="177" y="446"/>    
+    <position height="-1" width="-1" x="170" y="595"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -138,7 +138,7 @@
   </class>  
   <class id="16" language="java" name="model.services.VerbaFolhaService" project="intPims" 
     file="/intPims/src/model/services/VerbaFolhaService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="839" y="759"/>    
+    <position height="-1" width="-1" x="830" y="817"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -174,7 +174,7 @@
   </class>  
   <interface id="20" language="java" name="model.dao.VerbaFolhaDao" project="intPims" 
     file="/intPims/src/model/dao/VerbaFolhaDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="828" y="925"/>    
+    <position height="-1" width="-1" x="835" y="1051"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -237,7 +237,7 @@
   </class>  
   <class id="27" language="java" name="model.entities.VerbaFolha" project="intPims" 
     file="/intPims/src/model/entities/VerbaFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1002" y="1611"/>    
+    <position height="-1" width="-1" x="951" y="1429"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -246,7 +246,7 @@
   </class>  
   <class id="28" language="java" name="model.entities.DadosFolha" project="intPims" 
     file="/intPims/src/model/entities/DadosFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1005" y="1436"/>    
+    <position height="-1" width="-1" x="1092" y="1428"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -255,7 +255,7 @@
   </class>  
   <class id="29" language="java" name="model.entities.SumarioFolha" project="intPims" 
     file="/intPims/src/model/entities/SumarioFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1011" y="1493"/>    
+    <position height="-1" width="-1" x="1098" y="1479"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -264,7 +264,7 @@
   </class>  
   <interface id="30" language="java" name="model.dao.SumarioFolhaDao" project="intPims" 
     file="/intPims/src/model/dao/SumarioFolhaDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="345" y="925"/>    
+    <position height="-1" width="-1" x="352" y="1051"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -273,7 +273,7 @@
   </interface>  
   <class id="31" language="java" name="model.dao.impl.SumarioFolhaDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/SumarioFolhaDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="334" y="1080"/>    
+    <position height="-1" width="-1" x="336" y="1236"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -282,7 +282,7 @@
   </class>  
   <class id="32" language="java" name="model.services.SumarioFolhaService" project="intPims" 
     file="/intPims/src/model/services/SumarioFolhaService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="339" y="750"/>    
+    <position height="-1" width="-1" x="341" y="808"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -318,7 +318,7 @@
   </class>  
   <class id="36" language="java" name="model.services.SumarizarFolhaService" project="intPims" 
     file="/intPims/src/model/services/SumarizarFolhaService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="408" y="434"/>    
+    <position height="-1" width="-1" x="401" y="583"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -327,7 +327,7 @@
   </class>  
   <class id="37" language="java" name="model.entities.Cstg_IntPF" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntPF.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1002" y="1552"/>    
+    <position height="-1" width="-1" x="1088" y="1541"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -336,11 +336,65 @@
   </class>  
   <class id="38" language="java" name="model.services.ExportarFolhaService" project="intPims" 
     file="/intPims/src/model/services/ExportarFolhaService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="595" y="370"/>    
+    <position height="-1" width="-1" x="588" y="519"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="model.entities.Parametros" project="intPims" 
+    file="/intPims/src/model/entities/Parametros.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="954" y="1480"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="model.dao.impl.ParametrosDaoJDBC" project="intPims" 
+    file="/intPims/src/model/dao/impl/ParametrosDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1058" y="1235"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="41" language="java" name="model.dao.ParametrosDao" project="intPims" 
+    file="/intPims/src/model/dao/ParametrosDao.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1073" y="1051"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="42" language="java" name="model.services.ParametrosService" project="intPims" 
+    file="/intPims/src/model/services/ParametrosService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1078" y="816"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="gui.ParametrosListController" project="intPims" 
+    file="/intPims/src/gui/ParametrosListController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="307" y="233"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="gui.ParametrosFormController" project="intPims" 
+    file="/intPims/src/gui/ParametrosFormController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="392" y="281"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
   <classifier-display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 

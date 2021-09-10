@@ -8,6 +8,9 @@ import model.entities.DadosFolha;
 import model.entities.SumarioFolha;
 
 public class SumarizarFolhaService {
+	
+//	Parametros
+	String anoMes;
 
 	List<DadosFolha> lista;
 	Map<String, SumarioFolha> map;
@@ -20,34 +23,27 @@ public class SumarizarFolhaService {
 	public List<DadosFolha> getLista() {
 		return lista;
 	}
-
 	public Map<String, SumarioFolha> getMap() {
 		return map;
 	}
-
 	public Integer getQtdeLidas() {
 		return qtdeLidas;
 	}
-
 	public Integer getQtdeCCustos() {
 		return qtdeCCustos;
 	}
-
 	public Double getValorTotal() {
 		return valorTotal;
 	}
-
 	public Double getValorExportarSim() {
 		return valorExportarSim;
 	}
-
 	public Double getValorExportarNao() {
 		return valorExportarNao;
 	}
 
 	public void processar() {
-		String anoMes = "202109";
-		System.out.println("colocar parametro aqui");
+		lerParametros();
 		deletarSumarioFolhaAnoMes(anoMes);
 		sumarizarFolha();
 		gravarSumarioFolha();
@@ -102,5 +98,10 @@ public class SumarizarFolhaService {
 		for (String chave : map.keySet()) {
 			sumarioFolhaService.salvarOuAtualizar(map.get(chave));
 		}
+	}
+
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
 	}
 }

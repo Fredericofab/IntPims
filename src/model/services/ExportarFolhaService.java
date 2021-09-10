@@ -11,6 +11,7 @@ public class ExportarFolhaService {
 
 	private ProcessarFolhaDao dao = FabricaDeDao.criarImportarFolhaDao();
 
+//	parametros
 	String anoMes;
 	String instancia;
 	String usuarioPimsCS;
@@ -22,14 +23,6 @@ public class ExportarFolhaService {
 		String dataref = "01/" + anoMes.substring(4, 6) + "/" + anoMes.substring(0, 4);
 		deletarCstgIntFP(dataref);
 		gravarCstgIntFP(dataref, usuarioPimsCS);
-	}
-
-	private void lerParametros() {
-		anoMes = "202109";
-		instancia = "ITAJ";
-		usuarioPimsCS = "PIMSITAJ";
-		cdEmpresa = "1";
-		prefixoMatr = "8";
 	}
 
 	private void deletarCstgIntFP(String dataref) {
@@ -55,6 +48,15 @@ public class ExportarFolhaService {
 		String x = prefixo.repeat(10 - tamanho);
 		Double cdFunc = Double.parseDouble((x + codCCusto));
 		return cdFunc;
+	}
+
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		anoMes         = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+		instancia      = (parametrosService.pesquisarPorChave("AmbienteOracle", "InstanciaPimsCS")).getValor();
+		usuarioPimsCS  = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
+		cdEmpresa      = (parametrosService.pesquisarPorChave("AmbienteOracle", "EmpresaPadrao")).getValor();
+		prefixoMatr    = (parametrosService.pesquisarPorChave("AmbienteOracle", "PrefixoMatricula")).getValor();
 	}
 
 }

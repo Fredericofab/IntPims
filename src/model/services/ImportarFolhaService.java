@@ -22,7 +22,11 @@ import model.exceptions.TxtIntegridadeException;
 public class ImportarFolhaService {
 
 	private ProcessarFolhaDao dao = FabricaDeDao.criarImportarFolhaDao();
-
+	
+//	prametros
+	String entrada;
+	String anoMes;
+	
 	List<DadosFolha> lista;
 	Set<VerbaFolha> set;
 	Integer qtdeLidas = 0;
@@ -32,39 +36,36 @@ public class ImportarFolhaService {
 	Integer qtdeDeletadas = 0;
 	Integer qtdeIncluidas = 0;
 
+	public String getEntrada() {
+		return entrada;
+	}
 	public List<DadosFolha> getLista() {
 		return lista;
 	}
-
 	public Set<VerbaFolha> getSet() {
 		return set;
 	}
-
 	public Integer getQtdeLidas() {
 		return qtdeLidas;
 	}
-
 	public Integer getQtdeCorrompidas() {
 		return qtdeCorrompidas;
 	}
-
 	public Integer getqtdeVerbasDistintas() {
 		return qtdeVerbasDistintas;
 	}
-
 	public Integer getQtdeVerbasSemDefinicao() {
 		return qtdeVerbasSemDefinicao;
 	}
-
 	public Integer getQtdeDeletadas() {
 		return qtdeDeletadas;
 	}
-
 	public Integer getQtdeIncluidas() {
 		return qtdeIncluidas;
 	}
 
-	public void processarTXT(String entrada, String anoMes) {
+	public void processarTXT() {
+		lerParametros();
 		deletarDadosFolhaAnoMes(anoMes);
 		deletarSumarioFolhaAnoMes(anoMes);
 		lerFolhaTXT(entrada, anoMes);
@@ -81,11 +82,9 @@ public class ImportarFolhaService {
 	private void deletarDadosFolhaAnoMes(String anoMes) {
 		qtdeDeletadas = dao.deletarDadosFolhaAnoMes(anoMes);
 	}
-
 	protected void deletarSumarioFolhaAnoMes(String anoMes) {
 		dao.deletarSumarioFolhaAnoMes(anoMes);
 	}
-
 	private void lerFolhaTXT(String entrada, String anoMesReferencia) {
 		String linha = null;
 		lista = new ArrayList<DadosFolha>();
@@ -116,7 +115,6 @@ public class ImportarFolhaService {
 			e.printStackTrace();
 		}
 	}
-
 	private void gravarVerbasNovas() {
 		VerbaFolhaService servico = new VerbaFolhaService();
 		for (VerbaFolha verbaFolha : set) {
@@ -125,11 +123,9 @@ public class ImportarFolhaService {
 			}
 		}
 	}
-
 	private void contarVerbasSemDefinicao() {
 		qtdeVerbasSemDefinicao = dao.contarVerbasSemDefinicao();
 	}
-
 	private void gravarDadosFolha() {
 		DadosFolhaService dadosFolhaService = new DadosFolhaService();
 		VerbaFolhaService verbaFolhaService = new VerbaFolhaService();
@@ -144,7 +140,6 @@ public class ImportarFolhaService {
 			qtdeIncluidas = qtdeIncluidas + 1;
 		}
 	}
-
 	private DadosFolha converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha) throws TxtIntegridadeException {
 		String[] campos = linha.split(",");
 		Optional<ButtonType> continuar = null;
@@ -191,4 +186,14 @@ public class ImportarFolhaService {
 		}
 		return null;
 	}
+
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaPasta")).getValor();
+		String arqEntradaNome  = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaNome")).getValor();
+		String arqEntradaTipo  = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaTipo")).getValor();
+		entrada = arqEntradaPasta + arqEntradaNome + anoMes + arqEntradaTipo ;
+	}
+
 }
