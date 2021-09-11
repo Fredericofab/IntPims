@@ -66,8 +66,8 @@ public class ImportarFolhaService {
 
 	public void processarTXT() {
 		lerParametros();
-		deletarDadosFolhaAnoMes(anoMes);
-		deletarSumarioFolhaAnoMes(anoMes);
+		deletarDadosFolhaTodos();
+		deletarSumarioFolhaTodos();
 		lerFolhaTXT(entrada, anoMes);
 		if (set.size() > 0) {
 			qtdeVerbasDistintas = set.size();
@@ -79,11 +79,11 @@ public class ImportarFolhaService {
 		}
 	}
 
-	private void deletarDadosFolhaAnoMes(String anoMes) {
-		qtdeDeletadas = dao.deletarDadosFolhaAnoMes(anoMes);
+	private void deletarDadosFolhaTodos() {
+		qtdeDeletadas = dao.deletarDadosFolhaTodos();
 	}
-	protected void deletarSumarioFolhaAnoMes(String anoMes) {
-		dao.deletarSumarioFolhaAnoMes(anoMes);
+	protected void deletarSumarioFolhaTodos() {
+		dao.deletarSumarioFolhaTodos();
 	}
 	private void lerFolhaTXT(String entrada, String anoMesReferencia) {
 		String linha = null;

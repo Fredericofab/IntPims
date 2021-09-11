@@ -29,11 +29,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.VerbaFolha;
+import model.services.ParametrosService;
 import model.services.VerbaFolhaService;
 
 public class VerbaFolhaListController implements Initializable, DadosAlteradosListener {
 
 	private VerbaFolhaService servico;
+	
+//	Parametros
+	String flagIncluir;
+	String flagAlterar;
+	String flagExcluir;
 
 	@FXML
 	private TableView<VerbaFolha> tableViewVerbaFolha;
@@ -81,14 +87,24 @@ public class VerbaFolhaListController implements Initializable, DadosAlteradosLi
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		lerParametros();
 		inicializarComponentes();
 	}
+	
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		flagIncluir = (parametrosService.pesquisarPorChave("VerbaFolha", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("VerbaFolha", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("VerbaFolha", "FlagExcluir")).getValor().toUpperCase();
+	}
+
 
 	private void inicializarComponentes() {
 		tableColumnCodVerba.setCellValueFactory(new PropertyValueFactory<>("codVerba"));
 		tableColumnDescVerba.setCellValueFactory(new PropertyValueFactory<>("descVerba"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
 		tableColumnCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
 
 	public void atualizarTableView() {
@@ -99,8 +115,13 @@ public class VerbaFolhaListController implements Initializable, DadosAlteradosLi
 
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewVerbaFolha.setItems(obsLista);
-		initEditButtons();
-		initRemoveButtons();
+
+		if (flagAlterar.equals("S")) {
+			initEditButtons();
+		}
+		if (flagExcluir.equals("S")) {
+			initRemoveButtons();
+		}
 	}
 
 	private void criarDialogoForm(VerbaFolha entidade, String caminhoDaView, Stage parentStage) {

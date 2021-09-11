@@ -43,8 +43,8 @@
                         <Insets left="10.0" />
                      </GridPane.margin></Label>
                   <TextField fx:id="txtCodVerba" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtDescVerba" GridPane.columnIndex="2" />
                   <TextField fx:id="txtImportar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtDescVerba" disable="true" editable="false" GridPane.columnIndex="2" />
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <children>
                         <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Salvar" />

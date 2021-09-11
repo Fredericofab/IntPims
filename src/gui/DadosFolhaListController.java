@@ -30,41 +30,38 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.DadosFolha;
 import model.services.DadosFolhaService;
+import model.services.ParametrosService;
 
 public class DadosFolhaListController implements Initializable, DadosAlteradosListener {
 
 	private DadosFolhaService servico;
 
+//	Parametros
+	String flagIncluir;
+	String flagAlterar;
+	String flagExcluir;
+	String anoMes;
+
 	@FXML
 	private TableView<DadosFolha> tableViewDadosFolha;
-
 	@FXML
 	private TableColumn<DadosFolha, String> tableColumnAnoMes;
-
 	@FXML
 	private TableColumn<DadosFolha, String> tableColumnCodCentroCustos;
-
 	@FXML
 	private TableColumn<DadosFolha, String> tableColumnDescCentroCustos;
-
 	@FXML
 	private TableColumn<DadosFolha, String> tableColumnCodVerba;
-
 	@FXML
 	private TableColumn<DadosFolha, String> tableColumnDescVerba;
-
 	@FXML
 	private TableColumn<DadosFolha, Double> tableColumnValorVerba;
-
 	@FXML
 	private TableColumn<DadosFolha, String> tableColumnImportar;
-
 	@FXML
 	private TableColumn<DadosFolha, String> tableColumnObservacao;
-
 	@FXML
 	private TableColumn<DadosFolha, DadosFolha> tableColumnEDIT;
-
 	@FXML
 	private TableColumn<DadosFolha, DadosFolha> tableColumnREMOVE;
 
@@ -77,12 +74,12 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 
 	private ObservableList<DadosFolha> obsLista;
 
-
 	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
 		Stage parentStage = Utilitarios.atualStage(evento);
 		String caminhoDaView = "/gui/DadosFolhaForm.fxml";
 		DadosFolha entidade = new DadosFolha();
+		entidade.setAnoMes(anoMes);
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
 
@@ -96,14 +93,22 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		Utilitarios.atualStage(evento).close();
 	}
 
-	
 	public void setDadosFolhaServico(DadosFolhaService servico) {
 		this.servico = servico;
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		lerParametros();
 		inicializarComponentes();
+	}
+
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		flagIncluir = (parametrosService.pesquisarPorChave("DadosFolha", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("DadosFolha", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("DadosFolha", "FlagExcluir")).getValor().toUpperCase();
+		anoMes =  (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
 	}
 
 	private void inicializarComponentes() {
@@ -119,6 +124,7 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		tableColumnCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
 		tableColumnCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
 		tableColumnValorVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
 
 	public void atualizarTableView() {
@@ -129,8 +135,12 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewDadosFolha.setItems(obsLista);
-		initEditButtons();
-		initRemoveButtons();
+		if (flagAlterar.equals("S")) {
+			initEditButtons();
+		}
+		if (flagExcluir.equals("S")) {
+			initRemoveButtons();
+		}
 	}
 
 	private void criarDialogoForm(DadosFolha entidade, String caminhoDaView, Stage parentStage) {

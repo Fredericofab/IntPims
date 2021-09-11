@@ -44,14 +44,14 @@ public class SumarizarFolhaService {
 
 	public void processar() {
 		lerParametros();
-		deletarSumarioFolhaAnoMes(anoMes);
+		deletarSumarioFolhaTodos();
 		sumarizarFolha();
 		gravarSumarioFolha();
 	}
 
-	private void deletarSumarioFolhaAnoMes(String anoMes) {
+	private void deletarSumarioFolhaTodos() {
 		ImportarFolhaService importarFolhaService = new ImportarFolhaService();
-		importarFolhaService.deletarSumarioFolhaAnoMes(anoMes);
+		importarFolhaService.deletarSumarioFolhaTodos();
 	}
 
 	private void sumarizarFolha() {

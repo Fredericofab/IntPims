@@ -52,11 +52,11 @@
                      </GridPane.margin></Label>
                   <TextField fx:id="txtAnoMes" prefHeight="25.0" prefWidth="102.0" GridPane.columnIndex="1" />
                   <TextField fx:id="txtCodCentroCustos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtDescCentroCustos" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <TextField fx:id="txtCodVerba" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtDescVerba" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <TextField fx:id="txtValorVerba" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="txtImportar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="txtDescCentroCustos" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtDescVerba" disable="true" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label fx:id="labelErroAnoMes" textFill="RED" GridPane.columnIndex="3">
                      <GridPane.margin>
                         <Insets left="10.0" />
@@ -97,6 +97,7 @@
                         <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="Cancelar" />
                      </children>
                   </HBox>
+                  <Label fx:id="labelErroObservacao" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>

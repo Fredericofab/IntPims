@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.VerbaFolha;
 import model.exceptions.ValidacaoException;
+import model.services.ParametrosService;
 import model.services.VerbaFolhaService;
 
 public class VerbaFolhaFormController implements Initializable {
@@ -31,21 +32,20 @@ public class VerbaFolhaFormController implements Initializable {
 	
 	private List<DadosAlteradosListener> ouvintes = new ArrayList<DadosAlteradosListener>();
 	
+//	Parametros
+	String flagIncluir;
+	String flagAlterar;
+	
 	@FXML
 	private TextField txtCodVerba;
-	
 	@FXML
 	private TextField txtDescVerba;
-	
 	@FXML
 	private TextField txtImportar;
-
 	@FXML
 	private Label labelErroCodVerba;	
-	
 	@FXML
 	private Button btSalvar;
-	
 	@FXML
 	private Button btCancelar;
 	
@@ -97,7 +97,14 @@ public class VerbaFolhaFormController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		lerParametros();
 		inicializarComponentes();
+	}
+	
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		flagIncluir = (parametrosService.pesquisarPorChave("VerbaFolha", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("VerbaFolha", "FlagAlterar")).getValor().toUpperCase();
 	}
 	
 	private void inicializarComponentes() {
@@ -105,6 +112,23 @@ public class VerbaFolhaFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodVerba, 5);	
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
+		if (flagIncluir.equals("S")) {
+			txtCodVerba.setDisable(false);
+			txtDescVerba.setDisable(false);
+			txtImportar.setDisable(false);
+		}
+		else {
+			if (flagAlterar.equals("S")) {
+				txtCodVerba.setDisable(true);
+				txtDescVerba.setDisable(true);
+				txtImportar.setDisable(false);
+			}
+			else {
+				txtCodVerba.setDisable(true);
+				txtDescVerba.setDisable(true);
+				txtImportar.setDisable(true);
+			}
+		}
 	}
 	
 	public void atualizarFormulario() {
@@ -115,6 +139,7 @@ public class VerbaFolhaFormController implements Initializable {
 		txtDescVerba.setText(entidade.getDescVerba());
 		txtImportar.setText(entidade.getImportar());
 		txtCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		
 	}
 	
 	private VerbaFolha getDadosDoForm() {

@@ -36,8 +36,8 @@ public class SumarioFolhaService {
 		dao.deletarPorChave(objeto.getAnoMes(), objeto.getCodCentroCustos());
 	}
 	
-	public void gerarTxt() {
-		lerParametros();
+	public void gerarTxt(Boolean oficial) {
+		lerParametros(oficial);
 		List<SumarioFolha> lista = pesquisarTodos();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
 			bw.write("AnoMes,CodCCustos,DescCCustos,QtdeImportarSim,TotalImportarSim,QtdeImportarNao,TotalImportarNao");
@@ -56,13 +56,18 @@ public class SumarioFolhaService {
 		}
 	}
 
-	private void lerParametros() {
+	private void lerParametros(Boolean oficial) {
 		ParametrosService parametrosService = new ParametrosService();
 		String anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
 		String arqSaidaPasta = (parametrosService.pesquisarPorChave("SumarioFolha", "ArqSaidaPasta")).getValor();
 		String arqSaidaNome  = (parametrosService.pesquisarPorChave("SumarioFolha", "ArqSaidaNome")).getValor();
 		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("SumarioFolha", "ArqSaidaTipo")).getValor();
-		saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+		if (oficial) {
+			saida = arqSaidaPasta + arqSaidaNome + anoMes + "_oficial" + arqSaidaTipo ;
+		}
+		else {
+			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+		}
 	}
 
 }

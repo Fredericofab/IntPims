@@ -34,6 +34,11 @@ import model.services.ParametrosService;
 public class ParametrosListController implements Initializable, DadosAlteradosListener {
 
 	private ParametrosService servico;
+	
+//	Parametros
+	String flagIncluir;
+	String flagAlterar;
+	String flagExcluir;
 
 	@FXML
 	private TableView<Parametros> tableViewParametros;
@@ -84,7 +89,15 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		lerParametros();
 		inicializarComponentes();
+	}
+
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		flagIncluir = (parametrosService.pesquisarPorChave("Parametros", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("Parametros", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("Parametros", "FlagExcluir")).getValor().toUpperCase();
 	}
 
 	private void inicializarComponentes() {
@@ -92,6 +105,7 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 		tableColumnEntrada.setCellValueFactory(new PropertyValueFactory<>("entrada"));
 		tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
 
 	public void atualizarTableView() {
@@ -102,8 +116,13 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewParametros.setItems(obsLista);
-		initEditButtons();
-		initRemoveButtons();
+
+		if (flagAlterar.equals("S")) {
+			initEditButtons();
+		}
+		if (flagExcluir.equals("S")) {
+			initRemoveButtons();
+		}
 	}
 
 	private void criarDialogoForm(Parametros entidade, String caminhoDaView, Stage parentStage) {

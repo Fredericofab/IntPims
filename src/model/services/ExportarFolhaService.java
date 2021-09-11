@@ -23,6 +23,13 @@ public class ExportarFolhaService {
 		String dataref = "01/" + anoMes.substring(4, 6) + "/" + anoMes.substring(0, 4);
 		deletarCstgIntFP(dataref);
 		gravarCstgIntFP(dataref, usuarioPimsCS);
+		gerarTxt();
+	}
+
+	private void gerarTxt() {
+		SumarioFolhaService sumarioFolhaService = new SumarioFolhaService();
+		Boolean oficial = true;
+		sumarioFolhaService.gerarTxt(oficial);
 	}
 
 	private void deletarCstgIntFP(String dataref) {

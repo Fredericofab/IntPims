@@ -17,7 +17,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.entities.Parametros;
-import model.exceptions.ValidacaoException;
 import model.services.ParametrosService;
 
 public class ParametrosFormController implements Initializable {
@@ -28,6 +27,10 @@ public class ParametrosFormController implements Initializable {
 	
 	private List<DadosAlteradosListener> ouvintes = new ArrayList<DadosAlteradosListener>();
 	
+//	Parametros
+	String flagIncluir;
+	String flagAlterar;
+
 	@FXML
 	private TextField txtSecao;
 	@FXML
@@ -39,10 +42,9 @@ public class ParametrosFormController implements Initializable {
 
 	@FXML
 	private Button btSalvar;
-	
 	@FXML
 	private Button btCancelar;
-	
+
 	@FXML
 	public void onBtSalvarAction(ActionEvent evento) {
 		if (entidade == null) {
@@ -57,9 +59,6 @@ public class ParametrosFormController implements Initializable {
 			notificarDadosAlteradosListeners();
 			Utilitarios.atualStage(evento).close();
 		}
-//		catch (ValidacaoException e) {
-//			mostrarErrosDeDigitacao(e.getErros());
-//		}
 		catch (DbException e){
 			Alertas.mostrarAlertas("erro Salvando Parametros", null, e.getMessage(), AlertType.ERROR);
 		}
@@ -87,18 +86,44 @@ public class ParametrosFormController implements Initializable {
 			ouvinte.onDadosAlterados();
 		}
 	}
-
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		lerParametros();
 		inicializarComponentes();
 	}
 	
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		flagIncluir = (parametrosService.pesquisarPorChave("Parametros", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("Parametros", "FlagAlterar")).getValor().toUpperCase();
+	}
+
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSecao, 30);	
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtEntrada, 30);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtValor, 2555);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtValor, 255);	
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescricao, 255);	
+		if (flagIncluir.equals("S")) {
+			txtSecao.setDisable(false);
+			txtEntrada.setDisable(false);
+			txtValor.setDisable(false);
+			txtDescricao.setDisable(false);
+		}
+		else {
+			if (flagAlterar.equals("S")) {
+				txtSecao.setDisable(true);
+				txtEntrada.setDisable(true);
+				txtValor.setDisable(false);
+				txtDescricao.setDisable(true);
+			}
+			else {
+				txtSecao.setDisable(true);
+				txtEntrada.setDisable(true);
+				txtValor.setDisable(true);
+				txtDescricao.setDisable(true);
+			}
+		}
 	}
 	
 	public void atualizarFormulario() {
@@ -113,7 +138,6 @@ public class ParametrosFormController implements Initializable {
 	
 	private Parametros getDadosDoForm() {
 		Parametros objeto = new Parametros();
-		ValidacaoException validacao = new ValidacaoException("Erros Na Digitacao do Form");
 		
 		objeto.setSecao(txtSecao.getText());
 		objeto.setEntrada(txtEntrada.getText());
@@ -122,26 +146,7 @@ public class ParametrosFormController implements Initializable {
 		
 		objeto.setValor(Utilitarios.tentarConverterParaMaiusculo(txtValor.getText()));
 
-//		if (txtCodVerba.getText() == null || txtCodVerba.getText().trim().equals("")) {
-//			validacao.adicionarErro("txtCodVerba", "Informe a Verba da Folha");
-//		}
-//
-//		
-//		if (validacao.getErros().size() > 0) {
-//			throw validacao;
-//		}
-//
 		return objeto;
 	}
 	
-//	private void mostrarErrosDeDigitacao(Map<String, String> erros) {
-//		Set<String> campos = erros.keySet();
-//		if (campos.contains("txtCodVerba")) {
-//			labelErroCodVerba.setText(erros.get("txtCodVerba"));
-//		}
-//		else {
-//			labelErroCodVerba.setText("");
-//		}
-//			
-//	}
 }

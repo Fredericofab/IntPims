@@ -37,16 +37,15 @@ public class ProcessarFolhaDaoJDBC implements ProcessarFolhaDao {
 	}
 	
 	@Override
-	public Integer deletarDadosFolhaAnoMes(String anoMes) {
+	public Integer deletarDadosFolhaTodos() {
 		PreparedStatement st = null;
 		try {
-			st = conexao.prepareStatement("DELETE FROM dados_folha WHERE Ano_Mes = ? ");
-			st.setString(1, anoMes);
+			st = conexao.prepareStatement("DELETE FROM dados_folha ");
 			st.executeUpdate();
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao do Movimento da Folha " + anoMes + "\n" + e.getMessage());
+			throw new DbException("erro na delecao do Movimento da Folha  \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -54,16 +53,15 @@ public class ProcessarFolhaDaoJDBC implements ProcessarFolhaDao {
 	}
 
 	@Override
-	public Integer deletarSumarioFolhaAnoMes(String anoMes) {
+	public Integer deletarSumarioFolhaTodos() {
 		PreparedStatement st = null;
 		try {
-			st = conexao.prepareStatement("DELETE FROM sumario_folha WHERE Ano_Mes = ? ");
-			st.setString(1, anoMes);
+			st = conexao.prepareStatement("DELETE FROM sumario_folha ");
 			st.executeUpdate();
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao do Sumario da Movimento " + anoMes + "\n" + e.getMessage());
+			throw new DbException("erro na delecao do Sumario da Movimento \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharStatement(st);

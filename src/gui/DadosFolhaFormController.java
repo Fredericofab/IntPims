@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import model.entities.DadosFolha;
 import model.exceptions.ValidacaoException;
 import model.services.DadosFolhaService;
+import model.services.ParametrosService;
 
 public class DadosFolhaFormController implements Initializable {
 
@@ -32,46 +33,41 @@ public class DadosFolhaFormController implements Initializable {
 	
 	private List<DadosAlteradosListener> ouvintes = new ArrayList<DadosAlteradosListener>();
 	
+//	Parametros
+	String flagIncluir;
+	String flagAlterar;
+	String flagObservacao;
+	
 	@FXML
 	private TextField txtAnoMes;
-	
 	@FXML
 	private TextField txtCodCentroCustos; 
-	
 	@FXML
 	private TextField txtDescCentroCustos;
-	
 	@FXML
 	private TextField txtCodVerba;
-	
 	@FXML
 	private TextField txtDescVerba;
-	
 	@FXML
 	private TextField txtValorVerba;
-	
 	@FXML
 	private TextField txtImportar;
-	
 	@FXML
 	private TextField txtObservacao;
 	
 	@FXML
 	private Label labelErroAnoMes;	
-
 	@FXML
 	private Label labelErroCodCentroCustos;	
-
 	@FXML
 	private Label labelErroCodVerba;	
-
 	@FXML
 	private Label labelErroValorVerba;
-	
+	@FXML
+	private Label labelErroObservacao;
 	
 	@FXML
 	private Button btSalvar;
-	
 	@FXML
 	private Button btCancelar;
 	
@@ -123,9 +119,17 @@ public class DadosFolhaFormController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		lerParametros();
 		inicializarComponentes();
 	}
 	
+	private void lerParametros() {
+		ParametrosService parametrosService = new ParametrosService();
+		flagIncluir = (parametrosService.pesquisarPorChave("DadosFolha", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("DadosFolha", "FlagAlterar")).getValor().toUpperCase();
+		flagObservacao =  (parametrosService.pesquisarPorChave("DadosFolha", "FlagObservacao")).getValor().toUpperCase();
+	}
+
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtAnoMes);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMes, 6);
@@ -138,6 +142,38 @@ public class DadosFolhaFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtObservacao, 30);
+		if (flagIncluir.equals("S")) {
+			txtAnoMes.setDisable(false);
+			txtCodCentroCustos.setDisable(false);
+			txtDescCentroCustos.setDisable(false);
+			txtCodVerba.setDisable(false);
+			txtDescVerba.setDisable(false);
+			txtValorVerba.setDisable(false);
+			txtImportar.setDisable(false);
+			txtObservacao.setDisable(false);
+		}
+		else {
+			if (flagAlterar.equals("S")) {
+				txtAnoMes.setDisable(true);
+				txtCodCentroCustos.setDisable(true);
+				txtDescCentroCustos.setDisable(true);
+				txtCodVerba.setDisable(true);
+				txtDescVerba.setDisable(true);
+				txtValorVerba.setDisable(true);
+				txtImportar.setDisable(false);
+				txtObservacao.setDisable(false);
+			}
+			else {
+				txtAnoMes.setDisable(true);
+				txtCodCentroCustos.setDisable(true);
+				txtDescCentroCustos.setDisable(true);
+				txtCodVerba.setDisable(true);
+				txtDescVerba.setDisable(true);
+				txtValorVerba.setDisable(true);
+				txtImportar.setDisable(true);
+				txtObservacao.setDisable(true);
+			}
+		}
 	}
 	
 	public void atualizarFormulario() {
@@ -186,6 +222,11 @@ public class DadosFolhaFormController implements Initializable {
 		if (txtValorVerba.getText() == null || txtValorVerba.getText().trim().equals("")) {
 			validacao.adicionarErro("txtValorVerba", "Informe o Valor da Verba");
 		}
+		if (txtObservacao.getText() == null || txtObservacao.getText().trim().equals("")) {
+			if (flagObservacao.equals("S")) {
+			    validacao.adicionarErro("txtObservacao", "Informe uma observacao com justificativa da inclusao/alteracao");
+			}
+		}
 
 		
 		if (validacao.getErros().size() > 0) {
@@ -202,6 +243,6 @@ public class DadosFolhaFormController implements Initializable {
 		labelErroCodCentroCustos.setText((campos.contains("txtCodCentroCustos") ? erros.get("txtCodCentroCustos") : ""));
 		labelErroCodVerba.setText((campos.contains("txtCodVerba") ? erros.get("txtCodVerba") : ""));
 		labelErroValorVerba.setText((campos.contains("txtValorVerba") ? erros.get("txtValorVerba") : ""));
-
+		labelErroObservacao.setText((campos.contains("txtObservacao") ? erros.get("txtObservacao") : ""));
 	}
 }
