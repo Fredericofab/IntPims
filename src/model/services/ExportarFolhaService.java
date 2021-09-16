@@ -9,7 +9,7 @@ import model.entities.SumarioFolha;
 
 public class ExportarFolhaService {
 
-	private ProcessarFolhaDao dao = FabricaDeDao.criarImportarFolhaDao();
+	private ProcessarFolhaDao dao = FabricaDeDao.criarProcessarFolhaDao();
 
 //	parametros
 	String anoMes;
@@ -27,9 +27,16 @@ public class ExportarFolhaService {
 	}
 
 	private void gerarTxt() {
-		SumarioFolhaService sumarioFolhaService = new SumarioFolhaService();
 		Boolean oficial = true;
+
+		SumarioFolhaService sumarioFolhaService = new SumarioFolhaService();
 		sumarioFolhaService.gerarTxt(oficial);
+		
+		DadosFolhaService dadosFolhaService = new DadosFolhaService();
+		dadosFolhaService.gerarTxt(oficial);
+
+		VerbaFolhaService verbaFolhaService = new VerbaFolhaService();
+		verbaFolhaService.gerarTxt(oficial);
 	}
 
 	private void deletarCstgIntFP(String dataref) {

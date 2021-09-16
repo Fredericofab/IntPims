@@ -21,7 +21,7 @@ import model.exceptions.TxtIntegridadeException;
 
 public class ImportarFolhaService {
 
-	private ProcessarFolhaDao dao = FabricaDeDao.criarImportarFolhaDao();
+	private ProcessarFolhaDao dao = FabricaDeDao.criarProcessarFolhaDao();
 	
 //	prametros
 	String entrada;

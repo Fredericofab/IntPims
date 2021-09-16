@@ -17,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.services.ControleProcessoService;
 import model.services.DadosFolhaService;
 import model.services.ExportarFolhaService;
 import model.services.ParametrosService;
@@ -29,7 +30,7 @@ public class MainViewController implements Initializable {
 	private MenuBar menuBarPrincipal;
 
 	@FXML
-	private MenuItem menuItemControleProcesso;
+	private MenuItem menuItemProcessoAtual;
 	@FXML
 	private MenuItem menuItemImportarFolha;
 	@FXML
@@ -46,6 +47,8 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemVerbaFolha;
 	@FXML
+	private MenuItem menuItemControleProcesso;
+	@FXML
 	private MenuItem menuItemParametros;
 
 	@FXML
@@ -61,8 +64,10 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemSobre;
 
 	@FXML
-	private void onMenuItemControleProcessoAction() {
-		System.out.println("onMenuItemControleProcessoAction");
+	private void onMenuItemProcessoAtualAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/ProcessoAtualView.fxml", "Controle do Processo Atual", paiStage, x -> {
+		});
 	}
 
 	@FXML
@@ -115,6 +120,17 @@ public class MainViewController implements Initializable {
 					controle.atualizarTableView();
 				});
 	}
+	
+	@FXML
+	private void onMenuItemControleProcessoAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/ControleProcessoList.fxml", "Cadastro dos Controle do Processo", paiStage,
+				(ControleProcessoListController controle) -> {
+					controle.setControleProcessoServico(new ControleProcessoService());
+					controle.atualizarTableView();
+				});
+	}
+
 
 	@FXML
 	private void onMenuItemParametrosAction() {
@@ -129,7 +145,6 @@ public class MainViewController implements Initializable {
 	@FXML
 	private void onMenuItemDadosFolhaAction() {
 		Stage paiStage = paiStage();
-
 		criarJanelaFilha("/gui/DadosFolhaList.fxml", "Movimento Dados da Folha", paiStage,
 				(DadosFolhaListController controle) -> {
 					controle.setDadosFolhaServico(new DadosFolhaService());

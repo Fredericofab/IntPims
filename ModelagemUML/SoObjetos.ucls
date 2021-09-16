@@ -3,7 +3,7 @@
   associations="false" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="application.Main" project="intPims" file="/intPims/src/application/Main.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="455" y="26"/>    
+    <position height="-1" width="-1" x="140" y="-244"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -30,11 +30,11 @@
   </class>  
   <class id="4" language="java" name="gui.MainViewController" project="intPims" 
     file="/intPims/src/gui/MainViewController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="455" y="69"/>    
+    <position height="-1" width="-1" x="344" y="-96"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+      <operations public="false" package="true" protected="false" private="true" static="false"/>    
     </display>  
   </class>  
   <class id="5" language="java" name="gui.VerbaFolhaFormController" project="intPims" 
@@ -237,7 +237,7 @@
   </class>  
   <class id="27" language="java" name="model.entities.VerbaFolha" project="intPims" 
     file="/intPims/src/model/entities/VerbaFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="951" y="1429"/>    
+    <position height="-1" width="-1" x="773" y="-237"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -246,7 +246,7 @@
   </class>  
   <class id="28" language="java" name="model.entities.DadosFolha" project="intPims" 
     file="/intPims/src/model/entities/DadosFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1092" y="1428"/>    
+    <position height="-1" width="-1" x="955" y="-235"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -255,7 +255,7 @@
   </class>  
   <class id="29" language="java" name="model.entities.SumarioFolha" project="intPims" 
     file="/intPims/src/model/entities/SumarioFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1098" y="1479"/>    
+    <position height="-1" width="-1" x="961" y="-184"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -327,7 +327,7 @@
   </class>  
   <class id="37" language="java" name="model.entities.Cstg_IntPF" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntPF.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1088" y="1541"/>    
+    <position height="-1" width="-1" x="1123" y="-235"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -345,7 +345,7 @@
   </class>  
   <class id="39" language="java" name="model.entities.Parametros" project="intPims" 
     file="/intPims/src/model/entities/Parametros.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="954" y="1480"/>    
+    <position height="-1" width="-1" x="776" y="-186"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      

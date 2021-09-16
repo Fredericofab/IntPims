@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="372.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ControleProcessoListController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" text="Incluir" />
+            <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="GerarTXT" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="576.0" text="Button" visible="false" />
+            <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" text="Sair" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="tableViewControleProcesso" prefHeight="336.0" prefWidth="754.0">
+        <columns>
+          <TableColumn fx:id="tableColumnAnoMes" prefWidth="56.0" text="AnoMes" />
+          <TableColumn fx:id="tableColumnImportarFolha" prefWidth="50.0" text="ImpFol" />
+            <TableColumn fx:id="tableColumnSumarizarFolha" prefWidth="50.0" text="SumFol" />
+            <TableColumn fx:id="tableColumnExportarFolha" prefWidth="50.0" text="ExpFol" />
+            <TableColumn fx:id="tableColumnImportarFuncionario" prefWidth="60.0" text="ImpFunc" />
+            <TableColumn fx:id="tableColumnSumarizarFuncionario" prefWidth="60.0" text="SumFunc" />
+            <TableColumn fx:id="tableColumnImportarErpMT" prefWidth="50.0" text="ImpMT" />
+            <TableColumn fx:id="tableColumnImportarErpCD" prefWidth="50.0" text="ImpCD" />
+            <TableColumn fx:id="tableColumnImportarErpDD" prefWidth="50.0" text="ImpDD" />
+            <TableColumn fx:id="tableColumnCriticarErp" prefWidth="50.0" text="CriErp" />
+            <TableColumn fx:id="tableColumnExportarErp" prefWidth="50.0" text="ExpErp" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="60.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="60.0" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

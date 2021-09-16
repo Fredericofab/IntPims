@@ -38,8 +38,8 @@ public class VerbaFolhaService {
 		dao.deletarPorChave(objeto.getCodVerba());
 	}
 
-	public void gerarTxt() {
-		lerParametros();
+	public void gerarTxt(Boolean oficial) {
+		lerParametros(oficial);
 		List<VerbaFolha> lista = pesquisarTodos();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
 			bw.write("Codverba,DescricaoVerba,FlagImportar");
@@ -49,18 +49,25 @@ public class VerbaFolhaService {
 				bw.write(linha);
 				bw.newLine();
 			}
-			Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
+			if (! oficial) {
+				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
+			}
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 		}
 	}
 
-	private void lerParametros() {
+	private void lerParametros(Boolean oficial) {
 		ParametrosService parametrosService = new ParametrosService();
 		String anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
 		String arqSaidaPasta = (parametrosService.pesquisarPorChave("VerbaFolha", "ArqSaidaPasta")).getValor();
 		String arqSaidaNome  = (parametrosService.pesquisarPorChave("VerbaFolha", "ArqSaidaNome")).getValor();
 		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("VerbaFolha", "ArqSaidaTipo")).getValor();
-		saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+		if (oficial) {
+			saida = arqSaidaPasta + arqSaidaNome + anoMes + "_oficial" + arqSaidaTipo ;
+		}
+		else {
+			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+		}
 	}
 }

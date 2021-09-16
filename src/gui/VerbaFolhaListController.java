@@ -73,7 +73,8 @@ public class VerbaFolhaListController implements Initializable, DadosAlteradosLi
 
 	@FXML
 	public void onGerarTxtAction(ActionEvent evento) {
-		servico.gerarTxt();
+		Boolean oficial = false;
+		servico.gerarTxt(oficial);
 	}
 
 	@FXML

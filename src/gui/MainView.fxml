@@ -14,7 +14,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Processos">
                   <items>
-                    <MenuItem fx:id="menuItemControleProcesso" mnemonicParsing="false" onAction="#onMenuItemControleProcessoAction" text="Controle doProcesso Mensal" />
+                    <MenuItem fx:id="menuItemProcessoAtual" mnemonicParsing="false" onAction="#onMenuItemProcessoAtualAction" text="Processo Atual" />
                         <MenuItem fx:id="menuItemImportarFolha" mnemonicParsing="false" onAction="#onMenuItemImportarFolhaAction" text="Importar Dados da Folha" />
                         <MenuItem fx:id="menuItemImportarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemImportarFuncionariosAction" text="Importar Funcionarios" />
                         <MenuItem fx:id="menuItemSumarizarFolha" mnemonicParsing="false" onAction="#onMenuItemSumarizarDadosFolhaAction" text="Sumarizar Dados Folha" />
@@ -26,6 +26,7 @@
                 <Menu mnemonicParsing="false" text="Tabelas">
                   <items>
                         <MenuItem fx:id="menuItemVerbaFolha" mnemonicParsing="false" onAction="#onMenuItemVerbaFolhaAction" text="Verbas da Folha" />
+                        <MenuItem fx:id="menuItemControleProcesso" mnemonicParsing="false" onAction="#onMenuItemControleProcessoAction" text="Controle dos Processos" />
                     <MenuItem fx:id="menuItemParametros" mnemonicParsing="false" onAction="#onMenuItemParametrosAction" text="Parametros" />
                   </items>
                 </Menu>

@@ -50,7 +50,9 @@ public class SumarioFolhaService {
 				bw.write(linha);
 				bw.newLine();
 			}
-			Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
+			if (! oficial) {
+				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
+			}
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 		}

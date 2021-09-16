@@ -28,13 +28,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.DadosFolha;
-import model.services.DadosFolhaService;
+import model.entities.ControleProcesso;
+import model.services.ControleProcessoService;
 import model.services.ParametrosService;
 
-public class DadosFolhaListController implements Initializable, DadosAlteradosListener {
+public class ControleProcessoListController implements Initializable, DadosAlteradosListener {
 
-	private DadosFolhaService servico;
+	private ControleProcessoService servico;
 
 //	Parametros
 	String flagIncluir;
@@ -43,27 +43,33 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 	String anoMes;
 
 	@FXML
-	private TableView<DadosFolha> tableViewDadosFolha;
+	private TableView<ControleProcesso> tableViewControleProcesso;
 	@FXML
-	private TableColumn<DadosFolha, String> tableColumnAnoMes;
+	private TableColumn<ControleProcesso, String> tableColumnAnoMes;
 	@FXML
-	private TableColumn<DadosFolha, String> tableColumnCodCentroCustos;
+	private TableColumn<ControleProcesso, String> tableColumnImportarFolha;
 	@FXML
-	private TableColumn<DadosFolha, String> tableColumnDescCentroCustos;
+	private TableColumn<ControleProcesso, String> tableColumnSumarizarFolha;
 	@FXML
-	private TableColumn<DadosFolha, String> tableColumnCodVerba;
+	private TableColumn<ControleProcesso, String> tableColumnExportarFolha;
 	@FXML
-	private TableColumn<DadosFolha, String> tableColumnDescVerba;
+	private TableColumn<ControleProcesso, String> tableColumnImportarFuncionario;
 	@FXML
-	private TableColumn<DadosFolha, Double> tableColumnValorVerba;
+	private TableColumn<ControleProcesso, Double> tableColumnSumarizarFuncionario;
 	@FXML
-	private TableColumn<DadosFolha, String> tableColumnImportar;
+	private TableColumn<ControleProcesso, String> tableColumnImportarErpMT;
 	@FXML
-	private TableColumn<DadosFolha, String> tableColumnObservacao;
+	private TableColumn<ControleProcesso, String> tableColumnImportarErpCD;
 	@FXML
-	private TableColumn<DadosFolha, DadosFolha> tableColumnEDIT;
+	private TableColumn<ControleProcesso, String> tableColumnImportarErpDD;
 	@FXML
-	private TableColumn<DadosFolha, DadosFolha> tableColumnREMOVE;
+	private TableColumn<ControleProcesso, String> tableColumnCriticarErp;
+	@FXML
+	private TableColumn<ControleProcesso, String> tableColumnExportarErp;
+	@FXML
+	private TableColumn<ControleProcesso, ControleProcesso> tableColumnEDIT;
+	@FXML
+	private TableColumn<ControleProcesso, ControleProcesso> tableColumnREMOVE;
 
 	@FXML
 	private Button btIncluir;
@@ -72,14 +78,13 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 	@FXML
 	private Button btSair;
 
-	private ObservableList<DadosFolha> obsLista;
+	private ObservableList<ControleProcesso> obsLista;
 
 	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
 		Stage parentStage = Utilitarios.atualStage(evento);
-		String caminhoDaView = "/gui/DadosFolhaForm.fxml";
-		DadosFolha entidade = new DadosFolha();
-		entidade.setAnoMes(anoMes);
+		String caminhoDaView = "/gui/ControleProcessoForm.fxml";
+		ControleProcesso entidade = new ControleProcesso();
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
 
@@ -94,7 +99,7 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		Utilitarios.atualStage(evento).close();
 	}
 
-	public void setDadosFolhaServico(DadosFolhaService servico) {
+	public void setControleProcessoServico(ControleProcessoService servico) {
 		this.servico = servico;
 	}
 
@@ -106,25 +111,26 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
-		flagIncluir = (parametrosService.pesquisarPorChave("DadosFolha", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("DadosFolha", "FlagAlterar")).getValor().toUpperCase();
-		flagExcluir = (parametrosService.pesquisarPorChave("DadosFolha", "FlagExcluir")).getValor().toUpperCase();
+		flagIncluir = (parametrosService.pesquisarPorChave("ControleProcesso", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("ControleProcesso", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("ControleProcesso", "FlagExcluir")).getValor().toUpperCase();
 		anoMes =  (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
 	}
 
 	private void inicializarComponentes() {
 		tableColumnAnoMes.setCellValueFactory(new PropertyValueFactory<>("anoMes"));
-		tableColumnCodCentroCustos.setCellValueFactory(new PropertyValueFactory<>("codCentroCustos"));
-		tableColumnDescCentroCustos.setCellValueFactory(new PropertyValueFactory<>("descCentroCustos"));
-		tableColumnCodVerba.setCellValueFactory(new PropertyValueFactory<>("codVerba"));
-		tableColumnDescVerba.setCellValueFactory(new PropertyValueFactory<>("descVerba"));
-		tableColumnValorVerba.setCellValueFactory(new PropertyValueFactory<>("valorVerba"));
-		Utilitarios.formatarTableColumnDouble(tableColumnValorVerba, 2);
-		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
-		tableColumnObservacao.setCellValueFactory(new PropertyValueFactory<>("observacao"));
-		tableColumnCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
-		tableColumnCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
-		tableColumnValorVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		tableColumnImportarFolha.setCellValueFactory(new PropertyValueFactory<>("importarFolha"));
+		tableColumnSumarizarFolha.setCellValueFactory(new PropertyValueFactory<>("sumarizarFolha"));
+		tableColumnExportarFolha.setCellValueFactory(new PropertyValueFactory<>("exportarFolha"));
+		tableColumnImportarFuncionario.setCellValueFactory(new PropertyValueFactory<>("importarFuncionario"));
+		tableColumnSumarizarFuncionario.setCellValueFactory(new PropertyValueFactory<>("sumarizarFuncionario"));
+		tableColumnImportarErpMT.setCellValueFactory(new PropertyValueFactory<>("importarErpMT"));
+		tableColumnImportarErpCD.setCellValueFactory(new PropertyValueFactory<>("importarErpCD"));
+		tableColumnImportarErpDD.setCellValueFactory(new PropertyValueFactory<>("importarErpDD"));
+		tableColumnCriticarErp.setCellValueFactory(new PropertyValueFactory<>("criticarErp"));
+		tableColumnExportarErp.setCellValueFactory(new PropertyValueFactory<>("exportarErp"));
+
+//		tableColumnCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
 
@@ -132,10 +138,10 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		if (servico == null) {
 			throw new IllegalStateException("o servico nao foi carregado pelo outro programador");
 		}
-		List<DadosFolha> lista = servico.pesquisarTodos();
+		List<ControleProcesso> lista = servico.pesquisarTodos();
 
 		obsLista = FXCollections.observableArrayList(lista);
-		tableViewDadosFolha.setItems(obsLista);
+		tableViewControleProcesso.setItems(obsLista);
 		if (flagAlterar.equals("S")) {
 			initEditButtons();
 		}
@@ -144,20 +150,19 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		}
 	}
 
-	private void criarDialogoForm(DadosFolha entidade, String caminhoDaView, Stage parentStage) {
+	private void criarDialogoForm(ControleProcesso entidade, String caminhoDaView, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
 			ScrollPane pane = loader.load();
-//			Pane pane = loader.load();
 
-			DadosFolhaFormController controller = loader.getController();
-			controller.setDadosFolha(entidade);
-			controller.setDadosFolhaService(new DadosFolhaService());
+			ControleProcessoFormController controller = loader.getController();
+			controller.setControleProcesso(entidade);
+			controller.setControleProcessoService(new ControleProcessoService());
 			controller.serOuvinteDeDadosAlteradosListener(this);
 			controller.atualizarFormulario();
 
 			Stage dialogoStage = new Stage();
-			dialogoStage.setTitle("Informe os Dados da Folha");
+			dialogoStage.setTitle("Controle dos Processos Mensais");
 			dialogoStage.setScene(new Scene(pane));
 			dialogoStage.setResizable(false);
 			dialogoStage.initOwner(parentStage);
@@ -178,11 +183,11 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 	private void initEditButtons() {
 		// codigo adaptado da material do curso Udemy
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEDIT.setCellFactory(param -> new TableCell<DadosFolha, DadosFolha>() {
+		tableColumnEDIT.setCellFactory(param -> new TableCell<ControleProcesso, ControleProcesso>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(DadosFolha obj, boolean empty) {
+			protected void updateItem(ControleProcesso obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -190,18 +195,18 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> criarDialogoForm(obj, "/gui/DadosFolhaForm.fxml", Utilitarios.atualStage(event)));
+						event -> criarDialogoForm(obj, "/gui/ControleProcessoForm.fxml", Utilitarios.atualStage(event)));
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<DadosFolha, DadosFolha>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<ControleProcesso, ControleProcesso>() {
 			private final Button button = new Button("Excluir");
 
 			@Override
-			protected void updateItem(DadosFolha obj, boolean empty) {
+			protected void updateItem(ControleProcesso obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -213,7 +218,7 @@ public class DadosFolhaListController implements Initializable, DadosAlteradosLi
 		});
 	}
 
-	private void removeEntity(DadosFolha objeto) {
+	private void removeEntity(ControleProcesso objeto) {
 		Optional<ButtonType> clicado = Alertas.mostrarConfirmacao("Confirmacao", null, "Tem certeza da delecao?", AlertType.CONFIRMATION );
 		if (clicado.get() == ButtonType.OK) {
 			if (servico == null) {

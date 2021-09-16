@@ -7,7 +7,7 @@ public interface ParametrosDao {
 	
 	void inserir(Parametros objeto);
 	void atualizar(Parametros objeto);
-	void deletarPorChave(String Secao, String Entrada);
-	Parametros pesquisarPorChave(String Secao, String Entrada);
+	void deletarPorChave(String secao, String entrada);
+	Parametros pesquisarPorChave(String secao, String entrada);
 	List<Parametros> listarTodos();
 }
