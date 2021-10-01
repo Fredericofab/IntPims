@@ -1,37 +1,52 @@
 package model.dao;
 
 import db.DB;
-import model.dao.impl.ControleProcessoDaoJDBC;
-import model.dao.impl.DadosFolhaDaoJDBC;
+import model.dao.impl.ProcessoAtualDaoJDBC;
+import model.dao.impl.FolhaDaoJDBC;
 import model.dao.impl.ParametrosDaoJDBC;
-import model.dao.impl.ProcessarFolhaDaoJDBC;
-import model.dao.impl.SumarioFolhaDaoJDBC;
-import model.dao.impl.VerbaFolhaDaoJDBC;
+import model.dao.impl.ErpDaoJDBC;
+import model.dao.impl.ExportarFolhaDaoJDBC;
+import model.dao.impl.FuncionariosDaoJDBC;
+import model.dao.impl.FolhaSumarizadaDaoJDBC;
+import model.dao.impl.FuncionariosSumarizadosDaoJDBC;
+import model.dao.impl.VerbasFolhaDaoJDBC;
 
 public class FabricaDeDao {
 	
-	public static VerbaFolhaDao criarVerbaFolhaDao() {
-		return new VerbaFolhaDaoJDBC(DB.abrirConexao());
+	public static VerbasFolhaDao criarVerbasFolhaDao() {
+		return new VerbasFolhaDaoJDBC(DB.abrirConexao());
 	}
 
-	public static ControleProcessoDao criarControleProcessoDao() {
-		return new ControleProcessoDaoJDBC(DB.abrirConexao());
+	public static ProcessoAtualDao criarProcessoAtualDao() {
+		return new ProcessoAtualDaoJDBC(DB.abrirConexao());
 	}
 
 	public static ParametrosDao criarParametrosDao() {
 		return new ParametrosDaoJDBC(DB.abrirConexao());
 	}
 	
-	public static DadosFolhaDao criarDadosFolhaDao() {
-		return new DadosFolhaDaoJDBC(DB.abrirConexao());
+	public static FolhaDao criarFolhaDao() {
+		return new FolhaDaoJDBC(DB.abrirConexao());
 	}
 
-	public static SumarioFolhaDao criarSumarioFolhaDao() {
-		return new SumarioFolhaDaoJDBC(DB.abrirConexao());
+	public static FolhaSumarizadaDao criarFolhaSumarizadaDao() {
+		return new FolhaSumarizadaDaoJDBC(DB.abrirConexao());
 	}
 
-	public static ProcessarFolhaDao criarProcessarFolhaDao() {
-		return new ProcessarFolhaDaoJDBC(DB.abrirConexao());
+	public static ExportarFolhaDao criarExportarFolhaDao() {
+		return new ExportarFolhaDaoJDBC(DB.abrirConexao());
+	}
+
+	public static FuncionariosDao criarFuncionariosDao() {
+		return new FuncionariosDaoJDBC(DB.abrirConexao());
+	}
+
+	public static FuncionariosSumarizadosDao criarFuncionariosSumarizadosDao() {
+		return new FuncionariosSumarizadosDaoJDBC(DB.abrirConexao());
+	}
+
+	public static ErpDao criarErpDao() {
+		return new ErpDaoJDBC(DB.abrirConexao());
 	}
 
 }

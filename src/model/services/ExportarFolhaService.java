@@ -3,13 +3,18 @@ package model.services;
 import java.util.List;
 
 import model.dao.FabricaDeDao;
-import model.dao.ProcessarFolhaDao;
+import model.dao.ExportarFolhaDao;
 import model.entities.Cstg_IntPF;
-import model.entities.SumarioFolha;
+import model.entities.FolhaSumarizada;
 
 public class ExportarFolhaService {
 
-	private ProcessarFolhaDao dao = FabricaDeDao.criarProcessarFolhaDao();
+	private ExportarFolhaDao dao = FabricaDeDao.criarExportarFolhaDao();
+
+	private	FolhaSumarizadaService folhaSumarizadaService = new FolhaSumarizadaService();
+	private FolhaService folhaService = new FolhaService();
+	private VerbasFolhaService verbasDaFolhaService = new VerbasFolhaService();
+	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 
 //	parametros
 	String anoMes;
@@ -24,19 +29,16 @@ public class ExportarFolhaService {
 		deletarCstgIntFP(dataref);
 		gravarCstgIntFP(dataref, usuarioPimsCS);
 		gerarTxt();
+		processoAtualService.atualizarEtapa("ExportarFolha","S");
+		processoAtualService.atualizarEtapa("VerbaAlterada","N");
+		processoAtualService.atualizarEtapa("FolhaAlterada","N");
 	}
 
 	private void gerarTxt() {
 		Boolean oficial = true;
-
-		SumarioFolhaService sumarioFolhaService = new SumarioFolhaService();
-		sumarioFolhaService.gerarTxt(oficial);
-		
-		DadosFolhaService dadosFolhaService = new DadosFolhaService();
-		dadosFolhaService.gerarTxt(oficial);
-
-		VerbaFolhaService verbaFolhaService = new VerbaFolhaService();
-		verbaFolhaService.gerarTxt(oficial);
+		folhaSumarizadaService.gerarTxt(oficial);
+		folhaService.gerarTxt(oficial);
+		verbasDaFolhaService.gerarTxt(oficial);
 	}
 
 	private void deletarCstgIntFP(String dataref) {
@@ -44,9 +46,8 @@ public class ExportarFolhaService {
 	}
 
 	private void gravarCstgIntFP(String dataref, String usuarioPimsCS) {
-		SumarioFolhaService sumarioFolhaService = new SumarioFolhaService();
-		List<SumarioFolha> lista = sumarioFolhaService.pesquisarTodos();
-		for (SumarioFolha sumarioFolha : lista) {
+		List<FolhaSumarizada> lista = folhaSumarizadaService.pesquisarTodos();
+		for (FolhaSumarizada sumarioFolha : lista) {
 			Cstg_IntPF cstg_intfp = new Cstg_IntPF();
 			cstg_intfp.setCdEmpresa(cdEmpresa);
 			cstg_intfp.setDtRefer(dataref);
@@ -57,16 +58,16 @@ public class ExportarFolhaService {
 		}
 	}
 
-	private Double colocarPrefixo(String prefixo, String codCCusto) {
-		Integer tamanho = codCCusto.length();
+	private Double colocarPrefixo(String prefixo, Double codCCusto) {
+		Integer tamanho = (String.format("%.0f", codCCusto)).length();
 		String x = prefixo.repeat(10 - tamanho);
-		Double cdFunc = Double.parseDouble((x + codCCusto));
+		Double cdFunc = Double.parseDouble((x + codCCusto.toString()));
 		return cdFunc;
 	}
 
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
-		anoMes         = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+		anoMes         = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 		instancia      = (parametrosService.pesquisarPorChave("AmbienteOracle", "InstanciaPimsCS")).getValor();
 		usuarioPimsCS  = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
 		cdEmpresa      = (parametrosService.pesquisarPorChave("AmbienteOracle", "EmpresaPadrao")).getValor();

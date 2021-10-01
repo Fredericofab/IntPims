@@ -9,8 +9,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="434.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessoAtualViewController">
+<VBox prefHeight="491.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessoAtualViewController">
    <children>
       <ToolBar prefHeight="21.0" prefWidth="431.0">
         <items>
@@ -22,11 +23,42 @@
         </items>
       </ToolBar>
       <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="10.0" prefWidth="122.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="10.0" prefWidth="86.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="436.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Ano Mes do Processo" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="txtAnoMes" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="79.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="labelErroAnoMes" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="Etapas Concluídas" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="138.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="165.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="107.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="249.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="35.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="145.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="32.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="33.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="416.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -39,65 +71,80 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label text="Ano Mes do Processo" GridPane.rowIndex="1">
+            <Label text="Importar Folha" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Importar Folha" GridPane.rowIndex="3">
+            <Label text="Sumarizar Folha" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Sumarizar Folha" GridPane.rowIndex="4">
+            <Label text="Exportar Folha" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Exportar Folha" GridPane.rowIndex="5">
+            <Label text="Importar Funcionario" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Importar Funcionario" GridPane.rowIndex="7">
+            <Label text="Sumarizar Funcionario" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Sumarizar Funcionario" GridPane.rowIndex="8">
+            <TextField fx:id="txtImportarFolha" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0">
                <GridPane.margin>
                   <Insets left="10.0" />
-               </GridPane.margin>
-            </Label>
-            <TextField fx:id="txtAnoMes" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="79.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtImportarFolha" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txtSumarizarFolha" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="25.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txtExportarFolha" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="25.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="txtImportarFuncionario" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="25.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextField fx:id="txtSumarizarFuncionario" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="25.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Label text="Importar Erp MT" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtSumarizarFolha" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="25.0" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtExportarFolha" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="25.0" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtImportarFuncionario" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="25.0" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtSumarizarFuncionario" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="25.0" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <Label text="Importar Erp MT" GridPane.columnIndex="4">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Label text="Importar Erp CD" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Label text="Importar Erp CD" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Label text="Importar Erp DD" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Label text="Criticar Erp" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Label text="Exportar Erp" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <TextField fx:id="txtImportarErpMT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <TextField fx:id="txtImportarErpCD" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <TextField fx:id="txtImportarErpDD" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <TextField fx:id="txtCriticarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <TextField fx:id="txtExportarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-            <Label fx:id="labelErroAnoMes" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label text="Importar Erp DD" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label text="Criticar Erp" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label text="Exportar Erp" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <TextField fx:id="txtImportarErpMT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" />
+            <TextField fx:id="txtImportarErpCD" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="txtImportarErpDD" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="txtCriticarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="txtExportarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label text="Ações que talvez necessite reprocessar etapas" GridPane.columnIndex="4" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label text="Verbas Alterada (Recomendado (re)importar Folha)" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+            <Label text="Dados da Folha Alterado (Recomendado (re)sumarizar Folha)" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+            <TextField fx:id="txtVerbaAlterada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <TextField fx:id="txtFolhaAlterada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
          </children>
       </GridPane>
    </children>

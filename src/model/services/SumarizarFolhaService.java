@@ -4,26 +4,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.entities.DadosFolha;
-import model.entities.SumarioFolha;
+import model.entities.Folha;
+import model.entities.FolhaSumarizada;
 
 public class SumarizarFolhaService {
 	
+	private ParametrosService parametrosService = new ParametrosService();
+	private FolhaSumarizadaService folhaSumarizadaService = new FolhaSumarizadaService();
+	private FolhaService folhaService = new FolhaService();
+	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
+
 //	Parametros
 	String anoMes;
 
-	List<DadosFolha> lista;
-	Map<String, SumarioFolha> map;
+	List<Folha> lista;
+	Map<Double, FolhaSumarizada> map;
 	Integer qtdeLidas = 0;
-	Integer qtdeCCustos = 0;;
+	Integer qtdeCCustos = 0;
 	Double valorExportarSim = 0.00;
 	Double valorExportarNao = 0.00;
 	Double valorTotal = 0.00;
 
-	public List<DadosFolha> getLista() {
+	public List<Folha> getLista() {
 		return lista;
 	}
-	public Map<String, SumarioFolha> getMap() {
+	public Map<Double, FolhaSumarizada> getMap() {
 		return map;
 	}
 	public Integer getQtdeLidas() {
@@ -44,27 +49,29 @@ public class SumarizarFolhaService {
 
 	public void processar() {
 		lerParametros();
-		deletarSumarioFolhaTodos();
+		deletarTodosFolhaSumarizada();
 		sumarizarFolha();
 		gravarSumarioFolha();
+		processoAtualService.atualizarEtapa("SumarizarFolha","S");
+		processoAtualService.atualizarEtapa("ExportarFolha","N");
+		processoAtualService.atualizarEtapa("VerbaAlterada","N");
+		processoAtualService.atualizarEtapa("FolhaAlterada","N");
 	}
 
-	private void deletarSumarioFolhaTodos() {
-		ImportarFolhaService importarFolhaService = new ImportarFolhaService();
-		importarFolhaService.deletarSumarioFolhaTodos();
+	private void deletarTodosFolhaSumarizada() {
+		folhaSumarizadaService.deletarTodos();
 	}
-
+	
 	private void sumarizarFolha() {
-		DadosFolhaService dadosFolhaService = new DadosFolhaService();
-		lista = dadosFolhaService.pesquisarTodos();
-		String codCCusto;
-		map = new HashMap<String, SumarioFolha>();
-		for (DadosFolha dadosFolha : lista) {
+		lista = folhaService.pesquisarTodos();
+		Double codCCusto;
+		map = new HashMap<Double, FolhaSumarizada>();
+		for (Folha dadosFolha : lista) {
 			qtdeLidas = qtdeLidas + 1;
-			;
+
 			codCCusto = dadosFolha.getCodCentroCustos();
 
-			SumarioFolha sumarioFolha = new SumarioFolha();
+			FolhaSumarizada sumarioFolha = new FolhaSumarizada();
 			if (map.containsKey(codCCusto)) {
 				sumarioFolha = map.get(codCCusto);
 			} else {
@@ -76,7 +83,7 @@ public class SumarizarFolhaService {
 				sumarioFolha.setQdteImportarNao(0);
 				sumarioFolha.setTotalImportarNao(0.00);
 				qtdeCCustos = qtdeCCustos + 1;
-				;
+				
 			}
 
 			if (dadosFolha.getImportar().equals("S")) {
@@ -94,14 +101,12 @@ public class SumarizarFolhaService {
 	}
 
 	private void gravarSumarioFolha() {
-		SumarioFolhaService sumarioFolhaService = new SumarioFolhaService();
-		for (String chave : map.keySet()) {
-			sumarioFolhaService.salvarOuAtualizar(map.get(chave));
+		for (Double chave : map.keySet()) {
+			folhaSumarizadaService.salvarOuAtualizar(map.get(chave));
 		}
 	}
 
 	private void lerParametros() {
-		ParametrosService parametrosService = new ParametrosService();
-		anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 	}
 }

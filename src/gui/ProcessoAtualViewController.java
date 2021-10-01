@@ -10,23 +10,25 @@ import gui.util.Alertas;
 import gui.util.RestricoesDeDigitacao;
 import gui.util.Utilitarios;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import model.entities.ControleProcesso;
+import model.entities.ProcessoAtual;
 import model.entities.Parametros;
 import model.exceptions.ValidacaoException;
-import model.services.ControleProcessoService;
+import model.services.ProcessoAtualService;
 import model.services.ParametrosService;
 
 public class ProcessoAtualViewController implements Initializable {
 
-	private ControleProcesso entidade = new ControleProcesso();
+	private ProcessoAtual entidade = new ProcessoAtual();
+	private ProcessoAtualService servico = new ProcessoAtualService();
 
-	private ControleProcessoService servico = new ControleProcessoService();
+	private ParametrosService parametrosService = new ParametrosService();
 
 //	Parametros
 	String anoMes;
@@ -55,6 +57,11 @@ public class ProcessoAtualViewController implements Initializable {
 	private TextField txtExportarErp;
 
 	@FXML
+	private TextField txtVerbaAlterada;
+	@FXML
+	private TextField txtFolhaAlterada;
+
+	@FXML
 	private Label labelErroAnoMes;
 
 	@FXML
@@ -68,8 +75,9 @@ public class ProcessoAtualViewController implements Initializable {
 
 	@FXML
 	public void onBtNovoAction(ActionEvent evento) {
-		entidade = new ControleProcesso();
+		valoresIniciais();
 		txtAnoMes.setDisable(false);
+		txtAnoMes.requestFocus();
 		atualizarTela();
 	}
 
@@ -102,20 +110,43 @@ public class ProcessoAtualViewController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		lerParametros();
 		entidade = carregarEntidade();
+		if (entidade == null) {
+			valoresIniciais();
+			txtAnoMes.setDisable(false);
+			txtAnoMes.requestFocus();
+		}
+		else {
+			txtAnoMes.setDisable(true);
+		}
 		inicializarComponentes();
-		txtAnoMes.setDisable(true);
 		atualizarTela();
 	}
 
 	private void lerParametros() {
-		ParametrosService parametrosService = new ParametrosService();
-		anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 	}
 
-	private ControleProcesso carregarEntidade() {
+	private ProcessoAtual carregarEntidade() {
 		entidade.setAnoMes(anoMes);
 		entidade = servico.pesquisarPorChave(entidade);
 		return entidade;
+	}
+
+	private void valoresIniciais() {
+		entidade = new ProcessoAtual();
+		entidade.setAnoMes(null);
+		entidade.setImportarFolha("N");
+		entidade.setSumarizarFolha("N");
+		entidade.setExportarFolha("N");
+		entidade.setImportarFuncionario("N");
+		entidade.setSumarizarFuncionario("N");
+		entidade.setImportarErpMT("N");
+		entidade.setImportarErpCD("N");
+		entidade.setImportarErpDD("N");
+		entidade.setCriticarErp("N");
+		entidade.setExportarErp("N");
+		entidade.setVerbaAlterada("N");
+		entidade.setFolhaAlterada("N");
 	}
 
 	private void atualizarTela() {
@@ -130,6 +161,8 @@ public class ProcessoAtualViewController implements Initializable {
 		txtImportarErpDD.setText(entidade.getImportarErpDD());
 		txtCriticarErp.setText(entidade.getCriticarErp());
 		txtExportarErp.setText(entidade.getExportarErp());
+		txtVerbaAlterada.setText(entidade.getVerbaAlterada());
+		txtFolhaAlterada.setText(entidade.getFolhaAlterada());
 	}
 
 	private void inicializarComponentes() {
@@ -145,10 +178,12 @@ public class ProcessoAtualViewController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpDD, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCriticarErp, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErp, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtVerbaAlterada, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtFolhaAlterada, 1);
 	}
 
-	private ControleProcesso getDadosDoForm() {
-		ControleProcesso objeto = new ControleProcesso();
+	private ProcessoAtual getDadosDoForm() {
+		ProcessoAtual objeto = new ProcessoAtual();
 		ValidacaoException validacao = new ValidacaoException("Erros Na Digitacao do Form");
 
 		objeto.setAnoMes(txtAnoMes.getText());
@@ -163,6 +198,8 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setImportarErpDD(txtImportarErpDD.getText());
 		objeto.setCriticarErp(txtCriticarErp.getText());
 		objeto.setExportarErp(txtExportarErp.getText());
+		objeto.setVerbaAlterada(txtVerbaAlterada.getText());
+		objeto.setFolhaAlterada(txtFolhaAlterada.getText());
 
 		objeto.setImportarFolha(Utilitarios.tentarConverterParaMaiusculo(txtImportarFolha.getText()));
 		objeto.setSumarizarFolha(Utilitarios.tentarConverterParaMaiusculo(txtSumarizarFolha.getText()));
@@ -174,6 +211,8 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setImportarErpDD(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpDD.getText()));
 		objeto.setCriticarErp(Utilitarios.tentarConverterParaMaiusculo(txtCriticarErp.getText()));
 		objeto.setExportarErp(Utilitarios.tentarConverterParaMaiusculo(txtExportarErp.getText()));
+		objeto.setVerbaAlterada(Utilitarios.tentarConverterParaMaiusculo(txtVerbaAlterada.getText()));
+		objeto.setFolhaAlterada(Utilitarios.tentarConverterParaMaiusculo(txtFolhaAlterada.getText()));
 
 		if (txtAnoMes.getText() == null || txtAnoMes.getText().trim().equals("")) {
 			validacao.adicionarErro("txtAnoMes", "Informe o Ano e Mes de referencia");
@@ -182,6 +221,16 @@ public class ProcessoAtualViewController implements Initializable {
 			validacao.adicionarErro("txtAnoMes", "Informe no formato AAAAMM");
 		}
 
+		if (txtAnoMes.getText() != null && txtAnoMes.getText().length() == 6) {
+			Integer ano = Integer.parseInt(txtAnoMes.getText().substring(0, 4));
+			if (ano < 2020 || ano > 2050) {
+				validacao.adicionarErro("txtAnoMes", "Informe ano entre 2020 e 2050");
+			}
+			Integer mes = Integer.parseInt(txtAnoMes.getText().substring(4, 6));
+			if (mes < 01 || mes > 12) {
+				validacao.adicionarErro("txtAnoMes", "Informe mes entre 01 e 12");
+			}
+		}
 		if (validacao.getErros().size() > 0) {
 			throw validacao;
 		}
@@ -196,7 +245,7 @@ public class ProcessoAtualViewController implements Initializable {
 
 	private void atualizarParametro(String anoMesNovo) {
 		ParametrosService parametrosService = new ParametrosService();
-		Parametros parametros = parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes");
+		Parametros parametros = parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes");
 		parametros.setValor(anoMesNovo);
 		parametrosService.salvarOuAtualizar(parametros);
 	}

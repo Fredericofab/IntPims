@@ -47,25 +47,21 @@ public class ImportarFolhaViewController implements Initializable {
 	private TextField txtRegDeletados;
 	@FXML
 	private TextField txtRegIncluidos;
-
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		inicializarComponentes();
-	}
-
-	private void inicializarComponentes() {
-	}
-	
-	@FXML
-	public void onBtSairAction(ActionEvent evento) {
-		Utilitarios.atualStage(evento).close();
-	}
 	
 	@FXML
 	public void onBtImportarAction(ActionEvent evento) {
 		ImportarFolhaService servico = new ImportarFolhaService();
 		servico.processarTXT();
 		atualizarTela(servico);
+	}
+	
+	@FXML
+	public void onBtSairAction(ActionEvent evento) {
+		Utilitarios.atualStage(evento).close();
+	}
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
 	}
 
 	private void atualizarTela(ImportarFolhaService servico) {

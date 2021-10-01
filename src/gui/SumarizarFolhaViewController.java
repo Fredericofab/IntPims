@@ -30,10 +30,6 @@ public class SumarizarFolhaViewController implements Initializable {
 	@FXML
 	private TextField txtValorExportarNao;
 
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-	}
-
 	@FXML
 	public void onBtSumarizarAction(ActionEvent evento) {
 		SumarizarFolhaService servico = new SumarizarFolhaService();
@@ -44,6 +40,11 @@ public class SumarizarFolhaViewController implements Initializable {
 	public void onBtSairAction(ActionEvent evento) {
 		Utilitarios.atualStage(evento).close();
 	}
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+	}
+
 	
 	private void atualizarTela(SumarizarFolhaService servico) {
 		Integer qtdeLidas = servico.getQtdeLidas();

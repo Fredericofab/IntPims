@@ -39,7 +39,6 @@ public class ParametrosFormController implements Initializable {
 	private TextField txtValor;
 	@FXML
 	private TextField txtDescricao;
-
 	@FXML
 	private Button btSalvar;
 	@FXML
@@ -105,27 +104,26 @@ public class ParametrosFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtValor, 255);	
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescricao, 255);	
 		if (flagIncluir.equals("S")) {
-			txtSecao.setDisable(false);
-			txtEntrada.setDisable(false);
-			txtValor.setDisable(false);
-			txtDescricao.setDisable(false);
+			desabilitarCompoenentes(false);
 		}
 		else {
 			if (flagAlterar.equals("S")) {
-				txtSecao.setDisable(true);
-				txtEntrada.setDisable(true);
+				desabilitarCompoenentes(true);
 				txtValor.setDisable(false);
-				txtDescricao.setDisable(true);
 			}
 			else {
-				txtSecao.setDisable(true);
-				txtEntrada.setDisable(true);
-				txtValor.setDisable(true);
-				txtDescricao.setDisable(true);
+				desabilitarCompoenentes(true);
 			}
 		}
 	}
 	
+	private void desabilitarCompoenentes(boolean b) {
+		txtSecao.setDisable(b);
+		txtEntrada.setDisable(b);
+		txtValor.setDisable(b);
+		txtDescricao.setDisable(b);
+	}
+
 	public void atualizarFormulario() {
 		if (entidade == null) {
 			throw new IllegalStateException("o outro programador esquecer de injetar a entidade");

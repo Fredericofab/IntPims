@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="350.0" prefWidth="1094.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ErpListController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" text="Incluir" />
+            <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="GerarTXT" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="539.0" text="Button" visible="false" />
+            <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="tableViewDadosErp" prefHeight="329.0" prefWidth="1047.0">
+        <columns>
+            <TableColumn fx:id="tableColumnSequencial" prefWidth="75.0" text="Sequencial" />
+          <TableColumn fx:id="tableColumnAnoMes" prefWidth="55.0" text="AnoMes" />
+            <TableColumn fx:id="tableColumnOrigem" prefWidth="58.0" text="Origem" />
+          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="71.0" text="C.Custos" />
+            <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="131.0" text="Desc. C.Custos" />
+            <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="65.0" text="C.Contabil" />
+            <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="110.0" text="Desc. C.Contabil" />
+            <TableColumn fx:id="tableColumnFamiliaMaterial" prefWidth="95.0" text="FamiliaMaterial" />
+            <TableColumn fx:id="tableColumnImportar" prefWidth="64.0" text="Importar" />
+            <TableColumn fx:id="tableColumnObservacao" prefWidth="90.0" text="Observacao" />
+            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="56.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="63.0" />
+        </columns>
+      </TableView>
+   </children>
+   <padding>
+      <Insets left="5.0" top="5.0" />
+   </padding>
+</VBox>

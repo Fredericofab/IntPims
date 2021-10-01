@@ -50,7 +50,6 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 	private TableColumn<Parametros, String> tableColumnValor;
 	@FXML
 	private TableColumn<Parametros, String> tableColumnDescricao;
-
 	@FXML
 	private TableColumn<Parametros, Parametros> tableColumnEDIT;
 	@FXML
@@ -72,12 +71,10 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 		Parametros entidade = new Parametros();
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
-
 	@FXML
 	public void onGerarTxtAction(ActionEvent evento) {
 		servico.gerarTxt();
 	}
-
 	@FXML
 	public void onBtSairAction(ActionEvent evento) {
 		Utilitarios.atualStage(evento).close();
@@ -129,7 +126,6 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
 			ScrollPane pane = loader.load();
-//			Pane pane = loader.load();
 
 			ParametrosFormController controller = loader.getController();
 			controller.setParametros(entidade);
@@ -138,7 +134,7 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 			controller.atualizarFormulario();
 
 			Stage dialogoStage = new Stage();
-			dialogoStage.setTitle("Informe os Parametros");
+			dialogoStage.setTitle("Parametros do Sistema");
 			dialogoStage.setScene(new Scene(pane));
 			dialogoStage.setResizable(false);
 			dialogoStage.initOwner(parentStage);

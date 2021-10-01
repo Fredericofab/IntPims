@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FuncionariosSumarizadosListController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+            <Button disable="true" mnemonicParsing="false" text="Button" visible="false" />
+          <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="Gerar TXT" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="297.0" text="Button" visible="false" />
+            <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" text="Sair" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="tableViewSumarioFuncionarios" prefHeight="400.0" prefWidth="601.0">
+        <columns>
+          <TableColumn fx:id="tableColumnAnoMes" prefWidth="75.0" text="AnoMes" />
+          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="170.0" text="C.Custos" />
+            <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="157.0" text="Desc. C.Custos" />
+            <TableColumn fx:id="tableColumnQtdeFuncionarios" prefWidth="95.0" text="Qtde Func" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

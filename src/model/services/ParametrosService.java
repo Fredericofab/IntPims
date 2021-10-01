@@ -15,6 +15,7 @@ public class ParametrosService {
 
 	private ParametrosDao dao = FabricaDeDao.criarParametrosDao();
 
+
 //  parametros
 	String saida;
 	
@@ -57,7 +58,8 @@ public class ParametrosService {
 
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
-		String anoMes = (parametrosService.pesquisarPorChave("AmbienteGeral", "AnoMes")).getValor();
+
+		String anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 		String arqSaidaPasta = (parametrosService.pesquisarPorChave("Parametros", "ArqSaidaPasta")).getValor();
 		String arqSaidaNome  = (parametrosService.pesquisarPorChave("Parametros", "ArqSaidaNome")).getValor();
 		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("Parametros", "ArqSaidaTipo")).getValor();
