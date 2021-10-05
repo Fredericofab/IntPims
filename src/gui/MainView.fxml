@@ -24,7 +24,9 @@
                         <MenuItem fx:id="menuItemImportarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemImportarFuncionariosAction" text="Importar Funcionarios" />
                         <MenuItem fx:id="menuItemSumarizarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemSumarizarFuncionariosAction" text="Sumarizar Funcionarios" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuItemImportarErp" mnemonicParsing="false" onAction="#onMenuItemImportarErpAction" text="Importar ERP" />
+                        <MenuItem fx:id="menuItemImportarErpMT" mnemonicParsing="false" onAction="#onMenuItemImportarErpMTAction" text="Importar ErpMT (Requisicao Materiais)" />
+                        <MenuItem fx:id="menuItemImportarErpCD" mnemonicParsing="false" onAction="#onMenuItemImportarErpCDAction" text="Importar ErpCD (Compras Diretas)" />
+                        <MenuItem fx:id="menuItemImportarErpDG" mnemonicParsing="false" onAction="#onMenuItemImportarErpDGAction" text="Importar ErpDG (Despesas Gerais)" />
                         <MenuItem fx:id="menuItemAnalisarErp" mnemonicParsing="false" onAction="#onMenuItemAnalisarErpAction" text="Analisar ERP" />
                         <MenuItem fx:id="menuItemExportarErp" mnemonicParsing="false" onAction="#onMenuItemExportarErpAction" text="Exportar ERP" />
                   </items>

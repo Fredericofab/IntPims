@@ -73,6 +73,11 @@
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin></Label>
+                  <Label fx:id="labelErroImportar" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
                </children>
             </GridPane>
             <GridPane>

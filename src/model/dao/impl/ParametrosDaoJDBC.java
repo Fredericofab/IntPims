@@ -90,6 +90,7 @@ public class ParametrosDaoJDBC implements ParametrosDao {
 				Parametros parametros = instanciaParametros(rs);
 				return parametros;
 			}
+		
 			return null;
 		} catch (SQLException e) {
 			throw new DbException("erro na Pesquisa " + e.getMessage());

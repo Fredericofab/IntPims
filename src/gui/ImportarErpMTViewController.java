@@ -43,7 +43,7 @@ public class ImportarErpMTViewController implements Initializable {
 	@FXML
 	public void onBtImportarAction(ActionEvent evento) {
 		ImportarErpMTService servico = new ImportarErpMTService();
-		servico.processarTXT();
+		servico.processarTXT("MT");
 		atualizarTela(servico);
 	}
 	

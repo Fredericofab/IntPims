@@ -53,7 +53,11 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemSumarizarFuncionarios;
 	@FXML
-	private MenuItem menuItemImportarErp;
+	private MenuItem menuItemImportarErpMT;
+	@FXML
+	private MenuItem menuItemImportarErpCD;
+	@FXML
+	private MenuItem menuItemImportarErpDG;
 	@FXML
 	private MenuItem menuItemAnalisarErp;
 	@FXML
@@ -138,9 +142,21 @@ public class MainViewController implements Initializable {
 	}
 
 	@FXML
-	private void onMenuItemImportarErpAction() {
+	private void onMenuItemImportarErpMTAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ERP", paiStage, x -> {
+		criarJanelaFilha("/gui/ImportarErpMTView.fxml", "Importação Dados do ErpMT (Requisicao de Materiais)", paiStage, x -> {
+		});
+	}
+	@FXML
+	private void onMenuItemImportarErpCDAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/ImportarErpCDView.fxml", "Importação Dados do ErpCD (Compra Direta)", paiStage, x -> {
+		});
+	}
+	@FXML
+	private void onMenuItemImportarErpDGAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/ImportarErpDGView.fxml", "Importação Dados do ErpDG (Despesas Gerais)", paiStage, x -> {
 		});
 	}
 	@FXML

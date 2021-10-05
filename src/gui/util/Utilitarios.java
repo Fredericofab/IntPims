@@ -90,7 +90,6 @@ public class Utilitarios {
 
 	// Codigo copiado do curso -293 TextField e DatePicker
 	// O DatePicker é um componente do FX para receber data (abre um calendario)  ao inves de usar o TextField
-	// A principio nao será usado neste projeto do IGP TG
 	public static void formatarDatePicker(DatePicker datePicker, String format) {
 		datePicker.setConverter(new StringConverter<LocalDate>() {
 			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(format);

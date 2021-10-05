@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -15,12 +16,13 @@
    <content>
       <VBox prefHeight="481.0" prefWidth="765.0">
          <children>
-            <GridPane prefHeight="172.0" prefWidth="765.0">
+            <GridPane prefHeight="170.0" prefWidth="765.0">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="98.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="104.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="178.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="404.0" minWidth="10.0" prefWidth="384.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="103.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="106.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="216.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="404.0" minWidth="10.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="404.0" minWidth="10.0" prefWidth="300.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -29,65 +31,154 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+                  <Label text="Sequencial">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtSequencial" editable="false" GridPane.columnIndex="1" />
                   <Label text="Ano Mês" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin></Label>
+                  <TextField fx:id="txtAnoMes" prefHeight="25.0" prefWidth="102.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="labelErroAnoMes" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin></Label>
                   <Label text="Origem" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets left="10.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
+                  <TextField fx:id="txtOrigem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="41.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="labelErroOrigem" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                   <Label text="Centro de Custos" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="5.0" />
+                     </GridPane.margin></Label>
+                  <TextField fx:id="txtCodCentroCustos" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtDescCentroCustos" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label fx:id="labelErroCodCentroCustos" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets />
                      </GridPane.margin></Label>
                   <Label text="Conta Contabil" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin></Label>
-                  <Label text="Familia Material" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets left="5.0" />
-                     </GridPane.margin></Label>
-                  <Label text="Importar (S/N)" GridPane.rowIndex="6">
-                     <GridPane.margin>
-                        <Insets left="5.0" />
-                     </GridPane.margin></Label>
-                  <TextField fx:id="txtSequencial" editable="false" GridPane.columnIndex="1" />
-                  <TextField fx:id="txtAnoMes" prefHeight="25.0" prefWidth="102.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtOrigem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="46.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtCodCentroCustos" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtDescCentroCustos" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <TextField fx:id="txtCodContaContabil" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField fx:id="txtDescContaContabil" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <TextField fx:id="txtFamiliaMaterial" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField fx:id="txtImportar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Label fx:id="labelErroAnoMes" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <Label fx:id="labelErroCodContaContabil" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <Label text="Material" GridPane.rowIndex="5">
                      <GridPane.margin>
-                        <Insets left="10.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin></Label>
-                  <Label fx:id="labelErroCodCentroCustos" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <TextField fx:id="txtCodMaterial" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="txtDescMovimento" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <TextField fx:id="txtUnidadeMedida" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="41.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <Label fx:id="labelErroCodMaterial" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+               </children>
+            </GridPane>
+            <GridPane>
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="103.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="346.0" minWidth="0.0" prefWidth="104.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="0.0" prefWidth="104.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.0" minWidth="10.0" prefWidth="115.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.0" minWidth="10.0" prefWidth="127.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.0" minWidth="10.0" prefWidth="215.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Preço Unitario">
                      <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin></Label>
-                  <Label fx:id="labelErroCodContaContabil" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin></Label>
-                  <Label fx:id="labelErroFamiliaMaterial" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin></Label>
-                  <Label text="Sequencial">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
+                  <TextField fx:id="txtPrecoUnitario" GridPane.columnIndex="1" />
+                  <Label text="Quantidade" GridPane.columnIndex="2">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtQuantidade" GridPane.columnIndex="3" />
+                  <Label text="Valor Movimento" GridPane.columnIndex="4">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtValorMovimento" maxWidth="-Infinity" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="5" />
+                  <Label text="Referencia OS" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtReferenciaOS" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Numero OS" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtNumeroOS" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label text="Documento ERP" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtDocumentoErp" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Data Movimento" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <DatePicker fx:id="dpDataMovimento" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Label text="Importar (S/N)" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin></Label>
+                  <TextField fx:id="txtImportar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Criticas" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtCriticas" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="217.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <Label text="Salvar OS_MATERIAL" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtSalvarOS_Material" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                  <Label text="Salvar CSTG_INTVM" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtSalvarCstg_IntVM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                  <Label text="Salvar CSTG_INTCM" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtSalvarCstg_IntCM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                  <Label text="Salvar CSTG_INTDG" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtSalvarCstg_IntDG" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
                </children>
             </GridPane>
             <GridPane prefHeight="104.0" prefWidth="765.0">

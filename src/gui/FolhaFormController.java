@@ -65,6 +65,8 @@ public class FolhaFormController implements Initializable {
 	@FXML
 	private Label labelErroValorVerba;
 	@FXML
+	private Label labelErroImportar;
+	@FXML
 	private Label labelErroObservacao;
 	@FXML
 	private Button btSalvar;
@@ -214,6 +216,9 @@ public class FolhaFormController implements Initializable {
 		if (txtValorVerba.getText() == null || txtValorVerba.getText().trim().equals("")) {
 			validacao.adicionarErro("txtValorVerba", "Informe o Valor da Verba");
 		}
+		if (txtImportar.getText() == null || txtImportar.getText().trim().equals("")) {
+			validacao.adicionarErro("txtImportar", "Informe S ou N para ser importado pelo Pimscs");
+		}
 		if (txtObservacao.getText() == null || txtObservacao.getText().trim().equals("")) {
 			if (flagObservacao.equals("S")) {
 			    validacao.adicionarErro("txtObservacao", "Informe uma observacao com justificativa da inclusao/alteracao");
@@ -231,6 +236,7 @@ public class FolhaFormController implements Initializable {
 		labelErroCodCentroCustos.setText((campos.contains("txtCodCentroCustos") ? erros.get("txtCodCentroCustos") : ""));
 		labelErroCodVerba.setText((campos.contains("txtCodVerba") ? erros.get("txtCodVerba") : ""));
 		labelErroValorVerba.setText((campos.contains("txtValorVerba") ? erros.get("txtValorVerba") : ""));
+		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
 		labelErroObservacao.setText((campos.contains("txtObservacao") ? erros.get("txtObservacao") : ""));
 	}
 }

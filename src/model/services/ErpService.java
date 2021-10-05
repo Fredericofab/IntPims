@@ -52,18 +52,41 @@ public class ErpService {
 		lerParametros(oficial);
 		List<Erp> lista = pesquisarTodos();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("Id,AnoMes,Origem,CodCCustos,DescCCustos,CodCContabil,DescCContabil,FamiliaMaterial,FlagImportar,Observacao");
+			bw.write("origem,anoMes," +
+					 "codCentroCustos,descCentroCustos,"   +
+					 "codContaContabil,descContaContabil," +
+					 "codMaterial,descMaterialDespesa,unidadeMedida," +
+					 "quantidade,precoUnitario,valorMovimento," +
+					 "referenciaOS,manfroOS,documentoErp,dataMovimento," +
+					 "importar,observacao,criticas," +
+					 "salvarOS_Material,salvarCstg_IntVM,salvarCstg_intCM,salvarCstg_intDG," +
+					 "sequencial");
 			bw.newLine();
 			for (Erp dadosErp : lista) {
-				String linha = dadosErp.getAnoMes() + "," + 
-							   dadosErp.getOrigem() + "," + 
+				String linha = dadosErp.getOrigem() + "," + 
+							   dadosErp.getAnoMes() + "," + 
 							   String.format("%.0f", dadosErp.getCodCentroCustos()) + "," + 
 							   dadosErp.getDescCentroCustos() + "," + 
 							   String.format("%.0f",dadosErp.getCodContaContabil()) + "," + 
 							   dadosErp.getDescContaContabil() + "," + 
-							   String.format("%.2f",dadosErp.getFamiliaMaterial()) + "," + 
+							   String.format("%.0f",dadosErp.getCodMaterial()) + "," + 
+							   dadosErp.getDescMovimento() + "," + 
+							   dadosErp.getUnidadeMedida() + "," + 
+							   String.format("%.0f",dadosErp.getQuantidade()) + "," + 
+							   String.format("%.0f",dadosErp.getPrecoUnitario()) + "," + 
+							   String.format("%.0f",dadosErp.getValorMovimento()) + "," + 
+							   dadosErp.getReferenciaOS() + "," + 
+							   String.format("%.0f",dadosErp.getNumeroOS()) + "," + 
+							   dadosErp.getDocumentoErp() + "," + 
+							   dadosErp.getDataMovimento() + "," + 
 							   dadosErp.getImportar() + "," + 
-							   dadosErp.getObservacao();
+							   dadosErp.getObservacao() + "," + 
+							   dadosErp.getCriticas() + "," + 
+							   dadosErp.getSalvarOS_Material() + "," + 
+							   dadosErp.getSalvarCstg_IntVM() + "," + 
+							   dadosErp.getSalvarCstg_IntCM() + "," + 
+							   dadosErp.getSalvarCstg_IntDG() + "," + 
+							   dadosErp.getSequencial();
 				bw.write(linha);
 				bw.newLine();
 			}

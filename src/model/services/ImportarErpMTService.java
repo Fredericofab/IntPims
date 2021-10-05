@@ -4,33 +4,36 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import gui.util.Alertas;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import model.entities.Erp;
 import model.exceptions.TxtIntegridadeException;
 
 public class ImportarErpMTService {
 
-	private ErpService ErpService = new ErpService();
+	private ErpService erpService = new ErpService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 		
 //	parametros
 	String entrada;
 	String anoMes;
+	String arqEntradaDelimitador;
 	
+	String origem;
+	Integer sequencial = erpService.ultimoSequencial();
 	List<Erp> lista;
 	Integer qtdeLidas = 0;
 	Integer qtdeCorrompidas = 0;
 	Integer qtdeDeletadas = 0;
 	Integer qtdeIncluidas = 0;
-	String origem = "MT";
 
 
 	public String getEntrada() {
@@ -52,9 +55,10 @@ public class ImportarErpMTService {
 		return qtdeIncluidas;
 	}
 
-	public void processarTXT() {
+	public void processarTXT(String origem) {
+		this.origem = origem;
 		lerParametros();
-		deletarPorOrigem();
+		deletarPorOrigem(origem);
 		lerErpMTtxt(entrada, anoMes);
 		if (qtdeCorrompidas == 0) {
 			gravarDadosErp();
@@ -70,8 +74,8 @@ public class ImportarErpMTService {
 		processoAtualService.atualizarEtapa("ExportarErp","N");
 	}
 
-	private void deletarPorOrigem() {
-		qtdeDeletadas = ErpService.deletarOrigem(origem);
+	private void deletarPorOrigem(String origem) {
+		qtdeDeletadas = erpService.deletarOrigem(origem);
 	}
 	
 	private void lerErpMTtxt(String entrada, String anoMesReferencia) {
@@ -93,10 +97,10 @@ public class ImportarErpMTService {
 			Alertas.mostrarAlertas("TxtIntegridadeException", "Processo de Leitura do TXT interrompido", e.getMessage(),
 					AlertType.ERROR);
 		} catch (FileNotFoundException e) {
-			Alertas.mostrarAlertas("FileNotFoundException", "Erro na Importacao Dados ErpMT",
+			Alertas.mostrarAlertas("FileNotFoundException", "Erro na Importacao Dados Erp" + origem,
 					"Arquivo não encontrado \n \n" + e.getMessage(), AlertType.ERROR);
 		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Importacao Dados ErpMT", e.getMessage(), AlertType.ERROR);
+			Alertas.mostrarAlertas("IOException", "Erro na Importacao Dados Erp" + origem, e.getMessage(), AlertType.ERROR);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
@@ -106,29 +110,59 @@ public class ImportarErpMTService {
 	private void gravarDadosErp() {
 		qtdeIncluidas = 0;
 		for (Erp dadosErp : lista) {
-			ErpService.salvarOuAtualizar(dadosErp);
+			erpService.salvarOuAtualizar(dadosErp);
 			qtdeIncluidas = qtdeIncluidas + 1;
 		}
 	}
 
 	private Erp converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha) throws TxtIntegridadeException {
-		String[] campos = linha.split(",");
+		String[] campos = linha.split(arqEntradaDelimitador);
 		Optional<ButtonType> continuar = null;
 		try {
-			if (campos.length == 6) {
+			if (campos.length == 15) {
 				String anoMes = campos[0];
 				Double codCentroCustos = Double.parseDouble(campos[1]);
 				String descCentroCustos = campos[2];
-				String importar = null;
-				String observacao = null;
+				Double codContaContabil = Double.parseDouble(campos[3]);
+				String descContaContabil = campos[4];
+				Double codMaterial = Double.parseDouble(campos[5]);
+				String descMaterialDespesa = campos[6];
+				String unidadeMedida = campos[7];
+				Double quantidade = Double.parseDouble(campos[8]);
+				Double precoUnitario = Double.parseDouble(campos[9]);
+				Double valorMovimento = Double.parseDouble(campos[10]);
+				String referenciaOS = campos[11];
+				Double manfroOS = Double.parseDouble(campos[12]);
+				String documentoErp = campos[13];
+				Date dataMovimento;
+				try {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					dataMovimento = (Date) sdf.parse(campos[14]);
+				} catch (ParseException e) {
+					throw new TxtIntegridadeException("Formato da Data de Movimento tem de ser dd/mm/aaaa");
+				}
+
+				String importar = "S";
+				String observacao = "";
+				String criticas = "";
+				String salvarOS_Material = "N";
+				String salvarCstg_IntVM = "N";
+				String salvarCstg_IntCM = "N";
+				String salvarCstg_IntDG = "N";
+				sequencial = sequencial + 1;
+				
 				if (!anoMes.equals(anoMesReferencia)) {
 					throw new TxtIntegridadeException("Registro nao Coerente com o Mês de Referencia");
 				}
-				Erp dadosErp = new Erp(anoMes, codCentroCustos, descCentroCustos, 
-						 importar, observacao);
+				Erp dadosErp = new Erp(origem,anoMes,codCentroCustos,descCentroCustos, 
+						 codContaContabil,descContaContabil, 
+						codMaterial,descMaterialDespesa,unidadeMedida,
+						 quantidade,precoUnitario,valorMovimento,
+						referenciaOS,manfroOS,documentoErp,dataMovimento,importar,observacao,criticas,
+						salvarOS_Material,salvarCstg_IntVM,salvarCstg_IntCM,salvarCstg_IntDG,sequencial);
 				return dadosErp;
 			} else {
-				throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (6)");
+				throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (15)");
 			}
 		} catch (TxtIntegridadeException e) {
 			qtdeCorrompidas = qtdeCorrompidas + 1;
@@ -158,6 +192,7 @@ public class ImportarErpMTService {
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
+		arqEntradaDelimitador  = (parametrosService.pesquisarPorChave("ImportarErpMT", "ArqEntradaDelimitador")).getValor();
 		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ImportarErpMT", "ArqEntradaPasta")).getValor();
 		String arqEntradaNome  = (parametrosService.pesquisarPorChave("ImportarErpMT", "ArqEntradaNome")).getValor();
 		String arqEntradaTipo  = (parametrosService.pesquisarPorChave("ImportarErpMT", "ArqEntradaTipo")).getValor();

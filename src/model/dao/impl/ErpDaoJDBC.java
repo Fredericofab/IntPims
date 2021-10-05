@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,20 +24,38 @@ public class ErpDaoJDBC implements ErpDao {
 		PreparedStatement st = null;
 		try {
 			st = conexao.prepareStatement("INSERT INTO Erp "
-										+ "(Sequencial,Ano_Mes, Origem, Cod_Centro_Custos, Desc_Centro_Custos, Cod_Conta_Contabil, Desc_Conta_Contabil, "
-										+ " Familia_Material, Importar, Observacao) "
-										+ " VALUES (?,?,?,?,?,?,?,?,?,?)" , 
-										+ Statement.RETURN_GENERATED_KEYS);
-			st.setInt(1, objeto.getSequencial());
+					+ "(origem,ano_Mes,"
+							+ "cod_Centro_Custos,desc_Centro_Custos,"
+							+ "cod_Conta_Contabil,desc_Conta_Contabil,"
+							+ "cod_Material,desc_Movimento,unidade_Medida,"
+							+ "quantidade,preco_Unitario,valor_Movimento,"
+							+ "referencia_OS,numero_OS,documento_Erp,data_Movimento," + "importar,observacao,criticas,"
+							+ "salvar_OS_Material,salvar_Cstg_IntVM,salvar_Cstg_intCM,salvar_Cstg_intDG," + "sequencial)"
+					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			st.setString(1, objeto.getOrigem().toUpperCase());
 			st.setString(2, objeto.getAnoMes());
-			st.setString(3, objeto.getOrigem());
-			st.setDouble(4, objeto.getCodCentroCustos());
-			st.setString(5, objeto.getDescCentroCustos());
-			st.setDouble(6, objeto.getCodContaContabil());
-			st.setString(7, objeto.getDescContaContabil());
-			st.setDouble(8, objeto.getFamiliaMaterial());
-			st.setString(9, objeto.getImportar().toUpperCase());
-			st.setString(10, objeto.getObservacao());
+			st.setDouble(3, objeto.getCodCentroCustos());
+			st.setString(4, objeto.getDescCentroCustos());
+			st.setDouble(5, objeto.getCodContaContabil());
+			st.setString(6, objeto.getDescContaContabil());
+			st.setDouble(7, objeto.getCodMaterial());
+			st.setString(8, objeto.getDescMovimento());
+			st.setString(9, objeto.getUnidadeMedida());
+			st.setDouble(10, objeto.getQuantidade());
+			st.setDouble(11, objeto.getPrecoUnitario());
+			st.setDouble(12, objeto.getValorMovimento());
+			st.setString(13, objeto.getReferenciaOS());
+			st.setDouble(14, objeto.getNumeroOS());
+			st.setString(15, objeto.getDocumentoErp());
+			st.setDate(16, new java.sql.Date(objeto.getDataMovimento().getTime()));
+			st.setString(17, objeto.getImportar().toUpperCase());
+			st.setString(18, objeto.getObservacao());
+			st.setString(19, objeto.getCriticas());
+			st.setString(20, objeto.getSalvarOS_Material().toUpperCase());
+			st.setString(21, objeto.getSalvarCstg_IntVM().toUpperCase());
+			st.setString(22, objeto.getSalvarCstg_IntCM().toUpperCase());
+			st.setString(23, objeto.getSalvarCstg_IntDG().toUpperCase());
+			st.setInt(24, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -52,24 +69,39 @@ public class ErpDaoJDBC implements ErpDao {
 	public void atualizar(Erp objeto) {
 		PreparedStatement st = null;
 		try {
-			st = conexao.prepareStatement("UPDATE Erp "
-										+ "SET Ano_Mes = ?, Origem = ?, "
-										+ "Cod_Centro_Custos = ?, Desc_Centro_Custos = ?, " 
-										+ "Cod_Conta_Contabil = ?,   Desc_Conta_Contabil = ?, "
-										+ "Familia_Material = ?, "
-										+ "Importar = ?, Observacao = ? "
-										+ "WHERE Sequencial = ? ");
-			
-			st.setString(1, objeto.getAnoMes());
-			st.setString(2, objeto.getOrigem());
+			st = conexao.prepareStatement("UPDATE Erp " + "SET origem = ?,	ano_Mes = ?, "
+					+ "cod_Centro_Custos = ?,	desc_Centro_Custos = ?, " + "cod_Conta_Contabil = ?,	desc_Conta_Contabil = ?, "
+					+ "cod_Material = ?,	desc_Movimento = ?,	unidade_Medida = ?, "
+					+ "quantidade = ?,	preco_Unitario = ?,	valor_Movimento = ?, "
+					+ "referencia_OS = ?,	numero_OS = ?,	documento_Erp = ?,	data_Movimento = ?,	"
+					+ "importar = ?,	observacao = ?,	criticas = ?,	"
+					+ "salvar_OS_Material = ?, salvar_Cstg_IntVM = ?, salvar_Cstg_intCM = ?, salvar_Cstg_intDG = ?"
+					+ "WHERE sequencial = ?");
+
+			st.setString(1, objeto.getOrigem().toUpperCase());
+			st.setString(2, objeto.getAnoMes());
 			st.setDouble(3, objeto.getCodCentroCustos());
 			st.setString(4, objeto.getDescCentroCustos());
 			st.setDouble(5, objeto.getCodContaContabil());
 			st.setString(6, objeto.getDescContaContabil());
-			st.setDouble(7, objeto.getFamiliaMaterial());
-			st.setString(8, objeto.getImportar().toUpperCase());
-			st.setString(9, objeto.getObservacao());
-			st.setInt(10, objeto.getSequencial());
+			st.setDouble(7, objeto.getCodMaterial());
+			st.setString(8, objeto.getDescMovimento());
+			st.setString(9, objeto.getUnidadeMedida());
+			st.setDouble(10, objeto.getQuantidade());
+			st.setDouble(11, objeto.getPrecoUnitario());
+			st.setDouble(12, objeto.getValorMovimento());
+			st.setString(13, objeto.getReferenciaOS());
+			st.setDouble(14, objeto.getNumeroOS());
+			st.setString(15, objeto.getDocumentoErp());
+			st.setDate(16, new java.sql.Date(objeto.getDataMovimento().getTime()));
+			st.setString(17, objeto.getImportar().toUpperCase());
+			st.setString(18, objeto.getObservacao());
+			st.setString(19, objeto.getCriticas());
+			st.setString(20, objeto.getSalvarOS_Material().toUpperCase());
+			st.setString(21, objeto.getSalvarCstg_IntVM().toUpperCase());
+			st.setString(22, objeto.getSalvarCstg_IntCM().toUpperCase());
+			st.setString(23, objeto.getSalvarCstg_IntDG().toUpperCase());
+			st.setInt(24, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Atualizacao " + e.getMessage());
@@ -87,14 +119,13 @@ public class ErpDaoJDBC implements ErpDao {
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("erro na delecao " + e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.fecharStatement(st);
 		}
 	}
 
 	@Override
-	public Erp pesquisarPorChave(Integer sequencial)  {
+	public Erp pesquisarPorChave(Integer sequencial) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -108,8 +139,7 @@ public class ErpDaoJDBC implements ErpDao {
 			return null;
 		} catch (SQLException e) {
 			throw new DbException("erro na Pesquisa " + e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
 		}
@@ -126,15 +156,12 @@ public class ErpDaoJDBC implements ErpDao {
 			List<Erp> lista = new ArrayList<Erp>();
 			while (rs.next()) {
 				Erp dadosErp = instanciaDadosErp(rs);
-				lista.add(dadosErp)
-				;
+				lista.add(dadosErp);
 			}
 			return lista;
-		} 
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException("erro na consulta todos - " + e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);
 		}
@@ -150,8 +177,7 @@ public class ErpDaoJDBC implements ErpDao {
 			return contagem;
 		} catch (SQLException e) {
 			throw new DbException("erro na delecao do Movimento da Erp  \n" + e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.fecharStatement(st);
 		}
 	}
@@ -160,19 +186,18 @@ public class ErpDaoJDBC implements ErpDao {
 	public Integer deletarPorOrigem(String origem) {
 		PreparedStatement st = null;
 		try {
-			st = conexao.prepareStatement("DELETE FROM Erp WHER Origem = ? ");
+			st = conexao.prepareStatement("DELETE FROM Erp WHERE Origem = ? ");
 			st.setString(1, origem);
 			st.executeUpdate();
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
 			throw new DbException("erro na delecao do Movimento da Erp por Origem \n" + e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.fecharStatement(st);
 		}
 	}
-	
+
 	@Override
 	public Integer ultimoSequencial() {
 		PreparedStatement st = null;
@@ -187,8 +212,7 @@ public class ErpDaoJDBC implements ErpDao {
 			return null;
 		} catch (SQLException e) {
 			throw new DbException("erro na Pesquisa do Ultimo Sequencial " + e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
 		}
@@ -196,19 +220,31 @@ public class ErpDaoJDBC implements ErpDao {
 
 	private Erp instanciaDadosErp(ResultSet rs) throws SQLException {
 		Erp dadosErp = new Erp();
-		dadosErp.setSequencial(rs.getInt("Sequencial"));
 		dadosErp.setAnoMes(rs.getString("Ano_Mes"));
 		dadosErp.setOrigem(rs.getString("Origem"));
 		dadosErp.setCodCentroCustos(rs.getDouble("Cod_Centro_Custos"));
-		dadosErp.setDescCentroCustos(rs.getString("Desc_Centro_Custos"));		
-		dadosErp.setCodContaContabil(rs.getDouble("Cod_Conta_Contabil"));		
-		dadosErp.setDescContaContabil(rs.getString("Desc_Conta_Contabil"));		
-		dadosErp.setFamiliaMaterial(rs.getDouble("Familia_Material"));		
-		dadosErp.setImportar(rs.getString("Importar"));		
-		dadosErp.setObservacao(rs.getString("Observacao"));		
+		dadosErp.setDescCentroCustos(rs.getString("Desc_Centro_Custos"));
+		dadosErp.setCodContaContabil(rs.getDouble("Cod_Conta_Contabil"));
+		dadosErp.setDescContaContabil(rs.getString("Desc_Conta_Contabil"));
+		dadosErp.setCodMaterial(rs.getDouble("Cod_Material"));
+		dadosErp.setDescMovimento(rs.getString("Desc_Movimento"));
+		dadosErp.setUnidadeMedida(rs.getString("Unidade_Medida"));
+		dadosErp.setQuantidade(rs.getDouble("Quantidade"));
+		dadosErp.setPrecoUnitario(rs.getDouble("Preco_Unitario"));
+		dadosErp.setValorMovimento(rs.getDouble("Valor_Movimento"));
+		dadosErp.setReferenciaOS(rs.getString("Referencia_OS"));
+		dadosErp.setNumeroOS(rs.getDouble("Numero_OS"));
+		dadosErp.setDocumentoErp(rs.getString("Documento_Erp"));
+		dadosErp.setDataMovimento(new java.util.Date(rs.getTimestamp("Data_Movimento").getTime()));
+
+		dadosErp.setImportar(rs.getString("Importar"));
+		dadosErp.setObservacao(rs.getString("Observacao"));
+		dadosErp.setCriticas(rs.getString("Criticas"));
+		dadosErp.setSalvarOS_Material(rs.getString("Salvar_OS_Material"));
+		dadosErp.setSalvarCstg_IntVM(rs.getString("Salvar_Cstg_IntVM"));
+		dadosErp.setSalvarCstg_IntCM(rs.getString("Salvar_Cstg_intCM"));
+		dadosErp.setSalvarCstg_IntDG(rs.getString("Salvar_Cstg_intDG"));
+		dadosErp.setSequencial(rs.getInt("Sequencial"));
 		return dadosErp;
 	}
-
-
 }
-

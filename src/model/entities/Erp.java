@@ -1,89 +1,71 @@
 package model.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 public class Erp implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer sequencial;
-	private String anoMes;
 	private String origem;
+	private String anoMes;
 	private Double codCentroCustos;
 	private String descCentroCustos;
 	private Double codContaContabil;
 	private String descContaContabil;
-	private Double familiaMaterial;
 	private Double codMaterial;
-	private String unidMedMaterial;
+	private String descMovimento;
+	private String unidadeMedida;
 	private Double quantidade;
 	private Double precoUnitario;
 	private Double valorMovimento;
+	private String referenciaOS;
+	private Double numeroOS;
+	private String documentoErp;
 	private Date dataMovimento;
-	private Double osManfro;
-	private String numeroDocErp;
-	private String descMovimento;
-	private String descMaterial;
 	private String importar;
 	private String observacao;
 	private String criticas;
 	private String salvarOS_Material;
 	private String salvarCstg_IntVM;
-	private String salvarCstg_intCM;
-	private String salvarCstg_intDG;
+	private String salvarCstg_IntCM;
+	private String salvarCstg_IntDG;
+	private Integer sequencial;
 
 	public Erp() {
 	}
 
-	public Erp(Integer sequencial, String anoMes, String origem, Double codCentroCustos, String descCentroCustos,
-			Double codContaContabil, String descContaContabil, Double familiaMaterial, Double codMaterial,
-			String unidMedMaterial, Double quantidade, Double precoUnitario, Double valorMovimento, Date dataMovimento,
-			Double osManfro, String numeroDocErp, String descMovimento, String descMaterial, String importar,
-			String observacao, String criticas, String salvarOS_Material, String salvarCstg_IntVM,
-			String salvarCstg_intCM, String salvarCstg_intDG) {
+	public Erp(String origem, String anoMes, Double codCentroCustos, String descCentroCustos, Double codContaContabil,
+			String descContaContabil, Double codMaterial, String descMovimento, String unidadeMedida,
+			Double quantidade, Double precoUnitario, Double valorMovimento, String referenciaOS, Double numeroOS,
+			String documentoErp, Date dataMovimento, String importar, String observacao, String criticas,
+			String salvarOS_Material, String salvarCstg_IntVM, String salvarCstg_intCM, String salvarCstg_intDG,
+			Integer sequencial) {
 		super();
-		this.sequencial = sequencial;
-		this.anoMes = anoMes;
 		this.origem = origem;
+		this.anoMes = anoMes;
 		this.codCentroCustos = codCentroCustos;
 		this.descCentroCustos = descCentroCustos;
 		this.codContaContabil = codContaContabil;
 		this.descContaContabil = descContaContabil;
-		this.familiaMaterial = familiaMaterial;
 		this.codMaterial = codMaterial;
-		this.unidMedMaterial = unidMedMaterial;
+		this.descMovimento = descMovimento;
+		this.unidadeMedida = unidadeMedida;
 		this.quantidade = quantidade;
 		this.precoUnitario = precoUnitario;
 		this.valorMovimento = valorMovimento;
+		this.referenciaOS = referenciaOS;
+		this.numeroOS = numeroOS;
+		this.documentoErp = documentoErp;
 		this.dataMovimento = dataMovimento;
-		this.osManfro = osManfro;
-		this.numeroDocErp = numeroDocErp;
-		this.descMovimento = descMovimento;
-		this.descMaterial = descMaterial;
 		this.importar = importar;
 		this.observacao = observacao;
 		this.criticas = criticas;
 		this.salvarOS_Material = salvarOS_Material;
 		this.salvarCstg_IntVM = salvarCstg_IntVM;
-		this.salvarCstg_intCM = salvarCstg_intCM;
-		this.salvarCstg_intDG = salvarCstg_intDG;
-	}
-
-	public Integer getSequencial() {
-		return sequencial;
-	}
-
-	public void setSequencial(Integer sequencial) {
+		this.salvarCstg_IntCM = salvarCstg_intCM;
+		this.salvarCstg_IntDG = salvarCstg_intDG;
 		this.sequencial = sequencial;
-	}
-
-	public String getAnoMes() {
-		return anoMes;
-	}
-
-	public void setAnoMes(String anoMes) {
-		this.anoMes = anoMes;
 	}
 
 	public String getOrigem() {
@@ -92,6 +74,14 @@ public class Erp implements Serializable {
 
 	public void setOrigem(String origem) {
 		this.origem = origem;
+	}
+
+	public String getAnoMes() {
+		return anoMes;
+	}
+
+	public void setAnoMes(String anoMes) {
+		this.anoMes = anoMes;
 	}
 
 	public Double getCodCentroCustos() {
@@ -126,14 +116,6 @@ public class Erp implements Serializable {
 		this.descContaContabil = descContaContabil;
 	}
 
-	public Double getFamiliaMaterial() {
-		return familiaMaterial;
-	}
-
-	public void setFamiliaMaterial(Double familiaMaterial) {
-		this.familiaMaterial = familiaMaterial;
-	}
-
 	public Double getCodMaterial() {
 		return codMaterial;
 	}
@@ -142,12 +124,20 @@ public class Erp implements Serializable {
 		this.codMaterial = codMaterial;
 	}
 
-	public String getUnidMedMaterial() {
-		return unidMedMaterial;
+	public String getDescMovimento() {
+		return descMovimento;
 	}
 
-	public void setUnidMedMaterial(String unidMedMaterial) {
-		this.unidMedMaterial = unidMedMaterial;
+	public void setDescMovimento(String descMovimento) {
+		this.descMovimento = descMovimento;
+	}
+
+	public String getUnidadeMedida() {
+		return unidadeMedida;
+	}
+
+	public void setUnidadeMedida(String unidadeMedida) {
+		this.unidadeMedida = unidadeMedida;
 	}
 
 	public Double getQuantidade() {
@@ -174,44 +164,36 @@ public class Erp implements Serializable {
 		this.valorMovimento = valorMovimento;
 	}
 
+	public String getReferenciaOS() {
+		return referenciaOS;
+	}
+
+	public void setReferenciaOS(String referenciaOS) {
+		this.referenciaOS = referenciaOS;
+	}
+
+	public Double getNumeroOS() {
+		return numeroOS;
+	}
+
+	public void setNumeroOS(Double numeroOS) {
+		this.numeroOS = numeroOS;
+	}
+
+	public String getDocumentoErp() {
+		return documentoErp;
+	}
+
+	public void setDocumentoErp(String documentoErp) {
+		this.documentoErp = documentoErp;
+	}
+
 	public Date getDataMovimento() {
 		return dataMovimento;
 	}
 
 	public void setDataMovimento(Date dataMovimento) {
 		this.dataMovimento = dataMovimento;
-	}
-
-	public Double getOsManfro() {
-		return osManfro;
-	}
-
-	public void setOsManfro(Double osManfro) {
-		this.osManfro = osManfro;
-	}
-
-	public String getNumeroDocErp() {
-		return numeroDocErp;
-	}
-
-	public void setNumeroDocErp(String numeroDocErp) {
-		this.numeroDocErp = numeroDocErp;
-	}
-
-	public String getDescMovimento() {
-		return descMovimento;
-	}
-
-	public void setDescMovimento(String descMovimento) {
-		this.descMovimento = descMovimento;
-	}
-
-	public String getDescMaterial() {
-		return descMaterial;
-	}
-
-	public void setDescMaterial(String descMaterial) {
-		this.descMaterial = descMaterial;
 	}
 
 	public String getImportar() {
@@ -254,20 +236,28 @@ public class Erp implements Serializable {
 		this.salvarCstg_IntVM = salvarCstg_IntVM;
 	}
 
-	public String getSalvarCstg_intCM() {
-		return salvarCstg_intCM;
+	public String getSalvarCstg_IntCM() {
+		return salvarCstg_IntCM;
 	}
 
-	public void setSalvarCstg_intCM(String salvarCstg_intCM) {
-		this.salvarCstg_intCM = salvarCstg_intCM;
+	public void setSalvarCstg_IntCM(String salvarCstg_IntCM) {
+		this.salvarCstg_IntCM = salvarCstg_IntCM;
 	}
 
-	public String getSalvarCstg_intDG() {
-		return salvarCstg_intDG;
+	public String getSalvarCstg_IntDG() {
+		return salvarCstg_IntDG;
 	}
 
-	public void setSalvarCstg_intDG(String salvarCstg_intDG) {
-		this.salvarCstg_intDG = salvarCstg_intDG;
+	public void setSalvarCstg_IntDG(String salvarCstg_IntDG) {
+		this.salvarCstg_IntDG = salvarCstg_IntDG;
+	}
+
+	public Integer getSequencial() {
+		return sequencial;
+	}
+
+	public void setSequencial(Integer sequencial) {
+		this.sequencial = sequencial;
 	}
 
 	@Override
@@ -297,16 +287,17 @@ public class Erp implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Erp [id=" + sequencial + ", anoMes=" + anoMes + ", origem=" + origem + ", codCentroCustos="
-				+ codCentroCustos + ", descCentroCustos=" + descCentroCustos + ", codContaContabil=" + codContaContabil
-				+ ", descContaContabil=" + descContaContabil + ", familiaMaterial=" + familiaMaterial + ", codMaterial="
-				+ codMaterial + ", unidMedMaterial=" + unidMedMaterial + ", quantidade=" + quantidade
-				+ ", precoUnitario=" + precoUnitario + ", valorMovimento=" + valorMovimento + ", dataMovimento="
-				+ dataMovimento + ", osManfro=" + osManfro + ", numeroDocErp=" + numeroDocErp + ", descMovimento="
-				+ descMovimento + ", descMaterial=" + descMaterial + ", importar=" + importar + ", observacao="
-				+ observacao + ", criticas=" + criticas + ", salvarOS_Material=" + salvarOS_Material
-				+ ", salvarCstg_IntVM=" + salvarCstg_IntVM + ", salvarCstg_intCM=" + salvarCstg_intCM
-				+ ", salvarCstg_intDG=" + salvarCstg_intDG + "]";
+		return "Erp [origem=" + origem + ", anoMes=" + anoMes + ", codCentroCustos=" + codCentroCustos
+				+ ", descCentroCustos=" + descCentroCustos + ", codContaContabil=" + codContaContabil
+				+ ", descContaContabil=" + descContaContabil + ", codMaterial=" + codMaterial + ", descMovimento="
+				+ descMovimento + ", unidadeMedida=" + unidadeMedida + ", quantidade=" + quantidade
+				+ ", precoUnitario=" + precoUnitario + ", valorMovimento=" + valorMovimento + ", referenciaOS="
+				+ referenciaOS + ", numeroOS=" + numeroOS + ", documentoErp=" + documentoErp + ", dataMovimento="
+				+ dataMovimento + ", importar=" + importar + ", observacao=" + observacao + ", criticas=" + criticas
+				+ ", salvarOS_Material=" + salvarOS_Material + ", salvarCstg_IntVM=" + salvarCstg_IntVM
+				+ ", salvarCstg_intCM=" + salvarCstg_IntCM + ", salvarCstg_intDG=" + salvarCstg_IntDG + ", sequencial="
+				+ sequencial + "]";
 	}
-
+	
+	
 }

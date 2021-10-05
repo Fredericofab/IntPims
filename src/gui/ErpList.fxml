@@ -26,8 +26,22 @@
             <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="131.0" text="Desc. C.Custos" />
             <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="65.0" text="C.Contabil" />
             <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="110.0" text="Desc. C.Contabil" />
-            <TableColumn fx:id="tableColumnFamiliaMaterial" prefWidth="95.0" text="FamiliaMaterial" />
+            <TableColumn fx:id="tableColumnCodMaterial" prefWidth="75.0" text="Material" />
+            <TableColumn fx:id="tableColumnDescMovimento" prefWidth="75.0" text="Desc Movimento" />
+            <TableColumn fx:id="tableColumnUnidadeMedida" prefWidth="75.0" text="UN" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="75.0" text="Quantidade" />
+            <TableColumn fx:id="tableColumnPrecoUnitario" prefWidth="75.0" text="Preco Unitario" />
+            <TableColumn fx:id="tableColumnValorMovimento" prefWidth="75.0" text="Valor Movimento" />
+            <TableColumn fx:id="tableColumnReferenciaOS" prefWidth="75.0" text="Referencia OS" />
+            <TableColumn fx:id="tableColumnNumeroOS" prefWidth="75.0" text="Numero OS" />
+            <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="75.0" text="Documento ERP" />
+            <TableColumn fx:id="tableColumnDataMovimento" prefWidth="75.0" text="Data Movimento" />
             <TableColumn fx:id="tableColumnImportar" prefWidth="64.0" text="Importar" />
+            <TableColumn fx:id="tableColumnCriticas" prefWidth="75.0" text="Criticas" />
+            <TableColumn fx:id="tableColumnSalvarOS_Material" prefWidth="75.0" text="Salvar OS_Material" />
+            <TableColumn fx:id="tableColumnSalvarCstg_IntVM" prefWidth="75.0" text="Salvar CSTG_IntVM" />
+            <TableColumn fx:id="tableColumnSalvarCstg_IntCM" prefWidth="75.0" text="Salvar CSTG_IntCM" />
+            <TableColumn fx:id="tableColumnSalvarCstg_IntDG" prefWidth="75.0" text="Salvar CSTG_IntDG" />
             <TableColumn fx:id="tableColumnObservacao" prefWidth="90.0" text="Observacao" />
             <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="56.0" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="63.0" />

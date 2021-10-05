@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -62,9 +63,37 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private TableColumn<Erp, String> tableColumnDescContaContabil;
 	@FXML
-	private TableColumn<Erp, Double> tableColumnFamiliaMaterial;
+	private TableColumn<Erp, Double> tableColumnCodMaterial;
+	@FXML
+	private TableColumn<Erp, String> tableColumnDescMovimento;
+	@FXML
+	private TableColumn<Erp, String> tableColumnUnidadeMedida;
+	@FXML
+	private TableColumn<Erp, Double> tableColumnQuantidade;
+	@FXML
+	private TableColumn<Erp, Double> tableColumnPrecoUnitario;
+	@FXML
+	private TableColumn<Erp, Double> tableColumnValorMovimento;
+	@FXML
+	private TableColumn<Erp, String> tableColumnReferenciaOS;
+	@FXML
+	private TableColumn<Erp, Double> tableColumnNumeroOS;
+	@FXML
+	private TableColumn<Erp, String> tableColumnDocumentoErp;
+	@FXML
+	private TableColumn<Erp, Date> tableColumnDataMovimento;
 	@FXML
 	private TableColumn<Erp, String> tableColumnImportar;
+	@FXML
+	private TableColumn<Erp, String> tableColumnCriticas;
+	@FXML
+	private TableColumn<Erp, String> tableColumnSalvarOS_Material;
+	@FXML
+	private TableColumn<Erp, String> tableColumnSalvarCstg_IntVM;
+	@FXML
+	private TableColumn<Erp, String> tableColumnSalvarCstg_IntCM;
+	@FXML
+	private TableColumn<Erp, String> tableColumnSalvarCstg_IntDG;
 	@FXML
 	private TableColumn<Erp, String> tableColumnObservacao;
 	@FXML
@@ -89,6 +118,12 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		Erp entidade = new Erp();
 		entidade.setAnoMes(anoMes);
 		entidade.setSequencial(sequencial);
+		entidade.setImportar("S");
+		entidade.setSalvarOS_Material("N");
+		entidade.setSalvarCstg_IntVM("N");
+		entidade.setSalvarCstg_IntCM("N");
+		entidade.setSalvarCstg_IntDG("N");
+
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
 	@FXML
@@ -126,17 +161,40 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnDescCentroCustos.setCellValueFactory(new PropertyValueFactory<>("descCentroCustos"));
 		tableColumnCodContaContabil.setCellValueFactory(new PropertyValueFactory<>("codContaContabil"));
 		tableColumnDescContaContabil.setCellValueFactory(new PropertyValueFactory<>("descContaContabil"));
-		tableColumnFamiliaMaterial.setCellValueFactory(new PropertyValueFactory<>("familiaMaterial"));
+		tableColumnCodMaterial.setCellValueFactory(new PropertyValueFactory<>("codMaterial"));
+		tableColumnDescMovimento.setCellValueFactory(new PropertyValueFactory<>("descMovimento"));
+		tableColumnUnidadeMedida.setCellValueFactory(new PropertyValueFactory<>("unidadeMedida"));
+		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+		tableColumnPrecoUnitario.setCellValueFactory(new PropertyValueFactory<>("precoUnitario"));
+		tableColumnValorMovimento.setCellValueFactory(new PropertyValueFactory<>("valorMovimento"));
+		tableColumnReferenciaOS.setCellValueFactory(new PropertyValueFactory<>("referenciaOS"));
+		tableColumnNumeroOS.setCellValueFactory(new PropertyValueFactory<>("numeroOS"));
+		tableColumnDocumentoErp.setCellValueFactory(new PropertyValueFactory<>("documentoErp"));
+		tableColumnDataMovimento.setCellValueFactory(new PropertyValueFactory<>("dataMovimento"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
+		tableColumnCriticas.setCellValueFactory(new PropertyValueFactory<>("criticas"));
+		tableColumnSalvarOS_Material.setCellValueFactory(new PropertyValueFactory<>("salvarOS_Material"));
+		tableColumnSalvarCstg_IntVM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntVM"));
+		tableColumnSalvarCstg_IntCM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntCM"));
+		tableColumnSalvarCstg_IntDG.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntDG"));
 		tableColumnObservacao.setCellValueFactory(new PropertyValueFactory<>("observacao"));
 		
 		Utilitarios.formatarTableColumnDouble(tableColumnCodCentroCustos, 0);
 		Utilitarios.formatarTableColumnDouble(tableColumnCodContaContabil, 0);
-		Utilitarios.formatarTableColumnDouble(tableColumnFamiliaMaterial, 2);
+		Utilitarios.formatarTableColumnDouble(tableColumnCodMaterial, 0);
+		Utilitarios.formatarTableColumnDouble(tableColumnQuantidade, 2);
+		Utilitarios.formatarTableColumnDouble(tableColumnPrecoUnitario, 2);
+		Utilitarios.formatarTableColumnDouble(tableColumnValorMovimento, 2);
+		Utilitarios.formatarTableColumnDouble(tableColumnNumeroOS, 0);
+		Utilitarios.formatarTableColumnDate(tableColumnDataMovimento, "dd/MM/yyyy");
 
-		tableColumnCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
-		tableColumnCodContaContabil.setStyle("-fx-alignment: CENTER-RIGHT");
-		tableColumnFamiliaMaterial.setStyle("-fx-alignment: CENTER-RIGHT");
+		tableColumnCodCentroCustos.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnCodContaContabil.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnCodMaterial.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnQuantidade.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnPrecoUnitario.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnValorMovimento.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnNumeroOS.setStyle("-fx-alignment: TOP-RIGHT");
 		
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
