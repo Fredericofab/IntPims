@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="gui.MainViewController" project="intPims" 
     file="/intPims/src/gui/MainViewController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="118" y="244"/>    
+    <position height="-1" width="-1" x="117" y="340"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -147,7 +147,7 @@
   </class>  
   <class id="17" language="java" name="db.DB" project="intPims" file="/intPims/src/db/DB.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="6" y="2532"/>    
+    <position height="-1" width="-1" x="5" y="3012"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -156,7 +156,7 @@
   </class>  
   <class id="18" language="java" name="db.DbException" project="intPims" file="/intPims/src/db/DbException.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="42" y="2613"/>    
+    <position height="-1" width="-1" x="41" y="3093"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -165,7 +165,7 @@
   </class>  
   <class id="19" language="java" name="db.DbIntegridadeException" project="intPims" 
     file="/intPims/src/db/DbIntegridadeException.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="60" y="2691"/>    
+    <position height="-1" width="-1" x="59" y="3171"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="false">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -183,7 +183,7 @@
   </interface>  
   <interface id="21" language="java" name="gui.listeners.DadosAlteradosListener" project="intPims" 
     file="/intPims/src/gui/listeners/DadosAlteradosListener.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="598" y="2531"/>    
+    <position height="-1" width="-1" x="597" y="3011"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -192,7 +192,7 @@
   </interface>  
   <class id="22" language="java" name="gui.util.Alertas" project="intPims" file="/intPims/src/gui/util/Alertas.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="743" y="2531"/>    
+    <position height="-1" width="-1" x="742" y="3011"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -201,7 +201,7 @@
   </class>  
   <class id="23" language="java" name="gui.util.RestricoesDeDigitacao" project="intPims" 
     file="/intPims/src/gui/util/RestricoesDeDigitacao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="787" y="2614"/>    
+    <position height="-1" width="-1" x="786" y="3094"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -210,7 +210,7 @@
   </class>  
   <class id="24" language="java" name="gui.util.Utilitarios" project="intPims" 
     file="/intPims/src/gui/util/Utilitarios.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="750" y="2695"/>    
+    <position height="-1" width="-1" x="749" y="3175"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -219,7 +219,7 @@
   </class>  
   <class id="25" language="java" name="model.dao.FabricaDeDao" project="intPims" 
     file="/intPims/src/model/dao/FabricaDeDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="207" y="2531"/>    
+    <position height="-1" width="-1" x="206" y="3011"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -228,7 +228,7 @@
   </class>  
   <class id="26" language="java" name="model.exceptions.ValidacaoException" project="intPims" 
     file="/intPims/src/model/exceptions/ValidacaoException.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="384" y="2549"/>    
+    <position height="-1" width="-1" x="383" y="3029"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -309,7 +309,7 @@
   </class>  
   <class id="35" language="java" name="model.exceptions.TxtIntegridadeException" project="intPims" 
     file="/intPims/src/model/exceptions/TxtIntegridadeException.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="385" y="2639"/>    
+    <position height="-1" width="-1" x="384" y="3119"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -580,6 +580,69 @@
   <class id="65" language="java" name="model.entities.FuncionariosSumarizados" project="intPims" 
     file="/intPims/src/model/entities/FuncionariosSumarizados.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="629" y="-85"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="66" language="java" name="gui.ErpListController" project="intPims" 
+    file="/intPims/src/gui/ErpListController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="842" y="380"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="67" language="java" name="gui.ErpFormController" project="intPims" 
+    file="/intPims/src/gui/ErpFormController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="847" y="438"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="68" language="java" name="gui.ImportarErpViewController" project="intPims" 
+    file="/intPims/src/gui/ImportarErpViewController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="384" y="335"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="69" language="java" name="model.services.ImportarErpService" project="intPims" 
+    file="/intPims/src/model/services/ImportarErpService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="55" y="2490"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="70" language="java" name="model.services.ErpService" project="intPims" 
+    file="/intPims/src/model/services/ErpService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="587" y="2499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="71" language="java" name="model.dao.ErpDao" project="intPims" file="/intPims/src/model/dao/ErpDao.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="596" y="2707"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="72" language="java" name="model.dao.impl.ErpDaoJDBC" project="intPims" 
+    file="/intPims/src/model/dao/impl/ErpDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="554" y="2831"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      

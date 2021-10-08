@@ -114,16 +114,15 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	public void onBtIncluirAction(ActionEvent evento) {
 		Stage parentStage = Utilitarios.atualStage(evento);
 		String caminhoDaView = "/gui/ErpForm.fxml";
-		Integer sequencial = servico.ultimoSequencial() + 1;
 		Erp entidade = new Erp();
 		entidade.setAnoMes(anoMes);
-		entidade.setSequencial(sequencial);
 		entidade.setImportar("S");
 		entidade.setSalvarOS_Material("N");
 		entidade.setSalvarCstg_IntVM("N");
 		entidade.setSalvarCstg_IntCM("N");
 		entidade.setSalvarCstg_IntDG("N");
-
+		Integer sequencial = servico.ultimoSequencial() + 1;
+		entidade.setSequencial(sequencial);
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
 	@FXML

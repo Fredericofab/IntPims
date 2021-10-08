@@ -40,7 +40,7 @@ public class Utilitarios {
 	public static String tentarConverterParaMaiusculo(String x) {
 		try {
 			if (x != null) {
-				x.toUpperCase();
+				x = x.toUpperCase();
 			}
 			return x;
 		} catch (NumberFormatException e) {

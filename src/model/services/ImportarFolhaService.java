@@ -79,8 +79,7 @@ public class ImportarFolhaService {
 			gravarDadosFolha();
 		}
 
-		if ((qtdeLidas - qtdeIncluidas) == 0) {
-			
+		if ((qtdeIncluidas > 0) && (qtdeLidas - qtdeIncluidas) == 0) {
 			processoAtualService.atualizarEtapa("ImportarFolha","S");
 		}
 		else {

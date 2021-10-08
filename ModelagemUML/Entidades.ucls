@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="model.entities.VerbasFolha" project="intPims" 
-    file="/intPims/src/model/entities/VerbasFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="885" y="-228"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="model.entities.FolhaSumarizada" project="intPims" 
+  <class id="1" language="java" name="model.entities.FolhaSumarizada" project="intPims" 
     file="/intPims/src/model/entities/FolhaSumarizada.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="567" y="-119"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -19,7 +10,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="model.entities.Cstg_IntPF" project="intPims" 
+  <class id="2" language="java" name="model.entities.Cstg_IntPF" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntPF.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1166" y="-181"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -28,7 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="model.entities.Parametros" project="intPims" 
+  <class id="3" language="java" name="model.entities.Parametros" project="intPims" 
     file="/intPims/src/model/entities/Parametros.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="139" y="933"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -37,7 +28,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="model.entities.ProcessoAtual" project="intPims" 
+  <class id="4" language="java" name="model.entities.ProcessoAtual" project="intPims" 
     file="/intPims/src/model/entities/ProcessoAtual.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="625" y="1173"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,7 +37,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="model.entities.Folha" project="intPims" 
+  <class id="5" language="java" name="model.entities.Folha" project="intPims" 
     file="/intPims/src/model/entities/Folha.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="200" y="-91"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -55,7 +46,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="model.entities.Funcionarios" project="intPims" 
+  <class id="6" language="java" name="model.entities.Funcionarios" project="intPims" 
     file="/intPims/src/model/entities/Funcionarios.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="166" y="466"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,9 +55,27 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="model.entities.FuncionariosSumarizados" project="intPims" 
+  <class id="7" language="java" name="model.entities.FuncionariosSumarizados" project="intPims" 
     file="/intPims/src/model/entities/FuncionariosSumarizados.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="529" y="440"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="model.entities.Erp" project="intPims" file="/intPims/src/model/entities/Erp.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="466" y="2378"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="model.entities.VerbasFolha" project="intPims" 
+    file="/intPims/src/model/entities/VerbasFolha.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1146" y="898"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

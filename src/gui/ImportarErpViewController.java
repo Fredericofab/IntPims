@@ -11,9 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import model.services.ImportarErpMTService;
+import model.services.ImportarErpService;
 
-public class ImportarErpMTViewController implements Initializable {
+public class ImportarErpViewController implements Initializable {
+
+	private String origem;
 
 	@FXML
 	private Label labelMsgGeral;
@@ -42,8 +44,8 @@ public class ImportarErpMTViewController implements Initializable {
 	
 	@FXML
 	public void onBtImportarAction(ActionEvent evento) {
-		ImportarErpMTService servico = new ImportarErpMTService();
-		servico.processarTXT("MT");
+		ImportarErpService servico = new ImportarErpService();
+		servico.processarTXT(origem);
 		atualizarTela(servico);
 	}
 	
@@ -52,11 +54,15 @@ public class ImportarErpMTViewController implements Initializable {
 		Utilitarios.atualStage(evento).close();
 	}
 
+	public void setOrigem(String origem) {
+		this.origem = origem;
+	}
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 	}
 
-	private void atualizarTela(ImportarErpMTService servico) {
+	private void atualizarTela(ImportarErpService servico) {
 		Integer qtdeLidas = servico.getQtdeLidas();
 		Integer qtdeCorrompidas = servico.getQtdeCorrompidas();
 		Integer qtdeDeletadas = servico.getQtdeDeletadas();
@@ -88,7 +94,7 @@ public class ImportarErpMTViewController implements Initializable {
 			labelMsgRegLidos.setText("Informação: Qtde de linhas lidas do Arquivo TXT");
 		}
 		if (qtdeCorrompidas > 0) {
-			labelMsgRegCorrompidos.setText("PENDENCIA: Fazer correções no arquivo TXT gerado pelo ErpMT");
+			labelMsgRegCorrompidos.setText("PENDENCIA: Fazer correções no arquivo TXT gerado pelo Erp" + origem);
 		}
 		if (qtdeDeletadas > 0) {
 			labelMsgRegDeletados.setText("Informação: Registros deletados de uma importação Anterior");

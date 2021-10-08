@@ -14,7 +14,7 @@ public class ProcessoAtual implements Serializable {
 	private String sumarizarFuncionario;
 	private String importarErpMT;
 	private String importarErpCD;
-	private String importarErpDD;
+	private String importarErpDG;
 	private String criticarErp;
 	private String exportarErp;
 	private String verbaAlterada;
@@ -25,7 +25,7 @@ public class ProcessoAtual implements Serializable {
 	
 	public ProcessoAtual(String anoMes, String importarFolha, String sumarizarFolha, String exportarFolha,
 			String importarFuncionario, String sumarizarFuncionario, String importarErpMT, String importarErpCD,
-			String importarErpDD, String criticarErp, String exportarErp, String verbaAlterada, String folhaAlterada) {
+			String importarErpDG, String criticarErp, String exportarErp, String verbaAlterada, String folhaAlterada) {
 		super();
 		this.anoMes = anoMes;
 		this.importarFolha = importarFolha;
@@ -35,7 +35,7 @@ public class ProcessoAtual implements Serializable {
 		this.sumarizarFuncionario = sumarizarFuncionario;
 		this.importarErpMT = importarErpMT;
 		this.importarErpCD = importarErpCD;
-		this.importarErpDD = importarErpDD;
+		this.importarErpDG = importarErpDG;
 		this.criticarErp = criticarErp;
 		this.exportarErp = exportarErp;
 		this.verbaAlterada = verbaAlterada;
@@ -90,11 +90,11 @@ public class ProcessoAtual implements Serializable {
 	public void setImportarErpCD(String importarErpCD) {
 		this.importarErpCD = importarErpCD;
 	}
-	public String getImportarErpDD() {
-		return importarErpDD;
+	public String getImportarErpDG() {
+		return importarErpDG;
 	}
-	public void setImportarErpDD(String importarErpDD) {
-		this.importarErpDD = importarErpDD;
+	public void setImportarErpDG(String importarErpDG) {
+		this.importarErpDG = importarErpDG;
 	}
 	public String getCriticarErp() {
 		return criticarErp;
@@ -151,7 +151,7 @@ public class ProcessoAtual implements Serializable {
 		return "ProcessoAtual [anoMes=" + anoMes + ", importarFolha=" + importarFolha + ", sumarizarFolha="
 				+ sumarizarFolha + ", exportarFolha=" + exportarFolha + ", importarFuncionario=" + importarFuncionario
 				+ ", sumarizarFuncionario=" + sumarizarFuncionario + ", importarErpMT=" + importarErpMT
-				+ ", importarErpCD=" + importarErpCD + ", importarErpDD=" + importarErpDD + ", criticarErp="
+				+ ", importarErpCD=" + importarErpCD + ", importarErpDG=" + importarErpDG + ", criticarErp="
 				+ criticarErp + ", exportarErp=" + exportarErp + ", verbaAlterada=" + verbaAlterada + ", folhaAlterada="
 				+ folhaAlterada + "]";
 	}

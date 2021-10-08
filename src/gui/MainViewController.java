@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.ProcessoAtual;
+import model.services.CriticasErpService;
 import model.services.ErpService;
 import model.services.ExportarFolhaService;
 import model.services.FolhaService;
@@ -144,19 +145,26 @@ public class MainViewController implements Initializable {
 	@FXML
 	private void onMenuItemImportarErpMTAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ImportarErpMTView.fxml", "Importação Dados do ErpMT (Requisicao de Materiais)", paiStage, x -> {
+		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpMT (Requisicao de Materiais)", paiStage,
+		(ImportarErpViewController controle) -> {
+			controle.setOrigem("MT");
 		});
+
 	}
 	@FXML
 	private void onMenuItemImportarErpCDAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ImportarErpCDView.fxml", "Importação Dados do ErpCD (Compra Direta)", paiStage, x -> {
+		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpCD (Compra Direta)", paiStage,
+				(ImportarErpViewController controle) -> {
+					controle.setOrigem("CD");
 		});
 	}
 	@FXML
 	private void onMenuItemImportarErpDGAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ImportarErpDGView.fxml", "Importação Dados do ErpDG (Despesas Gerais)", paiStage, x -> {
+		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpDG (Despesas Gerais)", paiStage,
+				(ImportarErpViewController controle) -> {
+					controle.setOrigem("DG");
 		});
 	}
 	@FXML
@@ -183,6 +191,16 @@ public class MainViewController implements Initializable {
 				});
 	}
 	@FXML
+	private void onMenuItemCriticasErpAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/CriticasErpList.fxml", "Criticas do ERP", paiStage,
+				(CriticasErpListController controle) -> {
+					controle.setCriticasErpServico(new CriticasErpService());
+					controle.atualizarTableView();
+				});
+	}
+
+	@FXML
 	private void onMenuItemParametrosAction() {
 		Stage paiStage = paiStage();
 		criarJanelaFilha("/gui/ParametrosList.fxml", "Parametros do Sistema", paiStage,
@@ -190,15 +208,6 @@ public class MainViewController implements Initializable {
 					controle.setParametrosServico(new ParametrosService());
 					controle.atualizarTableView();
 				});
-	}
-	@FXML
-	private void onMenuItemCriticasErpAction() {
-//		Stage paiStage = paiStage();
-//		criarJanelaFilha("/gui/CriticasErpList.fxml", "Criticas do ERP", paiStage,
-//				(CriticasErpListController controle) -> {
-//					controle.setCriticasErpServico(new CriticasErpService());
-//					controle.atualizarTableView();
-//				});
 	}
 	
 	@FXML
@@ -283,6 +292,15 @@ public class MainViewController implements Initializable {
 		menuItemSumarizarFolha.setDisable(processoAtual.getImportarFolha().equals("S") ? false : true);
 		menuItemExportarFolha.setDisable(processoAtual.getSumarizarFolha().equals("S") ? false : true);
 		menuItemSumarizarFuncionarios.setDisable(processoAtual.getImportarFuncionario().equals("S") ? false : true);
+		if (processoAtual.getImportarErpMT().equals("N") ||
+			processoAtual.getImportarErpCD().equals("N") ||
+			processoAtual.getImportarErpDG().equals("N")) {
+			menuItemAnalisarErp.setDisable(true);
+			menuItemExportarErp.setDisable(true);
+		}
+		else {
+			menuItemAnalisarErp.setDisable(false);
+		}
 	}
 	private ProcessoAtual pegarProcessoAtual() {
 		ProcessoAtual processoAtual = new ProcessoAtual();

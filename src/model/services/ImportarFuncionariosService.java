@@ -62,8 +62,10 @@ public class ImportarFuncionariosService {
 		lerFuncionariosTXT(entrada, anoMes);
 		if (qtdeCorrompidas == 0) {		
 			gravarFuncionarios();
+		}
+		if ((qtdeIncluidas > 0) && (qtdeLidas - qtdeIncluidas) == 0) {
 			processoAtualService.atualizarEtapa("ImportarFuncionario","S");
-			}
+		}
 		else {
 			processoAtualService.atualizarEtapa("ImportarFuncionario","N");
 			processoAtualService.atualizarEtapa("SumarizarFuncionario","N");

@@ -39,7 +39,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(6, objeto.getSumarizarFuncionario());
 			st.setString(7, objeto.getImportarErpMT());
 			st.setString(8, objeto.getImportarErpCD());
-			st.setString(9, objeto.getImportarErpDD());
+			st.setString(9, objeto.getImportarErpDG());
 			st.setString(10, objeto.getCriticarErp());
 			st.setString(11, objeto.getExportarErp());
 			st.setString(12, objeto.getVerbaAlterada());
@@ -70,7 +70,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(5, objeto.getSumarizarFuncionario());
 			st.setString(6, objeto.getImportarErpMT());
 			st.setString(7, objeto.getImportarErpCD());
-			st.setString(8, objeto.getImportarErpDD());
+			st.setString(8, objeto.getImportarErpDG());
 			st.setString(9, objeto.getCriticarErp());
 			st.setString(10, objeto.getExportarErp());
 			st.setString(11, objeto.getVerbaAlterada());
@@ -174,7 +174,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 		processoAtual.setSumarizarFuncionario(rs.getString("Sumarizar_Funcionario"));		
 		processoAtual.setImportarErpMT(rs.getString("Importar_ErpMT"));		
 		processoAtual.setImportarErpCD(rs.getString("Importar_ErpCD"));		
-		processoAtual.setImportarErpDD(rs.getString("Importar_ErpDD"));		
+		processoAtual.setImportarErpDG(rs.getString("Importar_ErpDD"));		
 		processoAtual.setCriticarErp(rs.getString("Criticar_Erp"));		
 		processoAtual.setExportarErp(rs.getString("Exportar_Erp"));		
 		processoAtual.setVerbaAlterada(rs.getString("Verba_Alterada"));		
