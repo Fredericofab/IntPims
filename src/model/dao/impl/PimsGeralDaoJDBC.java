@@ -2,17 +2,19 @@ package model.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import db.DB;
 import db.DbException;
-import model.dao.ExportarFolhaDao;
+import model.dao.PimsGeralDao;
 import model.entities.Cstg_IntPF;
 
-public class ExportarFolhaDaoJDBC implements ExportarFolhaDao {
+public class PimsGeralDaoJDBC implements PimsGeralDao {
 	private Connection conexao;
 
-	public ExportarFolhaDaoJDBC(Connection conexao) {
+	public PimsGeralDaoJDBC(Connection conexao) {
 		this.conexao = conexao;
 	}
 	
@@ -51,6 +53,52 @@ public class ExportarFolhaDaoJDBC implements ExportarFolhaDao {
 			throw new DbException("Erro na Insercao do CSTG_INTFP " + "\n" + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
+		}
+	}
+
+
+	@Override
+	public Boolean existeApt_os_he(Double numeroOS, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".apt_os_he WHERE no_boletim = ?");
+			st.setDouble(1, numeroOS);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			throw new DbException("erro na Pesquisa " + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+
+	@Override
+	public Date dataSaidaApt_os_he(Double numeroOS, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".apt_os_he WHERE no_boletim = ?");
+			st.setDouble(1, numeroOS);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				if (rs.getDate("dt_saida") == null) {
+					return null;
+				}
+				Date dataSaida = new java.util.Date(rs.getTimestamp("dt_saida").getTime());
+				return dataSaida;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Pesquisa " + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
 		}
 	}
 }

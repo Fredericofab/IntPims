@@ -6,7 +6,7 @@ import model.dao.impl.FolhaDaoJDBC;
 import model.dao.impl.ParametrosDaoJDBC;
 import model.dao.impl.CriticasErpDaoJDBC;
 import model.dao.impl.ErpDaoJDBC;
-import model.dao.impl.ExportarFolhaDaoJDBC;
+import model.dao.impl.PimsGeralDaoJDBC;
 import model.dao.impl.FuncionariosDaoJDBC;
 import model.dao.impl.FolhaSumarizadaDaoJDBC;
 import model.dao.impl.FuncionariosSumarizadosDaoJDBC;
@@ -17,8 +17,8 @@ public class FabricaDeDao {
 	public static ProcessoAtualDao criarProcessoAtualDao() {
 		return new ProcessoAtualDaoJDBC(DB.abrirConexao());
 	}
-	public static ExportarFolhaDao criarExportarFolhaDao() {
-		return new ExportarFolhaDaoJDBC(DB.abrirConexao());
+	public static PimsGeralDao criarPimsGeralDao() {
+		return new PimsGeralDaoJDBC(DB.abrirConexao());
 	}
 	
 	public static VerbasFolhaDao criarVerbasFolhaDao() {

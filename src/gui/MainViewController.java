@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.ProcessoAtual;
+import model.services.AnalisarErpService;
 import model.services.CriticasErpService;
 import model.services.ErpService;
 import model.services.ExportarFolhaService;
@@ -170,9 +171,14 @@ public class MainViewController implements Initializable {
 	@FXML
 	private void onMenuItemAnalisarErpAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/AnalisarErpView.fxml", "Analise do ERP", paiStage, x -> {
+		criarJanelaFilha("/gui/AnalisarErpView.fxml", "Analise do ERP", paiStage,
+				(AnalisarErpViewController controle) -> {
+					controle.setAnalisarErpServico(new AnalisarErpService());
+					controle.atualizarTableView();
 		});
 	}
+
+	
 	@FXML
 	private void onMenuItemExportarErpAction() {
 		Stage paiStage = paiStage();

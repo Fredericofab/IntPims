@@ -24,6 +24,10 @@ public class CriticasErpService {
 		return dao.listarTodos();
 	}
 
+	public CriticasErp pesquisarPorChave(String tipo, Integer codigo) {
+		return dao.pesquisarPorChave(tipo, codigo);
+	}
+
 	public void salvarOuAtualizar(CriticasErp objeto) {
 		if (dao.pesquisarPorChave(objeto.getTipoCritica(), objeto.getCodigoCritica()) == null) {
 			dao.inserir(objeto);

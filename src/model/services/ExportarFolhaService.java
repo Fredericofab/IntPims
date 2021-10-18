@@ -3,13 +3,13 @@ package model.services;
 import java.util.List;
 
 import model.dao.FabricaDeDao;
-import model.dao.ExportarFolhaDao;
+import model.dao.PimsGeralDao;
 import model.entities.Cstg_IntPF;
 import model.entities.FolhaSumarizada;
 
 public class ExportarFolhaService {
 
-	private ExportarFolhaDao dao = FabricaDeDao.criarExportarFolhaDao();
+	private PimsGeralDao dao = FabricaDeDao.criarPimsGeralDao();
 
 	private	FolhaSumarizadaService folhaSumarizadaService = new FolhaSumarizadaService();
 	private FolhaService folhaService = new FolhaService();

@@ -14,6 +14,7 @@ import java.util.Optional;
 import gui.util.Alertas;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import model.entities.CriticasErp;
 import model.entities.Erp;
 import model.exceptions.TxtIntegridadeException;
 
@@ -102,7 +103,9 @@ public class ImportarErpService {
 		}
 		processoAtualService.atualizarEtapa("CriticarErp", "N");
 		processoAtualService.atualizarEtapa("ExportarErp", "N");
+		zerarContadorDeCriticas();
 	}
+
 
 	private void deletarPorOrigem(String origem) {
 		qtdeDeletadas = erpService.deletarOrigem(origem);
@@ -269,6 +272,18 @@ public class ImportarErpService {
 			
 		} else {
 			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (13)");
+		}
+	}
+
+	private void zerarContadorDeCriticas() {
+		CriticasErpService criticasErpService = new CriticasErpService();
+		List<CriticasErp> lista = criticasErpService.pesquisarTodos();
+		for (CriticasErp criticasErp : lista) {
+			criticasErp.setAnoMesAnalisado(anoMes);
+			criticasErp.setRegistrosAnalisados(0);
+			criticasErp.setRegistrosAtualizados(0);
+			criticasErp.setRegistrosPendentes(0);
+			criticasErpService.salvarOuAtualizar(criticasErp);
 		}
 	}
 

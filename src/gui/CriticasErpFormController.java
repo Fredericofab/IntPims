@@ -139,7 +139,7 @@ public class CriticasErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtRegistrosPendentes);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoCritica, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodigoCritica, 3);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescCritica, 50);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescCritica, 250);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtFlagAtiva, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMesAnalisado, 6);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtRegistrosAnalisados, 5);

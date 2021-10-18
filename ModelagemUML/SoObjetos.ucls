@@ -82,8 +82,8 @@
       <operations public="true" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </interface>  
-  <interface id="10" language="java" name="model.dao.ExportarFolhaDao" project="intPims" 
-    file="/intPims/src/model/dao/ExportarFolhaDao.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="10" language="java" name="model.dao.PimsGeralDao" project="intPims" 
+    file="/intPims/src/model/dao/PimsGeralDao.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="574" y="1561"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -100,8 +100,8 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="model.dao.impl.ExportarFolhaDaoJDBC" project="intPims" 
-    file="/intPims/src/model/dao/impl/ExportarFolhaDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="model.dao.impl.PimsGeralDaoJDBC" project="intPims" 
+    file="/intPims/src/model/dao/impl/PimsGeralDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="542" y="1705"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
