@@ -187,11 +187,11 @@ public class ErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntVM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntCM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntDG, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
-		RestricoesDeDigitacao.soPermiteTextFieldSN(txtSalvarOS_Material);
-		RestricoesDeDigitacao.soPermiteTextFieldSN(txtSalvarCstg_IntVM);
-		RestricoesDeDigitacao.soPermiteTextFieldSN(txtSalvarCstg_IntCM);
-		RestricoesDeDigitacao.soPermiteTextFieldSN(txtSalvarCstg_IntDG);
+		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtImportar);
+		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtSalvarOS_Material);
+		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtSalvarCstg_IntVM);
+		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtSalvarCstg_IntCM);
+		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtSalvarCstg_IntDG);
 		Utilitarios.formatarDatePicker(dpDataMovimento, "dd/MM/yyyy");
 	
 		if (flagIncluir.equals("S")) {

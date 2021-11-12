@@ -47,6 +47,20 @@ public class ErpService {
 	public Integer ultimoSequencial() {
 		return dao.ultimoSequencial();
 	}
+	
+	public Integer qtdeTotal() {
+		return dao.qtdeTotal();
+	}
+
+	public Integer qtdeImportarS() {
+		return dao.qtdeImportarS();
+	}
+	public Integer qtdeImportarN() {
+		return dao.qtdeImportarN();
+	}
+	public Integer qtdeImportarIndefinido() {
+		return dao.qtdeImportarIndefinido();
+	}
 
 	public void gerarTxt(Boolean oficial) {
 		lerParametros(oficial);

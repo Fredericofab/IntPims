@@ -37,4 +37,12 @@ public class RestricoesDeDigitacao {
 			}
 		});
 	}
+	
+	public static void soPermiteTextFieldSNinterrogacao(TextField txt) {
+		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
+			if (valorNovo != null && !valorNovo.toUpperCase().matches("[SN?]")) {
+				txt.setText(valorVelho);
+			}
+		});
+	}
 }

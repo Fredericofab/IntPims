@@ -22,26 +22,28 @@ public class AnalisarErpService {
 	String qtdeDiasOS;
 	
 	List<Erp> listaErp;
+	Integer qtdeTotalDeRegistros;
 	Integer qtdeAnalisadas;
 	Integer qtdeAtualizadas;
 	Integer qtdePendentes;
+
 	
-	public Integer getQtdeAnalisadas() {
-		return qtdeAnalisadas;
+	public Integer getQtdeTotalDeRegistros() {
+		return erpService.qtdeTotal();
 	}
-	public Integer getQtdeAtualizadas() {
-		return qtdeAtualizadas;
+	public Integer getQtdeTotalLiberados() {
+		return erpService.qtdeImportarS();
 	}
-	public Integer getQtdePendentes() {
-		return qtdePendentes;
+	public Integer getQtdeTotalDesconsiderados() {
+		return erpService.qtdeImportarN();
+	}
+	public Integer getQtdeTotalPendentes() {
+		return erpService.qtdeImportarIndefinido();
 	}
 
 	
 	public void analisarUm(String tipo, Integer codigo) {
 		lerParametros();
-		qtdeAnalisadas  = 0;
-		qtdeAtualizadas = 0;
-		qtdePendentes   = 0;
 		listaErp = erpService.pesquisarTodos();
 		if (tipo.equals("S")) { 
 			if (codigo == 001) { s001OSInexistente(); }
@@ -51,11 +53,14 @@ public class AnalisarErpService {
 	public void analisarTodos() {
 		lerParametros();
 		listaErp = erpService.pesquisarTodos();
+		s001OSInexistente();
+		s002OSAntiga();
 	}
 
 
 
 	private void s001OSInexistente() {
+		zerarContadoresDaCritica();
 		for (Erp erp : listaErp) {
 			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
 				qtdeAnalisadas  += 1;
@@ -67,16 +72,17 @@ public class AnalisarErpService {
 				else {
 					qtdePendentes   += 1;
 					erp = gravarCritica(erp, "S001 ");
-					erp.setSalvarOS_Material("N");
+					erp.setImportar("?");
+					erp.setSalvarOS_Material("?");
 				}
 				erpService.salvarOuAtualizar(erp);
 			}
 		}
 		atualizarCriticasErp("S",001);
 	}
-
-	
+		
 	private void s002OSAntiga() {
+		zerarContadoresDaCritica();
 		for (Erp erp : listaErp) {
 			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
 				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
@@ -90,7 +96,8 @@ public class AnalisarErpService {
 					else {
 						qtdePendentes   += 1;
 						erp = gravarCritica(erp, "S002 ");
-						erp.setSalvarOS_Material("N");
+						erp.setImportar("?");
+						erp.setSalvarOS_Material("?");
 					}
 					erpService.salvarOuAtualizar(erp);
 				}
@@ -107,8 +114,13 @@ public class AnalisarErpService {
 		criticasErp.setRegistrosPendentes(qtdePendentes);
 		criticasErpService.salvarOuAtualizar(criticasErp);
 	}
-
 	
+	private void zerarContadoresDaCritica() {
+		qtdeAnalisadas  = 0;
+		qtdeAtualizadas = 0;
+		qtdePendentes   = 0;
+	}	
+
 	private Erp gravarCritica(Erp erp, String critica) {
 		String criticas = erp.getCriticas();
 		if (criticas == null) { 

@@ -13,4 +13,9 @@ public interface ErpDao {
 	Integer deletarTodos();
 	Integer deletarPorOrigem(String origem);
 	Integer ultimoSequencial();
-}
+	
+	Integer qtdeTotal();
+	Integer qtdeImportarS();
+	Integer qtdeImportarN();
+	Integer qtdeImportarIndefinido();
+	}

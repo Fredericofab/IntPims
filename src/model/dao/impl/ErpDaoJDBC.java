@@ -218,6 +218,90 @@ public class ErpDaoJDBC implements ErpDao {
 		}
 	}
 
+	@Override
+	public Integer qtdeTotal() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+System.out.println(qtde);				
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Erp" + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Integer qtdeImportarS() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE Importar = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+System.out.println(qtde);				
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Importar 'S' " + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Integer qtdeImportarN() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE Importar = 'N'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+System.out.println(qtde);				
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Importar 'N' " + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Integer qtdeImportarIndefinido() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE Importar = '?'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+System.out.println(qtde);				
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Importar Indefinido " + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
 	private Erp instanciaDadosErp(ResultSet rs) throws SQLException {
 		Erp dadosErp = new Erp();
 		dadosErp.setAnoMes(rs.getString("Ano_Mes"));
@@ -247,4 +331,5 @@ public class ErpDaoJDBC implements ErpDao {
 		dadosErp.setSequencial(rs.getInt("Sequencial"));
 		return dadosErp;
 	}
+
 }

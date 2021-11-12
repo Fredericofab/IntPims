@@ -14,17 +14,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="451.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AnalisarErpViewController">
+<VBox prefHeight="456.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AnalisarErpViewController">
    <children>
       <SplitPane dividerPositions="0.2600243013365735" prefHeight="404.0" prefWidth="861.0">
         <items>
             <GridPane>
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="117.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="10.0" prefWidth="103.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="146.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="10.0" prefWidth="97.0" />
               </columnConstraints>
               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -40,43 +43,60 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                <Button fx:id="btAnalisarTodos" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBtAnalisarTodosAction" prefHeight="25.0" prefWidth="104.0" text="Analisar Todos" textAlignment="CENTER" />
-                  <Label text="Analise Indivdual" GridPane.rowIndex="2">
+                  <Label text="Analisar Todos" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label text="(Opcional)" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Button fx:id="btAnalisarTodos" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBtAnalisarTodosAction" prefHeight="25.0" prefWidth="104.0" text="Analisar Todos" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Analise Individual" GridPane.rowIndex="4">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label text="Tipo (U/S)" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtTipoCritica" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="34.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Codigo" GridPane.rowIndex="4" />
-                  <TextField fx:id="txtCodigoCritica" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Button fx:id="btAnalisarUm" mnemonicParsing="false" onAction="#onBtAnalisarUmAction" prefHeight="25.0" prefWidth="108.0" text="Analisar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label text="Total de Analises" GridPane.rowIndex="8" />
-                  <TextField fx:id="txtTotalAnalises" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label text="Total de Atualizações" GridPane.rowIndex="9" />
-                  <TextField fx:id="txtTotalAtualizacoes" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label text="Total de Pendencias" GridPane.rowIndex="10" />
-                  <TextField fx:id="txtTotalPendencias" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="101.0" text="Sair" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <Label text="(Opcional)" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="Tipo (U/S)" GridPane.rowIndex="5" />
+                  <TextField fx:id="txtTipoCritica" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="34.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="Codigo" GridPane.rowIndex="6" />
+                  <TextField fx:id="txtCodigoCritica" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Button fx:id="btAnalisarUm" mnemonicParsing="false" onAction="#onBtAnalisarUmAction" prefHeight="25.0" prefWidth="108.0" text="Analisar" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label text="Estatística" GridPane.rowIndex="9">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="Total de Registros" GridPane.rowIndex="10" />
+                  <TextField fx:id="txtTotalRegistros" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <Label text="Registros Liberados" GridPane.rowIndex="11" />
+                  <TextField fx:id="txtTotalLiberados" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <Label text="Registros Desconsiderados" GridPane.rowIndex="12" />
+                  <TextField fx:id="txtTotalDesconsiderados" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <Label text="Registros Pendentes" GridPane.rowIndex="13" />
+                  <TextField fx:id="txtTotalPendentes" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <Label text="Sair" GridPane.rowIndex="15">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="101.0" text="Sair" GridPane.columnIndex="1" GridPane.rowIndex="15" />
                </children>
             </GridPane>
             <ScrollPane prefHeight="261.0" prefWidth="633.0">
                <content>
-                  <TableView fx:id="tableViewCriticasErp" prefHeight="402.0" prefWidth="606.0">
+                  <TableView fx:id="tableViewCriticasErp" prefHeight="402.0" prefWidth="690.0">
                     <columns>
                       <TableColumn fx:id="tableColumnTipoCritica" prefWidth="34.0" text="Tipo" />
                       <TableColumn fx:id="tableColumnCodCritica" prefWidth="49.0" text="Codigo" />
-                        <TableColumn fx:id="tableColumnDescCritica" prefWidth="189.0" text="Descricao" />
-                        <TableColumn fx:id="tableColumnFlagAtiva" minWidth="0.0" prefWidth="41.0" text="Ativa" />
-                        <TableColumn fx:id="tableColumnAnoMesAnalisado" prefWidth="58.0" text="AnoMes" />
-                        <TableColumn fx:id="tableColumnRegistrosAnalisados" prefWidth="71.0" text="Analisado" />
-                        <TableColumn fx:id="tableColumnRegistrosAtualizados" prefWidth="72.0" text="Atualizado" />
-                        <TableColumn fx:id="tableColumnRegistrosPendentes" prefWidth="63.0" text="Pendente" />
+                        <TableColumn fx:id="tableColumnDescCritica" prefWidth="307.0" text="Descricao" />
+                        <TableColumn fx:id="tableColumnFlagAtiva" minWidth="0.0" prefWidth="38.0" text="Ativa" />
+                        <TableColumn fx:id="tableColumnAnoMesAnalisado" prefWidth="55.0" text="AnoMes" />
+                        <TableColumn fx:id="tableColumnRegistrosAnalisados" prefWidth="63.0" text="Analisado" />
+                        <TableColumn fx:id="tableColumnRegistrosAtualizados" prefWidth="70.0" text="Atualizado" />
+                        <TableColumn fx:id="tableColumnRegistrosPendentes" prefWidth="65.0" text="Pendente" />
                     </columns>
                   </TableView>
                </content>

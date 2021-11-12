@@ -64,6 +64,9 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemAnalisarErp;
 	@FXML
 	private MenuItem menuItemExportarErp;
+	@FXML
+	private MenuItem menuItemSair;
+
 	
 	@FXML
 	private Menu menuTabelas;
@@ -95,7 +98,7 @@ public class MainViewController implements Initializable {
 	@FXML
 	private Menu menuSair;
 	@FXML
-	private MenuItem menuItemSair;
+	private MenuItem menuItemSair2;
 
 	@FXML
 	private void onMenuProcessosShown() {

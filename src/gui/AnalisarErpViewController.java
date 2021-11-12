@@ -47,11 +47,13 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	private TextField txtCodigoCritica;
 	@FXML
-	private TextField txtTotalAnalises;
+	private TextField txtTotalRegistros;
 	@FXML
-	private TextField txtTotalAtualizacoes;
+	private TextField txtTotalLiberados;
 	@FXML
-	private TextField txtTotalPendencias;
+	private TextField txtTotalDesconsiderados;
+	@FXML
+	private TextField txtTotalPendentes;
 	@FXML
 	private Button btAnalisarUm;
 	@FXML
@@ -78,6 +80,8 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	public void onBtAnalisarTodosAction(ActionEvent evento) {
 		servico.analisarTodos();
+		atualizarTela();
+		atualizarTableView();
 	}
 
 	public void setAnalisarErpServico(AnalisarErpService servico) {
@@ -109,11 +113,13 @@ public class AnalisarErpViewController implements Initializable {
 	}
 	
 	private void atualizarTela() {
-		Integer qtdeAnalisadas = servico.getQtdeAnalisadas();
-		Integer qtdeAtualizadas = servico.getQtdeAtualizadas();
-		Integer qtdePendentes = servico.getQtdePendentes();
-		txtTotalAnalises.setText(qtdeAnalisadas.toString());
-		txtTotalAtualizacoes.setText(qtdeAtualizadas.toString());
-		txtTotalPendencias.setText(qtdePendentes.toString());
+		Integer qtdeTotalRegistros = servico.getQtdeTotalDeRegistros();
+		Integer qtdeTotalLiberados = servico.getQtdeTotalLiberados();
+		Integer qtdeTotalDesconsiderados = servico.getQtdeTotalDesconsiderados();
+		Integer qtdeTotalPendentes = servico.getQtdeTotalPendentes();
+		txtTotalRegistros.setText(qtdeTotalRegistros.toString());
+		txtTotalLiberados.setText(qtdeTotalLiberados.toString());
+		txtTotalDesconsiderados.setText(qtdeTotalDesconsiderados.toString());
+		txtTotalPendentes.setText(qtdeTotalPendentes.toString());
 	}
 }

@@ -19,17 +19,17 @@
       </ToolBar>
       <TableView fx:id="tableViewDadosCriticasErp" prefHeight="311.0" prefWidth="792.0">
         <columns>
-          <TableColumn fx:id="tableColumnTipoCritica" prefWidth="55.0" text="Tipo" />
-          <TableColumn fx:id="tableColumnCodCritica" prefWidth="89.0" text="Codigo" />
-            <TableColumn fx:id="tableColumnDescCritica" prefWidth="96.0" text="Descricao" />
-            <TableColumn fx:id="tableColumnFlagAtiva" prefWidth="51.0" text="Ativa" />
-            <TableColumn fx:id="tableColumnAnoMesAnalisado" prefWidth="105.0" text="AnoMes Ref" />
-            <TableColumn fx:id="tableColumnRegistrosAnalisados" prefWidth="87.0" text="Qtde Anal" />
-            <TableColumn fx:id="tableColumnRegistrosAtualizados" prefWidth="58.0" text="Qtde Atu" />
-            <TableColumn fx:id="tableColumnRegistrosPendentes" prefWidth="72.0" text="Qtde Pend" />
-            <TableColumn fx:id="tableColumnClausulaWhere" prefWidth="75.0" text="Where" />
-            <TableColumn fx:id="tableColumnClausulaSet" prefWidth="75.0" text="Set" />
-            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="63.0" />
+          <TableColumn fx:id="tableColumnTipoCritica" prefWidth="32.0" text="Tipo" />
+          <TableColumn fx:id="tableColumnCodCritica" prefWidth="46.0" text="Codigo" />
+            <TableColumn fx:id="tableColumnDescCritica" prefWidth="226.0" text="Descricao" />
+            <TableColumn fx:id="tableColumnFlagAtiva" prefWidth="41.0" text="Ativa" />
+            <TableColumn fx:id="tableColumnAnoMesAnalisado" prefWidth="51.0" text="AnoMes" />
+            <TableColumn fx:id="tableColumnRegistrosAnalisados" prefWidth="66.0" text="Qtde Anal" />
+            <TableColumn fx:id="tableColumnRegistrosAtualizados" prefWidth="59.0" text="Qtde Atu" />
+            <TableColumn fx:id="tableColumnRegistrosPendentes" prefWidth="66.0" text="Qtde Pend" />
+            <TableColumn fx:id="tableColumnClausulaWhere" prefWidth="138.0" text="Where" />
+            <TableColumn fx:id="tableColumnClausulaSet" prefWidth="141.0" text="Set" />
+            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="81.0" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="64.0" />
         </columns>
       </TableView>

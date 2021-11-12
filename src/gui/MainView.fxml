@@ -29,6 +29,8 @@
                         <MenuItem fx:id="menuItemImportarErpDG" mnemonicParsing="false" onAction="#onMenuItemImportarErpDGAction" text="Importar ErpDG (Despesas Gerais)" />
                         <MenuItem fx:id="menuItemAnalisarErp" mnemonicParsing="false" onAction="#onMenuItemAnalisarErpAction" text="Analisar ERP" />
                         <MenuItem fx:id="menuItemExportarErp" mnemonicParsing="false" onAction="#onMenuItemExportarErpAction" text="Exportar ERP" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuItemSair2" mnemonicParsing="false" onAction="#onMenuItemSairAction" text="Sair" />
                   </items>
                 </Menu>
                 <Menu fx:id="menuTabelas" mnemonicParsing="false" text="Tabelas">

@@ -7,7 +7,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="350.0" prefWidth="1094.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ErpListController">
+<VBox prefHeight="349.0" prefWidth="1205.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ErpListController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -19,22 +19,22 @@
       </ToolBar>
       <TableView fx:id="tableViewDadosErp" prefHeight="329.0" prefWidth="1047.0">
         <columns>
-            <TableColumn fx:id="tableColumnSequencial" prefWidth="75.0" text="Sequencial" />
+            <TableColumn fx:id="tableColumnSequencial" prefWidth="71.0" text="Sequencial" />
           <TableColumn fx:id="tableColumnAnoMes" prefWidth="55.0" text="AnoMes" />
-            <TableColumn fx:id="tableColumnOrigem" prefWidth="58.0" text="Origem" />
-          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="71.0" text="C.Custos" />
-            <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="131.0" text="Desc. C.Custos" />
-            <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="65.0" text="C.Contabil" />
-            <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="110.0" text="Desc. C.Contabil" />
-            <TableColumn fx:id="tableColumnCodMaterial" prefWidth="75.0" text="Material" />
-            <TableColumn fx:id="tableColumnDescMovimento" prefWidth="75.0" text="Desc Movimento" />
-            <TableColumn fx:id="tableColumnUnidadeMedida" prefWidth="75.0" text="UN" />
-            <TableColumn fx:id="tableColumnQuantidade" prefWidth="75.0" text="Quantidade" />
-            <TableColumn fx:id="tableColumnPrecoUnitario" prefWidth="75.0" text="Preco Unitario" />
-            <TableColumn fx:id="tableColumnValorMovimento" prefWidth="75.0" text="Valor Movimento" />
-            <TableColumn fx:id="tableColumnReferenciaOS" prefWidth="75.0" text="Referencia OS" />
-            <TableColumn fx:id="tableColumnNumeroOS" prefWidth="75.0" text="Numero OS" />
-            <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="75.0" text="Documento ERP" />
+            <TableColumn fx:id="tableColumnOrigem" prefWidth="51.0" text="Origem" />
+          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="102.0" text="C.Custos" />
+            <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="121.0" text="Desc. C.Custos" />
+            <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="74.0" text="C.Contabil" />
+            <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="102.0" text="Desc. C.Contabil" />
+            <TableColumn fx:id="tableColumnCodMaterial" prefWidth="64.0" text="Material" />
+            <TableColumn fx:id="tableColumnDescMovimento" prefWidth="156.0" text="Desc Movimento" />
+            <TableColumn fx:id="tableColumnUnidadeMedida" prefWidth="26.0" text="UN" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="43.0" text="Qtde" />
+            <TableColumn fx:id="tableColumnPrecoUnitario" prefWidth="75.0" text="Pr. Unitario" />
+            <TableColumn fx:id="tableColumnValorMovimento" prefWidth="75.0" text="Valor Mov." />
+            <TableColumn fx:id="tableColumnReferenciaOS" prefWidth="46.0" text="Ref. OS" />
+            <TableColumn fx:id="tableColumnNumeroOS" prefWidth="76.0" text="Numero OS" />
+            <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="103.0" text="Documento ERP" />
             <TableColumn fx:id="tableColumnDataMovimento" prefWidth="75.0" text="Data Movimento" />
             <TableColumn fx:id="tableColumnImportar" prefWidth="64.0" text="Importar" />
             <TableColumn fx:id="tableColumnCriticas" prefWidth="75.0" text="Criticas" />
