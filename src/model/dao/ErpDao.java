@@ -18,4 +18,5 @@ public interface ErpDao {
 	Integer qtdeImportarS();
 	Integer qtdeImportarN();
 	Integer qtdeImportarIndefinido();
+	Integer atualizarCriticaTipoU(String clausulaWhere, String clausulaSet);
 	}

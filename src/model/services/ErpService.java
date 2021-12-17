@@ -48,10 +48,13 @@ public class ErpService {
 		return dao.ultimoSequencial();
 	}
 	
+	public Integer atualizarCriticaTipoU(String clausulaWhere, String clausulaSet) {
+		return dao.atualizarCriticaTipoU(clausulaWhere,clausulaSet);
+	}
+	
 	public Integer qtdeTotal() {
 		return dao.qtdeTotal();
 	}
-
 	public Integer qtdeImportarS() {
 		return dao.qtdeImportarS();
 	}

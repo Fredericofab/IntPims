@@ -1,9 +1,11 @@
+
 package gui;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import gui.util.RestricoesDeDigitacao;
 import gui.util.Utilitarios;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,32 +17,32 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.entities.CriticasErp;
+import model.entities.CriticaErp;
 import model.services.AnalisarErpService;
-import model.services.CriticasErpService;
+import model.services.CriticaErpService;
 
 public class AnalisarErpViewController implements Initializable {
 
 	private AnalisarErpService servico;
 	
 	@FXML
-	private TableView<CriticasErp> tableViewCriticasErp;
+	private TableView<CriticaErp> tableViewCriticasErp;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnTipoCritica;
+	private TableColumn<CriticaErp, String> tableColumnTipoCritica;
 	@FXML
-	private TableColumn<CriticasErp, Integer> tableColumnCodCritica;
+	private TableColumn<CriticaErp, Integer> tableColumnCodCritica;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnDescCritica;
+	private TableColumn<CriticaErp, String> tableColumnDescCritica;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnFlagAtiva;
+	private TableColumn<CriticaErp, String> tableColumnFlagAtiva;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnAnoMesAnalisado;
+	private TableColumn<CriticaErp, String> tableColumnAnoMesAnalisado;
 	@FXML
-	private TableColumn<CriticasErp, Integer> tableColumnRegistrosAnalisados;
+	private TableColumn<CriticaErp, Integer> tableColumnRegistrosAnalisados;
 	@FXML
-	private TableColumn<CriticasErp, Integer> tableColumnRegistrosAtualizados;
+	private TableColumn<CriticaErp, Integer> tableColumnRegistrosAtualizados;
 	@FXML
-	private TableColumn<CriticasErp, Integer> tableColumnRegistrosPendentes;
+	private TableColumn<CriticaErp, Integer> tableColumnRegistrosPendentes;
 
 	@FXML
 	private TextField txtTipoCritica;
@@ -61,7 +63,7 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	private Button btSair;
 	
-	private ObservableList<CriticasErp> obsLista;
+	private ObservableList<CriticaErp> obsLista;
 
 	@FXML
 	public void onBtSairAction(ActionEvent evento) {
@@ -102,11 +104,12 @@ public class AnalisarErpViewController implements Initializable {
 		tableColumnRegistrosAnalisados.setCellValueFactory(new PropertyValueFactory<>("registrosAnalisados"));
 		tableColumnRegistrosAtualizados.setCellValueFactory(new PropertyValueFactory<>("registrosAtualizados"));
 		tableColumnRegistrosPendentes.setCellValueFactory(new PropertyValueFactory<>("registrosPendentes"));
+		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodigoCritica);
 	}
 
 	public void atualizarTableView() {
-		CriticasErpService criticasErpService = new CriticasErpService();
-		List<CriticasErp> lista = criticasErpService.pesquisarTodos();
+		CriticaErpService criticasErpService = new CriticaErpService();
+		List<CriticaErp> lista = criticasErpService.pesquisarTodos();
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewCriticasErp.setItems(obsLista);
 		tableViewCriticasErp.refresh();

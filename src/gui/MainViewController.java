@@ -20,7 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.ProcessoAtual;
 import model.services.AnalisarErpService;
-import model.services.CriticasErpService;
+import model.services.CriticaErpService;
 import model.services.ErpService;
 import model.services.ExportarFolhaService;
 import model.services.FolhaService;
@@ -107,7 +107,8 @@ public class MainViewController implements Initializable {
 	@FXML
 	private void onMenuItemProcessoAtualAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ProcessoAtualView.fxml", "Controle do Processo Atual", paiStage, x -> {
+		criarJanelaFilha("/gui/ProcessoAtualView.fxml", "Controle do Processo Atual",
+				paiStage, x -> {
 		});
 	}
 	@FXML
@@ -202,9 +203,9 @@ public class MainViewController implements Initializable {
 	@FXML
 	private void onMenuItemCriticasErpAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/CriticasErpList.fxml", "Criticas do ERP", paiStage,
-				(CriticasErpListController controle) -> {
-					controle.setCriticasErpServico(new CriticasErpService());
+		criarJanelaFilha("/gui/CriticaErpList.fxml", "Criticas do ERP", paiStage,
+				(CriticaErpListController controle) -> {
+					controle.setCriticasErpServico(new CriticaErpService());
 					controle.atualizarTableView();
 				});
 	}
@@ -339,6 +340,7 @@ public class MainViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+
 	private Stage paiStage() {
 		Stage telaPrincipal = (Stage) menuBarPrincipal.getScene().getWindow();
 		return telaPrincipal;

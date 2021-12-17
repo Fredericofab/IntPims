@@ -32,7 +32,7 @@ public class RestricoesDeDigitacao {
 
 	public static void soPermiteTextFieldSN(TextField txt) {
 		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
-			if (valorNovo != null && !valorNovo.matches("[SNsn]")) {
+			if (valorNovo != null && !valorNovo.toUpperCase().matches("[SN]")) {
 				txt.setText(valorVelho);
 			}
 		});
@@ -45,4 +45,23 @@ public class RestricoesDeDigitacao {
 			}
 		});
 	}
+	
+//	public static void soPermiteTextFieldBrancoSNinterrogacao(TextField txt) {
+//		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
+//			if (valorNovo == null) {
+//				txt.setText(valorNovo);
+//			}
+//			else if ( !valorNovo.toUpperCase().matches("[SN?]")) {
+//				txt.setText(valorVelho);
+//			}
+//		});
+//	}
+	public static void soPermiteTextFieldBrancoSNinterrogacao(TextField txt) {
+		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
+			if (valorNovo != null && !valorNovo.toUpperCase().matches("[ SN?]")) {
+				txt.setText(valorVelho);
+			}
+		});
+	}
+	
 }

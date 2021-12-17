@@ -7,44 +7,45 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="349.0" prefWidth="1205.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ErpListController">
+<VBox prefHeight="627.0" prefWidth="1194.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ErpListController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <ToolBar prefHeight="7.0" prefWidth="1965.0">
         <items>
           <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" text="Incluir" />
             <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="GerarTXT" />
-            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="539.0" text="Button" visible="false" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Filtrar" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="479.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewDadosErp" prefHeight="329.0" prefWidth="1047.0">
+      <TableView fx:id="tableViewDadosErp" prefHeight="587.0" prefWidth="1776.0">
         <columns>
-            <TableColumn fx:id="tableColumnSequencial" prefWidth="71.0" text="Sequencial" />
-          <TableColumn fx:id="tableColumnAnoMes" prefWidth="55.0" text="AnoMes" />
-            <TableColumn fx:id="tableColumnOrigem" prefWidth="51.0" text="Origem" />
-          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="102.0" text="C.Custos" />
-            <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="121.0" text="Desc. C.Custos" />
-            <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="74.0" text="C.Contabil" />
-            <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="102.0" text="Desc. C.Contabil" />
-            <TableColumn fx:id="tableColumnCodMaterial" prefWidth="64.0" text="Material" />
-            <TableColumn fx:id="tableColumnDescMovimento" prefWidth="156.0" text="Desc Movimento" />
-            <TableColumn fx:id="tableColumnUnidadeMedida" prefWidth="26.0" text="UN" />
-            <TableColumn fx:id="tableColumnQuantidade" prefWidth="43.0" text="Qtde" />
-            <TableColumn fx:id="tableColumnPrecoUnitario" prefWidth="75.0" text="Pr. Unitario" />
-            <TableColumn fx:id="tableColumnValorMovimento" prefWidth="75.0" text="Valor Mov." />
-            <TableColumn fx:id="tableColumnReferenciaOS" prefWidth="46.0" text="Ref. OS" />
-            <TableColumn fx:id="tableColumnNumeroOS" prefWidth="76.0" text="Numero OS" />
-            <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="103.0" text="Documento ERP" />
-            <TableColumn fx:id="tableColumnDataMovimento" prefWidth="75.0" text="Data Movimento" />
-            <TableColumn fx:id="tableColumnImportar" prefWidth="64.0" text="Importar" />
-            <TableColumn fx:id="tableColumnCriticas" prefWidth="75.0" text="Criticas" />
-            <TableColumn fx:id="tableColumnSalvarOS_Material" prefWidth="75.0" text="Salvar OS_Material" />
-            <TableColumn fx:id="tableColumnSalvarCstg_IntVM" prefWidth="75.0" text="Salvar CSTG_IntVM" />
-            <TableColumn fx:id="tableColumnSalvarCstg_IntCM" prefWidth="75.0" text="Salvar CSTG_IntCM" />
-            <TableColumn fx:id="tableColumnSalvarCstg_IntDG" prefWidth="75.0" text="Salvar CSTG_IntDG" />
-            <TableColumn fx:id="tableColumnObservacao" prefWidth="90.0" text="Observacao" />
-            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="56.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="63.0" />
+            <TableColumn fx:id="tableColumnSequencial" prefWidth="10.0" text="Seq" />
+          <TableColumn fx:id="tableColumnAnoMes" prefWidth="10.0" text="AnoMes" />
+            <TableColumn fx:id="tableColumnOrigem" prefWidth="30.0" text="Origem" />
+          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="68.0" text="C.Custos" />
+            <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="10.0" text="Desc. C.Custos" />
+            <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="70.0" text="C.Contabil" />
+            <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="10.0" text="Desc. C.Contabil" />
+            <TableColumn fx:id="tableColumnCodMaterial" prefWidth="60.0" text="Material" />
+            <TableColumn fx:id="tableColumnDescMovimento" prefWidth="60.0" text="Desc Movimento" />
+            <TableColumn fx:id="tableColumnUnidadeMedida" prefWidth="28.0" text="UN" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="56.0" text="Qtde" />
+            <TableColumn fx:id="tableColumnPrecoUnitario" prefWidth="61.0" text="Pr. Unitario" />
+            <TableColumn fx:id="tableColumnValorMovimento" prefWidth="77.0" text="Valor Mov." />
+            <TableColumn fx:id="tableColumnReferenciaOS" prefWidth="36.0" text="Ref. OS" />
+            <TableColumn fx:id="tableColumnNumeroOS" prefWidth="50.0" text="No. OS" />
+            <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="43.0" text="Documento ERP" />
+            <TableColumn fx:id="tableColumnDataMovimento" prefWidth="70.0" text="Data Movto" />
+            <TableColumn fx:id="tableColumnImportar" prefWidth="58.0" text="Importar" />
+            <TableColumn fx:id="tableColumnCriticas" prefWidth="60.0" text="Criticas" />
+            <TableColumn fx:id="tableColumnSalvarOS_Material" prefWidth="25.0" text="OS" />
+            <TableColumn fx:id="tableColumnSalvarCstg_IntVM" prefWidth="25.0" text="VM" />
+            <TableColumn fx:id="tableColumnSalvarCstg_IntCM" prefWidth="25.0" text="CM" />
+            <TableColumn fx:id="tableColumnSalvarCstg_IntDG" prefWidth="25.0" text="DG" />
+            <TableColumn fx:id="tableColumnObservacao" prefWidth="85.0" text="Observacao" />
+            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="58.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="67.0" />
         </columns>
       </TableView>
    </children>

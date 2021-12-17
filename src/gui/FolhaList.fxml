@@ -7,7 +7,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="349.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FolhaListController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FolhaListController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -17,7 +17,7 @@
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewDadosFolha" prefHeight="311.0" prefWidth="792.0">
+      <TableView fx:id="tableViewDadosFolha" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="453.0" prefWidth="742.0">
         <columns>
           <TableColumn fx:id="tableColumnAnoMes" prefWidth="55.0" text="AnoMes" />
           <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="89.0" text="C.Custos" />

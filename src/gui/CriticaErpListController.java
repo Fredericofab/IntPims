@@ -28,13 +28,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.CriticasErp;
-import model.services.CriticasErpService;
+import model.entities.CriticaErp;
+import model.services.CriticaErpService;
 import model.services.ParametrosService;
 
-public class CriticasErpListController implements Initializable, DadosAlteradosListener {
+public class CriticaErpListController implements Initializable, DadosAlteradosListener {
 
-	private CriticasErpService servico;
+	private CriticaErpService servico;
 	
 	private ParametrosService parametrosService = new ParametrosService();
 
@@ -46,49 +46,56 @@ public class CriticasErpListController implements Initializable, DadosAlteradosL
 	String anoMes;
 
 	@FXML
-	private TableView<CriticasErp> tableViewDadosCriticasErp;
+	private TableView<CriticaErp> tableViewDadosCriticasErp;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnTipoCritica;
+	private TableColumn<CriticaErp, String> tableColumnTipoCritica;
 	@FXML
-	private TableColumn<CriticasErp, Integer> tableColumnCodCritica;
+	private TableColumn<CriticaErp, Integer> tableColumnCodCritica;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnDescCritica;
+	private TableColumn<CriticaErp, String> tableColumnNomeCritica;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnFlagAtiva;
+	private TableColumn<CriticaErp, String> tableColumnDescCritica;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnAnoMesAnalisado;
+	private TableColumn<CriticaErp, String> tableColumnFlagAtiva;
 	@FXML
-	private TableColumn<CriticasErp, Integer> tableColumnRegistrosAnalisados;
+	private TableColumn<CriticaErp, String> tableColumnAnoMesAnalisado;
 	@FXML
-	private TableColumn<CriticasErp, Integer> tableColumnRegistrosAtualizados;
+	private TableColumn<CriticaErp, Integer> tableColumnRegistrosPendentes;
 	@FXML
-	private TableColumn<CriticasErp, Integer> tableColumnRegistrosPendentes;
+	private TableColumn<CriticaErp, String> tableColumnClausulaWhere;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnClausulaWhere;
+	private TableColumn<CriticaErp, String> tableColumnImportar;
 	@FXML
-	private TableColumn<CriticasErp, String> tableColumnClausulaSet;
+	private TableColumn<CriticaErp, String> tableColumnSalvarOS_Material;
 	@FXML
-	private TableColumn<CriticasErp, CriticasErp> tableColumnEDIT;
+	private TableColumn<CriticaErp, String> tableColumnSalvarCstg_IntVM;
 	@FXML
-	private TableColumn<CriticasErp, CriticasErp> tableColumnREMOVE;
+	private TableColumn<CriticaErp, String> tableColumnSalvarCstg_IntCM;
+	@FXML
+	private TableColumn<CriticaErp, String> tableColumnSalvarCstg_IntDG;
+
+	@FXML
+	private TableColumn<CriticaErp, CriticaErp> tableColumnEDIT;
+	@FXML
+	private TableColumn<CriticaErp, CriticaErp> tableColumnREMOVE;
 
 	@FXML
 	private Button btIncluir;
 	@FXML
 	private Button btGerarTxt;
 	@FXML
+	private Button btRelatorioTxt;
+	@FXML
 	private Button btSair;
 
-	private ObservableList<CriticasErp> obsLista;
+	private ObservableList<CriticaErp> obsLista;
 
 	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
 		Stage parentStage = Utilitarios.atualStage(evento);
-		String caminhoDaView = "/gui/CriticasErpForm.fxml";
-		CriticasErp entidade = new CriticasErp();
+		String caminhoDaView = "/gui/CriticaErpForm.fxml";
+		CriticaErp entidade = new CriticaErp();
 		entidade.setTipoCritica("U");
-		entidade.setRegistrosAnalisados(0);
-		entidade.setRegistrosAtualizados(0);
 		entidade.setRegistrosPendentes(0);
 		Integer sequencial = servico.ultimoSequencial(entidade) + 1;
 		entidade.setCodigoCritica(sequencial);
@@ -100,11 +107,16 @@ public class CriticasErpListController implements Initializable, DadosAlteradosL
 		servico.gerarTxt(oficial);
 	}
 	@FXML
+	public void onRelatorioTxtAction(ActionEvent evento) {
+		Boolean oficial = false;
+		servico.relatorioTxt(oficial);
+	}
+	@FXML
 	public void onBtSairAction(ActionEvent evento) {
 		Utilitarios.atualStage(evento).close();
 	}
 
-	public void setCriticasErpServico(CriticasErpService servico) {
+	public void setCriticasErpServico(CriticaErpService servico) {
 		this.servico = servico;
 	}
 
@@ -121,18 +133,20 @@ public class CriticasErpListController implements Initializable, DadosAlteradosL
 	}
 
 	private void inicializarComponentes() {
-				
 		tableColumnTipoCritica.setCellValueFactory(new PropertyValueFactory<>("tipoCritica"));
 		tableColumnCodCritica.setCellValueFactory(new PropertyValueFactory<>("codigoCritica"));
+		tableColumnNomeCritica.setCellValueFactory(new PropertyValueFactory<>("nomeCritica"));
 		tableColumnDescCritica.setCellValueFactory(new PropertyValueFactory<>("descCritica"));
 		tableColumnFlagAtiva.setCellValueFactory(new PropertyValueFactory<>("flagAtiva"));
 		tableColumnAnoMesAnalisado.setCellValueFactory(new PropertyValueFactory<>("anoMesAnalisado"));
-		tableColumnRegistrosAnalisados.setCellValueFactory(new PropertyValueFactory<>("registrosAnalisados"));
-		tableColumnRegistrosAtualizados.setCellValueFactory(new PropertyValueFactory<>("registrosAtualizados"));
 		tableColumnRegistrosPendentes.setCellValueFactory(new PropertyValueFactory<>("registrosPendentes"));
 		tableColumnClausulaWhere.setCellValueFactory(new PropertyValueFactory<>("clausulaWhere"));
-		tableColumnClausulaSet.setCellValueFactory(new PropertyValueFactory<>("clausulaSet"));
-
+		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
+		tableColumnSalvarOS_Material.setCellValueFactory(new PropertyValueFactory<>("salvarOS_Material"));
+		tableColumnSalvarCstg_IntVM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntVM"));
+		tableColumnSalvarCstg_IntCM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntCM"));
+		tableColumnSalvarCstg_IntDG.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntDG"));
+		
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
 
@@ -140,7 +154,7 @@ public class CriticasErpListController implements Initializable, DadosAlteradosL
 		if (servico == null) {
 			throw new IllegalStateException("o servico nao foi carregado pelo outro programador");
 		}
-		List<CriticasErp> lista = servico.pesquisarTodos();
+		List<CriticaErp> lista = servico.pesquisarTodos();
 
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewDadosCriticasErp.setItems(obsLista);
@@ -152,19 +166,19 @@ public class CriticasErpListController implements Initializable, DadosAlteradosL
 		}
 	}
 
-	private void criarDialogoForm(CriticasErp entidade, String caminhoDaView, Stage parentStage) {
+	private void criarDialogoForm(CriticaErp entidade, String caminhoDaView, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
 			ScrollPane pane = loader.load();
 
-			CriticasErpFormController controller = loader.getController();
+			CriticaErpFormController controller = loader.getController();
 			controller.setCriticasErp(entidade);
-			controller.setCriticasErpService(new CriticasErpService());
+			controller.setCriticasErpService(new CriticaErpService());
 			controller.serOuvinteDeDadosAlteradosListener(this);
 			controller.atualizarFormulario();
 
 			Stage dialogoStage = new Stage();
-			dialogoStage.setTitle("CriticasErp");
+			dialogoStage.setTitle("CriticaErp");
 			dialogoStage.setScene(new Scene(pane));
 			dialogoStage.setResizable(false);
 			dialogoStage.initOwner(parentStage);
@@ -185,11 +199,11 @@ public class CriticasErpListController implements Initializable, DadosAlteradosL
 	private void initEditButtons() {
 		// codigo adaptado da material do curso Udemy
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEDIT.setCellFactory(param -> new TableCell<CriticasErp, CriticasErp>() {
+		tableColumnEDIT.setCellFactory(param -> new TableCell<CriticaErp, CriticaErp>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(CriticasErp obj, boolean empty) {
+			protected void updateItem(CriticaErp obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -197,18 +211,18 @@ public class CriticasErpListController implements Initializable, DadosAlteradosL
 				}
 				setGraphic(button);
 				button.setOnAction(
-						event -> criarDialogoForm(obj, "/gui/CriticasErpForm.fxml", Utilitarios.atualStage(event)));
+						event -> criarDialogoForm(obj, "/gui/CriticaErpForm.fxml", Utilitarios.atualStage(event)));
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<CriticasErp, CriticasErp>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<CriticaErp, CriticaErp>() {
 			private final Button button = new Button("Excluir");
 
 			@Override
-			protected void updateItem(CriticasErp obj, boolean empty) {
+			protected void updateItem(CriticaErp obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -220,7 +234,7 @@ public class CriticasErpListController implements Initializable, DadosAlteradosL
 		});
 	}
 
-	private void removeEntity(CriticasErp objeto) {
+	private void removeEntity(CriticaErp objeto) {
 		Optional<ButtonType> clicado = Alertas.mostrarConfirmacao("Confirmacao", null, "Tem certeza da delecao?", AlertType.CONFIRMATION );
 		if (clicado.get() == ButtonType.OK) {
 			if (servico == null) {

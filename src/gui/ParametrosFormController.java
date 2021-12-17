@@ -142,7 +142,9 @@ public class ParametrosFormController implements Initializable {
 		objeto.setValor(txtValor.getText());
 		objeto.setDescricao(txtDescricao.getText());
 		
-		objeto.setValor(Utilitarios.tentarConverterParaMaiusculo(txtValor.getText()));
+		if (txtValor.getText().length() == 1 ) {
+			objeto.setValor(Utilitarios.tentarConverterParaMaiusculo(txtValor.getText()));
+		}
 
 		return objeto;
 	}

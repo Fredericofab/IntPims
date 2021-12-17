@@ -15,9 +15,6 @@ public class Main extends Application {
 	@Override
 
 	public void start(Stage primaryStage) {
-
-		// TestesDeDesenvolvimento.testesDeDesenvolvimento();
-
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
 			ScrollPane scrollPane = loader.load();
@@ -28,7 +25,7 @@ public class Main extends Application {
 			mainScene = new Scene(scrollPane);
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Interfaces do PimsCS");
-//			primaryStage.setMaximized(true);
+			primaryStage.setMaximized(true);
 			primaryStage.show();
 
 		} catch (IOException e) {

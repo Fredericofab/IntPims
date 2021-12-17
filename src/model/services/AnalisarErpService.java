@@ -8,13 +8,14 @@ import java.util.List;
 
 import model.dao.FabricaDeDao;
 import model.dao.PimsGeralDao;
-import model.entities.CriticasErp;
+import model.entities.CriticaErp;
 import model.entities.Erp;
 
 public class AnalisarErpService {
 	
 	private PimsGeralDao pimsGeralDao = FabricaDeDao.criarPimsGeralDao();
 	private ErpService erpService = new ErpService();
+	private CriticaErpService criticasErpService = new CriticaErpService();
 
 //	parametros
 	String usuarioPimsCS;
@@ -22,9 +23,6 @@ public class AnalisarErpService {
 	String qtdeDiasOS;
 	
 	List<Erp> listaErp;
-	Integer qtdeTotalDeRegistros;
-	Integer qtdeAnalisadas;
-	Integer qtdeAtualizadas;
 	Integer qtdePendentes;
 
 	
@@ -46,27 +44,38 @@ public class AnalisarErpService {
 		lerParametros();
 		listaErp = erpService.pesquisarTodos();
 		if (tipo.equals("S")) { 
-			if (codigo == 001) { s001OSInexistente(); }
-			if (codigo == 002) { s002OSAntiga(); }
+			if (codigo == 001) { s001ExisteOSnoManfro(); }
+			if (codigo == 002) { s002OSRecente(); }
 		}
+		else {
+			if (tipo.equals("U") && codigo != null) {
+				criticaTipoU(criticasErpService.pesquisarPorChave("U", codigo));
+			}
+		}
+			
 	}
 	public void analisarTodos() {
 		lerParametros();
 		listaErp = erpService.pesquisarTodos();
-		s001OSInexistente();
-		s002OSAntiga();
+		s001ExisteOSnoManfro();
+		s002OSRecente();
+
+		for (CriticaErp criticaErp : criticasErpService.pesquisarTodos() ) {
+			if (criticaErp.getTipoCritica().toUpperCase().equals("U") && 
+				criticaErp.getFlagAtiva().toUpperCase().equals("S")) {
+				criticaTipoU(criticaErp);
+			}
+		}
 	}
 
 
 
-	private void s001OSInexistente() {
-		zerarContadoresDaCritica();
+	private void s001ExisteOSnoManfro() {
+		qtdePendentes   = 0;
 		for (Erp erp : listaErp) {
 			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
-				qtdeAnalisadas  += 1;
 				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
 				if (existeOS) {
-					qtdeAtualizadas += 1;
 					erp.setSalvarOS_Material("S");
 				}
 				else {
@@ -81,16 +90,14 @@ public class AnalisarErpService {
 		atualizarCriticasErp("S",001);
 	}
 		
-	private void s002OSAntiga() {
-		zerarContadoresDaCritica();
+	private void s002OSRecente() {
+		qtdePendentes   = 0;
 		for (Erp erp : listaErp) {
 			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
 				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
 				if ( existeOS ) {
-					qtdeAnalisadas  += 1;
 					Date dataSaida = pimsGeralDao.dataSaidaApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
 					if ((dataSaida == null) || (diferencaDias(dataSaida) < Long.parseLong(qtdeDiasOS))) {
-						qtdeAtualizadas += 1;
 						erp.setSalvarOS_Material("S");
 					}
 					else {
@@ -105,22 +112,18 @@ public class AnalisarErpService {
 		}
 		atualizarCriticasErp("S",002);
 	}
+
+	private void criticaTipoU(CriticaErp criticasErp) {
+		String clausulaWhere = criticasErp.getClausulaWhere();
+//		erpService.atualizarCriticaTipoU(clausulaWhere, clausulaSet);
+	}
 	
 	private void atualizarCriticasErp(String tipo, Integer codigo) {
-		CriticasErpService criticasErpService = new CriticasErpService();
-		CriticasErp criticasErp = criticasErpService.pesquisarPorChave(tipo, codigo);
-		criticasErp.setRegistrosAnalisados(qtdeAnalisadas);
-		criticasErp.setRegistrosAtualizados(qtdeAtualizadas);
+		CriticaErp criticasErp = criticasErpService.pesquisarPorChave(tipo, codigo);
 		criticasErp.setRegistrosPendentes(qtdePendentes);
 		criticasErpService.salvarOuAtualizar(criticasErp);
 	}
 	
-	private void zerarContadoresDaCritica() {
-		qtdeAnalisadas  = 0;
-		qtdeAtualizadas = 0;
-		qtdePendentes   = 0;
-	}	
-
 	private Erp gravarCritica(Erp erp, String critica) {
 		String criticas = erp.getCriticas();
 		if (criticas == null) { 

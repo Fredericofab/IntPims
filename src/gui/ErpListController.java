@@ -143,8 +143,8 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	public void initialize(URL url, ResourceBundle rb) {
 		lerParametros();
 		inicializarComponentes();
+		
 	}
-
 	private void lerParametros() {
 		flagIncluir = (parametrosService.pesquisarPorChave("DadosErp", "FlagIncluir")).getValor().toUpperCase();
 		flagAlterar = (parametrosService.pesquisarPorChave("DadosErp", "FlagAlterar")).getValor().toUpperCase();

@@ -227,7 +227,6 @@ public class ErpDaoJDBC implements ErpDao {
 			rs = st.executeQuery();
 			if (rs.next()) {
 				int qtde = rs.getInt(1);
-System.out.println(qtde);				
 				return qtde;
 			}
 			return null;
@@ -248,7 +247,6 @@ System.out.println(qtde);
 			rs = st.executeQuery();
 			if (rs.next()) {
 				int qtde = rs.getInt(1);
-System.out.println(qtde);				
 				return qtde;
 			}
 			return null;
@@ -269,7 +267,6 @@ System.out.println(qtde);
 			rs = st.executeQuery();
 			if (rs.next()) {
 				int qtde = rs.getInt(1);
-System.out.println(qtde);				
 				return qtde;
 			}
 			return null;
@@ -290,7 +287,6 @@ System.out.println(qtde);
 			rs = st.executeQuery();
 			if (rs.next()) {
 				int qtde = rs.getInt(1);
-System.out.println(qtde);				
 				return qtde;
 			}
 			return null;
@@ -299,6 +295,21 @@ System.out.println(qtde);
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
+		}
+	}
+	
+	@Override
+	public Integer atualizarCriticaTipoU(String clausulaWhere, String clausulaSet) {
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement("UPDATE Erp SET " + clausulaSet + " WHERE " + clausulaWhere);
+			st.executeUpdate();
+			Integer contagem = st.getUpdateCount();
+			return contagem;
+		} catch (SQLException e) {
+			throw new DbException("Erro na Atualizacao da CriticaTipoU " + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
 		}
 	}
 
@@ -331,5 +342,6 @@ System.out.println(qtde);
 		dadosErp.setSequencial(rs.getInt("Sequencial"));
 		return dadosErp;
 	}
+
 
 }
