@@ -53,13 +53,13 @@ public class ImportarErpService {
 	SimpleDateFormat sdf;
 	Date dataMovimento;
 
-	String importar = "S";
+	String importar = " ";
 	String observacao = "";
 	String criticas = "";
-	String salvarOS_Material = "N";
-	String salvarCstg_IntVM = "N";
-	String salvarCstg_IntCM = "N";
-	String salvarCstg_IntDG = "N";
+	String salvarOS_Material = " ";
+	String salvarCstg_IntVM = " ";
+	String salvarCstg_IntCM = " ";
+	String salvarCstg_IntDG = " ";
 
 
 	public String getEntrada() {
@@ -103,9 +103,9 @@ public class ImportarErpService {
 		}
 		processoAtualService.atualizarEtapa("CriticarErp", "N");
 		processoAtualService.atualizarEtapa("ExportarErp", "N");
+		apagarAnaliseAnteriores();
 		zerarContadorDeCriticas();
 	}
-
 
 	private void deletarPorOrigem(String origem) {
 		qtdeDeletadas = erpService.deletarOrigem(origem);
@@ -188,7 +188,6 @@ public class ImportarErpService {
 			qtdeCorrompidas = qtdeCorrompidas + 1;
 			continuar = Alertas.mostrarConfirmacao("RuntimeException", "Erro na Importacao Dados Erp" + origem,
 					e.getClass() + "\n" + e.getMessage(), AlertType.CONFIRMATION);
-//			e.printStackTrace();
 		} finally {
 			if ((continuar != null) && (continuar.get() == ButtonType.CANCEL)) {
 				throw new TxtIntegridadeException("Processo Interrompido pelo usuário");
@@ -279,9 +278,24 @@ public class ImportarErpService {
 		CriticaErpService criticasErpService = new CriticaErpService();
 		List<CriticaErp> lista = criticasErpService.pesquisarTodos();
 		for (CriticaErp criticasErp : lista) {
-			criticasErp.setAnoMesAnalisado(anoMes);
+			criticasErp.setAnoMesAnalisado(null);
+			criticasErp.setRegistrosAnalisados(0);
+			criticasErp.setRegistrosLiberados(0);
+			criticasErp.setRegistrosIgnorados(0);
 			criticasErp.setRegistrosPendentes(0);
 			criticasErpService.salvarOuAtualizar(criticasErp);
+		}
+	}
+
+	private void apagarAnaliseAnteriores() {
+		List<Erp> lista = erpService.pesquisarTodos();	
+		for (Erp erp : lista ) {
+			erp.setImportar(null);
+			erp.setSalvarOS_Material(null);
+			erp.setSalvarCstg_IntVM(null);
+			erp.setSalvarCstg_IntCM(null);
+			erp.setSalvarCstg_IntDG(null);
+			erpService.salvarOuAtualizar(erp);
 		}
 	}
 

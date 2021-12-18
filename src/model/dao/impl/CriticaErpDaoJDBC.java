@@ -26,24 +26,27 @@ public class CriticaErpDaoJDBC implements CriticaErpDao {
 			st = conexao.prepareStatement("INSERT INTO criticas_erp "
 										+ "(tipo_critica,cod_critica,nome_critica, desc_critica, "
 										+ " flag_ativa,ano_mes_analisado, "
-										+ " registros_pendentes, "
+										+ " registros_analisados, registros_liberados, registros_ignorados, registros_pendentes, "
 										+ " clausula_where, "
 										+ " importar, salvar_os_material, "
 										+ " salvar_cstg_intVM, salvar_cstg_intCM ,salvar_cstg_intDG) "
-										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)" );
+										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
 			st.setString(1, objeto.getTipoCritica());
 			st.setInt(2, objeto.getCodigoCritica());
 			st.setString(3, objeto.getNomeCritica());
 			st.setString(4, objeto.getDescCritica());
 			st.setString(5, objeto.getFlagAtiva());
 			st.setString(6, objeto.getAnoMesAnalisado());
-			st.setInt(7, objeto.getRegistrosPendentes());
-			st.setString(8, objeto.getClausulaWhere());
-			st.setString(9, objeto.getImportar());			
-			st.setString(10, objeto.getSalvarOS_Material());			
-			st.setString(11, objeto.getSalvarCstg_IntVM());			
-			st.setString(12, objeto.getSalvarCstg_IntCM());			
-			st.setString(13, objeto.getSalvarCstg_IntDG());			
+			st.setInt(7, objeto.getRegistrosAnalisados());
+			st.setInt(8, objeto.getRegistrosLiberados());
+			st.setInt(9, objeto.getRegistrosIgnorados());
+			st.setInt(10, objeto.getRegistrosPendentes());
+			st.setString(11, objeto.getClausulaWhere());
+			st.setString(12, objeto.getImportar());			
+			st.setString(13, objeto.getSalvarOS_Material());			
+			st.setString(14, objeto.getSalvarCstg_IntVM());			
+			st.setString(15, objeto.getSalvarCstg_IntCM());			
+			st.setString(16, objeto.getSalvarCstg_IntDG());			
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Insercao " + e.getMessage());
@@ -58,7 +61,7 @@ public class CriticaErpDaoJDBC implements CriticaErpDao {
 		try {
 			st = conexao.prepareStatement("UPDATE criticas_erp "
 										+ "SET nome_critica = ?, desc_critica = ?, flag_ativa =?, ano_mes_analisado = ?,  "
-										+ "registros_pendentes =?, "
+										+ "registros_analisados = ?, registros_liberados = ?, registros_ignorados = ?, registros_pendentes = ?, "
 										+ "clausula_where = ?, "
 										+ " importar = ?, salvar_os_material = ?, "
 										+ " salvar_cstg_intVM = ?, salvar_cstg_intCM = ?, salvar_cstg_intDG = ? "
@@ -67,15 +70,18 @@ public class CriticaErpDaoJDBC implements CriticaErpDao {
 			st.setString(2, objeto.getDescCritica());
 			st.setString(3, objeto.getFlagAtiva());
 			st.setString(4, objeto.getAnoMesAnalisado());
-			st.setInt(5, objeto.getRegistrosPendentes());
-			st.setString(6, objeto.getClausulaWhere());
-			st.setString(7, objeto.getImportar());			
-			st.setString(8, objeto.getSalvarOS_Material());			
-			st.setString(9, objeto.getSalvarCstg_IntVM());			
-			st.setString(10, objeto.getSalvarCstg_IntCM());			
-			st.setString(11, objeto.getSalvarCstg_IntDG());			
-			st.setString(12, objeto.getTipoCritica());
-			st.setInt(13, objeto.getCodigoCritica());
+			st.setInt(5, objeto.getRegistrosAnalisados());
+			st.setInt(6, objeto.getRegistrosLiberados());
+			st.setInt(7, objeto.getRegistrosIgnorados());
+			st.setInt(8, objeto.getRegistrosPendentes());
+			st.setString(9, objeto.getClausulaWhere());
+			st.setString(10, objeto.getImportar());			
+			st.setString(11, objeto.getSalvarOS_Material());			
+			st.setString(12, objeto.getSalvarCstg_IntVM());			
+			st.setString(13, objeto.getSalvarCstg_IntCM());			
+			st.setString(14, objeto.getSalvarCstg_IntDG());			
+			st.setString(15, objeto.getTipoCritica());
+			st.setInt(16, objeto.getCodigoCritica());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Atualizacao " + e.getMessage());
@@ -178,6 +184,9 @@ public class CriticaErpDaoJDBC implements CriticaErpDao {
 		criticasErp.setDescCritica(rs.getString("desc_critica"));
 		criticasErp.setFlagAtiva(rs.getString("flag_ativa"));
 		criticasErp.setAnoMesAnalisado(rs.getString("ano_mes_analisado"));
+		criticasErp.setRegistrosAnalisados(rs.getInt("registros_analisados"));
+		criticasErp.setRegistrosLiberados(rs.getInt("registros_liberados"));
+		criticasErp.setRegistrosIgnorados(rs.getInt("registros_ignorados"));
 		criticasErp.setRegistrosPendentes(rs.getInt("registros_pendentes"));
 		criticasErp.setClausulaWhere(rs.getString("clausula_where"));
 		criticasErp.setTipoCritica(rs.getString("tipo_critica"));

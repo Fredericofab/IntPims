@@ -43,7 +43,6 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 	String flagIncluir;
 	String flagAlterar;
 	String flagExcluir;
-	String anoMes;
 
 	@FXML
 	private TableView<CriticaErp> tableViewDadosCriticasErp;
@@ -57,10 +56,6 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 	private TableColumn<CriticaErp, String> tableColumnDescCritica;
 	@FXML
 	private TableColumn<CriticaErp, String> tableColumnFlagAtiva;
-	@FXML
-	private TableColumn<CriticaErp, String> tableColumnAnoMesAnalisado;
-	@FXML
-	private TableColumn<CriticaErp, Integer> tableColumnRegistrosPendentes;
 	@FXML
 	private TableColumn<CriticaErp, String> tableColumnClausulaWhere;
 	@FXML
@@ -138,15 +133,23 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 		tableColumnNomeCritica.setCellValueFactory(new PropertyValueFactory<>("nomeCritica"));
 		tableColumnDescCritica.setCellValueFactory(new PropertyValueFactory<>("descCritica"));
 		tableColumnFlagAtiva.setCellValueFactory(new PropertyValueFactory<>("flagAtiva"));
-		tableColumnAnoMesAnalisado.setCellValueFactory(new PropertyValueFactory<>("anoMesAnalisado"));
-		tableColumnRegistrosPendentes.setCellValueFactory(new PropertyValueFactory<>("registrosPendentes"));
 		tableColumnClausulaWhere.setCellValueFactory(new PropertyValueFactory<>("clausulaWhere"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
 		tableColumnSalvarOS_Material.setCellValueFactory(new PropertyValueFactory<>("salvarOS_Material"));
 		tableColumnSalvarCstg_IntVM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntVM"));
 		tableColumnSalvarCstg_IntCM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntCM"));
 		tableColumnSalvarCstg_IntDG.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntDG"));
+
 		
+		tableColumnTipoCritica.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnCodCritica.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnFlagAtiva.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnImportar.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnSalvarOS_Material.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnSalvarCstg_IntVM.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnSalvarCstg_IntCM.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnSalvarCstg_IntDG.setStyle("-fx-alignment: TOP-CENTER");
+
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
 
@@ -228,6 +231,15 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 					setGraphic(null);
 					return;
 				}
+				// meu ajuste no código copiado do curso
+				// se tipo 'S'istema, entao nao pode excluir.
+//				if (obj.getTipoCritica().equals("S")) {
+//					setGraphic(null);
+//					return;
+//				}
+				//FRED normalmente NAO comentar as 4 linhas acima e comentar a de abaixo
+				System.out.println("FRED Manutencao em CriticaErpListController - initRemoveButtons");
+				
 				setGraphic(button);
 				button.setOnAction(event -> removeEntity(obj));
 			}

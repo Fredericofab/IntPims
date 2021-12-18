@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import gui.util.Alertas;
+import javafx.scene.control.Alert.AlertType;
 import model.dao.FabricaDeDao;
 import model.dao.PimsGeralDao;
 import model.entities.CriticaErp;
@@ -23,42 +25,43 @@ public class AnalisarErpService {
 	String qtdeDiasOS;
 	
 	List<Erp> listaErp;
+	Integer qtdeAnalisados;
 	Integer qtdePendentes;
+	Integer qtdeLiberados;
+	Integer qtdeIgnorados;
 
-	
-	public Integer getQtdeTotalDeRegistros() {
-		return erpService.qtdeTotal();
+	public Integer getQtdeTotal(String importar) {
+		return erpService.qtdeTotal(importar);
 	}
-	public Integer getQtdeTotalLiberados() {
-		return erpService.qtdeImportarS();
-	}
-	public Integer getQtdeTotalDesconsiderados() {
-		return erpService.qtdeImportarN();
-	}
-	public Integer getQtdeTotalPendentes() {
-		return erpService.qtdeImportarIndefinido();
-	}
-
 	
 	public void analisarUm(String tipo, Integer codigo) {
 		lerParametros();
 		listaErp = erpService.pesquisarTodos();
 		if (tipo.equals("S")) { 
-			if (codigo == 001) { s001ExisteOSnoManfro(); }
-			if (codigo == 002) { s002OSRecente(); }
+			if (codigo == 001) { s001NaoExisteOSnoManfro(); }
+			if (codigo == 002) { s002OSAntiga(); }
+			if (codigo == 003) { s003OSValida(); }
 		}
 		else {
 			if (tipo.equals("U") && codigo != null) {
-				criticaTipoU(criticasErpService.pesquisarPorChave("U", codigo));
+				CriticaErp criticaErp = criticasErpService.pesquisarPorChave("U", codigo);
+				if ( criticaErp == null ) {
+					Alertas.mostrarAlertas(null, "Erro de Digitação", "Critica Informada não Existe",
+							AlertType.ERROR);
+				}
+				else {
+					criticaTipoU(criticaErp);
+				}
 			}
 		}
-			
 	}
+
 	public void analisarTodos() {
 		lerParametros();
 		listaErp = erpService.pesquisarTodos();
-		s001ExisteOSnoManfro();
-		s002OSRecente();
+		s001NaoExisteOSnoManfro();
+		s002OSAntiga();
+		s003OSValida();
 
 		for (CriticaErp criticaErp : criticasErpService.pesquisarTodos() ) {
 			if (criticaErp.getTipoCritica().toUpperCase().equals("U") && 
@@ -68,71 +71,143 @@ public class AnalisarErpService {
 		}
 	}
 
-
-
-	private void s001ExisteOSnoManfro() {
-		qtdePendentes   = 0;
+	private void s001NaoExisteOSnoManfro() {
+		CriticaErp criticaErp = criticasErpService.pesquisarPorChave("S", 001);
+		zerarContadores();
 		for (Erp erp : listaErp) {
 			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
+				qtdeAnalisados += 1;
 				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
-				if (existeOS) {
-					erp.setSalvarOS_Material("S");
-				}
-				else {
-					qtdePendentes   += 1;
-					erp = gravarCritica(erp, "S001 ");
-					erp.setImportar("?");
-					erp.setSalvarOS_Material("?");
-				}
-				erpService.salvarOuAtualizar(erp);
-			}
-		}
-		atualizarCriticasErp("S",001);
-	}
-		
-	private void s002OSRecente() {
-		qtdePendentes   = 0;
-		for (Erp erp : listaErp) {
-			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
-				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
-				if ( existeOS ) {
-					Date dataSaida = pimsGeralDao.dataSaidaApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
-					if ((dataSaida == null) || (diferencaDias(dataSaida) < Long.parseLong(qtdeDiasOS))) {
-						erp.setSalvarOS_Material("S");
-					}
-					else {
-						qtdePendentes   += 1;
-						erp = gravarCritica(erp, "S002 ");
-						erp.setImportar("?");
-						erp.setSalvarOS_Material("?");
-					}
+				if ( ! existeOS) {
+					qtdePendentes += 1;
+					erp = atualizarRegistroErp(criticaErp, erp);
 					erpService.salvarOuAtualizar(erp);
 				}
 			}
 		}
-		atualizarCriticasErp("S",002);
+		criticaErp = atualizarRegistroCriticaErp(criticaErp);
+		criticasErpService.salvarOuAtualizar(criticaErp);
+	}
+		
+	private void s002OSAntiga() {
+		CriticaErp criticaErp = criticasErpService.pesquisarPorChave("S", 002);
+		zerarContadores();
+		for (Erp erp : listaErp) {
+			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
+				qtdeAnalisados += 1;
+				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
+				if ( existeOS ) {
+					Date dataSaida = pimsGeralDao.dataSaidaApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
+					if ((dataSaida != null) && (diferencaDias(dataSaida) > Long.parseLong(qtdeDiasOS))) {
+						qtdePendentes += 1;
+						erp = atualizarRegistroErp(criticaErp, erp);
+						erpService.salvarOuAtualizar(erp);
+					}
+				}
+			}
+		}	
+		criticaErp = atualizarRegistroCriticaErp(criticaErp);
+		criticasErpService.salvarOuAtualizar(criticaErp);
 	}
 
-	private void criticaTipoU(CriticaErp criticasErp) {
-		String clausulaWhere = criticasErp.getClausulaWhere();
-//		erpService.atualizarCriticaTipoU(clausulaWhere, clausulaSet);
+	private void s003OSValida() {
+		CriticaErp criticaErp = criticasErpService.pesquisarPorChave("S", 003);
+		zerarContadores();
+		for (Erp erp : listaErp) {
+			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
+				qtdeAnalisados += 1;
+				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
+				if ( existeOS ) {
+					Date dataSaida = pimsGeralDao.dataSaidaApt_os_he(erp.getNumeroOS(),usuarioPimsCS);	
+					if ((dataSaida == null) || (diferencaDias(dataSaida) < Long.parseLong(qtdeDiasOS))) {
+						qtdeLiberados += 1;	
+						erp = atualizarRegistroErp(criticaErp, erp);
+						erpService.salvarOuAtualizar(erp);
+					}
+				}
+			}
+		}
+		criticaErp = atualizarRegistroCriticaErp(criticaErp);
+		criticasErpService.salvarOuAtualizar(criticaErp);
+	}
+
+	
+	
+	private void criticaTipoU(CriticaErp criticaErp) {
+		String filtro = criticaErp.getClausulaWhere();
+		Integer codigoCritica = criticaErp.getCodigoCritica();
+		listaErp = erpService.pesquisarFiltrado("U", codigoCritica, filtro);
+		zerarContadores();
+		for (Erp erp : listaErp) {
+			qtdeAnalisados += 1;
+			if ((criticaErp.getImportar() != null ) && 
+				(criticaErp.getImportar().equals("?"))) { 
+				qtdePendentes   += 1;
+			}
+			if ((criticaErp.getImportar() != null ) && 
+					(criticaErp.getImportar().equals("S"))) { 
+				qtdeLiberados   += 1;
+			}
+			if ((criticaErp.getImportar() != null ) && 
+					(criticaErp.getImportar().equals("N"))) { 
+				qtdeIgnorados   += 1;
+			}
+			erp = atualizarRegistroErp(criticaErp, erp);
+			erpService.salvarOuAtualizar(erp);
+		}
+		criticaErp = atualizarRegistroCriticaErp(criticaErp);
+		criticasErpService.salvarOuAtualizar(criticaErp);
 	}
 	
-	private void atualizarCriticasErp(String tipo, Integer codigo) {
-		CriticaErp criticasErp = criticasErpService.pesquisarPorChave(tipo, codigo);
-		criticasErp.setRegistrosPendentes(qtdePendentes);
-		criticasErpService.salvarOuAtualizar(criticasErp);
-	}
 	
-	private Erp gravarCritica(Erp erp, String critica) {
-		String criticas = erp.getCriticas();
-		if (criticas == null) { 
-			erp.setCriticas(critica);
+	private Erp atualizarRegistroErp(CriticaErp criticaErp, Erp erp) {
+
+		if (criticaErp.getImportar() != null ) { 
+			erp.setImportar(criticaErp.getImportar());
+		}
+		
+		if ( ( criticaErp.getSalvarOS_Material() != null ) &&
+		     ( ! criticaErp.getSalvarOS_Material().toUpperCase().equals(" "))){
+			erp.setSalvarOS_Material(criticaErp.getSalvarOS_Material());
+		}
+		if ( ( criticaErp.getSalvarCstg_IntVM() != null ) &&
+			     ( ! criticaErp.getSalvarCstg_IntVM().toUpperCase().equals(" "))){
+				erp.setSalvarCstg_IntVM(criticaErp.getSalvarCstg_IntVM());
+		}
+		if ( ( criticaErp.getSalvarCstg_IntCM() != null ) &&
+			     ( ! criticaErp.getSalvarCstg_IntCM().toUpperCase().equals(" "))){
+				erp.setSalvarCstg_IntCM(criticaErp.getSalvarCstg_IntCM());
+		}
+		if ( ( criticaErp.getSalvarCstg_IntDG() != null ) &&
+			     ( ! criticaErp.getSalvarCstg_IntDG().toUpperCase().equals(" "))){
+				erp.setSalvarCstg_IntDG(criticaErp.getSalvarCstg_IntDG());
+		}
+		
+		String essaCritica = criticaErp.getTipoCritica() + String.format("%03d", criticaErp.getCodigoCritica()) + " ";
+		String criticasDesseRegistros = erp.getCriticas();
+		if (criticasDesseRegistros == null) { 
+			erp.setCriticas(essaCritica);
 		}
 		else {
-			if (criticas.indexOf(critica) == -1) {erp.setCriticas(criticas + critica); }
+			if (criticasDesseRegistros.indexOf(essaCritica) == -1) {erp.setCriticas(criticasDesseRegistros + essaCritica); }
 		}
 		return erp;
+	}
+
+	private CriticaErp atualizarRegistroCriticaErp(CriticaErp criticaErp) {
+		criticaErp.setAnoMesAnalisado(anoMes);
+		criticaErp.setRegistrosAnalisados(qtdeAnalisados);
+		criticaErp.setRegistrosPendentes(qtdePendentes);
+		criticaErp.setRegistrosLiberados(qtdeLiberados);
+		criticaErp.setRegistrosIgnorados(qtdeIgnorados);
+		return criticaErp;
+	}
+
+	private void zerarContadores() {
+		qtdeAnalisados = 0;
+		qtdePendentes  = 0;
+		qtdeLiberados  = 0;
+		qtdeIgnorados  = 0;
 	}
 	
 	private Long diferencaDias(Date dataSaida) {
@@ -159,5 +234,4 @@ public class AnalisarErpService {
 		anoMes  = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 		qtdeDiasOS = (parametrosService.pesquisarPorChave("AnalisarErp", "QtdeDiasOS")).getValor();
 	}
-
 }

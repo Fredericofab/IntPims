@@ -15,7 +15,7 @@ public class ProcessoAtual implements Serializable {
 	private String importarErpMT;
 	private String importarErpCD;
 	private String importarErpDG;
-	private String criticarErp;
+	private String analisarErp;
 	private String exportarErp;
 	private String verbaAlterada;
 	private String folhaAlterada;
@@ -36,7 +36,7 @@ public class ProcessoAtual implements Serializable {
 		this.importarErpMT = importarErpMT;
 		this.importarErpCD = importarErpCD;
 		this.importarErpDG = importarErpDG;
-		this.criticarErp = criticarErp;
+		this.analisarErp = criticarErp;
 		this.exportarErp = exportarErp;
 		this.verbaAlterada = verbaAlterada;
 		this.folhaAlterada = folhaAlterada;
@@ -96,11 +96,11 @@ public class ProcessoAtual implements Serializable {
 	public void setImportarErpDG(String importarErpDG) {
 		this.importarErpDG = importarErpDG;
 	}
-	public String getCriticarErp() {
-		return criticarErp;
+	public String getAnalisarErp() {
+		return analisarErp;
 	}
-	public void setCriticarErp(String criticarErp) {
-		this.criticarErp = criticarErp;
+	public void setAnalisarErp(String analisarErp) {
+		this.analisarErp = analisarErp;
 	}
 	public String getExportarErp() {
 		return exportarErp;
@@ -152,7 +152,7 @@ public class ProcessoAtual implements Serializable {
 				+ sumarizarFolha + ", exportarFolha=" + exportarFolha + ", importarFuncionario=" + importarFuncionario
 				+ ", sumarizarFuncionario=" + sumarizarFuncionario + ", importarErpMT=" + importarErpMT
 				+ ", importarErpCD=" + importarErpCD + ", importarErpDG=" + importarErpDG + ", criticarErp="
-				+ criticarErp + ", exportarErp=" + exportarErp + ", verbaAlterada=" + verbaAlterada + ", folhaAlterada="
+				+ analisarErp + ", exportarErp=" + exportarErp + ", verbaAlterada=" + verbaAlterada + ", folhaAlterada="
 				+ folhaAlterada + "]";
 	}
 }

@@ -32,7 +32,7 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	private TableColumn<CriticaErp, Integer> tableColumnCodCritica;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnDescCritica;
+	private TableColumn<CriticaErp, String> tableColumnNomeCritica;
 	@FXML
 	private TableColumn<CriticaErp, String> tableColumnFlagAtiva;
 	@FXML
@@ -40,7 +40,9 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	private TableColumn<CriticaErp, Integer> tableColumnRegistrosAnalisados;
 	@FXML
-	private TableColumn<CriticaErp, Integer> tableColumnRegistrosAtualizados;
+	private TableColumn<CriticaErp, Integer> tableColumnRegistrosLiberados;
+	@FXML
+	private TableColumn<CriticaErp, Integer> tableColumnRegistrosIgnorados;
 	@FXML
 	private TableColumn<CriticaErp, Integer> tableColumnRegistrosPendentes;
 
@@ -53,13 +55,17 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	private TextField txtTotalLiberados;
 	@FXML
-	private TextField txtTotalDesconsiderados;
+	private TextField txtTotalIgnorados;
 	@FXML
 	private TextField txtTotalPendentes;
+	@FXML
+	private TextField txtTotalIndefinidos;
 	@FXML
 	private Button btAnalisarUm;
 	@FXML
 	private Button btAnalisarTodos;
+	@FXML
+	private Button btCalcular;
 	@FXML
 	private Button btSair;
 	
@@ -86,6 +92,12 @@ public class AnalisarErpViewController implements Initializable {
 		atualizarTableView();
 	}
 
+	@FXML
+	public void onBtCalcularAction(ActionEvent evento) {
+		atualizarTela();
+		atualizarTableView();
+	}
+
 	public void setAnalisarErpServico(AnalisarErpService servico) {
 		this.servico = servico;
 	}
@@ -98,12 +110,22 @@ public class AnalisarErpViewController implements Initializable {
 	private void inicializarComponentes() {
 		tableColumnTipoCritica.setCellValueFactory(new PropertyValueFactory<>("tipoCritica"));
 		tableColumnCodCritica.setCellValueFactory(new PropertyValueFactory<>("codigoCritica"));
-		tableColumnDescCritica.setCellValueFactory(new PropertyValueFactory<>("descCritica"));
+		tableColumnNomeCritica.setCellValueFactory(new PropertyValueFactory<>("nomeCritica"));
 		tableColumnFlagAtiva.setCellValueFactory(new PropertyValueFactory<>("flagAtiva"));
 		tableColumnAnoMesAnalisado.setCellValueFactory(new PropertyValueFactory<>("anoMesAnalisado"));
 		tableColumnRegistrosAnalisados.setCellValueFactory(new PropertyValueFactory<>("registrosAnalisados"));
-		tableColumnRegistrosAtualizados.setCellValueFactory(new PropertyValueFactory<>("registrosAtualizados"));
+		tableColumnRegistrosLiberados.setCellValueFactory(new PropertyValueFactory<>("registrosLiberados"));
+		tableColumnRegistrosIgnorados.setCellValueFactory(new PropertyValueFactory<>("registrosIgnorados"));
 		tableColumnRegistrosPendentes.setCellValueFactory(new PropertyValueFactory<>("registrosPendentes"));
+	
+		tableColumnTipoCritica.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnCodCritica.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnFlagAtiva.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnRegistrosAnalisados.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnRegistrosLiberados.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnRegistrosIgnorados.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnRegistrosPendentes.setStyle("-fx-alignment: TOP-RIGHT");
+
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodigoCritica);
 	}
 
@@ -116,13 +138,23 @@ public class AnalisarErpViewController implements Initializable {
 	}
 	
 	private void atualizarTela() {
-		Integer qtdeTotalRegistros = servico.getQtdeTotalDeRegistros();
-		Integer qtdeTotalLiberados = servico.getQtdeTotalLiberados();
-		Integer qtdeTotalDesconsiderados = servico.getQtdeTotalDesconsiderados();
-		Integer qtdeTotalPendentes = servico.getQtdeTotalPendentes();
+		Integer qtdeTotalLiberados = servico.getQtdeTotal("S");
+		Integer qtdeTotalIgnorados = servico.getQtdeTotal("N");
+		Integer qtdeTotalPendentes = servico.getQtdeTotal("?");
+		Integer qtdeTotalIndefinidos = servico.getQtdeTotal(null);
+		Integer qtdeTotalRegistros  = qtdeTotalLiberados + qtdeTotalIgnorados
+									+ qtdeTotalPendentes + qtdeTotalIndefinidos;
+
 		txtTotalRegistros.setText(qtdeTotalRegistros.toString());
 		txtTotalLiberados.setText(qtdeTotalLiberados.toString());
-		txtTotalDesconsiderados.setText(qtdeTotalDesconsiderados.toString());
+		txtTotalIgnorados.setText(qtdeTotalIgnorados.toString());
 		txtTotalPendentes.setText(qtdeTotalPendentes.toString());
+		txtTotalIndefinidos.setText(qtdeTotalIndefinidos.toString());
+		
+		txtTotalRegistros.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalLiberados.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalIgnorados.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalPendentes.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalIndefinidos.setStyle("-fx-alignment: CENTER-RIGHT");
 	}
 }

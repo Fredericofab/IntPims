@@ -64,7 +64,7 @@ public class ProcessoAtualService {
 						processoAtual.getImportarErpMT() + "," +
 						processoAtual.getImportarErpCD() + "," + 
 						processoAtual.getImportarErpDG() + "," +
-						processoAtual.getCriticarErp()	+ "," +
+						processoAtual.getAnalisarErp()	+ "," +
 						processoAtual.getExportarErp()   + "," +
 				processoAtual.getVerbaAlterada()  + "," +
 				processoAtual.getFolhaAlterada();
@@ -105,7 +105,7 @@ public class ProcessoAtualService {
 		if (campo.equals("ImportarErpMT")) processoAtual.setImportarErpMT(valor); 
 		if (campo.equals("ImportarErpCD")) processoAtual.setImportarErpCD(valor); 
 		if (campo.equals("ImportarErpDG")) processoAtual.setImportarErpDG(valor); 
-		if (campo.equals("CriticarErp")) processoAtual.setCriticarErp(valor); 
+		if (campo.equals("CriticarErp")) processoAtual.setAnalisarErp(valor); 
 		if (campo.equals("ExportarErp")) processoAtual.setExportarErp(valor); 
 		
 		if (campo.equals("VerbaAlterada")) processoAtual.setVerbaAlterada(valor); 

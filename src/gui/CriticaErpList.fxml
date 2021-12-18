@@ -23,18 +23,16 @@
           <TableColumn fx:id="tableColumnTipoCritica" prefWidth="32.0" text="Tipo" />
           <TableColumn fx:id="tableColumnCodCritica" prefWidth="46.0" text="Codigo" />
             <TableColumn fx:id="tableColumnNomeCritica" prefWidth="294.0" text="Critica" />
-            <TableColumn fx:id="tableColumnDescCritica" prefWidth="100.0" text="Descricao" />
+            <TableColumn fx:id="tableColumnDescCritica" prefWidth="250.0" text="Descricao" />
             <TableColumn fx:id="tableColumnFlagAtiva" prefWidth="40.0" text="Ativa" />
-            <TableColumn fx:id="tableColumnImportar" prefWidth="60.0" text="Importar" />
+            <TableColumn fx:id="tableColumnImportar" prefWidth="55.0" text="Importar" />
             <TableColumn fx:id="tableColumnSalvarOS_Material" prefWidth="25.0" text="OS" />
             <TableColumn fx:id="tableColumnSalvarCstg_IntVM" prefWidth="25.0" text="VM" />
             <TableColumn fx:id="tableColumnSalvarCstg_IntCM" prefWidth="25.0" text="CM" />
             <TableColumn fx:id="tableColumnSalvarCstg_IntDG" prefWidth="25.0" text="DG" />
-            <TableColumn fx:id="tableColumnAnoMesAnalisado" prefWidth="51.0" text="AnoMes" />
-            <TableColumn fx:id="tableColumnRegistrosPendentes" prefWidth="66.0" text="Qtde Pend" />
             <TableColumn fx:id="tableColumnClausulaWhere" prefWidth="138.0" text="Where" visible="false" />
-            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="66.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="66.0" />
+            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="55.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="60.0" />
         </columns>
       </TableView>
    </children>

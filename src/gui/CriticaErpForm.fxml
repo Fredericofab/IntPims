@@ -36,26 +36,26 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Sequencial">
+                  <Label text="Tipo Critica (U/S)">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin></Label>
+                  <TextField fx:id="txtTipoCritica" focusTraversable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" />
+                  <Label fx:id="labelErroTipoCritica" textFill="RED" GridPane.columnIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin></Label>
+                  <Label text="Sequencial" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtCodigoCritica" editable="false" focusTraversable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="1" />
-                  <Label fx:id="labelErroDescCritica" textFill="RED" GridPane.columnIndex="2">
+                  <TextField fx:id="txtCodigoCritica" focusTraversable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="labelErroDescCritica" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Tipo Critica (U/S)" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="5.0" />
-                     </GridPane.margin></Label>
-                  <TextField fx:id="txtTipoCritica" editable="false" focusTraversable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="labelErroTipoCritica" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin></Label>
                   <Label text="Ativa (S/N)" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
@@ -77,7 +77,7 @@
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="txtImportar" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label fx:id="labelErroImportar" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                  <Label fx:id="labelErroImportar" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -88,28 +88,29 @@
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="txtSalvarOS_Material" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label fx:id="labelErroAtiva2" text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <Label text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="6" />
                   <Label text="Salvar Valor Material" GridPane.rowIndex="7">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="txtSalvarCstg_IntVM" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label fx:id="labelErroAtiva3" text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <Label text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="7" />
                   <Label text="Salvar Consumo Materiiais" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="txtSalvarCstg_IntCM" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label fx:id="labelErroAtiva4" text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                  <Label text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="8" />
                   <Label text="Salvar Despesas Gerais" GridPane.rowIndex="9">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="txtSalvarCstg_IntDG" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label fx:id="labelErroAtiva5" text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                  <Label text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                  <Label text="Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="5" />
                </children>
             </GridPane>
             <GridPane prefHeight="269.0" prefWidth="766.0">
@@ -137,17 +138,9 @@
                   <TextArea fx:id="txtAreaClausulaWhere" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <HBox prefHeight="39.0" prefWidth="657.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <children>
-                        <Label text="Ano Mes">
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <TextField fx:id="txtAnoMesAnalisado" editable="false" focusTraversable="false" prefHeight="25.0" prefWidth="66.0" />
-                        <Label text="Pendentes" />
-                        <TextField fx:id="txtRegistrosPendentes" editable="false" focusTraversable="false" prefHeight="25.0" prefWidth="70.0" />
                         <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" prefHeight="25.0" prefWidth="59.0" text="Salvar">
                            <HBox.margin>
-                              <Insets left="100.0" />
+                              <Insets />
                            </HBox.margin></Button>
                         <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="Cancelar">
                            <HBox.margin>

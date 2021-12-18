@@ -48,22 +48,22 @@ public class ErpService {
 		return dao.ultimoSequencial();
 	}
 	
-	public Integer atualizarCriticaTipoU(String clausulaWhere, String clausulaSet) {
-		return dao.atualizarCriticaTipoU(clausulaWhere,clausulaSet);
+	public List<Erp> pesquisarFiltrado(String tipoCritica, Integer codigoCritica, String filtro) {
+		return dao.listarFiltrado(tipoCritica, codigoCritica, filtro);
 	}
-	
-	public Integer qtdeTotal() {
-		return dao.qtdeTotal();
+
+	public Integer qtdeTotal(String importar) {
+		return dao.qtdeTotal(importar);
 	}
-	public Integer qtdeImportarS() {
-		return dao.qtdeImportarS();
-	}
-	public Integer qtdeImportarN() {
-		return dao.qtdeImportarN();
-	}
-	public Integer qtdeImportarIndefinido() {
-		return dao.qtdeImportarIndefinido();
-	}
+//	public Integer qtdeImportarS() {
+//		return dao.qtdeImportarS();
+//	}
+//	public Integer qtdeImportarN() {
+//		return dao.qtdeImportarN();
+//	}
+//	public Integer qtdeImportarIndefinido() {
+//		return dao.qtdeImportarIndefinido();
+//	}
 
 	public void gerarTxt(Boolean oficial) {
 		lerParametros(oficial);

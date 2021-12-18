@@ -381,7 +381,7 @@
   </class>  
   <class id="43" language="java" name="gui.ParametrosListController" project="intPims" 
     file="/intPims/src/gui/ParametrosListController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="643" y="184"/>    
+    <position height="-1" width="-1" x="651" y="187"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -390,7 +390,7 @@
   </class>  
   <class id="44" language="java" name="gui.ParametrosFormController" project="intPims" 
     file="/intPims/src/gui/ParametrosFormController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="645" y="233"/>    
+    <position height="-1" width="-1" x="655" y="233"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      

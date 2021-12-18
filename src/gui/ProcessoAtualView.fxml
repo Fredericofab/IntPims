@@ -129,12 +129,12 @@
                </GridPane.margin>
             </Label>
             <Label text="Importar Erp DG" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <Label text="Criticar Erp" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label text="Analisar Erp" GridPane.columnIndex="4" GridPane.rowIndex="3" />
             <Label text="Exportar Erp" GridPane.columnIndex="4" GridPane.rowIndex="4" />
             <TextField fx:id="txtImportarErpMT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" />
             <TextField fx:id="txtImportarErpCD" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <TextField fx:id="txtImportarErpDG" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="txtCriticarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="txtAnalisarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <TextField fx:id="txtExportarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <Label text="Ações que talvez necessite reprocessar etapas" GridPane.columnIndex="4" GridPane.rowIndex="6">
                <font>

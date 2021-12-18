@@ -80,7 +80,7 @@ public class CriticaErpService {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saidaRelatorio))) {
 			for (CriticaErp criticasErp : lista) {
 				bw.write("Critica: " + criticasErp.getTipoCritica()   +
-									   criticasErp.getCodigoCritica() +
+						String.format("%03d", criticasErp.getCodigoCritica()) +			   
 						 "  Ativa: " + criticasErp.getFlagAtiva());
 				bw.newLine();
 				bw.write("Nome: " + criticasErp.getNomeCritica());
@@ -96,6 +96,19 @@ public class CriticaErpService {
 					bw.write(criticasErp.getClausulaWhere());
 					bw.newLine();
 				}
+				bw.write("Ações: ");
+				bw.newLine();
+				bw.write("Importar.................: " + criticasErp.getImportar());
+				bw.newLine();
+				bw.write("Salvar OS_Material.......: " + (criticasErp.getSalvarOS_Material() == null ? " " : criticasErp.getSalvarOS_Material()));
+				bw.newLine();
+				bw.write("Salvar Valor Material....: " + (criticasErp.getSalvarCstg_IntVM() == null ? " " : criticasErp.getSalvarCstg_IntVM()));
+				bw.newLine();
+				bw.write("Salvar Consumo Material..: " + (criticasErp.getSalvarCstg_IntCM() == null ? " " : criticasErp.getSalvarCstg_IntCM()));
+				bw.newLine();
+				bw.write("Salvar Despesas Gerais...: " + (criticasErp.getSalvarCstg_IntDG() == null ? " " : criticasErp.getSalvarCstg_IntDG()));
+				bw.newLine();
+
 				bw.newLine();
 				bw.write("==========================================================");
 				bw.newLine();

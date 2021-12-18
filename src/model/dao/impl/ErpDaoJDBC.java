@@ -94,13 +94,13 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setDouble(14, objeto.getNumeroOS());
 			st.setString(15, objeto.getDocumentoErp());
 			st.setDate(16, new java.sql.Date(objeto.getDataMovimento().getTime()));
-			st.setString(17, objeto.getImportar().toUpperCase());
+			st.setString(17, objeto.getImportar());
 			st.setString(18, objeto.getObservacao());
 			st.setString(19, objeto.getCriticas());
-			st.setString(20, objeto.getSalvarOS_Material().toUpperCase());
-			st.setString(21, objeto.getSalvarCstg_IntVM().toUpperCase());
-			st.setString(22, objeto.getSalvarCstg_IntCM().toUpperCase());
-			st.setString(23, objeto.getSalvarCstg_IntDG().toUpperCase());
+			st.setString(20, objeto.getSalvarOS_Material());
+			st.setString(21, objeto.getSalvarCstg_IntVM());
+			st.setString(22, objeto.getSalvarCstg_IntCM());
+			st.setString(23, objeto.getSalvarCstg_IntDG());
 			st.setInt(24, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -219,11 +219,17 @@ public class ErpDaoJDBC implements ErpDao {
 	}
 
 	@Override
-	public Integer qtdeTotal() {
+	public Integer qtdeTotal(String importar) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp");
+			if (importar == null ) {
+				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar is null");
+			}
+			else {
+				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar = ?");
+				st.setString(1, importar);
+			}
 			rs = st.executeQuery();
 			if (rs.next()) {
 				int qtde = rs.getInt(1);
@@ -231,67 +237,8 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Erp" + e.getMessage());
-		} finally {
-			DB.fecharStatement(st);
-			DB.fecharResultSet(rs);
-		}
-	}
-
-	@Override
-	public Integer qtdeImportarS() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE Importar = 'S'");
-			rs = st.executeQuery();
-			if (rs.next()) {
-				int qtde = rs.getInt(1);
-				return qtde;
-			}
-			return null;
-		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Importar 'S' " + e.getMessage());
-		} finally {
-			DB.fecharStatement(st);
-			DB.fecharResultSet(rs);
-		}
-	}
-
-	@Override
-	public Integer qtdeImportarN() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE Importar = 'N'");
-			rs = st.executeQuery();
-			if (rs.next()) {
-				int qtde = rs.getInt(1);
-				return qtde;
-			}
-			return null;
-		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Importar 'N' " + e.getMessage());
-		} finally {
-			DB.fecharStatement(st);
-			DB.fecharResultSet(rs);
-		}
-	}
-
-	@Override
-	public Integer qtdeImportarIndefinido() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE Importar = '?'");
-			rs = st.executeQuery();
-			if (rs.next()) {
-				int qtde = rs.getInt(1);
-				return qtde;
-			}
-			return null;
-		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Importar Indefinido " + e.getMessage());
+			throw new DbException("erro na Contagem do Erp para Importar = " + importar + " \n" 
+		+ e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -299,19 +246,28 @@ public class ErpDaoJDBC implements ErpDao {
 	}
 	
 	@Override
-	public Integer atualizarCriticaTipoU(String clausulaWhere, String clausulaSet) {
+	public List<Erp> listarFiltrado(String tipoCritica, Integer codigoCritica, String filtro) {
 		PreparedStatement st = null;
+		ResultSet rs = null;
 		try {
-			st = conexao.prepareStatement("UPDATE Erp SET " + clausulaSet + " WHERE " + clausulaWhere);
-			st.executeUpdate();
-			Integer contagem = st.getUpdateCount();
-			return contagem;
+			st = conexao.prepareStatement("SELECT * FROM Erp WHERE " + filtro);
+			rs = st.executeQuery();
+			List<Erp> lista = new ArrayList<Erp>();
+			while (rs.next()) {
+				Erp dadosErp = instanciaDadosErp(rs);
+				lista.add(dadosErp);
+			}
+			return lista;
 		} catch (SQLException e) {
-			throw new DbException("Erro na Atualizacao da CriticaTipoU " + e.getMessage());
+			throw new DbException("erro na consulta da critica " 
+								+ tipoCritica + String.format("%03d", codigoCritica)
+								+ "/n" + e.getMessage());
 		} finally {
+			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);
 		}
 	}
+
 
 	private Erp instanciaDadosErp(ResultSet rs) throws SQLException {
 		Erp dadosErp = new Erp();
@@ -342,6 +298,5 @@ public class ErpDaoJDBC implements ErpDao {
 		dadosErp.setSequencial(rs.getInt("Sequencial"));
 		return dadosErp;
 	}
-
 
 }

@@ -306,10 +306,12 @@ public class MainViewController implements Initializable {
 			processoAtual.getImportarErpCD().equals("N") ||
 			processoAtual.getImportarErpDG().equals("N")) {
 			menuItemAnalisarErp.setDisable(true);
-			menuItemExportarErp.setDisable(true);
 		}
 		else {
 			menuItemAnalisarErp.setDisable(false);
+		}
+		if (processoAtual.getAnalisarErp().equals("N")) {
+			menuItemExportarErp.setDisable(true);
 		}
 	}
 	private ProcessoAtual pegarProcessoAtual() {

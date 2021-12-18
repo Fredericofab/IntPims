@@ -59,10 +59,6 @@ public class CriticaErpFormController implements Initializable {
 	private TextField txtSalvarCstg_IntDG;
 
 	@FXML
-	private TextField txtAnoMesAnalisado;
-	@FXML
-	private TextField txtRegistrosPendentes;
-	@FXML
 	private TextField txtNomeCritica;
 	@FXML
 	private TextArea txtAreaDescCritica;
@@ -141,7 +137,6 @@ public class CriticaErpFormController implements Initializable {
 
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodigoCritica);
-		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtRegistrosPendentes);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoCritica, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodigoCritica, 3);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtNomeCritica, 250);
@@ -151,17 +146,21 @@ public class CriticaErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntVM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntCM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntDG, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMesAnalisado, 6);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtRegistrosPendentes, 5);
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtFlagAtiva);
-		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
+		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtImportar);
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarOS_Material);
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntVM);
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntCM);
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntDG);
 
 		if (flagIncluir.equals("S")) {
+			txtTipoCritica.setText("U");
 			desabilitarCompoenentes(false);
+//			txtTipoCritica.setDisable(true);
+//			txtCodigoCritica.setDisable(true);
+//FRED normalmente NAO comentar as 2 linhas acima e comentar a de abaixo
+			System.out.println("FRED Manutencao em CriticaErpFormController - inicializarComponentes");
+
 		}
 		else {
 			if (flagAlterar.equals("S")) {
@@ -181,6 +180,10 @@ public class CriticaErpFormController implements Initializable {
 	}
 	
 	private void desabilitarCompoenentes(boolean b) {
+		b = false;
+		System.out.println("FRED Manutencao em CriticaErpFormController - desabilitarCompoenentes");
+//FRED normalmente manter comentada as 2 linha acima
+		
 		txtTipoCritica.setDisable(b);
 		txtCodigoCritica.setDisable(b);
 		txtAreaDescCritica.setDisable(b);
@@ -209,11 +212,12 @@ public class CriticaErpFormController implements Initializable {
 		txtSalvarCstg_IntVM.setText(entidade.getSalvarCstg_IntVM());
 		txtSalvarCstg_IntCM.setText(entidade.getSalvarCstg_IntCM());
 		txtSalvarCstg_IntDG.setText(entidade.getSalvarCstg_IntDG());
-		txtAnoMesAnalisado.setText(entidade.getAnoMesAnalisado());
-		txtRegistrosPendentes.setText(String.format("%d", entidade.getRegistrosPendentes()));
 		txtAreaClausulaWhere.setText(entidade.getClausulaWhere());
-		
-		txtRegistrosPendentes.setStyle("-fx-alignment: CENTER-RIGHT");
+
+		if (entidade.getTipoCritica().equals("S") ) {
+			desabilitarCompoenentes(true);
+			txtFlagAtiva.setDisable(false);
+		}
 	}
 	
 	private CriticaErp getDadosDoForm() {
@@ -229,8 +233,6 @@ public class CriticaErpFormController implements Initializable {
 		objeto.setSalvarCstg_IntVM(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntVM.getText()));
 		objeto.setSalvarCstg_IntCM(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntCM.getText()));
 		objeto.setSalvarCstg_IntDG(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntDG.getText()));
-		objeto.setAnoMesAnalisado(txtAnoMesAnalisado.getText());
-		objeto.setRegistrosPendentes(Utilitarios.tentarConverterParaInt(txtRegistrosPendentes.getText()));
 		objeto.setClausulaWhere(txtAreaClausulaWhere.getText());
 
 		if (txtFlagAtiva.getText() == null || txtFlagAtiva.getText().trim().equals("")) {

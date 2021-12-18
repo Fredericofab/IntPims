@@ -11,7 +11,10 @@ public class CriticaErp implements Serializable {
 	private String nomeCritica;
 	private String flagAtiva;
 	private String anoMesAnalisado;
+	private Integer registrosAnalisados;
 	private Integer registrosPendentes;
+	private Integer registrosLiberados;
+	private Integer registrosIgnorados;
 	private String descCritica;
 	private String clausulaWhere;
 	private String importar;
@@ -25,16 +28,19 @@ public class CriticaErp implements Serializable {
 	}
 		
 	public CriticaErp(String tipoCritica, Integer codigoCritica, String nomeCritica, String flagAtiva,
-			String anoMesAnalisado, Integer registrosPendentes, String descCritica, String clausulaWhere,
-			String importar, String salvarOS_Material, String salvarCstg_IntVM, String salvarCstg_IntCM,
-			String salvarCstg_IntDG) {
+			String anoMesAnalisado, Integer registrosAnalisados, Integer registrosPendentes, Integer registrosLiberados,
+			Integer registrosIgnorados, String descCritica, String clausulaWhere, String importar,
+			String salvarOS_Material, String salvarCstg_IntVM, String salvarCstg_IntCM, String salvarCstg_IntDG) {
 		super();
 		this.tipoCritica = tipoCritica;
 		this.codigoCritica = codigoCritica;
 		this.nomeCritica = nomeCritica;
 		this.flagAtiva = flagAtiva;
 		this.anoMesAnalisado = anoMesAnalisado;
+		this.registrosAnalisados = registrosAnalisados;
 		this.registrosPendentes = registrosPendentes;
+		this.registrosLiberados = registrosLiberados;
+		this.registrosIgnorados = registrosIgnorados;
 		this.descCritica = descCritica;
 		this.clausulaWhere = clausulaWhere;
 		this.importar = importar;
@@ -43,82 +49,131 @@ public class CriticaErp implements Serializable {
 		this.salvarCstg_IntCM = salvarCstg_IntCM;
 		this.salvarCstg_IntDG = salvarCstg_IntDG;
 	}
-	
+
 	public String getTipoCritica() {
 		return tipoCritica;
 	}
+
 	public void setTipoCritica(String tipoCritica) {
 		this.tipoCritica = tipoCritica;
 	}
+
 	public Integer getCodigoCritica() {
 		return codigoCritica;
 	}
+
 	public void setCodigoCritica(Integer codigoCritica) {
 		this.codigoCritica = codigoCritica;
 	}
+
 	public String getNomeCritica() {
 		return nomeCritica;
 	}
+
 	public void setNomeCritica(String nomeCritica) {
 		this.nomeCritica = nomeCritica;
 	}
+
 	public String getFlagAtiva() {
 		return flagAtiva;
 	}
+
 	public void setFlagAtiva(String flagAtiva) {
 		this.flagAtiva = flagAtiva;
 	}
+
 	public String getAnoMesAnalisado() {
 		return anoMesAnalisado;
 	}
+
 	public void setAnoMesAnalisado(String anoMesAnalisado) {
 		this.anoMesAnalisado = anoMesAnalisado;
 	}
+
 	public Integer getRegistrosPendentes() {
 		return registrosPendentes;
 	}
+
 	public void setRegistrosPendentes(Integer registrosPendentes) {
 		this.registrosPendentes = registrosPendentes;
 	}
+
+	public Integer getRegistrosLiberados() {
+		return registrosLiberados;
+	}
+
+	public void setRegistrosLiberados(Integer registrosLiberados) {
+		this.registrosLiberados = registrosLiberados;
+	}
+
+	public Integer getRegistrosAnalisados() {
+		return registrosAnalisados;
+	}
+
+	public void setRegistrosAnalisados(Integer registrosAnalisados) {
+		this.registrosAnalisados = registrosAnalisados;
+	}
+
+	public Integer getRegistrosIgnorados() {
+		return registrosIgnorados;
+	}
+
+	public void setRegistrosIgnorados(Integer registrosIgnorados) {
+		this.registrosIgnorados = registrosIgnorados;
+	}
+
 	public String getDescCritica() {
 		return descCritica;
 	}
+
 	public void setDescCritica(String descCritica) {
 		this.descCritica = descCritica;
 	}
+
 	public String getClausulaWhere() {
 		return clausulaWhere;
 	}
+
 	public void setClausulaWhere(String clausulaWhere) {
 		this.clausulaWhere = clausulaWhere;
 	}
+
 	public String getImportar() {
 		return importar;
 	}
+
 	public void setImportar(String importar) {
 		this.importar = importar;
 	}
+
 	public String getSalvarOS_Material() {
 		return salvarOS_Material;
 	}
+
 	public void setSalvarOS_Material(String salvarOS_Material) {
 		this.salvarOS_Material = salvarOS_Material;
 	}
+
 	public String getSalvarCstg_IntVM() {
 		return salvarCstg_IntVM;
 	}
+
 	public void setSalvarCstg_IntVM(String salvarCstg_IntVM) {
 		this.salvarCstg_IntVM = salvarCstg_IntVM;
 	}
+
 	public String getSalvarCstg_IntCM() {
 		return salvarCstg_IntCM;
 	}
+
 	public void setSalvarCstg_IntCM(String salvarCstg_IntCM) {
 		this.salvarCstg_IntCM = salvarCstg_IntCM;
 	}
+
 	public String getSalvarCstg_IntDG() {
 		return salvarCstg_IntDG;
 	}
+
 	public void setSalvarCstg_IntDG(String salvarCstg_IntDG) {
 		this.salvarCstg_IntDG = salvarCstg_IntDG;
 	}
@@ -153,13 +208,5 @@ public class CriticaErp implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "CriticaErp [tipoCritica=" + tipoCritica + ", codigoCritica=" + codigoCritica + ", nomeCritica="
-				+ nomeCritica + ", flagAtiva=" + flagAtiva + ", anoMesAnalisado=" + anoMesAnalisado
-				+ ", registrosPendentes=" + registrosPendentes + ", descCritica=" + descCritica + ", clausulaWhere="
-				+ clausulaWhere + ", importar=" + importar + ", salvarOS_Material=" + salvarOS_Material
-				+ ", salvarCstg_IntVM=" + salvarCstg_IntVM + ", salvarCstg_IntCM=" + salvarCstg_IntCM
-				+ ", salvarCstg_IntDG=" + salvarCstg_IntDG + "]";
-	}
+
 }

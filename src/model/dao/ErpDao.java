@@ -9,14 +9,11 @@ public interface ErpDao {
 	void deletarPorChave(Integer sequencial);
 	Erp pesquisarPorChave(Integer sequencial);
 	List<Erp> listarTodos();
+	List<Erp> listarFiltrado(String tipoCritica, Integer codigoCritica, String filtro);
 
 	Integer deletarTodos();
 	Integer deletarPorOrigem(String origem);
 	Integer ultimoSequencial();
 	
-	Integer qtdeTotal();
-	Integer qtdeImportarS();
-	Integer qtdeImportarN();
-	Integer qtdeImportarIndefinido();
-	Integer atualizarCriticaTipoU(String clausulaWhere, String clausulaSet);
+	Integer qtdeTotal(String importar);
 	}
