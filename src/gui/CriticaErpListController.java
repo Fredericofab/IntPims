@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import db.DbIntegridadeException;
+import db.DbException;
 import gui.listeners.DadosAlteradosListener;
 import gui.util.Alertas;
 import gui.util.Utilitarios;
@@ -91,7 +91,6 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 		String caminhoDaView = "/gui/CriticaErpForm.fxml";
 		CriticaErp entidade = new CriticaErp();
 		entidade.setTipoCritica("U");
-		entidade.setRegistrosPendentes(0);
 		Integer sequencial = servico.ultimoSequencial(entidade) + 1;
 		entidade.setCodigoCritica(sequencial);
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
@@ -255,7 +254,7 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 			try {
 				servico.remover(objeto);
 				atualizarTableView();
-			} catch (DbIntegridadeException e) {
+			} catch (DbException e) {
 				Alertas.mostrarAlertas("Erro removendo Objeto", null, e.getMessage(), AlertType.ERROR);
 			}
 		}

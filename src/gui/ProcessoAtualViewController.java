@@ -10,18 +10,17 @@ import gui.util.Alertas;
 import gui.util.RestricoesDeDigitacao;
 import gui.util.Utilitarios;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.entities.ProcessoAtual;
 import model.entities.Parametros;
+import model.entities.ProcessoAtual;
 import model.exceptions.ValidacaoException;
-import model.services.ProcessoAtualService;
 import model.services.ParametrosService;
+import model.services.ProcessoAtualService;
 
 public class ProcessoAtualViewController implements Initializable {
 
@@ -122,13 +121,8 @@ public class ProcessoAtualViewController implements Initializable {
 		atualizarTela();
 	}
 
-	private void lerParametros() {
-		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-	}
-
 	private ProcessoAtual carregarEntidade() {
-		entidade.setAnoMes(anoMes);
-		entidade = servico.pesquisarPorChave(entidade);
+		entidade = servico.pesquisarPorChave(anoMes);
 		return entidade;
 	}
 
@@ -242,7 +236,12 @@ public class ProcessoAtualViewController implements Initializable {
 		Set<String> campos = erros.keySet();
 		labelErroAnoMes.setText((campos.contains("txtAnoMes") ? erros.get("txtAnoMes") : ""));
 	}
+	
+	private void lerParametros() {
+		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
+	}
 
+	
 	private void atualizarParametro(String anoMesNovo) {
 		ParametrosService parametrosService = new ParametrosService();
 		Parametros parametros = parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes");

@@ -295,6 +295,7 @@ public class ImportarErpService {
 			erp.setSalvarCstg_IntVM(null);
 			erp.setSalvarCstg_IntCM(null);
 			erp.setSalvarCstg_IntDG(null);
+			erp.setCriticas(null);
 			erpService.salvarOuAtualizar(erp);
 		}
 	}

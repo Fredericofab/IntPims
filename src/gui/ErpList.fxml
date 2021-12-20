@@ -2,40 +2,63 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="627.0" prefWidth="1194.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ErpListController">
+<VBox prefHeight="594.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ErpListController">
    <children>
       <ToolBar prefHeight="7.0" prefWidth="1965.0">
         <items>
           <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" text="Incluir" />
+            <Button fx:id="btFiltroTxt" mnemonicParsing="false" onAction="#onBtFiltroAction" prefHeight="25.0" prefWidth="56.0" text="Filtro" />
             <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="GerarTXT" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Filtrar" />
             <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="479.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewDadosErp" prefHeight="587.0" prefWidth="1776.0">
+      <GridPane prefHeight="22.0" prefWidth="1106.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="548.0" minWidth="10.0" prefWidth="94.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1012.0" minWidth="10.0" prefWidth="1012.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+         <children>
+            <Label text="Filtro Aplicado:" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextArea fx:id="txtAreaFiltro" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <TableView fx:id="tableViewDadosErp" prefHeight="482.0" prefWidth="1106.0">
         <columns>
             <TableColumn fx:id="tableColumnSequencial" prefWidth="10.0" text="Seq" />
           <TableColumn fx:id="tableColumnAnoMes" prefWidth="10.0" text="AnoMes" />
-            <TableColumn fx:id="tableColumnOrigem" prefWidth="30.0" text="Origem" />
-          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="68.0" text="C.Custos" />
+            <TableColumn fx:id="tableColumnOrigem" prefWidth="10.0" text="Origem" />
+          <TableColumn fx:id="tableColumnCodCentroCustos" text="C.Custos" />
             <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="10.0" text="Desc. C.Custos" />
             <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="70.0" text="C.Contabil" />
             <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="10.0" text="Desc. C.Contabil" />
             <TableColumn fx:id="tableColumnCodMaterial" prefWidth="60.0" text="Material" />
             <TableColumn fx:id="tableColumnDescMovimento" prefWidth="60.0" text="Desc Movimento" />
-            <TableColumn fx:id="tableColumnUnidadeMedida" prefWidth="28.0" text="UN" />
+            <TableColumn fx:id="tableColumnUnidadeMedida" prefWidth="10.0" text="UN" />
             <TableColumn fx:id="tableColumnQuantidade" prefWidth="56.0" text="Qtde" />
             <TableColumn fx:id="tableColumnPrecoUnitario" prefWidth="61.0" text="Pr. Unitario" />
             <TableColumn fx:id="tableColumnValorMovimento" prefWidth="77.0" text="Valor Mov." />
-            <TableColumn fx:id="tableColumnReferenciaOS" prefWidth="36.0" text="Ref. OS" />
+            <TableColumn fx:id="tableColumnReferenciaOS" prefWidth="10.0" text="Ref. OS" />
             <TableColumn fx:id="tableColumnNumeroOS" prefWidth="50.0" text="No. OS" />
-            <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="43.0" text="Documento ERP" />
+            <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="10.0" text="Documento ERP" />
             <TableColumn fx:id="tableColumnDataMovimento" prefWidth="70.0" text="Data Movto" />
             <TableColumn fx:id="tableColumnImportar" prefWidth="58.0" text="Importar" />
             <TableColumn fx:id="tableColumnCriticas" prefWidth="60.0" text="Criticas" />

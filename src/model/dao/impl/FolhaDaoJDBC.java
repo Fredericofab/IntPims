@@ -38,7 +38,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			st.setString(8, objeto.getObservacao());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Insercao " + e.getMessage());
+			throw new DbException("Erro na Insercao \n" + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -64,7 +64,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			st.setDouble(8, objeto.getCodVerba());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Atualizacao " + e.getMessage());
+			throw new DbException("Erro na Atualizacao \n" + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -81,7 +81,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			st.setDouble(3, codVerba);
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao " + e.getMessage());
+			throw new DbException("erro na delecao \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -105,7 +105,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa " + e.getMessage());
+			throw new DbException("erro na Pesquisa \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -130,7 +130,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			return lista;
 		} 
 		catch (SQLException e) {
-			throw new DbException("erro na consulta todos - " + e.getMessage());
+			throw new DbException("erro na consulta todos \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharResultSet(rs);

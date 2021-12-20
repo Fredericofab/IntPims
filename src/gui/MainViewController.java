@@ -299,26 +299,47 @@ public class MainViewController implements Initializable {
 	private void habilitarEtapas() {
 		lerParametros();
 		ProcessoAtual processoAtual = pegarProcessoAtual();
-		menuItemSumarizarFolha.setDisable(processoAtual.getImportarFolha().equals("S") ? false : true);
-		menuItemExportarFolha.setDisable(processoAtual.getSumarizarFolha().equals("S") ? false : true);
-		menuItemSumarizarFuncionarios.setDisable(processoAtual.getImportarFuncionario().equals("S") ? false : true);
-		if (processoAtual.getImportarErpMT().equals("N") ||
-			processoAtual.getImportarErpCD().equals("N") ||
-			processoAtual.getImportarErpDG().equals("N")) {
+		if (processoAtual == null) {
+			// Primeira utilizacao do sistema
+			menuItemImportarFolha.setDisable(true);
+			menuItemSumarizarFolha.setDisable(true);
+			menuItemExportarFolha.setDisable(true);
+			menuItemImportarFuncionarios.setDisable(true);
+			menuItemSumarizarFuncionarios.setDisable(true);
+			menuItemImportarErpMT.setDisable(true);
+			menuItemImportarErpCD.setDisable(true);
+			menuItemImportarErpDG.setDisable(true);
 			menuItemAnalisarErp.setDisable(true);
-		}
-		else {
-			menuItemAnalisarErp.setDisable(false);
-		}
-		if (processoAtual.getAnalisarErp().equals("N")) {
 			menuItemExportarErp.setDisable(true);
 		}
+		else {
+			menuItemImportarFolha.setDisable(false);
+			menuItemImportarFuncionarios.setDisable(false);
+			menuItemImportarErpMT.setDisable(false);
+			menuItemImportarErpCD.setDisable(false);
+			menuItemImportarErpDG.setDisable(false);
+
+			menuItemSumarizarFolha.setDisable(processoAtual.getImportarFolha().equals("S") ? false : true);
+			menuItemExportarFolha.setDisable(processoAtual.getSumarizarFolha().equals("S") ? false : true);
+			menuItemSumarizarFuncionarios.setDisable(processoAtual.getImportarFuncionario().equals("S") ? false : true);
+			if (processoAtual.getImportarErpMT().equals("N") ||
+				processoAtual.getImportarErpCD().equals("N") ||
+				processoAtual.getImportarErpDG().equals("N")) {
+				menuItemAnalisarErp.setDisable(true);
+				menuItemExportarErp.setDisable(true);
+			}
+			else {
+				menuItemAnalisarErp.setDisable(false);
+			}
+			if (processoAtual.getAnalisarErp().equals("N")) {
+				menuItemExportarErp.setDisable(true);
+			}
+		}
 	}
+	
 	private ProcessoAtual pegarProcessoAtual() {
-		ProcessoAtual processoAtual = new ProcessoAtual();
-		processoAtual.setAnoMes(anoMes);
 		ProcessoAtualService processoAtualService = new ProcessoAtualService();
-		return processoAtualService.pesquisarPorChave(processoAtual);
+		return processoAtualService.pesquisarPorChave(anoMes);
 	}
 	private <T> void criarJanelaFilha(String caminhoDaView, String titulo, Stage paiStage,
 			Consumer<T> acaoDeInicializacao) {

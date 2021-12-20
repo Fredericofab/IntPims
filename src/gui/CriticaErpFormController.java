@@ -282,7 +282,10 @@ public class CriticaErpFormController implements Initializable {
 	}
 	
 	private CriticaErp substituirNull(CriticaErp objeto) {
-		if (objeto.getRegistrosPendentes() == null) { objeto.setRegistrosPendentes(0);	}
+		if (objeto.getRegistrosAnalisados() == null) objeto.setRegistrosAnalisados(0);
+		if (objeto.getRegistrosLiberados() == null) objeto.setRegistrosLiberados(0);
+		if (objeto.getRegistrosIgnorados() == null) objeto.setRegistrosIgnorados(0);
+		if (objeto.getRegistrosPendentes() == null) objeto.setRegistrosPendentes(0);
 		return objeto;
 	}
 

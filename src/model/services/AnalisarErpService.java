@@ -6,12 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import gui.util.Alertas;
-import javafx.scene.control.Alert.AlertType;
 import model.dao.FabricaDeDao;
 import model.dao.PimsGeralDao;
 import model.entities.CriticaErp;
 import model.entities.Erp;
+import model.exceptions.IntegridadeException;
 
 public class AnalisarErpService {
 	
@@ -35,6 +34,10 @@ public class AnalisarErpService {
 	}
 	
 	public void analisarUm(String tipo, Integer codigo) {
+		CriticaErp criticaErp = criticasErpService.pesquisarPorChave(tipo, codigo);
+		if ( criticaErp == null ) {
+			throw new IntegridadeException("Critica Informada não Existe");
+		}	
 		lerParametros();
 		listaErp = erpService.pesquisarTodos();
 		if (tipo.equals("S")) { 
@@ -43,16 +46,7 @@ public class AnalisarErpService {
 			if (codigo == 003) { s003OSValida(); }
 		}
 		else {
-			if (tipo.equals("U") && codigo != null) {
-				CriticaErp criticaErp = criticasErpService.pesquisarPorChave("U", codigo);
-				if ( criticaErp == null ) {
-					Alertas.mostrarAlertas(null, "Erro de Digitação", "Critica Informada não Existe",
-							AlertType.ERROR);
-				}
-				else {
-					criticaTipoU(criticaErp);
-				}
-			}
+			criticaTipoU(criticaErp);
 		}
 	}
 
@@ -130,13 +124,11 @@ public class AnalisarErpService {
 		criticaErp = atualizarRegistroCriticaErp(criticaErp);
 		criticasErpService.salvarOuAtualizar(criticaErp);
 	}
-
-	
 	
 	private void criticaTipoU(CriticaErp criticaErp) {
 		String filtro = criticaErp.getClausulaWhere();
 		Integer codigoCritica = criticaErp.getCodigoCritica();
-		listaErp = erpService.pesquisarFiltrado("U", codigoCritica, filtro);
+		listaErp = erpService.pesquisarCriticaFiltrada("U", codigoCritica, filtro);
 		zerarContadores();
 		for (Erp erp : listaErp) {
 			qtdeAnalisados += 1;
@@ -158,8 +150,7 @@ public class AnalisarErpService {
 		criticaErp = atualizarRegistroCriticaErp(criticaErp);
 		criticasErpService.salvarOuAtualizar(criticaErp);
 	}
-	
-	
+		
 	private Erp atualizarRegistroErp(CriticaErp criticaErp, Erp erp) {
 
 		if (criticaErp.getImportar() != null ) { 

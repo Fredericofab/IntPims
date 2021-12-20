@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
-import db.DbIntegridadeException;
+import db.DbException;
 import gui.listeners.DadosAlteradosListener;
 import gui.util.Alertas;
 import gui.util.Utilitarios;
@@ -26,12 +27,16 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Erp;
+import model.entities.ProcessoAtual;
 import model.services.ErpService;
 import model.services.ParametrosService;
+import model.services.ProcessoAtualService;
 
 public class ErpListController implements Initializable, DadosAlteradosListener {
 
@@ -44,6 +49,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	String flagIncluir;
 	String flagAlterar;
 	String flagExcluir;
+	String filtro;
 	String anoMes;
 
 	@FXML
@@ -100,9 +106,13 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	private TableColumn<Erp, Erp> tableColumnEDIT;
 	@FXML
 	private TableColumn<Erp, Erp> tableColumnREMOVE;
-
+	
+	@FXML
+	private TextArea txtAreaFiltro;
 	@FXML
 	private Button btIncluir;
+	@FXML
+	private Button btFiltroTxt;
 	@FXML
 	private Button btGerarTxt;
 	@FXML
@@ -125,6 +135,16 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		entidade.setSequencial(sequencial);
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
+	
+	@FXML
+	public void onBtFiltroAction(ActionEvent evento) {
+		String caminhoDaView = "/gui/ErpFiltrosView.fxml";
+		Stage parentStage = Utilitarios.atualStage(evento);
+//		criarJanelaFilha(caminhoDaView, "Filtrar Dados Erp", parentStage, x -> {	});
+		criarJanelaFilha(caminhoDaView, "Filtrar Dados Erp", parentStage,
+				(ErpFiltrosViewController controle) -> { controle.serOuvinteDeDadosAlteradosListener(this);	});
+	}
+
 	@FXML
 	public void onGerarTxtAction(ActionEvent evento) {
 		Boolean oficial = false;
@@ -145,13 +165,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		inicializarComponentes();
 		
 	}
-	private void lerParametros() {
-		flagIncluir = (parametrosService.pesquisarPorChave("DadosErp", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("DadosErp", "FlagAlterar")).getValor().toUpperCase();
-		flagExcluir = (parametrosService.pesquisarPorChave("DadosErp", "FlagExcluir")).getValor().toUpperCase();
-		anoMes =  (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-	}
-
+	
 	private void inicializarComponentes() {
 		tableColumnSequencial.setCellValueFactory(new PropertyValueFactory<>("sequencial"));
 		tableColumnAnoMes.setCellValueFactory(new PropertyValueFactory<>("anoMes"));
@@ -199,19 +213,32 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	}
 
 	public void atualizarTableView() {
-		if (servico == null) {
-			throw new IllegalStateException("o servico nao foi carregado pelo outro programador");
+		try {
+			if (servico == null) {
+				throw new IllegalStateException("o servico nao foi carregado pelo outro programador");
+			}
+			lerClausulaWhere();
+			txtAreaFiltro.setText(filtro);
+			List<Erp> lista;
+			lista = (filtro == null) ? servico.pesquisarTodos() : servico.pesquisarTodosFiltrado(filtro);
+	
+			obsLista = FXCollections.observableArrayList(lista);
+			tableViewDadosErp.setItems(obsLista);
+			if (flagAlterar.equals("S")) {
+				initEditButtons();
+			}
+			if (flagExcluir.equals("S")) {
+				initRemoveButtons();
+			}
+		} catch (DbException e) {
+			Alertas.mostrarAlertas("DbException", "Erro na aplicacao do Filtro", e.getMessage(), AlertType.ERROR);
 		}
-		List<Erp> lista = servico.pesquisarTodos();
+	}
 
-		obsLista = FXCollections.observableArrayList(lista);
-		tableViewDadosErp.setItems(obsLista);
-		if (flagAlterar.equals("S")) {
-			initEditButtons();
-		}
-		if (flagExcluir.equals("S")) {
-			initRemoveButtons();
-		}
+	private void lerClausulaWhere() {
+		ProcessoAtualService processoAtualService = new ProcessoAtualService();
+		ProcessoAtual processoAtual = processoAtualService.pesquisarPorChave(anoMes);
+		filtro = processoAtual.getFiltroErp();
 	}
 
 	private void criarDialogoForm(Erp entidade, String caminhoDaView, Stage parentStage) {
@@ -234,7 +261,6 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 			dialogoStage.showAndWait();
 
 		} catch (IOException e) {
-			e.printStackTrace();
 			Alertas.mostrarAlertas("IOException", "Erro carregando View", e.getMessage(), AlertType.ERROR);
 		}
 	}
@@ -291,9 +317,42 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 			try {
 				servico.remover(objeto);
 				atualizarTableView();
-			} catch (DbIntegridadeException e) {
+			} catch (DbException e) {
 				Alertas.mostrarAlertas("Erro removendo Objeto", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}
+	
+	private <T> void criarJanelaFilha(String caminhoDaView, String titulo, Stage paiStage,
+			Consumer<T> acaoDeInicializacao) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
+			Pane pane = loader.load();
+
+			T controller = loader.getController();
+			acaoDeInicializacao.accept(controller);
+			
+//			controller.serOuvinteDeDadosAlteradosListener(this);
+
+			Stage janelaFilhaStage = new Stage();
+			janelaFilhaStage.setTitle(titulo);
+			janelaFilhaStage.setScene(new Scene(pane)); // a cena é exatamente a view carregada
+			janelaFilhaStage.setResizable(true); // pode ser redimensionada
+			janelaFilhaStage.initOwner(paiStage); // quem é o pai dessa janela
+			janelaFilhaStage.initModality(Modality.WINDOW_MODAL); // fica preso na janela
+			janelaFilhaStage.showAndWait();
+
+		} catch (IOException e) {
+			Alertas.mostrarAlertas("IOException", "Erro carregando Stage (Janela)", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
+		}
+	}
+
+	private void lerParametros() {
+		flagIncluir = (parametrosService.pesquisarPorChave("DadosErp", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("DadosErp", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("DadosErp", "FlagExcluir")).getValor().toUpperCase();
+		anoMes =  (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
+	}
+
 }

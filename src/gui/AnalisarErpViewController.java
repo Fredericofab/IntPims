@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import db.DbException;
+import gui.util.Alertas;
 import gui.util.RestricoesDeDigitacao;
 import gui.util.Utilitarios;
 import javafx.collections.FXCollections;
@@ -12,19 +14,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.CriticaErp;
+import model.exceptions.IntegridadeException;
 import model.services.AnalisarErpService;
 import model.services.CriticaErpService;
 
 public class AnalisarErpViewController implements Initializable {
 
 	private AnalisarErpService servico;
-	
+
 	@FXML
 	private TableView<CriticaErp> tableViewCriticasErp;
 	@FXML
@@ -68,7 +72,7 @@ public class AnalisarErpViewController implements Initializable {
 	private Button btCalcular;
 	@FXML
 	private Button btSair;
-	
+
 	private ObservableList<CriticaErp> obsLista;
 
 	@FXML
@@ -80,21 +84,32 @@ public class AnalisarErpViewController implements Initializable {
 	public void onBtAnalisarUmAction(ActionEvent evento) {
 		String tipo = txtTipoCritica.getText().toUpperCase();
 		Integer codigo = Utilitarios.tentarConverterParaInt(txtCodigoCritica.getText());
-		servico.analisarUm(tipo, codigo);
-		atualizarTela();
-		atualizarTableView();
+		try {
+			servico.analisarUm(tipo, codigo);
+			atualizarEstatistica();
+			atualizarTableView();
+		} catch (IntegridadeException e) {
+			Alertas.mostrarAlertas("IntegridadeException", "Erro de Digitação", e.getMessage(), AlertType.ERROR);
+		} catch (DbException e) {
+			Alertas.mostrarAlertas("DbException", "Erro na aplicacao do Filtro", e.getMessage(), AlertType.ERROR);
+		}
 	}
 
 	@FXML
 	public void onBtAnalisarTodosAction(ActionEvent evento) {
-		servico.analisarTodos();
-		atualizarTela();
-		atualizarTableView();
+		try {
+			servico.analisarTodos();
+		} catch (DbException e) {
+			Alertas.mostrarAlertas("DbException", "Erro na aplicacao do Filtro", e.getMessage(), AlertType.ERROR);
+		} finally {
+			atualizarEstatistica();
+			atualizarTableView();
+		}
 	}
 
 	@FXML
 	public void onBtCalcularAction(ActionEvent evento) {
-		atualizarTela();
+		atualizarEstatistica();
 		atualizarTableView();
 	}
 
@@ -117,7 +132,7 @@ public class AnalisarErpViewController implements Initializable {
 		tableColumnRegistrosLiberados.setCellValueFactory(new PropertyValueFactory<>("registrosLiberados"));
 		tableColumnRegistrosIgnorados.setCellValueFactory(new PropertyValueFactory<>("registrosIgnorados"));
 		tableColumnRegistrosPendentes.setCellValueFactory(new PropertyValueFactory<>("registrosPendentes"));
-	
+
 		tableColumnTipoCritica.setStyle("-fx-alignment: TOP-CENTER");
 		tableColumnCodCritica.setStyle("-fx-alignment: TOP-RIGHT");
 		tableColumnFlagAtiva.setStyle("-fx-alignment: TOP-CENTER");
@@ -136,21 +151,21 @@ public class AnalisarErpViewController implements Initializable {
 		tableViewCriticasErp.setItems(obsLista);
 		tableViewCriticasErp.refresh();
 	}
-	
-	private void atualizarTela() {
+
+	private void atualizarEstatistica() {
 		Integer qtdeTotalLiberados = servico.getQtdeTotal("S");
 		Integer qtdeTotalIgnorados = servico.getQtdeTotal("N");
 		Integer qtdeTotalPendentes = servico.getQtdeTotal("?");
 		Integer qtdeTotalIndefinidos = servico.getQtdeTotal(null);
-		Integer qtdeTotalRegistros  = qtdeTotalLiberados + qtdeTotalIgnorados
-									+ qtdeTotalPendentes + qtdeTotalIndefinidos;
+		Integer qtdeTotalRegistros = qtdeTotalLiberados + qtdeTotalIgnorados + qtdeTotalPendentes
+				+ qtdeTotalIndefinidos;
 
 		txtTotalRegistros.setText(qtdeTotalRegistros.toString());
 		txtTotalLiberados.setText(qtdeTotalLiberados.toString());
 		txtTotalIgnorados.setText(qtdeTotalIgnorados.toString());
 		txtTotalPendentes.setText(qtdeTotalPendentes.toString());
 		txtTotalIndefinidos.setText(qtdeTotalIndefinidos.toString());
-		
+
 		txtTotalRegistros.setStyle("-fx-alignment: CENTER-RIGHT");
 		txtTotalLiberados.setStyle("-fx-alignment: CENTER-RIGHT");
 		txtTotalIgnorados.setStyle("-fx-alignment: CENTER-RIGHT");

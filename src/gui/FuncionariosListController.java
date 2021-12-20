@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import db.DbIntegridadeException;
+import db.DbException;
 import gui.listeners.DadosAlteradosListener;
 import gui.util.Alertas;
 import gui.util.Utilitarios;
@@ -213,7 +213,7 @@ public class FuncionariosListController implements Initializable, DadosAlterados
 			try {
 				servico.remover(objeto);
 				atualizarTableView();
-			} catch (DbIntegridadeException e) {
+			} catch (DbException e) {
 				Alertas.mostrarAlertas("Erro removendo Objeto", null, e.getMessage(), AlertType.ERROR);
 			}
 		}

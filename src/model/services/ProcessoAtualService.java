@@ -37,8 +37,8 @@ public class ProcessoAtualService {
 		dao.deletarPorChave(objeto.getAnoMes());
 	}
 
-	public ProcessoAtual pesquisarPorChave(ProcessoAtual objeto) {
-		return dao.pesquisarPorChave(objeto.getAnoMes());
+	public ProcessoAtual pesquisarPorChave(String anoMes) {
+		return dao.pesquisarPorChave(anoMes);
 	}
 	
 	public void removerTodos() {
@@ -94,9 +94,7 @@ public class ProcessoAtualService {
 	
 	public void atualizarEtapa(String campo, String valor) {
 		lerParametros(true);
-		ProcessoAtual processoAtual = new ProcessoAtual();
-		processoAtual.setAnoMes(anoMes);
-		processoAtual = pesquisarPorChave(processoAtual);
+		ProcessoAtual processoAtual = pesquisarPorChave(anoMes);
 		if (campo.equals("ImportarFolha")) processoAtual.setImportarFolha(valor); 
 		if (campo.equals("SumarizarFolha")) processoAtual.setSumarizarFolha(valor); 
 		if (campo.equals("ExportarFolha")) processoAtual.setExportarFolha(valor); 

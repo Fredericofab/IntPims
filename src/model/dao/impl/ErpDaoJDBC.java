@@ -246,7 +246,7 @@ public class ErpDaoJDBC implements ErpDao {
 	}
 	
 	@Override
-	public List<Erp> listarFiltrado(String tipoCritica, Integer codigoCritica, String filtro) {
+	public List<Erp> listarCriticaFiltrada(String tipoCritica, Integer codigoCritica, String filtro) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -261,7 +261,28 @@ public class ErpDaoJDBC implements ErpDao {
 		} catch (SQLException e) {
 			throw new DbException("erro na consulta da critica " 
 								+ tipoCritica + String.format("%03d", codigoCritica)
-								+ "/n" + e.getMessage());
+								+ "\n" + e.toString());
+		} finally {
+			DB.fecharResultSet(rs);
+			DB.fecharStatement(st);
+		}
+	}
+
+	@Override
+	public List<Erp> listarTodosFiltrado(String filtro) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM Erp WHERE " + filtro);
+			rs = st.executeQuery();
+			List<Erp> lista = new ArrayList<Erp>();
+			while (rs.next()) {
+				Erp dadosErp = instanciaDadosErp(rs);
+				lista.add(dadosErp);
+			}
+			return lista;
+		} catch (SQLException e) {
+			throw new DbException("erro na consulta filtrada \n"  +  e.toString());
 		} finally {
 			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);
@@ -298,5 +319,6 @@ public class ErpDaoJDBC implements ErpDao {
 		dadosErp.setSequencial(rs.getInt("Sequencial"));
 		return dadosErp;
 	}
+
 
 }
