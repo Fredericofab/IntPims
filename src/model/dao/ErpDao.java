@@ -17,4 +17,9 @@ public interface ErpDao {
 	Integer ultimoSequencial();
 	
 	Integer qtdeTotal(String importar);
+	Integer qtdeLiberadosOS();
+	Integer qtdeLiberadosCM();
+	Integer qtdeLiberadosDG();
+	Integer qtdeLiberadosVM();
+	Integer qtdeDessaCritica(String essaCriticaTxt, String importar);
 	}

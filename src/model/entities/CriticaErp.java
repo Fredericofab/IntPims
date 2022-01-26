@@ -208,5 +208,16 @@ public class CriticaErp implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "CriticaErp [tipoCritica=" + tipoCritica + ", codigoCritica=" + codigoCritica + ", nomeCritica="
+				+ nomeCritica + ", flagAtiva=" + flagAtiva + ", anoMesAnalisado=" + anoMesAnalisado
+				+ ", registrosAnalisados=" + registrosAnalisados + ", registrosPendentes=" + registrosPendentes
+				+ ", registrosLiberados=" + registrosLiberados + ", registrosIgnorados=" + registrosIgnorados
+				+ ", descCritica=" + descCritica + ", clausulaWhere=" + clausulaWhere + ", importar=" + importar
+				+ ", salvarOS_Material=" + salvarOS_Material + ", salvarCstg_IntVM=" + salvarCstg_IntVM
+				+ ", salvarCstg_IntCM=" + salvarCstg_IntCM + ", salvarCstg_IntDG=" + salvarCstg_IntDG + "]";
+	}
+
 
 }

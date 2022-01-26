@@ -59,6 +59,25 @@ public class ErpService {
 	public Integer qtdeTotal(String importar) {
 		return dao.qtdeTotal(importar);
 	}
+	
+	public Integer qtdeDessaCritica(String essaCriticaTxt, String importar) {
+		return dao.qtdeDessaCritica(essaCriticaTxt, importar);
+	}
+
+	public Integer qtdeLiberadosOS() {
+		return dao.qtdeLiberadosOS();
+	}
+	public Integer qtdeLiberadosCM() {
+		return dao.qtdeLiberadosCM();
+	}
+	public Integer qtdeLiberadosDG() {
+		return dao.qtdeLiberadosDG();
+	}
+	public Integer qtdeLiberadosVM() {
+		return dao.qtdeLiberadosVM();
+	}
+
+
 
 	public void gerarTxt(Boolean oficial) {
 		lerParametros(oficial);
@@ -122,4 +141,6 @@ public class ErpService {
 			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
 		}
 	}
+
+
 }

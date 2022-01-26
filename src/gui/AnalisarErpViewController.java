@@ -9,7 +9,7 @@ import db.DbException;
 import gui.util.Alertas;
 import gui.util.RestricoesDeDigitacao;
 import gui.util.Utilitarios;
-import javafx.collections.FXCollections;
+import javafx.collections.FXCollections; 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,13 +57,21 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	private TextField txtTotalRegistros;
 	@FXML
-	private TextField txtTotalLiberados;
-	@FXML
-	private TextField txtTotalIgnorados;
+	private TextField txtTotalIndefinidos;
 	@FXML
 	private TextField txtTotalPendentes;
 	@FXML
-	private TextField txtTotalIndefinidos;
+	private TextField txtTotalIgnorados;
+	@FXML
+	private TextField txtTotalLiberadosOS;
+	@FXML
+	private TextField txtTotalLiberadosCM;
+	@FXML
+	private TextField txtTotalLiberadosDG;
+	@FXML
+	private TextField txtTotalLiberadosVM;
+	@FXML
+	private TextField txtTotalLiberados;
 	@FXML
 	private Button btAnalisarUm;
 	@FXML
@@ -86,7 +94,7 @@ public class AnalisarErpViewController implements Initializable {
 		Integer codigo = Utilitarios.tentarConverterParaInt(txtCodigoCritica.getText());
 		try {
 			servico.analisarUm(tipo, codigo);
-			atualizarEstatistica();
+			atualizarEstatisticaGeral();
 			atualizarTableView();
 		} catch (IntegridadeException e) {
 			Alertas.mostrarAlertas("IntegridadeException", "Erro de Digitação", e.getMessage(), AlertType.ERROR);
@@ -102,16 +110,18 @@ public class AnalisarErpViewController implements Initializable {
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro na aplicacao do Filtro", e.getMessage(), AlertType.ERROR);
 		} finally {
-			atualizarEstatistica();
+			atualizarEstatisticaGeral();
 			atualizarTableView();
 		}
 	}
 
 	@FXML
 	public void onBtCalcularAction(ActionEvent evento) {
-		atualizarEstatistica();
+		atualizarEstatisticaGeral();
+		atualizarEstatisticaPorCritica();
 		atualizarTableView();
 	}
+
 
 	public void setAnalisarErpServico(AnalisarErpService servico) {
 		this.servico = servico;
@@ -152,24 +162,42 @@ public class AnalisarErpViewController implements Initializable {
 		tableViewCriticasErp.refresh();
 	}
 
-	private void atualizarEstatistica() {
-		Integer qtdeTotalLiberados = servico.getQtdeTotal("S");
-		Integer qtdeTotalIgnorados = servico.getQtdeTotal("N");
-		Integer qtdeTotalPendentes = servico.getQtdeTotal("?");
+	private void atualizarEstatisticaGeral() {
 		Integer qtdeTotalIndefinidos = servico.getQtdeTotal(null);
+		Integer qtdeTotalPendentes = servico.getQtdeTotal("?");
+		Integer qtdeTotalIgnorados = servico.getQtdeTotal("N");
+		Integer qtdeTotalLiberados = servico.getQtdeTotal("S");
 		Integer qtdeTotalRegistros = qtdeTotalLiberados + qtdeTotalIgnorados + qtdeTotalPendentes
 				+ qtdeTotalIndefinidos;
+		Integer qtdeLiberadosOS = servico.getQtdeLiberadosOS();
+		Integer qtdeLiberadosCM = servico.getQtdeLiberadosCM();
+		Integer qtdeLiberadosDG = servico.getQtdeLiberadosDG();
+		Integer qtdeLiberadosVM = servico.getQtdeLiberadosVM();
 
-		txtTotalRegistros.setText(qtdeTotalRegistros.toString());
-		txtTotalLiberados.setText(qtdeTotalLiberados.toString());
-		txtTotalIgnorados.setText(qtdeTotalIgnorados.toString());
-		txtTotalPendentes.setText(qtdeTotalPendentes.toString());
 		txtTotalIndefinidos.setText(qtdeTotalIndefinidos.toString());
-
-		txtTotalRegistros.setStyle("-fx-alignment: CENTER-RIGHT");
-		txtTotalLiberados.setStyle("-fx-alignment: CENTER-RIGHT");
-		txtTotalIgnorados.setStyle("-fx-alignment: CENTER-RIGHT");
-		txtTotalPendentes.setStyle("-fx-alignment: CENTER-RIGHT");
-		txtTotalIndefinidos.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalPendentes.setText(qtdeTotalPendentes.toString());
+		txtTotalIgnorados.setText(qtdeTotalIgnorados.toString());
+		txtTotalLiberados.setText(qtdeTotalLiberados.toString());
+		txtTotalRegistros.setText(qtdeTotalRegistros.toString());
+		txtTotalLiberadosOS.setText(qtdeLiberadosOS.toString());
+		txtTotalLiberadosCM.setText(qtdeLiberadosCM.toString());
+		txtTotalLiberadosDG.setText(qtdeLiberadosDG.toString());
+		txtTotalLiberadosVM.setText(qtdeLiberadosVM.toString());
+		
+		txtTotalIndefinidos.setStyle("-fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
+		txtTotalPendentes.setStyle("  -fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
+		txtTotalIgnorados.setStyle("  -fx-alignment: CENTER-RIGHT");
+		txtTotalLiberados.setStyle("  -fx-alignment: CENTER-RIGHT");
+		txtTotalRegistros.setStyle("  -fx-alignment: CENTER-RIGHT");
+		txtTotalLiberadosOS.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalLiberadosCM.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalLiberadosDG.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalLiberadosVM.setStyle("-fx-alignment: CENTER-RIGHT");
+				
 	}
+	
+	private void atualizarEstatisticaPorCritica() {
+		servico.atualizarEstatisticaPorCritica();
+	}
+
 }

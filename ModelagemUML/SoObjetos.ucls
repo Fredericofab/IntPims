@@ -336,7 +336,7 @@
   </class>  
   <class id="38" language="java" name="model.entities.Parametros" project="intPims" 
     file="/intPims/src/model/entities/Parametros.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="466" y="-178"/>    
+    <position height="-1" width="-1" x="477" y="-132"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -372,7 +372,7 @@
   </class>  
   <class id="42" language="java" name="gui.ParametrosListController" project="intPims" 
     file="/intPims/src/gui/ParametrosListController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="651" y="187"/>    
+    <position height="-1" width="-1" x="645" y="292"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -381,7 +381,7 @@
   </class>  
   <class id="43" language="java" name="gui.ParametrosFormController" project="intPims" 
     file="/intPims/src/gui/ParametrosFormController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="655" y="233"/>    
+    <position height="-1" width="-1" x="651" y="346"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -426,7 +426,7 @@
   </class>  
   <interface id="48" language="java" name="model.dao.ProcessoAtualDao" project="intPims" 
     file="/intPims/src/model/dao/ProcessoAtualDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="551" y="957"/>    
+    <position height="-1" width="-1" x="581" y="959"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -435,7 +435,7 @@
   </interface>  
   <class id="49" language="java" name="model.dao.impl.ProcessoAtualDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/ProcessoAtualDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="515" y="1065"/>    
+    <position height="-1" width="-1" x="547" y="1065"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -606,7 +606,7 @@
   </class>  
   <class id="68" language="java" name="model.services.ImportarErpService" project="intPims" 
     file="/intPims/src/model/services/ImportarErpService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="55" y="2490"/>    
+    <position height="-1" width="-1" x="49" y="2477"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -624,7 +624,7 @@
   </class>  
   <interface id="70" language="java" name="model.dao.ErpDao" project="intPims" file="/intPims/src/model/dao/ErpDao.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="596" y="2707"/>    
+    <position height="-1" width="-1" x="579" y="2757"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -633,21 +633,67 @@
   </interface>  
   <class id="71" language="java" name="model.dao.impl.ErpDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/ErpDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="554" y="2831"/>    
+    <position height="-1" width="-1" x="497" y="2914"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <realization id="72">    
-    <end type="SOURCE" refId="71"/>    
-    <end type="TARGET" refId="70"/>  
-  </realization>  
-  <realization id="73">    
-    <end type="SOURCE" refId="65"/>    
-    <end type="TARGET" refId="20"/>  
-  </realization>  
+  <class id="72" language="java" name="model.entities.CriticaErp" project="intPims" 
+    file="/intPims/src/model/entities/CriticaErp.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="471" y="-177"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="73" language="java" name="model.entities.Erp" project="intPims" file="/intPims/src/model/entities/Erp.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="576" y="-41"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="74" language="java" name="gui.AnalisarErpViewController" project="intPims" 
+    file="/intPims/src/gui/AnalisarErpViewController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="381" y="379"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="75" language="java" name="gui.CriticaErpListController" project="intPims" 
+    file="/intPims/src/gui/CriticaErpListController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="647" y="188"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="76" language="java" name="gui.CriticaErpFormController" project="intPims" 
+    file="/intPims/src/gui/CriticaErpFormController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="647" y="238"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="77" language="java" name="gui.ErpFiltrosViewController" project="intPims" 
+    file="/intPims/src/gui/ErpFiltrosViewController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="23" width="162" x="789" y="476"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
   <classifier-display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="false" package="false" protected="false" private="false" static="false"/>    

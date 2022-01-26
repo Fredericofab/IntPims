@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="model.entities.ProcessoAtual" project="intPims" 
     file="/intPims/src/model/entities/ProcessoAtual.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="625" y="1173"/>    
+    <position height="-1" width="-1" x="630" y="1204"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="model.entities.Erp" project="intPims" file="/intPims/src/model/entities/Erp.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="466" y="2378"/>    
+    <position height="-1" width="-1" x="460" y="2440"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="model.entities.VerbasFolha" project="intPims" 
     file="/intPims/src/model/entities/VerbasFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1146" y="898"/>    
+    <position height="-1" width="-1" x="1090" y="906"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

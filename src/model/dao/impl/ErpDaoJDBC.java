@@ -244,7 +244,118 @@ public class ErpDaoJDBC implements ErpDao {
 			DB.fecharResultSet(rs);
 		}
 	}
-	
+
+	@Override
+	public Integer qtdeDessaCritica(String essaCriticaTxt, String importar) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			if (importar != null ) {
+				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar = ? AND criticas LIKE ?");
+				st.setString(1, importar);
+				st.setString(2, "%" + essaCriticaTxt + "%");
+			}
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Erp para Importar = " + importar +
+								  "da critica " + essaCriticaTxt + " \n" 
+		+ e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Integer qtdeLiberadosOS() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_os_material = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Erp para Ordem de Servico = " + " \n" 
+		+ e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Integer qtdeLiberadosCM() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intCM = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Erp para CM Consumo de Material = " + " \n" 
+		+ e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Integer qtdeLiberadosDG() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intDG = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Erp para DG Despesas Gerais = " + " \n" 
+		+ e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Integer qtdeLiberadosVM() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intVM = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("erro na Contagem do Erp para VM Valores de Materiais = " + " \n" 
+		+ e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+
 	@Override
 	public List<Erp> listarCriticaFiltrada(String tipoCritica, Integer codigoCritica, String filtro) {
 		PreparedStatement st = null;
