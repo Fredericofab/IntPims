@@ -52,6 +52,7 @@ public class ExportarFolhaService {
 			cstg_intfp.setCdEmpresa(cdEmpresa);
 			cstg_intfp.setDtRefer(dataref);
 			cstg_intfp.setCdFunc(colocarPrefixo(prefixoMatr, sumarioFolha.getCodCentroCustos()));
+			cstg_intfp.setQtHoras(sumarioFolha.getTotalReferenciaSim());
 			cstg_intfp.setQtValor(sumarioFolha.getTotalImportarSim());
 			cstg_intfp.setInstancia(instancia);
 			dao.gravarCstg_IntFP(cstg_intfp, usuarioPimsCS);

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import db.DbException;
 import gui.util.Alertas;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
@@ -23,14 +24,17 @@ public class ImportarFolhaService {
 	private FolhaSumarizadaService folhaSumarizadaService = new FolhaSumarizadaService();
 	private VerbasFolhaService verbasDaFolhaService = new VerbasFolhaService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
-		
+
 //	parametros
 	String entrada;
 	String anoMes;
-	
+	String naoImportar;
+	String arqEntradaDelimitador;
+
 	List<Folha> lista;
 	Set<VerbasFolha> setVerbas;
 	Integer qtdeLidas = 0;
+	Integer qtdeNaoImportadas = 0;
 	Integer qtdeCorrompidas = 0;
 	Integer qtdeVerbasDistintas = 0;
 	Integer qtdeVerbasSemDefinicao = 0;
@@ -40,27 +44,39 @@ public class ImportarFolhaService {
 	public String getEntrada() {
 		return entrada;
 	}
+
 	public List<Folha> getLista() {
 		return lista;
 	}
+
 	public Set<VerbasFolha> getSetVerbas() {
 		return setVerbas;
 	}
+
 	public Integer getQtdeLidas() {
 		return qtdeLidas;
 	}
+
+	public Integer getQtdeNaoImportadas() {
+		return qtdeNaoImportadas;
+	}
+
 	public Integer getQtdeCorrompidas() {
 		return qtdeCorrompidas;
 	}
+
 	public Integer getqtdeVerbasDistintas() {
 		return qtdeVerbasDistintas;
 	}
+
 	public Integer getQtdeVerbasSemDefinicao() {
 		return qtdeVerbasSemDefinicao;
 	}
+
 	public Integer getQtdeDeletadas() {
 		return qtdeDeletadas;
 	}
+
 	public Integer getQtdeIncluidas() {
 		return qtdeIncluidas;
 	}
@@ -79,26 +95,25 @@ public class ImportarFolhaService {
 			gravarDadosFolha();
 		}
 
-		if ((qtdeIncluidas > 0) && (qtdeLidas - qtdeIncluidas) == 0) {
-			processoAtualService.atualizarEtapa("ImportarFolha","S");
+		if ((qtdeIncluidas > 0) && (qtdeLidas - qtdeIncluidas - qtdeNaoImportadas) == 0) {
+			processoAtualService.atualizarEtapa("ImportarFolha", "S");
+		} else {
+			processoAtualService.atualizarEtapa("ImportarFolha", "N");
 		}
-		else {
-			processoAtualService.atualizarEtapa("ImportarFolha","N");
-		}
-		processoAtualService.atualizarEtapa("SumarizarFolha","N");
-		processoAtualService.atualizarEtapa("ExportarFolha","N");
-		processoAtualService.atualizarEtapa("VerbaAlterada","N");
-		processoAtualService.atualizarEtapa("FolhaAlterada","N");
+		processoAtualService.atualizarEtapa("SumarizarFolha", "N");
+		processoAtualService.atualizarEtapa("ExportarFolha", "N");
+		processoAtualService.atualizarEtapa("VerbaAlterada", "N");
+		processoAtualService.atualizarEtapa("FolhaAlterada", "N");
 	}
 
 	private void deletarTodosFolhaSumarizada() {
 		folhaSumarizadaService.deletarTodos();
 	}
-	
+
 	private void deletarTodosFolha() {
 		qtdeDeletadas = folhaService.deletarTodos();
 	}
-	
+
 	private void lerFolhaTXT(String entrada, String anoMesReferencia) {
 		String linha = null;
 		lista = new ArrayList<Folha>();
@@ -109,11 +124,16 @@ public class ImportarFolhaService {
 			while (linha != null) {
 				qtdeLidas = qtdeLidas + 1;
 				Folha dadosFolha = null;
-				dadosFolha = converteRegistro(linha, anoMesReferencia,qtdeLidas);
+				dadosFolha = converteRegistro(linha, anoMesReferencia, qtdeLidas);
 				if (dadosFolha != null) {
-					lista.add(dadosFolha);
-					VerbasFolha verbaFolha = new VerbasFolha(dadosFolha.getCodVerba(), dadosFolha.getDescVerba(), null);
-					setVerbas.add(verbaFolha);
+					if (naoImportar.indexOf(dadosFolha.getTipoVerba()) >= 0) {
+						qtdeNaoImportadas = qtdeNaoImportadas + 1;
+					} else {
+						lista.add(dadosFolha);
+						VerbasFolha verbaFolha = new VerbasFolha(dadosFolha.getCodVerba(), dadosFolha.getDescVerba(),
+								dadosFolha.getTipoVerba(), null, null);
+						setVerbas.add(verbaFolha);
+					}
 				}
 				linha = br.readLine();
 			}
@@ -146,54 +166,63 @@ public class ImportarFolhaService {
 		VerbasFolha verbaFolha;
 		qtdeIncluidas = 0;
 		Double codVerba;
-		for (Folha dadosFolha : lista) {
-			codVerba = dadosFolha.getCodVerba();
-			verbaFolha = verbasDaFolhaService.pesquisarPorChave(codVerba);
-			dadosFolha.setImportar(verbaFolha.getImportar());
-			folhaService.salvarOuAtualizar(dadosFolha);
-			qtdeIncluidas = qtdeIncluidas + 1;
+		try {
+			for (Folha dadosFolha : lista) {
+				codVerba = dadosFolha.getCodVerba();
+				verbaFolha = verbasDaFolhaService.pesquisarPorChave(codVerba);
+				dadosFolha.setImportar(verbaFolha.getImportar());
+				dadosFolha.setConsiderarReferencia(verbaFolha.getConsiderarReferencia());
+				folhaService.salvarOuAtualizar(dadosFolha);
+				qtdeIncluidas = qtdeIncluidas + 1;
+			}
+		} catch (DbException e) {
+			Alertas.mostrarAlertas("DbException", "Erro de Gravacao dos Dados da Folha", e.getMessage(),
+					AlertType.ERROR);
 		}
 	}
 
-	private Folha converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha) throws TxtIntegridadeException {
-		String[] campos = linha.split(",");
+	private Folha converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha)
+			throws TxtIntegridadeException {
+		String[] campos = linha.split(arqEntradaDelimitador);
 		Optional<ButtonType> continuar = null;
 		try {
-			if (campos.length == 6) {
+			if (campos.length == 8) {
 				String anoMes = campos[0];
 				Double codCentroCustos = Double.parseDouble(campos[1]);
 				String descCentroCustos = campos[2];
 				Double codVerba = Double.parseDouble(campos[3]);
 				String descVerba = campos[4];
 				Double valorVerba = Double.parseDouble(campos[5]);
+				Double referenciaVerba = Double.parseDouble(campos[6]);
+				String tipoVerba = campos[7];
 				String importar = null;
+				String considerarReferencia = null;
 				String observacao = null;
 				if (!anoMes.equals(anoMesReferencia)) {
 					throw new TxtIntegridadeException("Registro nao Coerente com o Mês de Referencia");
 				}
-				Folha dadosFolha = new Folha(anoMes, codCentroCustos, descCentroCustos, codVerba, descVerba,
-						valorVerba, importar, observacao);
+				Folha dadosFolha = new Folha(anoMes, codCentroCustos, descCentroCustos, codVerba, descVerba, valorVerba,
+						referenciaVerba, tipoVerba, importar, considerarReferencia, observacao);
 				return dadosFolha;
 			} else {
-				throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (6)");
+				throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (8)");
 			}
 		} catch (TxtIntegridadeException e) {
 			qtdeCorrompidas = qtdeCorrompidas + 1;
-			continuar = Alertas.mostrarConfirmacao("Erro de Integridade no Arquivo", "Continuar Processo de Leitura do TXT ?",
-					e.getMessage() + "\n \n" +
-					"na linha No.: " + numeroLinha.toString() + "\n" + "\n" + linha,
+			continuar = Alertas.mostrarConfirmacao("Erro de Integridade no Arquivo",
+					"Continuar Processo de Leitura do TXT ?",
+					e.getMessage() + "\n \n" + "na linha No.: " + numeroLinha.toString() + "\n" + "\n" + linha,
 					AlertType.CONFIRMATION);
 		} catch (NumberFormatException e) {
 			qtdeCorrompidas = qtdeCorrompidas + 1;
-			continuar = Alertas.mostrarConfirmacao("NumberFormatException", "Continuar Processo de Leitura do TXT ?", 
-					"Campo numerico esperado. \n" + e.getMessage() + "\n \n" +
-					"na linha No.: " + numeroLinha.toString() + "\n" + "\n" + linha,
+			continuar = Alertas.mostrarConfirmacao("NumberFormatException", "Continuar Processo de Leitura do TXT ?",
+					"Campo numerico esperado. \n" + e.getMessage() + "\n \n" + "na linha No.: " + numeroLinha.toString()
+							+ "\n" + "\n" + linha,
 					AlertType.CONFIRMATION);
 		} catch (RuntimeException e) {
 			qtdeCorrompidas = qtdeCorrompidas + 1;
 			continuar = Alertas.mostrarConfirmacao("RuntimeException", "Erro na Importacao Dados da Folha",
 					e.getClass() + "\n" + e.getMessage(), AlertType.CONFIRMATION);
-//			e.printStackTrace();
 		} finally {
 			if ((continuar != null) && (continuar.get() == ButtonType.CANCEL)) {
 				throw new TxtIntegridadeException("Processo Interrompido pelo usuário");
@@ -206,8 +235,10 @@ public class ImportarFolhaService {
 		ParametrosService parametrosService = new ParametrosService();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaPasta")).getValor();
-		String arqEntradaNome  = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaNome")).getValor();
-		String arqEntradaTipo  = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaTipo")).getValor();
-		entrada = arqEntradaPasta + arqEntradaNome + anoMes + arqEntradaTipo ;
+		String arqEntradaNome = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaNome")).getValor();
+		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaTipo")).getValor();
+		entrada = arqEntradaPasta + arqEntradaNome + anoMes + arqEntradaTipo;
+		naoImportar = (parametrosService.pesquisarPorChave("ImportarFolha", "NaoImportar")).getValor();
+		arqEntradaDelimitador = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaDelimitador")).getValor();
 	}
 }

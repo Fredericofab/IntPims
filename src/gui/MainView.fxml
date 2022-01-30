@@ -33,13 +33,6 @@
                         <MenuItem fx:id="menuItemSair2" mnemonicParsing="false" onAction="#onMenuItemSairAction" text="Sair" />
                   </items>
                 </Menu>
-                <Menu fx:id="menuTabelas" mnemonicParsing="false" text="Tabelas">
-                  <items>
-                        <MenuItem fx:id="menuItemVerbaFolha" mnemonicParsing="false" onAction="#onMenuItemVerbaFolhaAction" text="Verbas da Folha" />
-                        <MenuItem fx:id="menuItemCriticasErp" mnemonicParsing="false" onAction="#onMenuItemCriticasErpAction" text="Criticas do ERP" />
-                    <MenuItem fx:id="menuItemParametros" mnemonicParsing="false" onAction="#onMenuItemParametrosAction" text="Parametros" />
-                  </items>
-                </Menu>
                   <Menu fx:id="menuMovimentos" mnemonicParsing="false" text="Movimentos">
                     <items>
                       <MenuItem fx:id="menuItemFolha" mnemonicParsing="false" onAction="#onMenuItemFolhaAction" text="Dados da Folha" />
@@ -51,6 +44,13 @@
                         <MenuItem fx:id="menuItemErp" mnemonicParsing="false" onAction="#onMenuItemErpAction" text="Dados do ERP" />
                     </items>
                   </Menu>
+                <Menu fx:id="menuTabelas" mnemonicParsing="false" text="Tabelas">
+                  <items>
+                        <MenuItem fx:id="menuItemVerbaFolha" mnemonicParsing="false" onAction="#onMenuItemVerbaFolhaAction" text="Verbas da Folha" />
+                        <MenuItem fx:id="menuItemCriticasErp" mnemonicParsing="false" onAction="#onMenuItemCriticasErpAction" text="Criticas do ERP" />
+                    <MenuItem fx:id="menuItemParametros" mnemonicParsing="false" onAction="#onMenuItemParametrosAction" text="Parametros" />
+                  </items>
+                </Menu>
                 <Menu fx:id="menuAjuda" mnemonicParsing="false" text="Ajuda">
                   <items>
                     <MenuItem fx:id="menuItemSobre" mnemonicParsing="false" onAction="#onMenuItemSobreAction" text="Sobre" />

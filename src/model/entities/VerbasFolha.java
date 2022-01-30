@@ -8,39 +8,49 @@ public class VerbasFolha implements Serializable {
 
 	private Double codVerba;
 	private String descVerba;
+	private String tipoVerba;
+	private String considerarReferencia;
 	private String importar;
 
 	public VerbasFolha() {
 	}
-
-	public VerbasFolha(Double codVerba, String descVerba, String importar) {
+	public VerbasFolha(Double codVerba, String descVerba, String tipoVerba, String considerarReferencia,
+			String importar) {
 		super();
 		this.codVerba = codVerba;
 		this.descVerba = descVerba;
+		this.tipoVerba = tipoVerba;
+		this.considerarReferencia = considerarReferencia;
 		this.importar = importar;
 	}
-
 
 	public Double getCodVerba() {
 		return codVerba;
 	}
-
 	public void setCodVerba(Double codVerba) {
 		this.codVerba = codVerba;
 	}
-
 	public String getDescVerba() {
 		return descVerba;
 	}
-
 	public void setDescVerba(String descVerba) {
 		this.descVerba = descVerba;
 	}
-
+	public String getTipoVerba() {
+		return tipoVerba;
+	}
+	public void setTipoVerba(String tipoVerba) {
+		this.tipoVerba = tipoVerba;
+	}
+	public String getConsiderarReferencia() {
+		return considerarReferencia;
+	}
+	public void setConsiderarReferencia(String considerarReferencia) {
+		this.considerarReferencia = considerarReferencia;
+	}
 	public String getImportar() {
 		return importar;
 	}
-
 	public void setImportar(String importar) {
 		this.importar = importar;
 	}
@@ -50,11 +60,8 @@ public class VerbasFolha implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codVerba == null) ? 0 : codVerba.hashCode());
-		result = prime * result + ((descVerba == null) ? 0 : descVerba.hashCode());
-		result = prime * result + ((importar == null) ? 0 : importar.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -69,23 +76,12 @@ public class VerbasFolha implements Serializable {
 				return false;
 		} else if (!codVerba.equals(other.codVerba))
 			return false;
-		if (descVerba == null) {
-			if (other.descVerba != null)
-				return false;
-		} else if (!descVerba.equals(other.descVerba))
-			return false;
-		if (importar == null) {
-			if (other.importar != null)
-				return false;
-		} else if (!importar.equals(other.importar))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "VerbaFolha [codVerba=" + codVerba + ", descVerba=" + descVerba + ", importar=" + importar + "]";
+		return "VerbasFolha [codVerba=" + codVerba + ", descVerba=" + descVerba + ", tipoVerba=" + tipoVerba
+				+ ", considerarReferencia=" + considerarReferencia + ", importar=" + importar + "]";
 	}
-
-
 }

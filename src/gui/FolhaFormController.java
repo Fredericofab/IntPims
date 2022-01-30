@@ -53,7 +53,13 @@ public class FolhaFormController implements Initializable {
 	@FXML
 	private TextField txtValorVerba;
 	@FXML
+	private TextField txtReferenciaVerba;
+	@FXML
+	private TextField txtTipoVerba;
+	@FXML
 	private TextField txtImportar;
+	@FXML
+	private TextField txtConsiderarReferencia;
 	@FXML
 	private TextField txtObservacao;
 	@FXML
@@ -65,7 +71,13 @@ public class FolhaFormController implements Initializable {
 	@FXML
 	private Label labelErroValorVerba;
 	@FXML
+	private Label labelErroReferenciaVerba;
+	@FXML
+	private Label labelErroTipoVerba;
+	@FXML
 	private Label labelErroImportar;
+	@FXML
+	private Label labelErroConsiderarReferencia;
 	@FXML
 	private Label labelErroObservacao;
 	@FXML
@@ -139,8 +151,14 @@ public class FolhaFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodVerba, 5);	
 		RestricoesDeDigitacao.soPermiteTextFieldDouble(txtValorVerba);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtValorVerba, 14);			
+		RestricoesDeDigitacao.soPermiteTextFieldDouble(txtReferenciaVerba);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtReferenciaVerba, 8);			
+		RestricoesDeDigitacao.soPermiteTextFieldPDB(txtTipoVerba);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoVerba, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldSN(txtConsiderarReferencia);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtConsiderarReferencia, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtObservacao, 30);
 		if (flagIncluir.equals("S")) {
 			desabilitarCompoenentes(false);
@@ -164,7 +182,10 @@ public class FolhaFormController implements Initializable {
 		txtCodVerba.setDisable(b);
 		txtDescVerba.setDisable(b);
 		txtValorVerba.setDisable(b);
+		txtReferenciaVerba.setDisable(b);
+		txtTipoVerba.setDisable(b);
 		txtImportar.setDisable(b);
+		txtConsiderarReferencia.setDisable(b);
 		txtObservacao.setDisable(b);
 	}
 
@@ -180,12 +201,16 @@ public class FolhaFormController implements Initializable {
 		txtCodVerba.setText(String.format("%.0f",entidade.getCodVerba()));
 		txtDescVerba.setText(entidade.getDescVerba());
 		txtValorVerba.setText(String.format("%.2f", entidade.getValorVerba()));
+		txtReferenciaVerba.setText(String.format("%.2f", entidade.getReferenciaVerba()));
+		txtTipoVerba.setText(entidade.getTipoVerba());
 		txtImportar.setText(entidade.getImportar());
+		txtConsiderarReferencia.setText(entidade.getConsiderarReferencia());
 		txtObservacao.setText(entidade.getObservacao());
 		
 		txtCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
 		txtCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
 		txtValorVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtReferenciaVerba.setStyle("-fx-alignment: CENTER-RIGHT");
 	}
 	
 	private Folha getDadosDoForm() {
@@ -197,9 +222,12 @@ public class FolhaFormController implements Initializable {
 		objeto.setCodVerba(Utilitarios.tentarConverterParaDouble(txtCodVerba.getText()));
 		objeto.setDescCentroCustos(txtDescCentroCustos.getText());
 		objeto.setDescVerba(txtDescVerba.getText());
-		objeto.setImportar(Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText()));
-		objeto.setObservacao(txtObservacao.getText());
 		objeto.setValorVerba(Utilitarios.tentarConverterParaDouble(txtValorVerba.getText()));
+		objeto.setReferenciaVerba(Utilitarios.tentarConverterParaDouble(txtReferenciaVerba.getText()));
+		objeto.setTipoVerba(Utilitarios.tentarConverterParaMaiusculo(txtTipoVerba.getText()));
+		objeto.setImportar(Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText()));
+		objeto.setConsiderarReferencia(Utilitarios.tentarConverterParaMaiusculo(txtConsiderarReferencia.getText()));
+		objeto.setObservacao(txtObservacao.getText());
 
 		if (txtAnoMes.getText() == null || txtAnoMes.getText().trim().equals("")) {
 			validacao.adicionarErro("txtAnoMes", "Informe o Ano e Mes de referencia");
@@ -216,8 +244,17 @@ public class FolhaFormController implements Initializable {
 		if (txtValorVerba.getText() == null || txtValorVerba.getText().trim().equals("")) {
 			validacao.adicionarErro("txtValorVerba", "Informe o Valor da Verba");
 		}
+		if (txtReferenciaVerba.getText() == null || txtReferenciaVerba.getText().trim().equals("")) {
+			validacao.adicionarErro("txtReferenciaVerba", "Informe a Referencia da Verba");
+		}
+		if (txtTipoVerba.getText() == null || txtTipoVerba.getText().trim().equals("")) {
+			validacao.adicionarErro("txtTipoVerba", "Informe P-Provento, D-Desconto ou B-Base");
+		}
 		if (txtImportar.getText() == null || txtImportar.getText().trim().equals("")) {
 			validacao.adicionarErro("txtImportar", "Informe S ou N para ser importado pelo Pimscs");
+		}
+		if (txtConsiderarReferencia.getText() == null || txtConsiderarReferencia.getText().trim().equals("")) {
+			validacao.adicionarErro("txtConsiderarReferencia", "Informe S ou N ser considerar essas referencias no total de horas");
 		}
 		if (txtObservacao.getText() == null || txtObservacao.getText().trim().equals("")) {
 			if (flagObservacao.equals("S")) {
@@ -236,7 +273,10 @@ public class FolhaFormController implements Initializable {
 		labelErroCodCentroCustos.setText((campos.contains("txtCodCentroCustos") ? erros.get("txtCodCentroCustos") : ""));
 		labelErroCodVerba.setText((campos.contains("txtCodVerba") ? erros.get("txtCodVerba") : ""));
 		labelErroValorVerba.setText((campos.contains("txtValorVerba") ? erros.get("txtValorVerba") : ""));
+		labelErroReferenciaVerba.setText((campos.contains("txtReferenciaVerba") ? erros.get("txtReferenciaVerba") : ""));
+		labelErroTipoVerba.setText((campos.contains("txtTipoVerba") ? erros.get("txtTipoVerba") : ""));
 		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
+		labelErroConsiderarReferencia.setText((campos.contains("txtConsiderarReferencia") ? erros.get("txtConsiderarReferencia") : ""));
 		labelErroObservacao.setText((campos.contains("txtObservacao") ? erros.get("txtObservacao") : ""));
 	}
 }

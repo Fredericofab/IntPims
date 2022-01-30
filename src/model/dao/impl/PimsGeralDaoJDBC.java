@@ -41,13 +41,14 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 		PreparedStatement st = null;
 		try {
 			st = conexao.prepareStatement("INSERT INTO " +  usuarioPimsCS + ".cstg_intFP " +
-										 "(Cd_empresa, dt_refer, cd_func, qt_valor, instancia) " +
-										 "VALUES (?,?,?,?,?)" );
+										 "(Cd_empresa, dt_refer, cd_func, qt_horas, qt_valor, instancia) " +
+										 "VALUES (?,?,?,?,?,?)" );
 			st.setString(1, cstg_IntFP.getCdEmpresa());
 			st.setString(2, cstg_IntFP.getDtRefer());
 			st.setDouble(3, cstg_IntFP.getCdFunc());
-			st.setDouble(4, cstg_IntFP.getQtValor());
-			st.setString(5, cstg_IntFP.getInstancia());
+			st.setDouble(4, cstg_IntFP.getQtHoras());
+			st.setDouble(5, cstg_IntFP.getQtValor());
+			st.setString(6, cstg_IntFP.getInstancia());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Insercao do CSTG_INTFP " + "\n" + e.getMessage());

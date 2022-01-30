@@ -12,14 +12,17 @@ public class Folha implements Serializable {
 	private Double codVerba;
 	private String descVerba;
 	private Double valorVerba;
+	private Double referenciaVerba;
+	private String tipoVerba;
 	private String importar;
+	private String considerarReferencia;
 	private String observacao;
 
 	public Folha() {
 	}
-
 	public Folha(String anoMes, Double codCentroCustos, String descCentroCustos, Double codVerba, String descVerba,
-			Double valorVerba, String importar, String observacao) {
+			Double valorVerba, Double referenciaVerba, String tipoVerba, String importar, String considerarReferencia,
+			String observacao) {
 		super();
 		this.anoMes = anoMes;
 		this.codCentroCustos = codCentroCustos;
@@ -27,70 +30,76 @@ public class Folha implements Serializable {
 		this.codVerba = codVerba;
 		this.descVerba = descVerba;
 		this.valorVerba = valorVerba;
+		this.referenciaVerba = referenciaVerba;
+		this.tipoVerba = tipoVerba;
 		this.importar = importar;
+		this.considerarReferencia = considerarReferencia;
 		this.observacao = observacao;
 	}
 
 	public String getAnoMes() {
 		return anoMes;
 	}
-
 	public void setAnoMes(String anoMes) {
 		this.anoMes = anoMes;
 	}
-
 	public Double getCodCentroCustos() {
 		return codCentroCustos;
 	}
-
 	public void setCodCentroCustos(Double codCentroCustos) {
 		this.codCentroCustos = codCentroCustos;
 	}
-
 	public String getDescCentroCustos() {
 		return descCentroCustos;
 	}
-
 	public void setDescCentroCustos(String descCentroCustos) {
 		this.descCentroCustos = descCentroCustos;
 	}
-
 	public Double getCodVerba() {
 		return codVerba;
 	}
-
 	public void setCodVerba(Double codVerba) {
 		this.codVerba = codVerba;
 	}
-
 	public String getDescVerba() {
 		return descVerba;
 	}
-
 	public void setDescVerba(String descVerba) {
 		this.descVerba = descVerba;
 	}
-
 	public Double getValorVerba() {
 		return valorVerba;
 	}
-
 	public void setValorVerba(Double valorVerba) {
 		this.valorVerba = valorVerba;
 	}
-
+	public Double getReferenciaVerba() {
+		return referenciaVerba;
+	}
+	public void setReferenciaVerba(Double referenciaVerba) {
+		this.referenciaVerba = referenciaVerba;
+	}
+	public String getTipoVerba() {
+		return tipoVerba;
+	}
+	public void setTipoVerba(String tipoVerba) {
+		this.tipoVerba = tipoVerba;
+	}
 	public String getImportar() {
 		return importar;
 	}
-
 	public void setImportar(String importar) {
 		this.importar = importar;
 	}
-
+	public String getConsiderarReferencia() {
+		return considerarReferencia;
+	}
+	public void setConsiderarReferencia(String considerarReferencia) {
+		this.considerarReferencia = considerarReferencia;
+	}
 	public String getObservacao() {
 		return observacao;
 	}
-
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
@@ -104,7 +113,6 @@ public class Folha implements Serializable {
 		result = prime * result + ((codVerba == null) ? 0 : codVerba.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -134,8 +142,9 @@ public class Folha implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DadosFolha [anoMes=" + anoMes + ", codCentroCusto=" + codCentroCustos + ", descCentroCusto="
+		return "Folha [anoMes=" + anoMes + ", codCentroCustos=" + codCentroCustos + ", descCentroCustos="
 				+ descCentroCustos + ", codVerba=" + codVerba + ", descVerba=" + descVerba + ", valorVerba="
-				+ valorVerba + ", importar=" + importar + ",  observacao=" 	+ observacao + "]";
+				+ valorVerba + ", referenciaVerba=" + referenciaVerba + ", tipoVerba=" + tipoVerba + ", importar="
+				+ importar + ", considerarReferencia=" + considerarReferencia + ", observacao=" + observacao + "]";
 	}
 }

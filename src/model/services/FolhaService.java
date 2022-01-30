@@ -47,7 +47,7 @@ public class FolhaService {
 		lerParametros(oficial);
 		List<Folha> lista = pesquisarTodos();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("AnoMes,CodCCustos,DescCCustos,Codverba,DescVerba,ValorVerba,FlagImportar,Observacao");
+			bw.write("AnoMes,CodCCustos,DescCCustos,Codverba,DescVerba,ValorVerba,Referencia,Tipo,FlagImportar,ConsiderarReferencia,Observacao");
 			bw.newLine();
 			for (Folha dadosFolha : lista) {
 				String linha = dadosFolha.getAnoMes() + "," + 
@@ -56,7 +56,10 @@ public class FolhaService {
 							   String.format("%.0f",dadosFolha.getCodVerba()) + "," + 
 							   dadosFolha.getDescVerba() + "," + 
 							   String.format("%.2f",dadosFolha.getValorVerba()) + "," + 
+							   String.format("%.2f",dadosFolha.getReferenciaVerba()) + "," + 
+							   dadosFolha.getTipoVerba() + "," + 
 							   dadosFolha.getImportar() + "," + 
+							   dadosFolha.getConsiderarReferencia() + "," + 
 							   dadosFolha.getObservacao();
 				bw.write(linha);
 				bw.newLine();

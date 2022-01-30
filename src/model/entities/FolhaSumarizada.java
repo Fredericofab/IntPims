@@ -13,12 +13,12 @@ public class FolhaSumarizada implements Serializable {
 	private Integer qdteImportarNao;
 	private Double totalImportarSim;
 	private Double totalImportarNao;
+	private Double totalReferenciaSim;
 
 	public FolhaSumarizada() {
 	}
-
 	public FolhaSumarizada(String anoMes, Double codCentroCustos, String descCentroCustos, Integer qdteImportarSim,
-			Integer qdteImportarNao, Double totalImportarSim, Double totalImportarNao) {
+			Integer qdteImportarNao, Double totalImportarSim, Double totalImportarNao, Double totalReferenciaSim) {
 		super();
 		this.anoMes = anoMes;
 		this.codCentroCustos = codCentroCustos;
@@ -27,62 +27,56 @@ public class FolhaSumarizada implements Serializable {
 		this.qdteImportarNao = qdteImportarNao;
 		this.totalImportarSim = totalImportarSim;
 		this.totalImportarNao = totalImportarNao;
+		this.totalReferenciaSim = totalReferenciaSim;
 	}
 
 	public String getAnoMes() {
 		return anoMes;
 	}
-
 	public void setAnoMes(String anoMes) {
 		this.anoMes = anoMes;
 	}
-
 	public Double getCodCentroCustos() {
 		return codCentroCustos;
 	}
-
 	public void setCodCentroCustos(Double codCentroCustos) {
 		this.codCentroCustos = codCentroCustos;
 	}
-
 	public String getDescCentroCustos() {
 		return descCentroCustos;
 	}
-
 	public void setDescCentroCustos(String descCentroCustos) {
 		this.descCentroCustos = descCentroCustos;
 	}
-
 	public Integer getQdteImportarSim() {
 		return qdteImportarSim;
 	}
-
 	public void setQdteImportarSim(Integer qdteImportarSim) {
 		this.qdteImportarSim = qdteImportarSim;
 	}
-
 	public Integer getQdteImportarNao() {
 		return qdteImportarNao;
 	}
-
 	public void setQdteImportarNao(Integer qdteImportarNao) {
 		this.qdteImportarNao = qdteImportarNao;
 	}
-
 	public Double getTotalImportarSim() {
 		return totalImportarSim;
 	}
-
 	public void setTotalImportarSim(Double totalImportarSim) {
 		this.totalImportarSim = totalImportarSim;
 	}
-
 	public Double getTotalImportarNao() {
 		return totalImportarNao;
 	}
-
 	public void setTotalImportarNao(Double totalImportarNao) {
 		this.totalImportarNao = totalImportarNao;
+	}
+	public Double getTotalReferenciaSim() {
+		return totalReferenciaSim;
+	}
+	public void setTotalReferenciaSim(Double totalReferenciaSim) {
+		this.totalReferenciaSim = totalReferenciaSim;
 	}
 
 	@Override
@@ -93,7 +87,6 @@ public class FolhaSumarizada implements Serializable {
 		result = prime * result + ((codCentroCustos == null) ? 0 : codCentroCustos.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -118,10 +111,10 @@ public class FolhaSumarizada implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SumarioFolha [anoMes=" + anoMes + ", codCentroCustos=" + codCentroCustos + ", descCentroCustos="
+		return "FolhaSumarizada [anoMes=" + anoMes + ", codCentroCustos=" + codCentroCustos + ", descCentroCustos="
 				+ descCentroCustos + ", qdteImportarSim=" + qdteImportarSim + ", qdteImportarNao=" + qdteImportarNao
-				+ ", totalImportarSim=" + totalImportarSim + ", totalImportarNao=" + totalImportarNao + "]";
+				+ ", totalImportarSim=" + totalImportarSim + ", totalImportarNao=" + totalImportarNao
+				+ ", totalReferenciaSim=" + totalReferenciaSim + "]";
 	}
 
-	
 }	

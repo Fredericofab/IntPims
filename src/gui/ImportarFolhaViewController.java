@@ -32,6 +32,8 @@ public class ImportarFolhaViewController implements Initializable {
 	@FXML
 	private Label labelMsgRegIncluidos;
 	@FXML
+	private Label labelMsgRegNaoImportados;
+	@FXML
 	private Button btImportar;
 	@FXML
 	private Button btSair;
@@ -47,6 +49,8 @@ public class ImportarFolhaViewController implements Initializable {
 	private TextField txtRegDeletados;
 	@FXML
 	private TextField txtRegIncluidos;
+	@FXML
+	private TextField txtRegNaoImportados;
 	
 	@FXML
 	public void onBtImportarAction(ActionEvent evento) {
@@ -71,6 +75,7 @@ public class ImportarFolhaViewController implements Initializable {
 		Integer qtdeVerbasSemDefinicao = servico.getQtdeVerbasSemDefinicao();
 		Integer qtdeDeletadas = servico.getQtdeDeletadas();
 		Integer qtdeIncluidas = servico.getQtdeIncluidas();
+		Integer qtdeNaoImportadas = servico.getQtdeNaoImportadas();
 		String arqEntrada = servico.getEntrada();
 		
 		txtRegLidos.setText(qtdeLidas.toString());
@@ -79,8 +84,9 @@ public class ImportarFolhaViewController implements Initializable {
 		txtVerbasSemDefinicao.setText(qtdeVerbasSemDefinicao.toString());
 		txtRegDeletados.setText(qtdeDeletadas.toString());
 		txtRegIncluidos.setText(qtdeIncluidas.toString());
+		txtRegNaoImportados.setText(qtdeNaoImportadas.toString());
 
-		if ( (qtdeLidas > 0) && (qtdeLidas - qtdeIncluidas) == 0 ) {
+		if ( (qtdeLidas > 0) && (qtdeLidas - qtdeIncluidas - qtdeNaoImportadas) == 0 ) {
 			labelMsgGeral.setText("Processo Concluido com Sucesso");
 			labelMsgGeral.setTextFill(Color.BLUE);
 		}
@@ -97,6 +103,7 @@ public class ImportarFolhaViewController implements Initializable {
 		labelMsgVerbasSemDefinicao.setText(null);
 		labelMsgRegDeletados.setText(null);
 		labelMsgRegIncluidos.setText(null);
+		labelMsgRegNaoImportados.setText(null);
 
 		if (qtdeLidas > 0) {
 			labelMsgRegLidos.setText("Informação: Qtde de linhas lidas do Arquivo TXT");
@@ -116,5 +123,9 @@ public class ImportarFolhaViewController implements Initializable {
 		if (qtdeIncluidas > 0) {
 			labelMsgRegIncluidos.setText("Informação: Registros incluidos na importação Atual");
 		}
+		if (qtdeNaoImportadas > 0) {
+			labelMsgRegNaoImportados.setText("Informação: Registros desconsiderados em função do parametro NaoImportar");
+		}
+
 	}
 }

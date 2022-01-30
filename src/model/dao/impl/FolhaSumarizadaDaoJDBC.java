@@ -26,8 +26,8 @@ public class FolhaSumarizadaDaoJDBC implements FolhaSumarizadaDao {
 //			System.out.println(objeto.toString());
 			st = conexao.prepareStatement("INSERT INTO folha_sumarizada "
 										+ "(Ano_Mes, Cod_Centro_Custos, Desc_Centro_Custos, Qtde_Importar_Sim, Total_Importar_Sim, "
-										+ " Qtde_Importar_Nao, Total_Importar_Nao) "
-										+ " VALUES (?,?,?,?,?,?,?)" );
+										+ " Qtde_Importar_Nao, Total_Importar_Nao, Total_Referencia_Sim) "
+										+ " VALUES (?,?,?,?,?,?,?,?)" );
 			st.setString(1, objeto.getAnoMes());
 			st.setDouble(2, objeto.getCodCentroCustos());
 			st.setString(3, objeto.getDescCentroCustos());
@@ -35,6 +35,7 @@ public class FolhaSumarizadaDaoJDBC implements FolhaSumarizadaDao {
 			st.setDouble(5, objeto.getTotalImportarSim());
 			st.setDouble(6, objeto.getQdteImportarNao());
 			st.setDouble(7, objeto.getTotalImportarNao());
+			st.setDouble(8, objeto.getTotalReferenciaSim());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Insercao " + e.getMessage());
@@ -50,16 +51,17 @@ public class FolhaSumarizadaDaoJDBC implements FolhaSumarizadaDao {
 //			System.out.println(objeto.toString());
 			st = conexao.prepareStatement("UPDATE folha_sumarizada "
 										+ "SET Desc_Centro_Custos =?, Qtde_Importar_Sim = ?, Total_Importar_Sim = ?" 
-										+ "Qtde_Importar_Nao = ?, Total_Importar_Nao = "
+										+ "Qtde_Importar_Nao = ?, Total_Importar_Nao = ?, Total_Referencia_sim = ?"
 										+ "WHERE Ano_Mes = ? AND Cod_Centro_Custos = ?");
 			st.setString(1, objeto.getDescCentroCustos());
 			st.setDouble(2, objeto.getQdteImportarSim());
 			st.setDouble(3, objeto.getTotalImportarSim());
 			st.setDouble(4, objeto.getQdteImportarNao());
 			st.setDouble(5, objeto.getTotalImportarNao());
+			st.setDouble(6, objeto.getTotalReferenciaSim());
 			
-			st.setString(6, objeto.getAnoMes());
-			st.setDouble(7, objeto.getCodCentroCustos());
+			st.setString(7, objeto.getAnoMes());
+			st.setDouble(8, objeto.getCodCentroCustos());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Atualizacao " + e.getMessage());
@@ -159,6 +161,7 @@ public class FolhaSumarizadaDaoJDBC implements FolhaSumarizadaDao {
 		sumarioFolha.setTotalImportarSim(rs.getDouble("Total_Importar_Sim"));
 		sumarioFolha.setQdteImportarNao(rs.getInt("Qtde_Importar_Nao"));
 		sumarioFolha.setTotalImportarNao(rs.getDouble("Total_Importar_Nao"));
+		sumarioFolha.setTotalReferenciaSim(rs.getDouble("Total_Referencia_sim"));
 		return sumarioFolha;
 	}
 }

@@ -60,7 +60,13 @@ public class FolhaListController implements Initializable, DadosAlteradosListene
 	@FXML
 	private TableColumn<Folha, Double> tableColumnValorVerba;
 	@FXML
+	private TableColumn<Folha, Double> tableColumnReferenciaVerba;
+	@FXML
+	private TableColumn<Folha, String> tableColumnTipoVerba;
+	@FXML
 	private TableColumn<Folha, String> tableColumnImportar;
+	@FXML
+	private TableColumn<Folha, String> tableColumnConsiderarReferencia;
 	@FXML
 	private TableColumn<Folha, String> tableColumnObservacao;
 	@FXML
@@ -119,16 +125,21 @@ public class FolhaListController implements Initializable, DadosAlteradosListene
 		tableColumnCodVerba.setCellValueFactory(new PropertyValueFactory<>("codVerba"));
 		tableColumnDescVerba.setCellValueFactory(new PropertyValueFactory<>("descVerba"));
 		tableColumnValorVerba.setCellValueFactory(new PropertyValueFactory<>("valorVerba"));
+		tableColumnReferenciaVerba.setCellValueFactory(new PropertyValueFactory<>("referenciaVerba"));
+		tableColumnTipoVerba.setCellValueFactory(new PropertyValueFactory<>("tipoVerba"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
+		tableColumnConsiderarReferencia.setCellValueFactory(new PropertyValueFactory<>("considerarReferencia"));
 		tableColumnObservacao.setCellValueFactory(new PropertyValueFactory<>("observacao"));
 		
 		Utilitarios.formatarTableColumnDouble(tableColumnCodCentroCustos, 0);
 		Utilitarios.formatarTableColumnDouble(tableColumnCodVerba, 0);
 		Utilitarios.formatarTableColumnDouble(tableColumnValorVerba, 2);
+		Utilitarios.formatarTableColumnDouble(tableColumnReferenciaVerba, 2);
 
-		tableColumnCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
-		tableColumnCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
-		tableColumnValorVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		tableColumnCodCentroCustos.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnCodVerba.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnValorVerba.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnReferenciaVerba.setStyle("-fx-alignment: TOP-RIGHT");
 		
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
@@ -141,12 +152,8 @@ public class FolhaListController implements Initializable, DadosAlteradosListene
 
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewDadosFolha.setItems(obsLista);
-		if (flagAlterar.equals("S")) {
-			initEditButtons();
-		}
-		if (flagExcluir.equals("S")) {
-			initRemoveButtons();
-		}
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void criarDialogoForm(Folha entidade, String caminhoDaView, Stage parentStage) {
@@ -193,6 +200,7 @@ public class FolhaListController implements Initializable, DadosAlteradosListene
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagAlterar.equals("N") ? true : false));
 				button.setOnAction(
 						event -> criarDialogoForm(obj, "/gui/FolhaForm.fxml", Utilitarios.atualStage(event)));
 			}
@@ -212,6 +220,7 @@ public class FolhaListController implements Initializable, DadosAlteradosListene
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagExcluir.equals("N") ? true : false));
 				button.setOnAction(event -> removeEntity(obj));
 			}
 		});

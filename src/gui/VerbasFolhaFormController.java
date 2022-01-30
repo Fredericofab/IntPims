@@ -43,9 +43,19 @@ public class VerbasFolhaFormController implements Initializable {
 	@FXML
 	private TextField txtDescVerba;
 	@FXML
+	private TextField txtTipoVerba;
+	@FXML
+	private TextField txtConsiderarReferencia;
+	@FXML
 	private TextField txtImportar;
 	@FXML
 	private Label labelErroCodVerba;	
+	@FXML
+	private Label labelErroTipoVerba;	
+	@FXML
+	private Label labelErroConsiderarReferencia;	
+	@FXML
+	private Label labelErroImportar;	
 	@FXML
 	private Button btSalvar;
 	@FXML
@@ -110,8 +120,12 @@ public class VerbasFolhaFormController implements Initializable {
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodVerba);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodVerba, 5);	
+		RestricoesDeDigitacao.soPermiteTextFieldPDB(txtTipoVerba);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoVerba, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldSN(txtConsiderarReferencia);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtConsiderarReferencia, 1);
 		if (flagIncluir.equals("S")) {
 			desabilitarCompoenentes(false);
 		}
@@ -119,6 +133,7 @@ public class VerbasFolhaFormController implements Initializable {
 			if (flagAlterar.equals("S")) {
 				desabilitarCompoenentes(true);
 				txtImportar.setDisable(false);
+				txtConsiderarReferencia.setDisable(false);
 			}
 			else {
 				desabilitarCompoenentes(true);
@@ -129,6 +144,8 @@ public class VerbasFolhaFormController implements Initializable {
 	private void desabilitarCompoenentes(Boolean b) {
 		txtCodVerba.setDisable(b);
 		txtDescVerba.setDisable(b);
+		txtTipoVerba.setDisable(b);
+		txtConsiderarReferencia.setDisable(b);
 		txtImportar.setDisable(b);
 	}
 
@@ -140,9 +157,11 @@ public class VerbasFolhaFormController implements Initializable {
 
 		txtCodVerba.setText(String.format("%.0f", entidade.getCodVerba()));
 		txtDescVerba.setText(entidade.getDescVerba());
+		txtTipoVerba.setText(entidade.getTipoVerba());
+		txtConsiderarReferencia.setText(entidade.getConsiderarReferencia());
 		txtImportar.setText(entidade.getImportar());
 		
-		txtCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtCodVerba.setStyle("-fx-alignment: TOP-RIGHT");
 	}
 	
 	private VerbasFolha getDadosDoForm() {
@@ -151,11 +170,23 @@ public class VerbasFolhaFormController implements Initializable {
 		
 		objeto.setCodVerba(Utilitarios.tentarConverterParaDouble(txtCodVerba.getText()));
 		objeto.setDescVerba(txtDescVerba.getText());
+		objeto.setTipoVerba(Utilitarios.tentarConverterParaMaiusculo(txtTipoVerba.getText()));
+		objeto.setConsiderarReferencia(Utilitarios.tentarConverterParaMaiusculo(txtConsiderarReferencia.getText()));
 		objeto.setImportar(Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText()));
 
 		if (txtCodVerba.getText() == null || txtCodVerba.getText().trim().equals("")) {
 			validacao.adicionarErro("txtCodVerba", "Informe a Verba da Folha");
 		}
+		if (txtTipoVerba.getText() == null || txtTipoVerba.getText().trim().equals("")) {
+			validacao.adicionarErro("txtTipoVerba", "Informe P-Provento, D-Desconto ou B-Base");
+		}
+		if (txtConsiderarReferencia.getText() == null || txtConsiderarReferencia.getText().trim().equals("")) {
+			validacao.adicionarErro("txtConsiderarReferencia", "Informe S ou N ser considerar essas referencias no total de horas");
+		}
+		if (txtImportar.getText() == null || txtImportar.getText().trim().equals("")) {
+			validacao.adicionarErro("txtImportar", "Informe S ou N para ser importado pelo Pimscs");
+		}
+
 		if (validacao.getErros().size() > 0) {
 			throw validacao;
 		}
@@ -165,5 +196,8 @@ public class VerbasFolhaFormController implements Initializable {
 	private void mostrarErrosDeDigitacao(Map<String, String> erros) {
 		Set<String> campos = erros.keySet();
 		labelErroCodVerba.setText((campos.contains("txtCodVerba") ? erros.get("txtCodVerba") : ""));
+		labelErroTipoVerba.setText((campos.contains("txtTipoVerba") ? erros.get("txtTipoVerba") : ""));
+		labelErroConsiderarReferencia.setText((campos.contains("txtConsiderarReferencia") ? erros.get("txtConsiderarReferencia") : ""));
+		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
 	}
 }

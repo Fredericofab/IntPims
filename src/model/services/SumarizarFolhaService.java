@@ -23,6 +23,7 @@ public class SumarizarFolhaService {
 	Integer qtdeCCustos = 0;
 	Double valorExportarSim = 0.00;
 	Double valorExportarNao = 0.00;
+	Double referenciaExportarSim = 0.00;
 	Double valorTotal = 0.00;
 
 	public List<Folha> getLista() {
@@ -45,6 +46,9 @@ public class SumarizarFolhaService {
 	}
 	public Double getValorExportarNao() {
 		return valorExportarNao;
+	}
+	public Double getReferenciaExportarSim() {
+		return referenciaExportarSim;
 	}
 
 	public void processar() {
@@ -82,6 +86,7 @@ public class SumarizarFolhaService {
 				sumarioFolha.setTotalImportarSim(0.00);
 				sumarioFolha.setQdteImportarNao(0);
 				sumarioFolha.setTotalImportarNao(0.00);
+				sumarioFolha.setTotalReferenciaSim(0.00);
 				qtdeCCustos = qtdeCCustos + 1;
 				
 			}
@@ -90,6 +95,9 @@ public class SumarizarFolhaService {
 				sumarioFolha.setQdteImportarSim(sumarioFolha.getQdteImportarSim() + 1);
 				sumarioFolha.setTotalImportarSim(sumarioFolha.getTotalImportarSim() + dadosFolha.getValorVerba());
 				valorExportarSim = valorExportarSim + dadosFolha.getValorVerba();
+				if (dadosFolha.getConsiderarReferencia().equals("S")) {
+					sumarioFolha.setTotalReferenciaSim(sumarioFolha.getTotalReferenciaSim() + dadosFolha.getReferenciaVerba());
+				}
 			} else {
 				sumarioFolha.setQdteImportarNao(sumarioFolha.getQdteImportarNao() + 1);
 				sumarioFolha.setTotalImportarNao(sumarioFolha.getTotalImportarNao() + dadosFolha.getValorVerba());

@@ -23,22 +23,24 @@ public class FolhaDaoJDBC implements FolhaDao {
 	public void inserir(Folha objeto) {
 		PreparedStatement st = null;
 		try {
-//			System.out.println(objeto.toString());
 			st = conexao.prepareStatement("INSERT INTO folha "
 										+ "(Ano_Mes, Cod_Centro_Custos, Desc_Centro_Custos, Cod_Verba, Desc_Verba, "
-										+ " Valor_Verba, Importar, Observacao) "
-										+ " VALUES (?,?,?,?,?,?,?,?)" );
+										+ " Valor_Verba, Referencia, Tipo_Verba, Importar, Considerar_Referencia, Observacao) "
+										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)" );
 			st.setString(1, objeto.getAnoMes());
 			st.setDouble(2, objeto.getCodCentroCustos());
 			st.setString(3, objeto.getDescCentroCustos());
 			st.setDouble(4, objeto.getCodVerba());
 			st.setString(5, objeto.getDescVerba());
 			st.setDouble(6, objeto.getValorVerba());
-			st.setString(7, objeto.getImportar().toUpperCase());
-			st.setString(8, objeto.getObservacao());
+			st.setDouble(7, objeto.getReferenciaVerba());
+			st.setString(8, objeto.getTipoVerba());
+			st.setString(9, objeto.getImportar().toUpperCase());
+			st.setString(10, objeto.getConsiderarReferencia().toUpperCase());
+			st.setString(11, objeto.getObservacao());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Insercao \n" + e.getMessage());
+			throw new DbException("Erro na Insercao \n" + objeto + "\n" + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -48,20 +50,23 @@ public class FolhaDaoJDBC implements FolhaDao {
 	public void atualizar(Folha objeto) {
 		PreparedStatement st = null;
 		try {
-//			System.out.println(objeto.toString());
 			st = conexao.prepareStatement("UPDATE folha "
 										+ "SET Importar = ?, Observacao = ?, "
-										+ "    Desc_Centro_Custos =?, Desc_Verba = ?, Valor_Verba = ?" 
+										+ "    Desc_Centro_Custos =?, Desc_Verba = ?, "
+										+ "    Valor_Verba = ?, Referencia = ?, Tipo_Verba = ?, Considerar_Referencia = ? " 
 										+ "WHERE Ano_Mes = ? AND Cod_Centro_Custos = ? AND Cod_Verba = ? ");
 			st.setString(1, objeto.getImportar().toUpperCase());
 			st.setString(2, objeto.getObservacao());
 			st.setString(3, objeto.getDescCentroCustos());
 			st.setString(4, objeto.getDescVerba());
 			st.setDouble(5, objeto.getValorVerba());
+			st.setDouble(6, objeto.getReferenciaVerba());
+			st.setString(7, objeto.getTipoVerba());
+			st.setString(8, objeto.getConsiderarReferencia().toUpperCase());
 			
-			st.setString(6, objeto.getAnoMes());
-			st.setDouble(7, objeto.getCodCentroCustos());
-			st.setDouble(8, objeto.getCodVerba());
+			st.setString(9, objeto.getAnoMes());
+			st.setDouble(10, objeto.getCodCentroCustos());
+			st.setDouble(11, objeto.getCodVerba());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Atualizacao \n" + e.getMessage());
@@ -162,7 +167,10 @@ public class FolhaDaoJDBC implements FolhaDao {
 		dadosFolha.setCodVerba(rs.getDouble("Cod_Verba"));		
 		dadosFolha.setDescVerba(rs.getString("Desc_Verba"));		
 		dadosFolha.setValorVerba(rs.getDouble("Valor_Verba"));		
+		dadosFolha.setReferenciaVerba(rs.getDouble("Referencia"));		
+		dadosFolha.setTipoVerba(rs.getString("Tipo_Verba"));		
 		dadosFolha.setImportar(rs.getString("Importar"));		
+		dadosFolha.setConsiderarReferencia(rs.getString("Considerar_Referencia"));		
 		dadosFolha.setObservacao(rs.getString("Observacao"));		
 		return dadosFolha;
 	}

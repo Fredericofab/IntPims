@@ -49,6 +49,10 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 	@FXML
 	private TableColumn<VerbasFolha, String> tableColumnDescVerba;
 	@FXML
+	private TableColumn<VerbasFolha, String> tableColumnTipoVerba;
+	@FXML
+	private TableColumn<VerbasFolha, String> tableColumnConsiderarReferencia;
+	@FXML
 	private TableColumn<VerbasFolha, String> tableColumnImportar;
 	@FXML
 	private TableColumn<VerbasFolha, VerbasFolha> tableColumnEDIT;
@@ -66,7 +70,6 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 
 	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
-		System.out.println("onBtIncluirAction");
 		Stage parentStage = Utilitarios.atualStage(evento);
 		String caminhoDaView = "/gui/VerbaFolhaForm.fxml";
 		VerbasFolha entidade = new VerbasFolha();
@@ -92,21 +95,17 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 		inicializarComponentes();
 	}
 	
-	private void lerParametros() {
-		flagIncluir = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagAlterar")).getValor().toUpperCase();
-		flagExcluir = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagExcluir")).getValor().toUpperCase();
-	}
-
 	private void inicializarComponentes() {
 		tableColumnCodVerba.setCellValueFactory(new PropertyValueFactory<>("codVerba"));
 		tableColumnDescVerba.setCellValueFactory(new PropertyValueFactory<>("descVerba"));
+		tableColumnTipoVerba.setCellValueFactory(new PropertyValueFactory<>("tipoVerba"));
+		tableColumnConsiderarReferencia.setCellValueFactory(new PropertyValueFactory<>("considerarReferencia"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
 		
 		Utilitarios.formatarTableColumnDouble(tableColumnCodVerba, 0);
 
-		tableColumnCodVerba.setStyle("-fx-alignment: CENTER-RIGHT");
-		
+		tableColumnCodVerba.setStyle("-fx-alignment: TOP-RIGHT");
+
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
 
@@ -119,12 +118,8 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewVerbaFolha.setItems(obsLista);
 
-		if (flagAlterar.equals("S")) {
-			initEditButtons();
-		}
-		if (flagExcluir.equals("S")) {
-			initRemoveButtons();
-		}
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void criarDialogoForm(VerbasFolha entidade, String caminhoDaView, Stage parentStage) {
@@ -171,6 +166,7 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagAlterar.equals("N") ? true : false));
 				button.setOnAction(
 						event -> criarDialogoForm(obj, "/gui/VerbaFolhaForm.fxml", Utilitarios.atualStage(event)));
 			}
@@ -191,6 +187,7 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagExcluir.equals("N") ? true : false));
 				button.setOnAction(event -> removeEntity(obj));
 			}
 		});
@@ -211,4 +208,11 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 			}
 		}
 	}
+	
+	private void lerParametros() {
+		flagIncluir = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagExcluir")).getValor().toUpperCase();
+	}
+
 }

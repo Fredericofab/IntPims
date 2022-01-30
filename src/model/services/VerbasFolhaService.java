@@ -53,11 +53,13 @@ public class VerbasFolhaService {
 		lerParametros(oficial);
 		List<VerbasFolha> lista = pesquisarTodos();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("Codverba,DescricaoVerba,FlagImportar");
+			bw.write("Codverba,DescricaoVerba,TipoVerba, ConsiderarReferencia, FlagImportar");
 			bw.newLine();
 			for (VerbasFolha verbaFolha : lista) {
 				String linha = String.format("%.0f", verbaFolha.getCodVerba()) + "," + 
 							   verbaFolha.getDescVerba() + "," + 
+							   verbaFolha.getTipoVerba() + "," +
+							   verbaFolha.getConsiderarReferencia() + "," +
 							   verbaFolha.getImportar(); 
 				bw.write(linha);
 				bw.newLine();

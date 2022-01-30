@@ -34,6 +34,8 @@ public class FolhaSumarizadaListController implements Initializable {
 	@FXML
 	private TableColumn<FolhaSumarizada, Double> tableColumnTotalImportarSim;
 	@FXML
+	private TableColumn<FolhaSumarizada, Double> tableColumnTotalReferenciaSim;
+	@FXML
 	private TableColumn<FolhaSumarizada, Integer> tableColumnQtdeImportarNao;
 	@FXML
 	private TableColumn<FolhaSumarizada, Double> tableColumnTotalImportarNao;
@@ -70,17 +72,20 @@ public class FolhaSumarizadaListController implements Initializable {
 		tableColumnDescCentroCustos.setCellValueFactory(new PropertyValueFactory<>("descCentroCustos"));
 		tableColumnQtdeImportarSim.setCellValueFactory(new PropertyValueFactory<>("qdteImportarSim"));
 		tableColumnTotalImportarSim.setCellValueFactory(new PropertyValueFactory<>("totalImportarSim"));
+		tableColumnTotalReferenciaSim.setCellValueFactory(new PropertyValueFactory<>("totalReferenciaSim"));
 		tableColumnQtdeImportarNao.setCellValueFactory(new PropertyValueFactory<>("qdteImportarNao"));
 		tableColumnTotalImportarNao.setCellValueFactory(new PropertyValueFactory<>("totalImportarNao"));
 
 		Utilitarios.formatarTableColumnDouble(tableColumnCodCentroCustos, 0);
 		Utilitarios.formatarTableColumnDouble(tableColumnTotalImportarSim, 2);
+		Utilitarios.formatarTableColumnDouble(tableColumnTotalReferenciaSim, 2);
 		Utilitarios.formatarTableColumnDouble(tableColumnTotalImportarNao, 2);
 		
 		tableColumnCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
 		tableColumnQtdeImportarSim.setStyle("-fx-alignment: CENTER-RIGHT");
 		tableColumnQtdeImportarNao.setStyle("-fx-alignment: CENTER-RIGHT");
 		tableColumnTotalImportarSim.setStyle("-fx-alignment: CENTER-RIGHT");
+		tableColumnTotalReferenciaSim.setStyle("-fx-alignment: CENTER-RIGHT");
 		tableColumnTotalImportarNao.setStyle("-fx-alignment: CENTER-RIGHT");
 	}
 

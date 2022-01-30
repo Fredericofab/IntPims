@@ -46,19 +46,17 @@ public class RestricoesDeDigitacao {
 		});
 	}
 	
-//	public static void soPermiteTextFieldBrancoSNinterrogacao(TextField txt) {
-//		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
-//			if (valorNovo == null) {
-//				txt.setText(valorNovo);
-//			}
-//			else if ( !valorNovo.toUpperCase().matches("[SN?]")) {
-//				txt.setText(valorVelho);
-//			}
-//		});
-//	}
 	public static void soPermiteTextFieldBrancoSNinterrogacao(TextField txt) {
 		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
 			if (valorNovo != null && !valorNovo.toUpperCase().matches("[ SN?]")) {
+				txt.setText(valorVelho);
+			}
+		});
+	}
+
+	public static void soPermiteTextFieldPDB(TextField txt) {
+		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
+			if (valorNovo != null && !valorNovo.toUpperCase().matches("[PDB]")) {
 				txt.setText(valorVelho);
 			}
 		});

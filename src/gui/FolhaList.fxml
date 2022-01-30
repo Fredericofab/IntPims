@@ -7,7 +7,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FolhaListController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FolhaListController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -17,16 +17,19 @@
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewDadosFolha" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="453.0" prefWidth="742.0">
+      <TableView fx:id="tableViewDadosFolha" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="452.0" prefWidth="773.0">
         <columns>
           <TableColumn fx:id="tableColumnAnoMes" prefWidth="55.0" text="AnoMes" />
-          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="89.0" text="C.Custos" />
-            <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="96.0" text="Desc. C.Custos" />
-            <TableColumn fx:id="tableColumnCodVerba" prefWidth="51.0" text="Verba" />
-            <TableColumn fx:id="tableColumnDescVerba" prefWidth="105.0" text="Desc. Verba" />
+          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="67.0" text="C.Custos" />
+            <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="118.0" text="Desc. C.Custos" />
+            <TableColumn fx:id="tableColumnCodVerba" prefWidth="43.0" text="Verba" />
+            <TableColumn fx:id="tableColumnDescVerba" prefWidth="113.0" text="Desc. Verba" />
             <TableColumn fx:id="tableColumnValorVerba" prefWidth="87.0" text="Valor" />
-            <TableColumn fx:id="tableColumnImportar" prefWidth="58.0" text="Importar" />
-            <TableColumn fx:id="tableColumnObservacao" prefWidth="72.0" text="Observacao" />
+            <TableColumn fx:id="tableColumnReferenciaVerba" prefWidth="75.0" text="Referencia" />
+            <TableColumn fx:id="tableColumnTipoVerba" prefWidth="33.0" text="Tipo" />
+            <TableColumn fx:id="tableColumnImportar" prefWidth="70.0" text="Importar" />
+            <TableColumn fx:id="tableColumnConsiderarReferencia" prefWidth="75.0" text="Cons.Refer." />
+            <TableColumn fx:id="tableColumnObservacao" prefWidth="102.0" text="Observacao" />
             <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="63.0" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="64.0" />
         </columns>

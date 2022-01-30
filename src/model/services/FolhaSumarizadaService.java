@@ -50,7 +50,7 @@ public class FolhaSumarizadaService {
 		lerParametros(oficial);
 		List<FolhaSumarizada> lista = pesquisarTodos();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("AnoMes,CodCCustos,DescCCustos,QtdeImportarSim,TotalImportarSim,QtdeImportarNao,TotalImportarNao");
+			bw.write("AnoMes,CodCCustos,DescCCustos,QtdeImportarSim,TotalImportarSim,TotalReferenciaSim,QtdeImportarNao,TotalImportarNao");
 			bw.newLine();
 			for (FolhaSumarizada sumarioFolha : lista) {
 				String linha = sumarioFolha.getAnoMes() + "," + 
@@ -58,6 +58,7 @@ public class FolhaSumarizadaService {
 							   sumarioFolha.getDescCentroCustos() + "," +
 							   sumarioFolha.getQdteImportarSim() + "," +
 							   String.format("%.2f", sumarioFolha.getTotalImportarSim()) + "," +
+							   String.format("%.2f", sumarioFolha.getTotalReferenciaSim()) + "," +
 							   sumarioFolha.getQdteImportarNao() + "," +
 							   String.format("%.2f", sumarioFolha.getTotalImportarNao());
 				bw.write(linha);

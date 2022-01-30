@@ -24,11 +24,13 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 		PreparedStatement st = null;
 		try {
 			st = conexao.prepareStatement("INSERT INTO verbas_folha "
-										+ "(Cod_Verba, Desc_Verba, Importar) "
-										+ " VALUES (?,?,?)" );
+										+ "(Cod_Verba, Desc_Verba, Tipo_Verba, Considerar_Referencia,  Importar) "
+										+ " VALUES (?,?,?,?,?)" );
 			st.setDouble(1, objeto.getCodVerba());
 			st.setString(2, objeto.getDescVerba());
-			st.setString(3, objeto.getImportar());
+			st.setString(3, objeto.getTipoVerba());
+			st.setString(4, objeto.getConsiderarReferencia());
+			st.setString(5, objeto.getImportar());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Insercao " + e.getMessage());
@@ -41,14 +43,15 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 	public void atualizar(VerbasFolha objeto) {
 		PreparedStatement st = null;
 		try {
-//			System.out.println(objeto.toString());
 			st = conexao.prepareStatement("UPDATE verbas_folha "
-										+ "SET Importar = ?, Desc_Verba = ?" 
+										+ "SET Importar = ?, Desc_Verba = ?, Tipo_Verba = ?, Considerar_Referencia = ?" 
 										+ "WHERE Cod_Verba = ? ");
 			st.setString(1, objeto.getImportar().toUpperCase());
 			st.setString(2, objeto.getDescVerba());
+			st.setString(3, objeto.getTipoVerba());
+			st.setString(4, objeto.getConsiderarReferencia());
 
-			st.setDouble(3, objeto.getCodVerba());
+			st.setDouble(5, objeto.getCodVerba());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Erro na Atualizacao " + e.getMessage());
@@ -144,6 +147,8 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 		VerbasFolha verbaFolha = new VerbasFolha();
 		verbaFolha.setCodVerba(rs.getDouble("Cod_Verba"));		
 		verbaFolha.setDescVerba(rs.getString("Desc_Verba"));		
+		verbaFolha.setTipoVerba(rs.getString("Tipo_Verba"));		
+		verbaFolha.setConsiderarReferencia(rs.getString("Considerar_Referencia"));		
 		verbaFolha.setImportar(rs.getString("Importar"));		
 		return verbaFolha;
 	}

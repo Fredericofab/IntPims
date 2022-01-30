@@ -23,6 +23,7 @@
             <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="196.0" text="Desc. C.Custos" />
             <TableColumn fx:id="tableColumnQtdeImportarSim" prefWidth="62.0" text="Qtde  Sim" />
             <TableColumn fx:id="tableColumnTotalImportarSim" prefWidth="106.0" text="Total Sim" />
+            <TableColumn fx:id="tableColumnTotalReferenciaSim" prefWidth="75.0" text="Referencia Sim" />
             <TableColumn fx:id="tableColumnQtdeImportarNao" prefWidth="66.0" text="Qtde Nao" />
             <TableColumn fx:id="tableColumnTotalImportarNao" prefWidth="97.0" text="Total Nao" />
         </columns>

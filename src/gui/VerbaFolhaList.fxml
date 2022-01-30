@@ -8,7 +8,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="349.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.VerbasFolhaListController">
+<VBox prefHeight="349.0" prefWidth="701.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.VerbasFolhaListController">
    <children>
       <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -25,8 +25,10 @@
         <columns>
             <TableColumn fx:id="tableColumnCodVerba" prefWidth="63.0" text="Verba" />
             <TableColumn fx:id="tableColumnDescVerba" prefWidth="186.0" text="Desc. Verba" />
-            <TableColumn fx:id="tableColumnImportar" minWidth="0.0" prefWidth="82.0" text="Importar" />
-            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="63.0" />
+            <TableColumn fx:id="tableColumnTipoVerba" prefWidth="31.0" text="Tipo" />
+            <TableColumn fx:id="tableColumnImportar" minWidth="0.0" prefWidth="77.0" text="Importar" />
+            <TableColumn fx:id="tableColumnConsiderarReferencia" prefWidth="128.0" text="Considerar Referencia" />
+            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="59.0" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="63.0" />
         </columns>
       </TableView>
