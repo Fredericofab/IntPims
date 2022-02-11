@@ -12,6 +12,7 @@ import java.util.Set;
 
 import db.DbException;
 import gui.util.Alertas;
+import gui.util.Utilitarios;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import model.entities.Folha;
@@ -82,19 +83,24 @@ public class ImportarFolhaService {
 	}
 
 	public void processarTXT() {
-		lerParametros();
-		deletarTodosFolha();
-		deletarTodosFolhaSumarizada();
-		lerFolhaTXT(entrada, anoMes);
-		if (setVerbas.size() > 0) {
-			qtdeVerbasDistintas = setVerbas.size();
-			gravarVerbasNovas();
+		try {
+			lerParametros();
+			deletarTodosFolha();
+			deletarTodosFolhaSumarizada();
+			lerFolhaTXT(entrada, anoMes);
+			if (setVerbas.size() > 0) {
+				qtdeVerbasDistintas = setVerbas.size();
+				gravarVerbasNovas();
+			}
+			contarVerbasSemDefinicao();
+			if (qtdeVerbasSemDefinicao == 0 && qtdeCorrompidas == 0) {
+				gravarDadosFolha();
+			}
+		} catch (DbException e) {
+			Alertas.mostrarAlertas("Erro Banco Oracle", "Processo Cancelado", e.getMessage(),
+					AlertType.ERROR);
 		}
-		contarVerbasSemDefinicao();
-		if (qtdeVerbasSemDefinicao == 0 && qtdeCorrompidas == 0) {
-			gravarDadosFolha();
-		}
-
+		
 		if ((qtdeIncluidas > 0) && (qtdeLidas - qtdeIncluidas - qtdeNaoImportadas) == 0) {
 			processoAtualService.atualizarEtapa("ImportarFolha", "S");
 		} else {
@@ -105,7 +111,7 @@ public class ImportarFolhaService {
 		processoAtualService.atualizarEtapa("VerbaAlterada", "N");
 		processoAtualService.atualizarEtapa("FolhaAlterada", "N");
 	}
-
+	
 	private void deletarTodosFolhaSumarizada() {
 		folhaSumarizadaService.deletarTodos();
 	}
@@ -138,11 +144,10 @@ public class ImportarFolhaService {
 				linha = br.readLine();
 			}
 		} catch (TxtIntegridadeException e) {
-			Alertas.mostrarAlertas("TxtIntegridadeException", "Processo de Leitura do TXT interrompido", e.getMessage(),
-					AlertType.ERROR);
+			Alertas.mostrarAlertas("Erro de Integridade no Arquivo", "Processo de Leitura do TXT interrompido",
+					e.getMessage(), AlertType.ERROR);
 		} catch (FileNotFoundException e) {
-			Alertas.mostrarAlertas("FileNotFoundException", "Erro na Importacao Dados da Folha",
-					"Arquivo não encontrado \n \n" + e.getMessage(), AlertType.ERROR);
+			Alertas.mostrarAlertas("Arquivo não encontrado", "Processo Cancelado", e.getMessage(), AlertType.ERROR);
 		} catch (IOException e) {
 			Alertas.mostrarAlertas("IOException", "Erro na Importacao Dados da Folha", e.getMessage(), AlertType.ERROR);
 		} catch (RuntimeException e) {
@@ -166,24 +171,24 @@ public class ImportarFolhaService {
 		VerbasFolha verbaFolha;
 		qtdeIncluidas = 0;
 		Double codVerba;
-		try {
-			for (Folha dadosFolha : lista) {
-				codVerba = dadosFolha.getCodVerba();
-				verbaFolha = verbasDaFolhaService.pesquisarPorChave(codVerba);
+		for (Folha dadosFolha : lista) {
+			codVerba = dadosFolha.getCodVerba();
+			verbaFolha = verbasDaFolhaService.pesquisarPorChave(codVerba);
+			if (verbaFolha != null) {
 				dadosFolha.setImportar(verbaFolha.getImportar());
 				dadosFolha.setConsiderarReferencia(verbaFolha.getConsiderarReferencia());
 				folhaService.salvarOuAtualizar(dadosFolha);
 				qtdeIncluidas = qtdeIncluidas + 1;
 			}
-		} catch (DbException e) {
-			Alertas.mostrarAlertas("DbException", "Erro de Gravacao dos Dados da Folha", e.getMessage(),
-					AlertType.ERROR);
 		}
 	}
 
 	private Folha converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha)
 			throws TxtIntegridadeException {
 		String[] campos = linha.split(arqEntradaDelimitador);
+		if ( numeroLinha == 1 ) {
+			campos[0] = Utilitarios.excluiCaracterNaoEditavel(campos[0], 6);
+		}
 		Optional<ButtonType> continuar = null;
 		try {
 			if (campos.length == 8) {
@@ -192,9 +197,9 @@ public class ImportarFolhaService {
 				String descCentroCustos = campos[2];
 				Double codVerba = Double.parseDouble(campos[3]);
 				String descVerba = campos[4];
-				Double valorVerba = Double.parseDouble(campos[5]);
+				String tipoVerba = campos[5];
 				Double referenciaVerba = Double.parseDouble(campos[6]);
-				String tipoVerba = campos[7];
+				Double valorVerba = Double.parseDouble(campos[7]);
 				String importar = null;
 				String considerarReferencia = null;
 				String observacao = null;
@@ -215,9 +220,10 @@ public class ImportarFolhaService {
 					AlertType.CONFIRMATION);
 		} catch (NumberFormatException e) {
 			qtdeCorrompidas = qtdeCorrompidas + 1;
-			continuar = Alertas.mostrarConfirmacao("NumberFormatException", "Continuar Processo de Leitura do TXT ?",
-					"Campo numerico esperado. \n" + e.getMessage() + "\n \n" + "na linha No.: " + numeroLinha.toString()
-							+ "\n" + "\n" + linha,
+			continuar = Alertas.mostrarConfirmacao("Erro de Integridade no Arquivo",
+					"Continuar Processo de Leitura do TXT ?",
+					"Campo numerico esperado. \n \n" + e.getMessage() + "\n \n" +
+					"na linha No.: " + numeroLinha.toString() + "\n" + "\n" + linha,
 					AlertType.CONFIRMATION);
 		} catch (RuntimeException e) {
 			qtdeCorrompidas = qtdeCorrompidas + 1;

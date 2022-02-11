@@ -110,11 +110,6 @@ public class FuncionariosFormController implements Initializable {
 		inicializarComponentes();
 	}
 	
-	private void lerParametros() {
-		flagIncluir = (parametrosService.pesquisarPorChave("Funcionarios", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("Funcionarios", "FlagAlterar")).getValor().toUpperCase();
-	}
-
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtAnoMes);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMes, 6);
@@ -128,6 +123,9 @@ public class FuncionariosFormController implements Initializable {
 		else {
 			if (flagAlterar.equals("S")) {
 				desabilitarCompoenentes(true);
+				txtDescCentroCustos.setDisable(false);
+				txtDescFuncionario.setDisable(false);
+
 			}
 			else {
 				desabilitarCompoenentes(true);
@@ -193,4 +191,10 @@ public class FuncionariosFormController implements Initializable {
 		labelErroCodCentroCustos.setText((campos.contains("txtCodCentroCustos") ? erros.get("txtCodCentroCustos") : ""));
 		labelErroCodFuncionario.setText((campos.contains("txtCodFuncionario") ? erros.get("txtCodFuncionario") : ""));
 	}
+	
+	private void lerParametros() {
+		flagIncluir = (parametrosService.pesquisarPorChave("Funcionarios", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("Funcionarios", "FlagAlterar")).getValor().toUpperCase();
+	}
+
 }

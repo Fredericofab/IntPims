@@ -60,9 +60,10 @@ public class ExportarFolhaService {
 	}
 
 	private Double colocarPrefixo(String prefixo, Double codCCusto) {
-		Integer tamanho = (String.format("%.0f", codCCusto)).length();
-		String x = prefixo.repeat(10 - tamanho);
-		Double cdFunc = Double.parseDouble((x + codCCusto.toString()));
+//		Integer tamanho = (String.format("%.0f", codCCusto)).length();
+//		String x = prefixo.repeat(10 - tamanho);
+//		Double cdFunc = Double.parseDouble((x + codCCusto.toString()));
+		Double cdFunc = Double.parseDouble(prefixo) + codCCusto;
 		return cdFunc;
 	}
 

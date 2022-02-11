@@ -108,6 +108,7 @@ public class ProcessoAtualService {
 		
 		if (campo.equals("VerbaAlterada")) processoAtual.setVerbaAlterada(valor); 
 		if (campo.equals("FolhaAlterada")) processoAtual.setFolhaAlterada(valor); 
+		if (campo.equals("FuncionarioAlterado")) processoAtual.setFuncionarioAlterado(valor); 
 
 		salvarOuAtualizar(processoAtual);
 	}

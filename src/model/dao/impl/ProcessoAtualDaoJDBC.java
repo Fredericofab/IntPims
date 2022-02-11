@@ -29,8 +29,8 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 										+ "Importar_Funcionario,Sumarizar_Funcionario,"
 										+ "Importar_ErpMT, Importar_ErpCD, Importar_ErpDD, "
 										+ "Analisar_Erp, Exportar_Erp, "
-										+ "Verba_Alterada, Folha_Alterada, Filtro_Erp) "
-										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
+										+ "Verba_Alterada, Folha_Alterada, Funcionario_alterado,Filtro_Erp) "
+										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
 			st.setString(1, objeto.getAnoMes());
 			st.setString(2, objeto.getImportarFolha());
 			st.setString(3, objeto.getSumarizarFolha());
@@ -44,10 +44,11 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(11, objeto.getExportarErp());
 			st.setString(12, objeto.getVerbaAlterada());
 			st.setString(13, objeto.getFolhaAlterada());
-			st.setString(14, objeto.getFiltroErp());
+			st.setString(14, objeto.getFuncionarioAlterado());
+			st.setString(15, objeto.getFiltroErp());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Insercao " + e.getMessage());
+			throw new DbException("Tabela Processo_Atual  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -62,7 +63,8 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 										+ "Importar_Funcionario = ?,Sumarizar_Funcionario = ?,"
 										+ "Importar_ErpMT = ? , Importar_ErpCD = ?, Importar_ErpDD = ?, "
 										+ "Analisar_Erp = ? , Exportar_Erp = ?, "
-										+ "Verba_alterada = ? , Folha_Alterada = ?, Filtro_Erp = ? "
+										+ "Verba_alterada = ? , Folha_Alterada = ?, Funcionario_Alterado =?, "
+										+ "Filtro_Erp = ? "
 										+ "WHERE Ano_Mes = ? ");
 			st.setString(1, objeto.getImportarFolha());
 			st.setString(2, objeto.getSumarizarFolha());
@@ -76,12 +78,13 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(10, objeto.getExportarErp());
 			st.setString(11, objeto.getVerbaAlterada());
 			st.setString(12, objeto.getFolhaAlterada());
-			st.setString(13, objeto.getFiltroErp());
+			st.setString(13, objeto.getFuncionarioAlterado());
+			st.setString(14, objeto.getFiltroErp());
 
-			st.setString(14, objeto.getAnoMes());
+			st.setString(15, objeto.getAnoMes());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Atualizacao " + e.getMessage());
+			throw new DbException("Tabela Processo_Atual  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -96,7 +99,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(1, anoMes);
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao " + e.getMessage());
+			throw new DbException("Tabela Processo_Atual \n \n" + e.getMessage() + "\n \n" + anoMes );
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -112,8 +115,8 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao " + e.getMessage());
-		}
+			throw new DbException("Tabela Processo_Atual \n \n" + e.getMessage());
+					}
 		finally {
 			DB.fecharStatement(st);
 		}
@@ -134,7 +137,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa " + e.getMessage());
+			throw new DbException("Tabela Processo_Atual \n \n" + e.getMessage() + "\n \n" + anoMes );
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -158,7 +161,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			return lista;
 		} 
 		catch (SQLException e) {
-			throw new DbException("erro na consulta todos - " + e.getMessage());
+			throw new DbException("Tabela Processo_Atual \n \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharResultSet(rs);
@@ -181,6 +184,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 		processoAtual.setExportarErp(rs.getString("Exportar_Erp"));		
 		processoAtual.setVerbaAlterada(rs.getString("Verba_Alterada"));		
 		processoAtual.setFolhaAlterada(rs.getString("Folha_Alterada"));		
+		processoAtual.setFuncionarioAlterado(rs.getString("Funcionario_Alterado"));		
 		processoAtual.setFiltroErp(rs.getString("Filtro_Erp"));		
 		return processoAtual;
 	}

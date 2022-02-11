@@ -19,16 +19,15 @@ public class ProcessoAtual implements Serializable {
 	private String exportarErp;
 	private String verbaAlterada;
 	private String folhaAlterada;
+	private String funcionarioAlterado;
 	private String filtroErp;
-
 	
 	public ProcessoAtual() {
 	}
-		
 	public ProcessoAtual(String anoMes, String importarFolha, String sumarizarFolha, String exportarFolha,
 			String importarFuncionario, String sumarizarFuncionario, String importarErpMT, String importarErpCD,
 			String importarErpDG, String analisarErp, String exportarErp, String verbaAlterada, String folhaAlterada,
-			String filtroErp) {
+			String funcionarioAlterado, String filtroErp) {
 		super();
 		this.anoMes = anoMes;
 		this.importarFolha = importarFolha;
@@ -43,117 +42,97 @@ public class ProcessoAtual implements Serializable {
 		this.exportarErp = exportarErp;
 		this.verbaAlterada = verbaAlterada;
 		this.folhaAlterada = folhaAlterada;
+		this.funcionarioAlterado = funcionarioAlterado;
 		this.filtroErp = filtroErp;
 	}
 
 	public String getAnoMes() {
 		return anoMes;
 	}
-
 	public void setAnoMes(String anoMes) {
 		this.anoMes = anoMes;
 	}
-
 	public String getImportarFolha() {
 		return importarFolha;
 	}
-
 	public void setImportarFolha(String importarFolha) {
 		this.importarFolha = importarFolha;
 	}
-
 	public String getSumarizarFolha() {
 		return sumarizarFolha;
 	}
-
 	public void setSumarizarFolha(String sumarizarFolha) {
 		this.sumarizarFolha = sumarizarFolha;
 	}
-
 	public String getExportarFolha() {
 		return exportarFolha;
 	}
-
 	public void setExportarFolha(String exportarFolha) {
 		this.exportarFolha = exportarFolha;
 	}
-
 	public String getImportarFuncionario() {
 		return importarFuncionario;
 	}
-
 	public void setImportarFuncionario(String importarFuncionario) {
 		this.importarFuncionario = importarFuncionario;
 	}
-
 	public String getSumarizarFuncionario() {
 		return sumarizarFuncionario;
 	}
-
 	public void setSumarizarFuncionario(String sumarizarFuncionario) {
 		this.sumarizarFuncionario = sumarizarFuncionario;
 	}
-
 	public String getImportarErpMT() {
 		return importarErpMT;
 	}
-
 	public void setImportarErpMT(String importarErpMT) {
 		this.importarErpMT = importarErpMT;
 	}
-
 	public String getImportarErpCD() {
 		return importarErpCD;
 	}
-
 	public void setImportarErpCD(String importarErpCD) {
 		this.importarErpCD = importarErpCD;
 	}
-
 	public String getImportarErpDG() {
 		return importarErpDG;
 	}
-
 	public void setImportarErpDG(String importarErpDG) {
 		this.importarErpDG = importarErpDG;
 	}
-
 	public String getAnalisarErp() {
 		return analisarErp;
 	}
-
 	public void setAnalisarErp(String analisarErp) {
 		this.analisarErp = analisarErp;
 	}
-
 	public String getExportarErp() {
 		return exportarErp;
 	}
-
 	public void setExportarErp(String exportarErp) {
 		this.exportarErp = exportarErp;
 	}
-
 	public String getVerbaAlterada() {
 		return verbaAlterada;
 	}
-
 	public void setVerbaAlterada(String verbaAlterada) {
 		this.verbaAlterada = verbaAlterada;
 	}
-
 	public String getFolhaAlterada() {
 		return folhaAlterada;
 	}
-
 	public void setFolhaAlterada(String folhaAlterada) {
 		this.folhaAlterada = folhaAlterada;
 	}
-
+	public String getFuncionarioAlterado() {
+		return funcionarioAlterado;
+	}
+	public void setFuncionarioAlterado(String funcionarioAlterado) {
+		this.funcionarioAlterado = funcionarioAlterado;
+	}
 	public String getFiltroErp() {
 		return filtroErp;
 	}
-
 	public void setFiltroErp(String filtroErp) {
 		this.filtroErp = filtroErp;
 	}
@@ -165,7 +144,6 @@ public class ProcessoAtual implements Serializable {
 		result = prime * result + ((anoMes == null) ? 0 : anoMes.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -182,8 +160,7 @@ public class ProcessoAtual implements Serializable {
 			return false;
 		return true;
 	}
-
-
+	
 	@Override
 	public String toString() {
 		return "ProcessoAtual [anoMes=" + anoMes + ", importarFolha=" + importarFolha + ", sumarizarFolha="
@@ -191,7 +168,7 @@ public class ProcessoAtual implements Serializable {
 				+ ", sumarizarFuncionario=" + sumarizarFuncionario + ", importarErpMT=" + importarErpMT
 				+ ", importarErpCD=" + importarErpCD + ", importarErpDG=" + importarErpDG + ", analisarErp="
 				+ analisarErp + ", exportarErp=" + exportarErp + ", verbaAlterada=" + verbaAlterada + ", folhaAlterada="
-				+ folhaAlterada + ", filtroErp=" + filtroErp + "]";
+				+ folhaAlterada + ", funcionarioAlterado=" + funcionarioAlterado + ", filtroErp=" + filtroErp + "]";
 	}
 
 }

@@ -41,6 +41,7 @@ public class SumarizarFuncionariosService {
 		sumarizarFuncionarios();
 		gravarSumarioFuncionarios();
 		processoAtualService.atualizarEtapa("SumarizarFuncionario","S");
+		processoAtualService.atualizarEtapa("FuncionarioAlterado","N");
 	}
 
 	private void deletarTodosSumarioFuncionarios() {

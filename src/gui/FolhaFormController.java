@@ -136,11 +136,6 @@ public class FolhaFormController implements Initializable {
 		inicializarComponentes();
 	}
 	
-	private void lerParametros() {
-		flagIncluir = (parametrosService.pesquisarPorChave("DadosFolha", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("DadosFolha", "FlagAlterar")).getValor().toUpperCase();
-		flagObservacao =  (parametrosService.pesquisarPorChave("DadosFolha", "FlagObservacao")).getValor().toUpperCase();
-	}
 
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtAnoMes);
@@ -278,5 +273,11 @@ public class FolhaFormController implements Initializable {
 		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
 		labelErroConsiderarReferencia.setText((campos.contains("txtConsiderarReferencia") ? erros.get("txtConsiderarReferencia") : ""));
 		labelErroObservacao.setText((campos.contains("txtObservacao") ? erros.get("txtObservacao") : ""));
+	}
+	
+	private void lerParametros() {
+		flagIncluir = (parametrosService.pesquisarPorChave("DadosFolha", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("DadosFolha", "FlagAlterar")).getValor().toUpperCase();
+		flagObservacao =  (parametrosService.pesquisarPorChave("DadosFolha", "FlagObservacao")).getValor().toUpperCase();
 	}
 }

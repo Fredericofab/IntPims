@@ -11,4 +11,5 @@ public interface VerbasFolhaDao {
 	List<VerbasFolha> listarTodos();
 	
 	Integer contarVerbasSemDefinicao();
+	void atualizarNovos(String defaultImportar, String defaultConsiderarReferencia);
 }

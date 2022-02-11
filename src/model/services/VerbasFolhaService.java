@@ -21,6 +21,9 @@ public class VerbasFolhaService {
 	
 //	parametros
 	String saida;
+	String defaultImportar;
+	String defaultConsiderarReferencia;
+
 
 	public List<VerbasFolha> pesquisarTodos() {
 		return dao.listarTodos();
@@ -47,6 +50,10 @@ public class VerbasFolhaService {
 
 	public Integer contarVerbasSemDefinicao() {
 		return dao.contarVerbasSemDefinicao();
+	}
+	public void atualizarNovos() {
+		lerParametros(false);
+		dao.atualizarNovos(defaultImportar, defaultConsiderarReferencia);
 	}
 
 	public void gerarTxt(Boolean oficial) {
@@ -83,6 +90,9 @@ public class VerbasFolhaService {
 		else {
 			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
 		}
+		defaultImportar = (parametrosService.pesquisarPorChave("VerbasDaFolha", "DefaultImportar")).getValor().toUpperCase();
+		defaultConsiderarReferencia = (parametrosService.pesquisarPorChave("VerbasDaFolha", "DefaultConsiderarReferencia")).getValor().toUpperCase();
+
 	}
 	
 	private void reatualizarEtapaDoProcesso() {
@@ -91,4 +101,6 @@ public class VerbasFolhaService {
 		processoAtualService.atualizarEtapa("ExportarFolha","N");
 		processoAtualService.atualizarEtapa("VerbaAlterada","S");
 	}
+
+	
 }

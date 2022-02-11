@@ -48,8 +48,18 @@ public class Utilitarios {
 		}
 	}
 
-	// Codigo copiado do curso -291 SellerList TableView
+	public static String excluiCaracterNaoEditavel(String campo, Integer tamanho) {
+		if ( campo.length() != tamanho ) {
+			int inicio = campo.length() - tamanho;
+			int termino = campo.length();
+			campo = campo.substring(inicio, termino);
+		}
+		return campo;
+	}
+	
 	public static <T> void formatarTableColumnDate(TableColumn<T, Date> tableColumn, String format) {
+		// Codigo copiado do curso -291 SellerList TableView
+
 		tableColumn.setCellFactory(column -> {
 			TableCell<T, Date> cell = new TableCell<T, Date>() {
 				private SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -69,8 +79,9 @@ public class Utilitarios {
 		});
 	}
 
-	// Codigo copiado do curso -291 SellerList TableView
 	public static <T> void formatarTableColumnDouble(TableColumn<T, Double> tableColumn, int decimalPlaces) {
+		// Codigo copiado do curso -291 SellerList TableView
+
 		tableColumn.setCellFactory(column -> {
 			TableCell<T, Double> cell = new TableCell<T, Double>() {
 				@Override
@@ -88,9 +99,10 @@ public class Utilitarios {
 		});
 	}
 
-	// Codigo copiado do curso -293 TextField e DatePicker
-	// O DatePicker é um componente do FX para receber data (abre um calendario)  ao inves de usar o TextField
 	public static void formatarDatePicker(DatePicker datePicker, String format) {
+		// Codigo copiado do curso -293 TextField e DatePicker
+		// O DatePicker é um componente do FX para receber data (abre um calendario)  ao inves de usar o TextField
+		
 		datePicker.setConverter(new StringConverter<LocalDate>() {
 			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(format);
 			{

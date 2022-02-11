@@ -97,12 +97,6 @@ public class FuncionariosListController implements Initializable, DadosAlterados
 		inicializarComponentes();
 	}
 
-	private void lerParametros() {
-		flagIncluir = (parametrosService.pesquisarPorChave("Funcionarios", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("Funcionarios", "FlagAlterar")).getValor().toUpperCase();
-		flagExcluir = (parametrosService.pesquisarPorChave("Funcionarios", "FlagExcluir")).getValor().toUpperCase();
-		anoMes =  (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-	}
 
 	private void inicializarComponentes() {
 		tableColumnAnoMes.setCellValueFactory(new PropertyValueFactory<>("anoMes"));
@@ -114,8 +108,8 @@ public class FuncionariosListController implements Initializable, DadosAlterados
 		Utilitarios.formatarTableColumnDouble(tableColumnCodCentroCustos, 0);
 		Utilitarios.formatarTableColumnDouble(tableColumnCodFuncionario, 0);
 
-		tableColumnCodCentroCustos.setStyle("-fx-alignment: CENTER-RIGHT");
-		tableColumnCodFuncionario.setStyle("-fx-alignment: CENTER-RIGHT");
+		tableColumnCodCentroCustos.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnCodFuncionario.setStyle("-fx-alignment: TOP-RIGHT");
 		
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
@@ -128,12 +122,8 @@ public class FuncionariosListController implements Initializable, DadosAlterados
 
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewFuncionarios.setItems(obsLista);
-		if (flagAlterar.equals("S")) {
-			initEditButtons();
-		}
-		if (flagExcluir.equals("S")) {
-			initRemoveButtons();
-		}
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void criarDialogoForm(Funcionarios entidade, String caminhoDaView, Stage parentStage) {
@@ -180,6 +170,7 @@ public class FuncionariosListController implements Initializable, DadosAlterados
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagAlterar.equals("N") ? true : false));
 				button.setOnAction(
 						event -> criarDialogoForm(obj, "/gui/FuncionariosForm.fxml", Utilitarios.atualStage(event)));
 			}
@@ -199,6 +190,7 @@ public class FuncionariosListController implements Initializable, DadosAlterados
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagExcluir.equals("N") ? true : false));
 				button.setOnAction(event -> removeEntity(obj));
 			}
 		});
@@ -217,5 +209,11 @@ public class FuncionariosListController implements Initializable, DadosAlterados
 				Alertas.mostrarAlertas("Erro removendo Objeto", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
+	}
+	private void lerParametros() {
+		flagIncluir = (parametrosService.pesquisarPorChave("Funcionarios", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("Funcionarios", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("Funcionarios", "FlagExcluir")).getValor().toUpperCase();
+		anoMes =  (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 	}
 }

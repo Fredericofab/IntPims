@@ -33,7 +33,7 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 			st.setString(5, objeto.getImportar());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Insercao " + e.getMessage());
+			throw new DbException("Tabela Verbas_Folha  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -54,7 +54,7 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 			st.setDouble(5, objeto.getCodVerba());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Atualizacao " + e.getMessage());
+			throw new DbException("Tabela Verbas_Folha  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -69,7 +69,8 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 			st.setDouble(1, codVerba);
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao " + e.getMessage());
+			throw new DbException("Tabela Verbas_Folha \n \n" + e.getMessage() + "\n \n" 
+					  + codVerba);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -91,7 +92,7 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa " + e.getMessage());
+			throw new DbException("Tabela Verbas_Folha \n \n" + e.getMessage() + "\n \n" + codVerba);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -116,7 +117,7 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 			return lista;
 		} 
 		catch (SQLException e) {
-			throw new DbException("erro na consulta todos - " + e.getMessage());
+			throw new DbException("Tabela Verbas_Folha \n \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharResultSet(rs);
@@ -135,13 +136,31 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 			Integer contagem = rs.getInt("contagem");
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("Erro na Contagem das Verbas Sem Definicao " + e.getMessage());
+			throw new DbException("Tabela Verbas_Folha \n \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);
 		}
 	}
+	
+	@Override
+	public void atualizarNovos(String defaultImportar, String defaultConsiderarReferencia) {
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement("UPDATE verbas_folha "
+										+ "SET Importar = ?, Considerar_Referencia = ?" 
+										+ "WHERE Importar is null and  Considerar_Referencia is null ");
+			st.setString(1, defaultImportar.toUpperCase());
+			st.setString(2, defaultConsiderarReferencia.toUpperCase());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException("Tabela Verbas_Folha \n \n" + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+		}
+	}
+
 	
 	private VerbasFolha instanciaVerbaFolha(ResultSet rs) throws SQLException {
 		VerbasFolha verbaFolha = new VerbasFolha();
@@ -152,5 +171,6 @@ public class VerbasFolhaDaoJDBC implements VerbasFolhaDao {
 		verbaFolha.setImportar(rs.getString("Importar"));		
 		return verbaFolha;
 	}
+
 }
 

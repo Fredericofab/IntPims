@@ -23,7 +23,6 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 	public void inserir(Funcionarios objeto) {
 		PreparedStatement st = null;
 		try {
-//			System.out.println(objeto.toString());
 			st = conexao.prepareStatement("INSERT INTO funcionarios "
 										+ "(Ano_Mes, Cod_Centro_Custos, Desc_Centro_Custos, "
 										+ " Cod_Funcionario, Desc_Funcionario) "
@@ -35,7 +34,7 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 			st.setString(5, objeto.getDescFuncionario());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Insercao " + e.getMessage());
+			throw new DbException("Tabela Funcionarios  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -45,7 +44,6 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 	public void atualizar(Funcionarios objeto) {
 		PreparedStatement st = null;
 		try {
-//			System.out.println(objeto.toString());
 			st = conexao.prepareStatement("UPDATE funcionarios "
 										+ "SET Desc_Centro_Custos =?, Desc_Funcionario = ?" 
 										+ "WHERE Ano_Mes = ? AND Cod_Centro_Custos = ? AND Cod_Funcionario = ? ");
@@ -57,7 +55,7 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 			st.setDouble(5, objeto.getCodFuncionario());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Atualizacao " + e.getMessage());
+			throw new DbException("Tabela Funcionarios  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -74,7 +72,8 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 			st.setDouble(3, codFuncionario);
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao " + e.getMessage());
+			throw new DbException("Tabela Funcionarios \n \n" + e.getMessage() + "\n \n" 
+					  + anoMes + " - " + codCentroCustos + " - " + codFuncionario);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -98,7 +97,8 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa " + e.getMessage());
+			throw new DbException("Tabela Funcionarios \n \n" + e.getMessage() + "\n \n" 
+		  			  + anoMes + " - " + codCentroCustos + " - " + codFuncionario);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -123,7 +123,7 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 			return lista;
 		} 
 		catch (SQLException e) {
-			throw new DbException("erro na consulta todos - " + e.getMessage());
+			throw new DbException("Tabela Funcionarios \n \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharResultSet(rs);
@@ -140,7 +140,7 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao do Movimento de Funcionarios  \n" + e.getMessage());
+			throw new DbException("Tabela Funcionarios \n \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharStatement(st);

@@ -59,6 +59,8 @@ public class ProcessoAtualViewController implements Initializable {
 	private TextField txtVerbaAlterada;
 	@FXML
 	private TextField txtFolhaAlterada;
+	@FXML
+	private TextField txtFuncionarioAlterado;
 
 	@FXML
 	private Label labelErroAnoMes;
@@ -141,6 +143,7 @@ public class ProcessoAtualViewController implements Initializable {
 		entidade.setExportarErp("N");
 		entidade.setVerbaAlterada("N");
 		entidade.setFolhaAlterada("N");
+		entidade.setFuncionarioAlterado("N");
 	}
 
 	private void atualizarTela() {
@@ -157,6 +160,7 @@ public class ProcessoAtualViewController implements Initializable {
 		txtExportarErp.setText(entidade.getExportarErp());
 		txtVerbaAlterada.setText(entidade.getVerbaAlterada());
 		txtFolhaAlterada.setText(entidade.getFolhaAlterada());
+		txtFuncionarioAlterado.setText(entidade.getFuncionarioAlterado());
 	}
 
 	private void inicializarComponentes() {
@@ -174,6 +178,7 @@ public class ProcessoAtualViewController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErp, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtVerbaAlterada, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtFolhaAlterada, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtFuncionarioAlterado, 1);
 	}
 
 	private ProcessoAtual getDadosDoForm() {
@@ -194,6 +199,7 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setExportarErp(txtExportarErp.getText());
 		objeto.setVerbaAlterada(txtVerbaAlterada.getText());
 		objeto.setFolhaAlterada(txtFolhaAlterada.getText());
+		objeto.setFuncionarioAlterado(txtFuncionarioAlterado.getText());
 
 		objeto.setImportarFolha(Utilitarios.tentarConverterParaMaiusculo(txtImportarFolha.getText()));
 		objeto.setSumarizarFolha(Utilitarios.tentarConverterParaMaiusculo(txtSumarizarFolha.getText()));
@@ -207,6 +213,7 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setExportarErp(Utilitarios.tentarConverterParaMaiusculo(txtExportarErp.getText()));
 		objeto.setVerbaAlterada(Utilitarios.tentarConverterParaMaiusculo(txtVerbaAlterada.getText()));
 		objeto.setFolhaAlterada(Utilitarios.tentarConverterParaMaiusculo(txtFolhaAlterada.getText()));
+		objeto.setFuncionarioAlterado(Utilitarios.tentarConverterParaMaiusculo(txtFuncionarioAlterado.getText()));
 
 		if (txtAnoMes.getText() == null || txtAnoMes.getText().trim().equals("")) {
 			validacao.adicionarErro("txtAnoMes", "Informe o Ano e Mes de referencia");

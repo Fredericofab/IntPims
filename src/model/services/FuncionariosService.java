@@ -16,6 +16,7 @@ public class FuncionariosService {
 	private FuncionariosDao dao = FabricaDeDao.criarFuncionariosDao();
 
 	private ParametrosService parametrosService = new ParametrosService();
+	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 
 //	parametros
 	String saida;
@@ -30,10 +31,12 @@ public class FuncionariosService {
 		} else {
 			dao.atualizar(objeto);
 		}
+		reatualizarEtapaDoProcesso();
 	}
 
 	public void remover(Funcionarios objeto) {
 		dao.deletarPorChave(objeto.getAnoMes(), objeto.getCodCentroCustos(), objeto.getCodFuncionario());
+		reatualizarEtapaDoProcesso();
 	}
 
 	public Integer deletarTodos() {
@@ -74,5 +77,10 @@ public class FuncionariosService {
 		else {
 			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
 		}
+	}
+	
+	private void reatualizarEtapaDoProcesso() {
+		processoAtualService.atualizarEtapa("SumarizarFuncionario","N");
+		processoAtualService.atualizarEtapa("FuncionarioAlterado","S");
 	}
 }

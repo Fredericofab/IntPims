@@ -41,6 +41,7 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 	String flagIncluir;
 	String flagAlterar;
 	String flagExcluir;
+	String atualizarNovos;
 
 	@FXML
 	private TableView<VerbasFolha> tableViewVerbaFolha;
@@ -64,6 +65,8 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 	@FXML
 	private Button btGerarTxt;
 	@FXML
+	private Button btAtualizarNovos;
+	@FXML
 	private Button btSair;
 
 	private ObservableList<VerbasFolha> obsLista;
@@ -79,6 +82,17 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 	public void onGerarTxtAction(ActionEvent evento) {
 		Boolean oficial = false;
 		servico.gerarTxt(oficial);
+	}
+	@FXML
+	public void onAtualizarNovosAction(ActionEvent evento) {
+		try {
+		servico.atualizarNovos();
+		atualizarTableView();
+		}
+		catch (DbException e){
+			Alertas.mostrarAlertas("erro Salvando VerbaFolha", null, e.getMessage(), AlertType.ERROR);
+		}
+		
 	}
 	@FXML
 	public void onBtSairAction(ActionEvent evento) {
@@ -107,6 +121,7 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 		tableColumnCodVerba.setStyle("-fx-alignment: TOP-RIGHT");
 
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
+		btAtualizarNovos.setDisable((atualizarNovos.equals("N") ? true : false));
 	}
 
 	public void atualizarTableView() {
@@ -213,6 +228,7 @@ public class VerbasFolhaListController implements Initializable, DadosAlteradosL
 		flagIncluir = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagIncluir")).getValor().toUpperCase();
 		flagAlterar = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagAlterar")).getValor().toUpperCase();
 		flagExcluir = (parametrosService.pesquisarPorChave("VerbasDaFolha", "FlagExcluir")).getValor().toUpperCase();
+		atualizarNovos = (parametrosService.pesquisarPorChave("VerbasDaFolha", "AtualizarNovos")).getValor().toUpperCase();
 	}
 
 }

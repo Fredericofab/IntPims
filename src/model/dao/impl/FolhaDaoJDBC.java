@@ -40,7 +40,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			st.setString(11, objeto.getObservacao());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Insercao \n" + objeto + "\n" + e.getMessage());
+			throw new DbException("Tabela Folha  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -69,7 +69,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			st.setDouble(11, objeto.getCodVerba());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Atualizacao \n" + e.getMessage());
+			throw new DbException("Tabela Folha  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -86,7 +86,8 @@ public class FolhaDaoJDBC implements FolhaDao {
 			st.setDouble(3, codVerba);
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao \n" + e.getMessage());
+			throw new DbException("Tabela Folha \n \n" + e.getMessage() + "\n \n" 
+								  + anoMes + " - " + codCentroCustos + " - " + codVerba);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -99,7 +100,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 		ResultSet rs = null;
 		try {
 			st = conexao.prepareStatement("SELECT * FROM folha "
-										+ "WHERE Ano_Mes = ? AND Cod_Centro_Custos = ? AND Cod_Verba = ? ");
+										  + "WHERE Ano_Mes = ? AND Cod_Centro_Custos = ? AND Cod_Verba = ? ");
 			st.setString(1, anoMes);
 			st.setDouble(2, codCentroCustos);
 			st.setDouble(3, codVerba);
@@ -110,7 +111,8 @@ public class FolhaDaoJDBC implements FolhaDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa \n" + e.getMessage());
+			throw new DbException("Tabela Folha \n \n" + e.getMessage() + "\n \n" 
+					  			  + anoMes + " - " + codCentroCustos + " - " + codVerba);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -135,7 +137,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			return lista;
 		} 
 		catch (SQLException e) {
-			throw new DbException("erro na consulta todos \n" + e.getMessage());
+			throw new DbException("Tabela Folha \n \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharResultSet(rs);
@@ -152,7 +154,7 @@ public class FolhaDaoJDBC implements FolhaDao {
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao do Movimento da Folha  \n" + e.getMessage());
+			throw new DbException("Tabela Folha \n \n" + e.getMessage());
 		}
 		finally {
 			DB.fecharStatement(st);
