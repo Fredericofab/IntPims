@@ -15,6 +15,7 @@ public class ProcessoAtual implements Serializable {
 	private String importarErpMT;
 	private String importarErpCD;
 	private String importarErpDG;
+	private String criticarErp;
 	private String analisarErp;
 	private String exportarErp;
 	private String verbaAlterada;
@@ -26,8 +27,8 @@ public class ProcessoAtual implements Serializable {
 	}
 	public ProcessoAtual(String anoMes, String importarFolha, String sumarizarFolha, String exportarFolha,
 			String importarFuncionario, String sumarizarFuncionario, String importarErpMT, String importarErpCD,
-			String importarErpDG, String analisarErp, String exportarErp, String verbaAlterada, String folhaAlterada,
-			String funcionarioAlterado, String filtroErp) {
+			String importarErpDG, String criticarErp, String analisarErp, String exportarErp, String verbaAlterada,
+			String folhaAlterada, String funcionarioAlterado, String filtroErp) {
 		super();
 		this.anoMes = anoMes;
 		this.importarFolha = importarFolha;
@@ -38,6 +39,7 @@ public class ProcessoAtual implements Serializable {
 		this.importarErpMT = importarErpMT;
 		this.importarErpCD = importarErpCD;
 		this.importarErpDG = importarErpDG;
+		this.criticarErp = criticarErp;
 		this.analisarErp = analisarErp;
 		this.exportarErp = exportarErp;
 		this.verbaAlterada = verbaAlterada;
@@ -45,7 +47,7 @@ public class ProcessoAtual implements Serializable {
 		this.funcionarioAlterado = funcionarioAlterado;
 		this.filtroErp = filtroErp;
 	}
-
+	
 	public String getAnoMes() {
 		return anoMes;
 	}
@@ -100,6 +102,12 @@ public class ProcessoAtual implements Serializable {
 	public void setImportarErpDG(String importarErpDG) {
 		this.importarErpDG = importarErpDG;
 	}
+	public String getCriticarErp() {
+		return criticarErp;
+	}
+	public void setCriticarErp(String criticarErp) {
+		this.criticarErp = criticarErp;
+	}
 	public String getAnalisarErp() {
 		return analisarErp;
 	}
@@ -136,7 +144,6 @@ public class ProcessoAtual implements Serializable {
 	public void setFiltroErp(String filtroErp) {
 		this.filtroErp = filtroErp;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -166,9 +173,10 @@ public class ProcessoAtual implements Serializable {
 		return "ProcessoAtual [anoMes=" + anoMes + ", importarFolha=" + importarFolha + ", sumarizarFolha="
 				+ sumarizarFolha + ", exportarFolha=" + exportarFolha + ", importarFuncionario=" + importarFuncionario
 				+ ", sumarizarFuncionario=" + sumarizarFuncionario + ", importarErpMT=" + importarErpMT
-				+ ", importarErpCD=" + importarErpCD + ", importarErpDG=" + importarErpDG + ", analisarErp="
-				+ analisarErp + ", exportarErp=" + exportarErp + ", verbaAlterada=" + verbaAlterada + ", folhaAlterada="
-				+ folhaAlterada + ", funcionarioAlterado=" + funcionarioAlterado + ", filtroErp=" + filtroErp + "]";
+				+ ", importarErpCD=" + importarErpCD + ", importarErpDG=" + importarErpDG + ", criticarErp="
+				+ criticarErp + ", analisarErp=" + analisarErp + ", exportarErp=" + exportarErp + ", verbaAlterada="
+				+ verbaAlterada + ", folhaAlterada=" + folhaAlterada + ", funcionarioAlterado=" + funcionarioAlterado
+				+ ", filtroErp=" + filtroErp + "]";
 	}
 
 }

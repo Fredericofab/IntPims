@@ -61,6 +61,8 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemImportarErpDG;
 	@FXML
+	private MenuItem menuItemCriticarErp;
+	@FXML
 	private MenuItem menuItemAnalisarErp;
 	@FXML
 	private MenuItem menuItemExportarErp;
@@ -171,6 +173,17 @@ public class MainViewController implements Initializable {
 				(ImportarErpViewController controle) -> {
 					controle.setOrigem("DG");
 		});
+	}
+	@FXML
+	private void onMenuItemCriticarErpAction() {
+System.out.println("FRED - MAINVIEWCONTROLER");		
+		
+//		Stage paiStage = paiStage();
+//		criarJanelaFilha("/gui/CriticarErpView.fxml", "Critica do ERP", paiStage,
+//				(CriticarErpViewController controle) -> {
+//					controle.setCriticarErpServico(new CriticarErpService());
+//					controle.atualizarTableView();
+//		});
 	}
 	@FXML
 	private void onMenuItemAnalisarErpAction() {
@@ -309,6 +322,7 @@ public class MainViewController implements Initializable {
 			menuItemImportarErpMT.setDisable(true);
 			menuItemImportarErpCD.setDisable(true);
 			menuItemImportarErpDG.setDisable(true);
+			menuItemCriticarErp.setDisable(true);
 			menuItemAnalisarErp.setDisable(true);
 			menuItemExportarErp.setDisable(true);
 		}
@@ -322,18 +336,16 @@ public class MainViewController implements Initializable {
 			menuItemSumarizarFolha.setDisable(processoAtual.getImportarFolha().equals("S") ? false : true);
 			menuItemExportarFolha.setDisable(processoAtual.getSumarizarFolha().equals("S") ? false : true);
 			menuItemSumarizarFuncionarios.setDisable(processoAtual.getImportarFuncionario().equals("S") ? false : true);
-			if (processoAtual.getImportarErpMT().equals("N") ||
-				processoAtual.getImportarErpCD().equals("N") ||
-				processoAtual.getImportarErpDG().equals("N")) {
-				menuItemAnalisarErp.setDisable(true);
-				menuItemExportarErp.setDisable(true);
+			if (processoAtual.getImportarErpMT().equals("S") ||
+				processoAtual.getImportarErpCD().equals("S") ||
+				processoAtual.getImportarErpDG().equals("S")) {
+				menuItemCriticarErp.setDisable(false);
 			}
 			else {
-				menuItemAnalisarErp.setDisable(false);
+				menuItemCriticarErp.setDisable(true);
 			}
-			if (processoAtual.getAnalisarErp().equals("N")) {
-				menuItemExportarErp.setDisable(true);
-			}
+			menuItemAnalisarErp.setDisable(processoAtual.getCriticarErp().equals("S") ? false : true);
+			menuItemExportarErp.setDisable(processoAtual.getAnalisarErp().equals("S") ? false : true);
 		}
 	}
 	

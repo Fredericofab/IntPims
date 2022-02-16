@@ -112,11 +112,15 @@ public class FuncionariosFormController implements Initializable {
 	
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtAnoMes);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMes, 6);
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodCentroCustos);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodCentroCustos, 20);	
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodFuncionario);
+
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMes, 6);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodCentroCustos, 20);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescCentroCustos, 50);	
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodFuncionario, 10);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescFuncionario, 50);	
+
 		if (flagIncluir.equals("S")) {
 			desabilitarCompoenentes(false);
 		}

@@ -24,42 +24,42 @@ public class ErpDaoJDBC implements ErpDao {
 		PreparedStatement st = null;
 		try {
 			st = conexao.prepareStatement("INSERT INTO Erp "
-					+ "(origem,ano_Mes,"
+					+ "(origem,tipo_movimento,ano_Mes,"
 							+ "cod_Centro_Custos,desc_Centro_Custos,"
 							+ "cod_Conta_Contabil,desc_Conta_Contabil,"
 							+ "cod_Material,desc_Movimento,unidade_Medida,"
 							+ "quantidade,preco_Unitario,valor_Movimento,"
-							+ "referencia_OS,numero_OS,documento_Erp,data_Movimento," + "importar,observacao,criticas,"
+							+ "numero_OS,frota_ou_cc,documento_Erp,data_Movimento," + "importar,observacao,politicas,"
 							+ "salvar_OS_Material,salvar_Cstg_IntVM,salvar_Cstg_intCM,salvar_Cstg_intDG," + "sequencial)"
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			st.setString(1, objeto.getOrigem().toUpperCase());
-			st.setString(2, objeto.getAnoMes());
-			st.setDouble(3, objeto.getCodCentroCustos());
-			st.setString(4, objeto.getDescCentroCustos());
-			st.setDouble(5, objeto.getCodContaContabil());
-			st.setString(6, objeto.getDescContaContabil());
-			st.setDouble(7, objeto.getCodMaterial());
-			st.setString(8, objeto.getDescMovimento());
-			st.setString(9, objeto.getUnidadeMedida());
-			st.setDouble(10, objeto.getQuantidade());
-			st.setDouble(11, objeto.getPrecoUnitario());
-			st.setDouble(12, objeto.getValorMovimento());
-			st.setString(13, objeto.getReferenciaOS());
-			st.setDouble(14, objeto.getNumeroOS());
-			st.setString(15, objeto.getDocumentoErp());
-			st.setDate(16, new java.sql.Date(objeto.getDataMovimento().getTime()));
-			st.setString(17, objeto.getImportar().toUpperCase());
-			st.setString(18, objeto.getObservacao());
-			st.setString(19, objeto.getCriticas());
-			st.setString(20, objeto.getSalvarOS_Material().toUpperCase());
-			st.setString(21, objeto.getSalvarCstg_IntVM().toUpperCase());
-			st.setString(22, objeto.getSalvarCstg_IntCM().toUpperCase());
-			st.setString(23, objeto.getSalvarCstg_IntDG().toUpperCase());
-			st.setInt(24, objeto.getSequencial());
+			st.setString(2, objeto.getTipoMovimento());
+			st.setString(3, objeto.getAnoMes());
+			st.setDouble(4, objeto.getCodCentroCustos());
+			st.setString(5, objeto.getDescCentroCustos());
+			st.setString(6, objeto.getCodContaContabil());
+			st.setString(7, objeto.getDescContaContabil());
+			st.setString(8, objeto.getCodMaterial());
+			st.setString(9, objeto.getDescMovimento());
+			st.setString(10, objeto.getUnidadeMedida());
+			st.setDouble(11, objeto.getQuantidade());
+			st.setDouble(12, objeto.getPrecoUnitario());
+			st.setDouble(13, objeto.getValorMovimento());
+			st.setString(14, objeto.getNumeroOS());
+			st.setString(15, objeto.getFrotaOuCC());
+			st.setString(16, objeto.getDocumentoErp());
+			st.setDate(17, new java.sql.Date(objeto.getDataMovimento().getTime()));
+			st.setString(18, objeto.getImportar().toUpperCase());
+			st.setString(19, objeto.getObservacao());
+			st.setString(20, objeto.getPoliticas());
+			st.setString(21, objeto.getSalvarOS_Material().toUpperCase());
+			st.setString(22, objeto.getSalvarCstg_IntVM().toUpperCase());
+			st.setString(23, objeto.getSalvarCstg_IntCM().toUpperCase());
+			st.setString(24, objeto.getSalvarCstg_IntDG().toUpperCase());
+			st.setInt(25, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DbException("Erro na Insercao " + e.getMessage());
+			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -69,42 +69,43 @@ public class ErpDaoJDBC implements ErpDao {
 	public void atualizar(Erp objeto) {
 		PreparedStatement st = null;
 		try {
-			st = conexao.prepareStatement("UPDATE Erp " + "SET origem = ?,	ano_Mes = ?, "
+			st = conexao.prepareStatement("UPDATE Erp " + "SET origem = ?,	tipo_movimento = ?, ano_Mes = ?, "
 					+ "cod_Centro_Custos = ?,	desc_Centro_Custos = ?, " + "cod_Conta_Contabil = ?,	desc_Conta_Contabil = ?, "
 					+ "cod_Material = ?,	desc_Movimento = ?,	unidade_Medida = ?, "
 					+ "quantidade = ?,	preco_Unitario = ?,	valor_Movimento = ?, "
-					+ "referencia_OS = ?,	numero_OS = ?,	documento_Erp = ?,	data_Movimento = ?,	"
-					+ "importar = ?,	observacao = ?,	criticas = ?,	"
+					+ "numero_OS = ?,	frota_ou_cc = ?, documento_Erp = ?,	data_Movimento = ?,	"
+					+ "importar = ?,	observacao = ?,	politicas = ?,	"
 					+ "salvar_OS_Material = ?, salvar_Cstg_IntVM = ?, salvar_Cstg_intCM = ?, salvar_Cstg_intDG = ?"
 					+ "WHERE sequencial = ?");
 
 			st.setString(1, objeto.getOrigem().toUpperCase());
-			st.setString(2, objeto.getAnoMes());
-			st.setDouble(3, objeto.getCodCentroCustos());
-			st.setString(4, objeto.getDescCentroCustos());
-			st.setDouble(5, objeto.getCodContaContabil());
-			st.setString(6, objeto.getDescContaContabil());
-			st.setDouble(7, objeto.getCodMaterial());
-			st.setString(8, objeto.getDescMovimento());
-			st.setString(9, objeto.getUnidadeMedida());
-			st.setDouble(10, objeto.getQuantidade());
-			st.setDouble(11, objeto.getPrecoUnitario());
-			st.setDouble(12, objeto.getValorMovimento());
-			st.setString(13, objeto.getReferenciaOS());
-			st.setDouble(14, objeto.getNumeroOS());
-			st.setString(15, objeto.getDocumentoErp());
-			st.setDate(16, new java.sql.Date(objeto.getDataMovimento().getTime()));
-			st.setString(17, objeto.getImportar());
-			st.setString(18, objeto.getObservacao());
-			st.setString(19, objeto.getCriticas());
-			st.setString(20, objeto.getSalvarOS_Material());
-			st.setString(21, objeto.getSalvarCstg_IntVM());
-			st.setString(22, objeto.getSalvarCstg_IntCM());
-			st.setString(23, objeto.getSalvarCstg_IntDG());
-			st.setInt(24, objeto.getSequencial());
+			st.setString(2, objeto.getTipoMovimento());
+			st.setString(3, objeto.getAnoMes());
+			st.setDouble(4, objeto.getCodCentroCustos());
+			st.setString(5, objeto.getDescCentroCustos());
+			st.setString(6, objeto.getCodContaContabil());
+			st.setString(7, objeto.getDescContaContabil());
+			st.setString(8, objeto.getCodMaterial());
+			st.setString(9, objeto.getDescMovimento());
+			st.setString(10, objeto.getUnidadeMedida());
+			st.setDouble(11, objeto.getQuantidade());
+			st.setDouble(12, objeto.getPrecoUnitario());
+			st.setDouble(13, objeto.getValorMovimento());
+			st.setString(14, objeto.getNumeroOS());
+			st.setString(15, objeto.getFrotaOuCC());
+			st.setString(16, objeto.getDocumentoErp());
+			st.setDate(17, new java.sql.Date(objeto.getDataMovimento().getTime()));
+			st.setString(18, objeto.getImportar());
+			st.setString(19, objeto.getObservacao());
+			st.setString(20, objeto.getPoliticas());
+			st.setString(21, objeto.getSalvarOS_Material());
+			st.setString(22, objeto.getSalvarCstg_IntVM());
+			st.setString(23, objeto.getSalvarCstg_IntCM());
+			st.setString(24, objeto.getSalvarCstg_IntDG());
+			st.setInt(25, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Atualizacao " + e.getMessage());
+			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -118,7 +119,7 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setInt(1, sequencial);
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao " + e.getMessage());
+			throw new DbException("Tabela Erp \n \n" + e.getMessage() + "\n \n" + sequencial);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -138,7 +139,7 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa " + e.getMessage());
+			throw new DbException("Tabela Erp \n \n" + e.getMessage() + "\n \n" + sequencial);
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -160,7 +161,7 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return lista;
 		} catch (SQLException e) {
-			throw new DbException("erro na consulta todos - " + e.getMessage());
+			throw new DbException("Tabela Erp \n \n" + e.getMessage());
 		} finally {
 			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);
@@ -176,7 +177,7 @@ public class ErpDaoJDBC implements ErpDao {
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao do Movimento da Erp  \n" + e.getMessage());
+			throw new DbException("Tabela Erp \n \n" + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -192,7 +193,7 @@ public class ErpDaoJDBC implements ErpDao {
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao do Movimento da Erp por Origem \n" + e.getMessage());
+			throw new DbException("Tabela Erp (" + origem + ") \n \n" + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -211,7 +212,7 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa do Ultimo Sequencial " + e.getMessage());
+			throw new DbException("Tabela Erp \n \n" + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -237,8 +238,8 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Erp para Importar = " + importar + " \n" 
-		+ e.getMessage());
+			throw new DbException("Tabela Erp \n \n" +
+								  "Importar = " + importar + " \n \n"+ e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -251,7 +252,7 @@ public class ErpDaoJDBC implements ErpDao {
 		ResultSet rs = null;
 		try {
 			if (importar != null ) {
-				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar = ? AND criticas LIKE ?");
+				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar = ? AND politicas LIKE ?");
 				st.setString(1, importar);
 				st.setString(2, "%" + essaCriticaTxt + "%");
 			}
@@ -262,9 +263,10 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Erp para Importar = " + importar +
-								  "da critica " + essaCriticaTxt + " \n" 
-		+ e.getMessage());
+			throw new DbException("Tabela Erp \n \n" +
+								  "Importar = " + importar + " \n" +
+								  "Critica  = " + essaCriticaTxt + " \n \n" 
+								  + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -284,8 +286,9 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Erp para Ordem de Servico = " + " \n" 
-		+ e.getMessage());
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para Ordem de Servico = " + " \n" 
+								  + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -305,8 +308,9 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Erp para CM Consumo de Material = " + " \n" 
-		+ e.getMessage());
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para CM Consumo de Material = " + " \n" 
+								  + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -326,8 +330,9 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Erp para DG Despesas Gerais = " + " \n" 
-		+ e.getMessage());
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para DG Despesas Gerais = " + " \n" 
+								  + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -347,8 +352,9 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Contagem do Erp para VM Valores de Materiais = " + " \n" 
-		+ e.getMessage());
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para VM Valores de Materiais = " + " \n" 
+								  + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
@@ -370,9 +376,10 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return lista;
 		} catch (SQLException e) {
-			throw new DbException("erro na consulta da critica " 
-								+ tipoCritica + String.format("%03d", codigoCritica)
-								+ "\n" + e.toString());
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na consulta da critica " 
+							 	  + tipoCritica + String.format("%03d", codigoCritica)
+								  + "\n" + e.toString());
 		} finally {
 			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);
@@ -393,7 +400,8 @@ public class ErpDaoJDBC implements ErpDao {
 			}
 			return lista;
 		} catch (SQLException e) {
-			throw new DbException("erro na consulta filtrada \n"  +  e.toString());
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na consulta filtrada \n"  +  e.toString());
 		} finally {
 			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);
@@ -404,25 +412,26 @@ public class ErpDaoJDBC implements ErpDao {
 	private Erp instanciaDadosErp(ResultSet rs) throws SQLException {
 		Erp dadosErp = new Erp();
 		dadosErp.setAnoMes(rs.getString("Ano_Mes"));
+		dadosErp.setTipoMovimento(rs.getString("Tipo_Movimento"));
 		dadosErp.setOrigem(rs.getString("Origem"));
 		dadosErp.setCodCentroCustos(rs.getDouble("Cod_Centro_Custos"));
 		dadosErp.setDescCentroCustos(rs.getString("Desc_Centro_Custos"));
-		dadosErp.setCodContaContabil(rs.getDouble("Cod_Conta_Contabil"));
+		dadosErp.setCodContaContabil(rs.getString("Cod_Conta_Contabil"));
 		dadosErp.setDescContaContabil(rs.getString("Desc_Conta_Contabil"));
-		dadosErp.setCodMaterial(rs.getDouble("Cod_Material"));
+		dadosErp.setCodMaterial(rs.getString("Cod_Material"));
 		dadosErp.setDescMovimento(rs.getString("Desc_Movimento"));
 		dadosErp.setUnidadeMedida(rs.getString("Unidade_Medida"));
 		dadosErp.setQuantidade(rs.getDouble("Quantidade"));
 		dadosErp.setPrecoUnitario(rs.getDouble("Preco_Unitario"));
 		dadosErp.setValorMovimento(rs.getDouble("Valor_Movimento"));
-		dadosErp.setReferenciaOS(rs.getString("Referencia_OS"));
-		dadosErp.setNumeroOS(rs.getDouble("Numero_OS"));
+		dadosErp.setNumeroOS(rs.getString("Numero_OS"));
+		dadosErp.setFrotaOuCC(rs.getString("Frota_Ou_CC"));
 		dadosErp.setDocumentoErp(rs.getString("Documento_Erp"));
 		dadosErp.setDataMovimento(new java.util.Date(rs.getTimestamp("Data_Movimento").getTime()));
 
 		dadosErp.setImportar(rs.getString("Importar"));
 		dadosErp.setObservacao(rs.getString("Observacao"));
-		dadosErp.setCriticas(rs.getString("Criticas"));
+		dadosErp.setPoliticas(rs.getString("Politicas"));
 		dadosErp.setSalvarOS_Material(rs.getString("Salvar_OS_Material"));
 		dadosErp.setSalvarCstg_IntVM(rs.getString("Salvar_Cstg_IntVM"));
 		dadosErp.setSalvarCstg_IntCM(rs.getString("Salvar_Cstg_intCM"));

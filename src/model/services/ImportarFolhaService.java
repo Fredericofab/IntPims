@@ -45,39 +45,30 @@ public class ImportarFolhaService {
 	public String getEntrada() {
 		return entrada;
 	}
-
 	public List<Folha> getLista() {
 		return lista;
 	}
-
 	public Set<VerbasFolha> getSetVerbas() {
 		return setVerbas;
 	}
-
 	public Integer getQtdeLidas() {
 		return qtdeLidas;
 	}
-
 	public Integer getQtdeNaoImportadas() {
 		return qtdeNaoImportadas;
 	}
-
 	public Integer getQtdeCorrompidas() {
 		return qtdeCorrompidas;
 	}
-
 	public Integer getqtdeVerbasDistintas() {
 		return qtdeVerbasDistintas;
 	}
-
 	public Integer getQtdeVerbasSemDefinicao() {
 		return qtdeVerbasSemDefinicao;
 	}
-
 	public Integer getQtdeDeletadas() {
 		return qtdeDeletadas;
 	}
-
 	public Integer getQtdeIncluidas() {
 		return qtdeIncluidas;
 	}
@@ -115,7 +106,6 @@ public class ImportarFolhaService {
 	private void deletarTodosFolhaSumarizada() {
 		folhaSumarizadaService.deletarTodos();
 	}
-
 	private void deletarTodosFolha() {
 		qtdeDeletadas = folhaService.deletarTodos();
 	}
@@ -134,7 +124,8 @@ public class ImportarFolhaService {
 				if (dadosFolha != null) {
 					if (naoImportar.indexOf(dadosFolha.getTipoVerba()) >= 0) {
 						qtdeNaoImportadas = qtdeNaoImportadas + 1;
-					} else {
+					}
+					else {
 						lista.add(dadosFolha);
 						VerbasFolha verbaFolha = new VerbasFolha(dadosFolha.getCodVerba(), dadosFolha.getDescVerba(),
 								dadosFolha.getTipoVerba(), null, null);
@@ -147,9 +138,11 @@ public class ImportarFolhaService {
 			Alertas.mostrarAlertas("Erro de Integridade no Arquivo", "Processo de Leitura do TXT interrompido",
 					e.getMessage(), AlertType.ERROR);
 		} catch (FileNotFoundException e) {
-			Alertas.mostrarAlertas("Arquivo não encontrado", "Processo Cancelado", e.getMessage(), AlertType.ERROR);
+			Alertas.mostrarAlertas("Arquivo não encontrado", "Processo Cancelado",
+					e.getMessage(), AlertType.ERROR);
 		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Importacao Dados da Folha", e.getMessage(), AlertType.ERROR);
+			Alertas.mostrarAlertas("IOException", "Erro na Importacao Dados da Folha",
+					e.getMessage(), AlertType.ERROR);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
@@ -162,7 +155,6 @@ public class ImportarFolhaService {
 			}
 		}
 	}
-
 	private void contarVerbasSemDefinicao() {
 		qtdeVerbasSemDefinicao = verbasDaFolhaService.contarVerbasSemDefinicao();
 	}

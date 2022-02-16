@@ -120,12 +120,12 @@
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="txtValorMovimento" maxWidth="-Infinity" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="5" />
-                  <Label text="Referencia OS" GridPane.rowIndex="1">
+                  <Label text="Frota ou CC" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtReferenciaOS" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtFrotaOuCC" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="102.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Numero OS" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
@@ -149,12 +149,12 @@
                         <Insets left="5.0" />
                      </GridPane.margin></Label>
                   <TextField fx:id="txtImportar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Criticas" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <Label text="Politicas" GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtCriticas" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="217.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtPoliticas" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="217.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                   <Label text="Salvar OS_MATERIAL" GridPane.columnIndex="4" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="5.0" />

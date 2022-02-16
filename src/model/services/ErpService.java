@@ -83,36 +83,37 @@ public class ErpService {
 		lerParametros(oficial);
 		List<Erp> lista = pesquisarTodos();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("origem,anoMes," +
+			bw.write("origem,TipoMovimento,anoMes," +
 					 "codCentroCustos,descCentroCustos,"   +
 					 "codContaContabil,descContaContabil," +
 					 "codMaterial,descMaterialDespesa,unidadeMedida," +
 					 "quantidade,precoUnitario,valorMovimento," +
-					 "referenciaOS,manfroOS,documentoErp,dataMovimento," +
+					 "manfroOS,manfroFrotaOuCC,documentoErp,dataMovimento," +
 					 "importar,observacao,criticas," +
 					 "salvarOS_Material,salvarCstg_IntVM,salvarCstg_intCM,salvarCstg_intDG," +
 					 "sequencial");
 			bw.newLine();
 			for (Erp dadosErp : lista) {
 				String linha = dadosErp.getOrigem() + "," + 
+							   dadosErp.getTipoMovimento() + "," + 
 							   dadosErp.getAnoMes() + "," + 
 							   String.format("%.0f", dadosErp.getCodCentroCustos()) + "," + 
 							   dadosErp.getDescCentroCustos() + "," + 
-							   String.format("%.0f",dadosErp.getCodContaContabil()) + "," + 
+							   dadosErp.getCodContaContabil() + "," + 
 							   dadosErp.getDescContaContabil() + "," + 
-							   String.format("%.0f",dadosErp.getCodMaterial()) + "," + 
+							   dadosErp.getCodMaterial() + "," + 
 							   dadosErp.getDescMovimento() + "," + 
 							   dadosErp.getUnidadeMedida() + "," + 
 							   String.format("%.0f",dadosErp.getQuantidade()) + "," + 
 							   String.format("%.0f",dadosErp.getPrecoUnitario()) + "," + 
 							   String.format("%.0f",dadosErp.getValorMovimento()) + "," + 
-							   dadosErp.getReferenciaOS() + "," + 
-							   String.format("%.0f",dadosErp.getNumeroOS()) + "," + 
+							   dadosErp.getNumeroOS() + "," + 
+							   dadosErp.getFrotaOuCC() + "," + 
 							   dadosErp.getDocumentoErp() + "," + 
 							   dadosErp.getDataMovimento() + "," + 
 							   dadosErp.getImportar() + "," + 
 							   dadosErp.getObservacao() + "," + 
-							   dadosErp.getCriticas() + "," + 
+							   dadosErp.getPoliticas() + "," + 
 							   dadosErp.getSalvarOS_Material() + "," + 
 							   dadosErp.getSalvarCstg_IntVM() + "," + 
 							   dadosErp.getSalvarCstg_IntCM() + "," + 

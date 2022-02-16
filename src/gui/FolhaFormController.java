@@ -139,22 +139,28 @@ public class FolhaFormController implements Initializable {
 
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtAnoMes);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMes, 6);
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodCentroCustos);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodCentroCustos, 20);	
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodVerba);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodVerba, 5);	
 		RestricoesDeDigitacao.soPermiteTextFieldDouble(txtValorVerba);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtValorVerba, 14);			
 		RestricoesDeDigitacao.soPermiteTextFieldDouble(txtReferenciaVerba);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtReferenciaVerba, 8);			
 		RestricoesDeDigitacao.soPermiteTextFieldPDB(txtTipoVerba);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoVerba, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtConsiderarReferencia);
+		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
+
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMes, 6);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodCentroCustos, 20);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescCentroCustos, 50);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodVerba, 5);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescVerba, 50);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtValorVerba, 14);			
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtReferenciaVerba, 8);			
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoVerba, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtConsiderarReferencia, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtObservacao, 30);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtObservacao, 255);
+		
+		
+		
 		if (flagIncluir.equals("S")) {
 			desabilitarCompoenentes(false);
 		}

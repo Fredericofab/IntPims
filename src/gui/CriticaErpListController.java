@@ -160,12 +160,8 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewDadosCriticasErp.setItems(obsLista);
-		if (flagAlterar.equals("S")) {
-			initEditButtons();
-		}
-		if (flagExcluir.equals("S")) {
-			initRemoveButtons();
-		}
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void criarDialogoForm(CriticaErp entidade, String caminhoDaView, Stage parentStage) {
@@ -212,6 +208,7 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagAlterar.equals("N") ? true : false));
 				button.setOnAction(
 						event -> criarDialogoForm(obj, "/gui/CriticaErpForm.fxml", Utilitarios.atualStage(event)));
 			}
@@ -230,16 +227,8 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 					setGraphic(null);
 					return;
 				}
-				// meu ajuste no código copiado do curso
-				// se tipo 'S'istema, entao nao pode excluir.
-//				if (obj.getTipoCritica().equals("S")) {
-//					setGraphic(null);
-//					return;
-//				}
-				//FRED normalmente NAO comentar as 4 linhas acima e comentar a de abaixo
-				System.out.println("FRED Manutencao em CriticaErpListController - initRemoveButtons");
-				
 				setGraphic(button);
+				button.setDisable((flagExcluir.equals("N") ? true : false));
 				button.setOnAction(event -> removeEntity(obj));
 			}
 		});

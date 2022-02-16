@@ -71,6 +71,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Label text="Importar Folha" GridPane.columnIndex="1">
@@ -129,24 +130,26 @@
                </GridPane.margin>
             </Label>
             <Label text="Importar Erp DG" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <Label text="Analisar Erp" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <Label text="Exportar Erp" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Label text="Criticar Erp" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label text="Analisar Erp" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Label text="Exportar Erp" GridPane.columnIndex="4" GridPane.rowIndex="5" />
             <TextField fx:id="txtImportarErpMT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" />
             <TextField fx:id="txtImportarErpCD" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <TextField fx:id="txtImportarErpDG" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="txtAnalisarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <TextField fx:id="txtExportarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <Label text="Ações que talvez necessite reprocessar etapas" GridPane.columnIndex="4" GridPane.rowIndex="6">
+            <TextField fx:id="txtCriticarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="txtAnalisarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <TextField fx:id="txtExportarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Label text="Ações que talvez necessite reprocessar etapas" GridPane.columnIndex="4" GridPane.rowIndex="7">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label text="Verbas Alterada ( Recomendado (re)importar Folha )" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-            <Label text="Dados da Folha Alterado ( Recomendado (re)sumarizar Folha )" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-            <TextField fx:id="txtVerbaAlterada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-            <TextField fx:id="txtFolhaAlterada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-            <TextField fx:id="txtFuncionarioAlterado" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-            <Label text="Funcionarios Alterados ( Recomendado (re)sumarizar Funcionários )" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+            <Label text="Verbas Alterada ( Recomendado (re)importar Folha )" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+            <Label text="Dados da Folha Alterado ( Recomendado (re)sumarizar Folha )" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+            <TextField fx:id="txtVerbaAlterada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+            <TextField fx:id="txtFolhaAlterada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+            <TextField fx:id="txtFuncionarioAlterado" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+            <Label text="Funcionarios Alterados ( Recomendado (re)sumarizar Funcionários )" GridPane.columnIndex="4" GridPane.rowIndex="10" />
          </children>
       </GridPane>
    </children>

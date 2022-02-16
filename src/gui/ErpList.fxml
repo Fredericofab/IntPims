@@ -46,7 +46,8 @@
             <TableColumn fx:id="tableColumnSequencial" prefWidth="10.0" text="Seq" />
           <TableColumn fx:id="tableColumnAnoMes" prefWidth="10.0" text="AnoMes" />
             <TableColumn fx:id="tableColumnOrigem" prefWidth="10.0" text="Origem" />
-          <TableColumn fx:id="tableColumnCodCentroCustos" text="C.Custos" />
+            <TableColumn fx:id="tableColumnTipoMovimento" prefWidth="10.0" text="Tipo" />
+          <TableColumn fx:id="tableColumnCodCentroCustos" prefWidth="86.0" text="C.Custos" />
             <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="10.0" text="Desc. C.Custos" />
             <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="70.0" text="C.Contabil" />
             <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="10.0" text="Desc. C.Contabil" />
@@ -56,12 +57,12 @@
             <TableColumn fx:id="tableColumnQuantidade" prefWidth="56.0" text="Qtde" />
             <TableColumn fx:id="tableColumnPrecoUnitario" prefWidth="61.0" text="Pr. Unitario" />
             <TableColumn fx:id="tableColumnValorMovimento" prefWidth="77.0" text="Valor Mov." />
-            <TableColumn fx:id="tableColumnReferenciaOS" prefWidth="10.0" text="Ref. OS" />
             <TableColumn fx:id="tableColumnNumeroOS" prefWidth="50.0" text="No. OS" />
+            <TableColumn fx:id="tableColumnFrotaOuCC" prefWidth="50.0" text="Frota" />
             <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="10.0" text="Documento ERP" />
-            <TableColumn fx:id="tableColumnDataMovimento" prefWidth="70.0" text="Data Movto" />
-            <TableColumn fx:id="tableColumnImportar" prefWidth="58.0" text="Importar" />
-            <TableColumn fx:id="tableColumnCriticas" prefWidth="60.0" text="Criticas" />
+            <TableColumn fx:id="tableColumnDataMovimento" prefWidth="10.0" text="Data Movto" />
+            <TableColumn fx:id="tableColumnImportar" prefWidth="35.0" text="IMP" />
+            <TableColumn fx:id="tableColumnPoliticas" prefWidth="60.0" text="Politicas" />
             <TableColumn fx:id="tableColumnSalvarOS_Material" prefWidth="25.0" text="OS" />
             <TableColumn fx:id="tableColumnSalvarCstg_IntVM" prefWidth="25.0" text="VM" />
             <TableColumn fx:id="tableColumnSalvarCstg_IntCM" prefWidth="25.0" text="CM" />

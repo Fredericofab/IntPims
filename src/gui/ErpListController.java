@@ -61,6 +61,8 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private TableColumn<Erp, String> tableColumnOrigem;
 	@FXML
+	private TableColumn<Erp, String> tableColumnTipoMovimento;
+	@FXML
 	private TableColumn<Erp, Double> tableColumnCodCentroCustos;
 	@FXML
 	private TableColumn<Erp, String> tableColumnDescCentroCustos;
@@ -81,9 +83,9 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private TableColumn<Erp, Double> tableColumnValorMovimento;
 	@FXML
-	private TableColumn<Erp, String> tableColumnReferenciaOS;
-	@FXML
 	private TableColumn<Erp, Double> tableColumnNumeroOS;
+	@FXML
+	private TableColumn<Erp, Double> tableColumnFrotaOuCC;
 	@FXML
 	private TableColumn<Erp, String> tableColumnDocumentoErp;
 	@FXML
@@ -91,7 +93,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private TableColumn<Erp, String> tableColumnImportar;
 	@FXML
-	private TableColumn<Erp, String> tableColumnCriticas;
+	private TableColumn<Erp, String> tableColumnPoliticas;
 	@FXML
 	private TableColumn<Erp, String> tableColumnSalvarOS_Material;
 	@FXML
@@ -140,7 +142,6 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	public void onBtFiltroAction(ActionEvent evento) {
 		String caminhoDaView = "/gui/ErpFiltrosView.fxml";
 		Stage parentStage = Utilitarios.atualStage(evento);
-//		criarJanelaFilha(caminhoDaView, "Filtrar Dados Erp", parentStage, x -> {	});
 		criarJanelaFilha(caminhoDaView, "Filtrar Dados Erp", parentStage,
 				(ErpFiltrosViewController controle) -> { controle.serOuvinteDeDadosAlteradosListener(this);	});
 	}
@@ -170,6 +171,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnSequencial.setCellValueFactory(new PropertyValueFactory<>("sequencial"));
 		tableColumnAnoMes.setCellValueFactory(new PropertyValueFactory<>("anoMes"));
 		tableColumnOrigem.setCellValueFactory(new PropertyValueFactory<>("origem"));
+		tableColumnTipoMovimento.setCellValueFactory(new PropertyValueFactory<>("tipoMovimento"));
 		tableColumnCodCentroCustos.setCellValueFactory(new PropertyValueFactory<>("codCentroCustos"));
 		tableColumnDescCentroCustos.setCellValueFactory(new PropertyValueFactory<>("descCentroCustos"));
 		tableColumnCodContaContabil.setCellValueFactory(new PropertyValueFactory<>("codContaContabil"));
@@ -180,12 +182,12 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnPrecoUnitario.setCellValueFactory(new PropertyValueFactory<>("precoUnitario"));
 		tableColumnValorMovimento.setCellValueFactory(new PropertyValueFactory<>("valorMovimento"));
-		tableColumnReferenciaOS.setCellValueFactory(new PropertyValueFactory<>("referenciaOS"));
 		tableColumnNumeroOS.setCellValueFactory(new PropertyValueFactory<>("numeroOS"));
+		tableColumnFrotaOuCC.setCellValueFactory(new PropertyValueFactory<>("frotaOuCC"));
 		tableColumnDocumentoErp.setCellValueFactory(new PropertyValueFactory<>("documentoErp"));
 		tableColumnDataMovimento.setCellValueFactory(new PropertyValueFactory<>("dataMovimento"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
-		tableColumnCriticas.setCellValueFactory(new PropertyValueFactory<>("criticas"));
+		tableColumnPoliticas.setCellValueFactory(new PropertyValueFactory<>("politicas"));
 		tableColumnSalvarOS_Material.setCellValueFactory(new PropertyValueFactory<>("salvarOS_Material"));
 		tableColumnSalvarCstg_IntVM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntVM"));
 		tableColumnSalvarCstg_IntCM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntCM"));
@@ -193,12 +195,9 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnObservacao.setCellValueFactory(new PropertyValueFactory<>("observacao"));
 		
 		Utilitarios.formatarTableColumnDouble(tableColumnCodCentroCustos, 0);
-		Utilitarios.formatarTableColumnDouble(tableColumnCodContaContabil, 0);
-		Utilitarios.formatarTableColumnDouble(tableColumnCodMaterial, 0);
 		Utilitarios.formatarTableColumnDouble(tableColumnQuantidade, 2);
 		Utilitarios.formatarTableColumnDouble(tableColumnPrecoUnitario, 2);
 		Utilitarios.formatarTableColumnDouble(tableColumnValorMovimento, 2);
-		Utilitarios.formatarTableColumnDouble(tableColumnNumeroOS, 0);
 		Utilitarios.formatarTableColumnDate(tableColumnDataMovimento, "dd/MM/yyyy");
 
 		tableColumnCodCentroCustos.setStyle("-fx-alignment: TOP-RIGHT");
@@ -224,12 +223,9 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	
 			obsLista = FXCollections.observableArrayList(lista);
 			tableViewDadosErp.setItems(obsLista);
-			if (flagAlterar.equals("S")) {
-				initEditButtons();
-			}
-			if (flagExcluir.equals("S")) {
-				initRemoveButtons();
-			}
+			
+			initEditButtons();
+			initRemoveButtons();
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro na aplicacao do Filtro", e.getMessage(), AlertType.ERROR);
 		}
@@ -261,6 +257,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 			dialogoStage.showAndWait();
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alertas.mostrarAlertas("IOException", "Erro carregando View", e.getMessage(), AlertType.ERROR);
 		}
 	}
@@ -284,6 +281,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagAlterar.equals("N") ? true : false));
 				button.setOnAction(
 						event -> criarDialogoForm(obj, "/gui/ErpForm.fxml", Utilitarios.atualStage(event)));
 			}
@@ -303,6 +301,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagExcluir.equals("N") ? true : false));
 				button.setOnAction(event -> removeEntity(obj));
 			}
 		});

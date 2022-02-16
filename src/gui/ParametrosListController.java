@@ -113,13 +113,8 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 
 		obsLista = FXCollections.observableArrayList(lista);
 		tableViewParametros.setItems(obsLista);
-
-		if (flagAlterar.equals("S")) {
-			initEditButtons();
-		}
-		if (flagExcluir.equals("S")) {
-			initRemoveButtons();
-		}
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void criarDialogoForm(Parametros entidade, String caminhoDaView, Stage parentStage) {
@@ -166,6 +161,7 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagAlterar.equals("N") ? true : false));
 				button.setOnAction(
 						event -> criarDialogoForm(obj, "/gui/ParametrosForm.fxml", Utilitarios.atualStage(event)));
 			}
@@ -186,6 +182,7 @@ public class ParametrosListController implements Initializable, DadosAlteradosLi
 					return;
 				}
 				setGraphic(button);
+				button.setDisable((flagExcluir.equals("N") ? true : false));
 				button.setOnAction(event -> removeEntity(obj));
 			}
 		});

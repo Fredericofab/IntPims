@@ -59,12 +59,12 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 
 
 	@Override
-	public Boolean existeApt_os_he(Double numeroOS, String usuarioPimsCS) {
+	public Boolean existeApt_os_he(String numeroOS, String usuarioPimsCS) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".apt_os_he WHERE no_boletim = ?");
-			st.setDouble(1, numeroOS);
+			st.setString(1, numeroOS);
 			rs = st.executeQuery();
 			if (rs.next()) {
 				return true;
@@ -80,12 +80,12 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 
 
 	@Override
-	public Date dataSaidaApt_os_he(Double numeroOS, String usuarioPimsCS) {
+	public Date dataSaidaApt_os_he(String numeroOS, String usuarioPimsCS) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".apt_os_he WHERE no_boletim = ?");
-			st.setDouble(1, numeroOS);
+			st.setString(1, numeroOS);
 			rs = st.executeQuery();
 			if (rs.next()) {
 				if (rs.getDate("dt_saida") == null) {

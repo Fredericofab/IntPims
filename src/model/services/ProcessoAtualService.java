@@ -51,8 +51,9 @@ public class ProcessoAtualService {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
 			bw.write("anoMes,importarFolha,sumarizarFolha,exportarFolha," +
 					 "importarFuncionario,sumarizarFuncionario," +
-					 "importarErpMT,importarErpCD,importarErpDG,criticarErp,exportarErp," +
-					 "verbaAlterada, folhaAlterada");
+					 "importarErpMT,importarErpCD,importarErpDG," +
+					 "analisarErp,criticarErp,exportarErp," +
+					 "verbaAlterada, folhaAlterada, funcionarioAlterado");
 						bw.newLine();
 			for (ProcessoAtual processoAtual : lista) {
 				String linha = processoAtual.getAnoMes() + "," +
@@ -64,10 +65,12 @@ public class ProcessoAtualService {
 						processoAtual.getImportarErpMT() + "," +
 						processoAtual.getImportarErpCD() + "," + 
 						processoAtual.getImportarErpDG() + "," +
+						processoAtual.getCriticarErp()	+ "," +
 						processoAtual.getAnalisarErp()	+ "," +
 						processoAtual.getExportarErp()   + "," +
 				processoAtual.getVerbaAlterada()  + "," +
-				processoAtual.getFolhaAlterada();
+				processoAtual.getFolhaAlterada() + "," +
+				processoAtual.getFuncionarioAlterado();
 				bw.write(linha);
 				bw.newLine();
 			}
@@ -103,7 +106,8 @@ public class ProcessoAtualService {
 		if (campo.equals("ImportarErpMT")) processoAtual.setImportarErpMT(valor); 
 		if (campo.equals("ImportarErpCD")) processoAtual.setImportarErpCD(valor); 
 		if (campo.equals("ImportarErpDG")) processoAtual.setImportarErpDG(valor); 
-		if (campo.equals("CriticarErp")) processoAtual.setAnalisarErp(valor); 
+		if (campo.equals("CriticarErp")) processoAtual.setCriticarErp(valor); 
+		if (campo.equals("AnalisarErp")) processoAtual.setAnalisarErp(valor); 
 		if (campo.equals("ExportarErp")) processoAtual.setExportarErp(valor); 
 		
 		if (campo.equals("VerbaAlterada")) processoAtual.setVerbaAlterada(valor); 

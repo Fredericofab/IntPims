@@ -695,18 +695,30 @@
     </display>  
   </class>  
   <realization id="78">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="20"/>  
-  </realization>  
-  <realization id="79">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="19"/>  
-  </realization>  
-  <realization id="80">    
     <end type="SOURCE" refId="30"/>    
     <end type="TARGET" refId="29"/>  
   </realization>  
+  <realization id="79">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="20"/>  
+  </realization>  
+  <realization id="80">    
+    <end type="SOURCE" refId="71"/>    
+    <end type="TARGET" refId="70"/>  
+  </realization>  
   <realization id="81">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <realization id="82">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="10"/>  
+  </realization>  
+  <realization id="83">    
+    <end type="SOURCE" refId="65"/>    
+    <end type="TARGET" refId="20"/>  
+  </realization>  
+  <realization id="84">    
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="9"/>  
   </realization>  

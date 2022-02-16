@@ -8,24 +8,25 @@ public class Erp implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String origem;
+	private String tipoMovimento;
 	private String anoMes;
 	private Double codCentroCustos;
 	private String descCentroCustos;
-	private Double codContaContabil;
+	private String codContaContabil;
 	private String descContaContabil;
-	private Double codMaterial;
+	private String codMaterial;
 	private String descMovimento;
 	private String unidadeMedida;
 	private Double quantidade;
 	private Double precoUnitario;
 	private Double valorMovimento;
-	private String referenciaOS;
-	private Double numeroOS;
+	private String numeroOS;
+	private String frotaOuCC;
 	private String documentoErp;
 	private Date dataMovimento;
 	private String importar;
 	private String observacao;
-	private String criticas;
+	private String politicas;
 	private String salvarOS_Material;
 	private String salvarCstg_IntVM;
 	private String salvarCstg_IntCM;
@@ -35,14 +36,15 @@ public class Erp implements Serializable {
 	public Erp() {
 	}
 
-	public Erp(String origem, String anoMes, Double codCentroCustos, String descCentroCustos, Double codContaContabil,
-			String descContaContabil, Double codMaterial, String descMovimento, String unidadeMedida,
-			Double quantidade, Double precoUnitario, Double valorMovimento, String referenciaOS, Double numeroOS,
-			String documentoErp, Date dataMovimento, String importar, String observacao, String criticas,
-			String salvarOS_Material, String salvarCstg_IntVM, String salvarCstg_intCM, String salvarCstg_intDG,
-			Integer sequencial) {
+	public Erp(String origem, String tipoMovimento, String anoMes, Double codCentroCustos, String descCentroCustos,
+			String codContaContabil, String descContaContabil, String codMaterial, String descMovimento,
+			String unidadeMedida, Double quantidade, Double precoUnitario, Double valorMovimento, String numeroOS,
+			String frotaOuCC, String documentoErp, Date dataMovimento, String importar, String observacao,
+			String politicas, String salvarOS_Material, String salvarCstg_IntVM, String salvarCstg_IntCM,
+			String salvarCstg_IntDG, Integer sequencial) {
 		super();
 		this.origem = origem;
+		this.tipoMovimento = tipoMovimento;
 		this.anoMes = anoMes;
 		this.codCentroCustos = codCentroCustos;
 		this.descCentroCustos = descCentroCustos;
@@ -54,17 +56,17 @@ public class Erp implements Serializable {
 		this.quantidade = quantidade;
 		this.precoUnitario = precoUnitario;
 		this.valorMovimento = valorMovimento;
-		this.referenciaOS = referenciaOS;
 		this.numeroOS = numeroOS;
+		this.frotaOuCC = frotaOuCC;
 		this.documentoErp = documentoErp;
 		this.dataMovimento = dataMovimento;
 		this.importar = importar;
 		this.observacao = observacao;
-		this.criticas = criticas;
+		this.politicas = politicas;
 		this.salvarOS_Material = salvarOS_Material;
 		this.salvarCstg_IntVM = salvarCstg_IntVM;
-		this.salvarCstg_IntCM = salvarCstg_intCM;
-		this.salvarCstg_IntDG = salvarCstg_intDG;
+		this.salvarCstg_IntCM = salvarCstg_IntCM;
+		this.salvarCstg_IntDG = salvarCstg_IntDG;
 		this.sequencial = sequencial;
 	}
 
@@ -74,6 +76,14 @@ public class Erp implements Serializable {
 
 	public void setOrigem(String origem) {
 		this.origem = origem;
+	}
+
+	public String getTipoMovimento() {
+		return tipoMovimento;
+	}
+
+	public void setTipoMovimento(String tipoMovimento) {
+		this.tipoMovimento = tipoMovimento;
 	}
 
 	public String getAnoMes() {
@@ -100,11 +110,11 @@ public class Erp implements Serializable {
 		this.descCentroCustos = descCentroCustos;
 	}
 
-	public Double getCodContaContabil() {
+	public String getCodContaContabil() {
 		return codContaContabil;
 	}
 
-	public void setCodContaContabil(Double codContaContabil) {
+	public void setCodContaContabil(String codContaContabil) {
 		this.codContaContabil = codContaContabil;
 	}
 
@@ -116,11 +126,11 @@ public class Erp implements Serializable {
 		this.descContaContabil = descContaContabil;
 	}
 
-	public Double getCodMaterial() {
+	public String getCodMaterial() {
 		return codMaterial;
 	}
 
-	public void setCodMaterial(Double codMaterial) {
+	public void setCodMaterial(String codMaterial) {
 		this.codMaterial = codMaterial;
 	}
 
@@ -164,20 +174,20 @@ public class Erp implements Serializable {
 		this.valorMovimento = valorMovimento;
 	}
 
-	public String getReferenciaOS() {
-		return referenciaOS;
-	}
-
-	public void setReferenciaOS(String referenciaOS) {
-		this.referenciaOS = referenciaOS;
-	}
-
-	public Double getNumeroOS() {
+	public String getNumeroOS() {
 		return numeroOS;
 	}
 
-	public void setNumeroOS(Double numeroOS) {
+	public void setNumeroOS(String numeroOS) {
 		this.numeroOS = numeroOS;
+	}
+
+	public String getFrotaOuCC() {
+		return frotaOuCC;
+	}
+
+	public void setFrotaOuCC(String frotaOuCC) {
+		this.frotaOuCC = frotaOuCC;
 	}
 
 	public String getDocumentoErp() {
@@ -212,12 +222,12 @@ public class Erp implements Serializable {
 		this.observacao = observacao;
 	}
 
-	public String getCriticas() {
-		return criticas;
+	public String getPoliticas() {
+		return politicas;
 	}
 
-	public void setCriticas(String criticas) {
-		this.criticas = criticas;
+	public void setPoliticas(String politicas) {
+		this.politicas = politicas;
 	}
 
 	public String getSalvarOS_Material() {
@@ -259,6 +269,7 @@ public class Erp implements Serializable {
 	public void setSequencial(Integer sequencial) {
 		this.sequencial = sequencial;
 	}
+	
 
 	@Override
 	public int hashCode() {
@@ -287,17 +298,15 @@ public class Erp implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Erp [origem=" + origem + ", anoMes=" + anoMes + ", codCentroCustos=" + codCentroCustos
-				+ ", descCentroCustos=" + descCentroCustos + ", codContaContabil=" + codContaContabil
-				+ ", descContaContabil=" + descContaContabil + ", codMaterial=" + codMaterial + ", descMovimento="
-				+ descMovimento + ", unidadeMedida=" + unidadeMedida + ", quantidade=" + quantidade
-				+ ", precoUnitario=" + precoUnitario + ", valorMovimento=" + valorMovimento + ", referenciaOS="
-				+ referenciaOS + ", numeroOS=" + numeroOS + ", documentoErp=" + documentoErp + ", dataMovimento="
-				+ dataMovimento + ", importar=" + importar + ", observacao=" + observacao + ", criticas=" + criticas
-				+ ", salvarOS_Material=" + salvarOS_Material + ", salvarCstg_IntVM=" + salvarCstg_IntVM
-				+ ", salvarCstg_intCM=" + salvarCstg_IntCM + ", salvarCstg_intDG=" + salvarCstg_IntDG + ", sequencial="
-				+ sequencial + "]";
+		return "Erp [origem=" + origem + ", tipoMovimento=" + tipoMovimento + ", anoMes=" + anoMes
+				+ ", codCentroCustos=" + codCentroCustos + ", descCentroCustos=" + descCentroCustos
+				+ ", codContaContabil=" + codContaContabil + ", descContaContabil=" + descContaContabil
+				+ ", codMaterial=" + codMaterial + ", descMovimento=" + descMovimento + ", unidadeMedida="
+				+ unidadeMedida + ", quantidade=" + quantidade + ", precoUnitario=" + precoUnitario
+				+ ", valorMovimento=" + valorMovimento + ", numeroOS=" + numeroOS + ", frotaOuCC=" + frotaOuCC
+				+ ", documentoErp=" + documentoErp + ", dataMovimento=" + dataMovimento + ", importar=" + importar
+				+ ", observacao=" + observacao + ", politicas=" + politicas + ", salvarOS_Material=" + salvarOS_Material
+				+ ", salvarCstg_IntVM=" + salvarCstg_IntVM + ", salvarCstg_IntCM=" + salvarCstg_IntCM
+				+ ", salvarCstg_IntDG=" + salvarCstg_IntDG + ", sequencial=" + sequencial + "]";
 	}
-	
-	
 }

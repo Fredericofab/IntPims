@@ -73,9 +73,9 @@ public class ErpFormController implements Initializable {
 	@FXML
 	private TextField txtValorMovimento;
 	@FXML
-	private TextField txtReferenciaOS;
-	@FXML
 	private TextField txtNumeroOS;
+	@FXML
+	private TextField txtFrotaOuCC;
 	@FXML
 	private TextField txtDocumentoErp;
 	@FXML
@@ -83,7 +83,7 @@ public class ErpFormController implements Initializable {
 	@FXML
 	private TextField txtImportar;
 	@FXML
-	private TextField txtCriticas;
+	private TextField txtPoliticas;
 	@FXML
 	private TextField txtSalvarOS_Material;
 	@FXML
@@ -170,8 +170,6 @@ public class ErpFormController implements Initializable {
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtAnoMes);
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodCentroCustos);
-		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodContaContabil);
-		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodMaterial);
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtNumeroOS);
 		RestricoesDeDigitacao.soPermiteTextFieldDouble(txtQuantidade);
 		RestricoesDeDigitacao.soPermiteTextFieldDouble(txtPrecoUnitario);
@@ -224,8 +222,8 @@ public class ErpFormController implements Initializable {
 		txtQuantidade.setDisable(b);
 		txtPrecoUnitario.setDisable(b);
 		txtValorMovimento.setDisable(b);
-		txtReferenciaOS.setDisable(b);
 		txtNumeroOS.setDisable(b);
+		txtFrotaOuCC.setDisable(b);
 		txtDocumentoErp.setDisable(b);
 		dpDataMovimento.setDisable(b);
 		txtImportar.setDisable(b);
@@ -247,16 +245,16 @@ public class ErpFormController implements Initializable {
 		txtOrigem.setText(entidade.getOrigem());
 		txtCodCentroCustos.setText(String.format("%.0f", entidade.getCodCentroCustos()));
 		txtDescCentroCustos.setText(entidade.getDescCentroCustos());
-		txtCodContaContabil.setText(String.format("%.0f", entidade.getCodContaContabil()));
+		txtCodContaContabil.setText(entidade.getCodContaContabil());
 		txtDescContaContabil.setText(entidade.getDescContaContabil());
-		txtCodMaterial.setText(String.format("%.0f", entidade.getCodMaterial()));
+		txtCodMaterial.setText(entidade.getCodMaterial());
 		txtDescMovimento.setText(entidade.getDescMovimento());
 		txtUnidadeMedida.setText(entidade.getUnidadeMedida());
 		txtQuantidade.setText(String.format("%.2f", entidade.getQuantidade()));
 		txtPrecoUnitario.setText(String.format("%.2f", entidade.getPrecoUnitario()));
 		txtValorMovimento.setText(String.format("%.2f", entidade.getValorMovimento()));
-		txtReferenciaOS.setText(entidade.getReferenciaOS());
-		txtNumeroOS.setText(String.format("%.0f", entidade.getNumeroOS()));
+		txtNumeroOS.setText(entidade.getNumeroOS());
+		txtFrotaOuCC.setText(entidade.getFrotaOuCC());
 		txtDocumentoErp.setText(entidade.getDocumentoErp());
 
 //		dpDataMovimento.setValue(entidade.getDataMovimento()); erro de compilação Date x LocalDate
@@ -265,7 +263,7 @@ public class ErpFormController implements Initializable {
 		}
 		
 		txtImportar.setText(entidade.getImportar());
-		txtCriticas.setText(entidade.getCriticas());
+		txtPoliticas.setText(entidade.getPoliticas());
 		txtSalvarOS_Material.setText(entidade.getSalvarOS_Material());
 		txtSalvarCstg_IntVM.setText(entidade.getSalvarCstg_IntVM());
 		txtSalvarCstg_IntCM.setText(entidade.getSalvarCstg_IntCM());
@@ -290,23 +288,23 @@ public class ErpFormController implements Initializable {
 		objeto.setOrigem(Utilitarios.tentarConverterParaMaiusculo(txtOrigem.getText()));
 		objeto.setCodCentroCustos(Utilitarios.tentarConverterParaDouble(txtCodCentroCustos.getText()));
 		objeto.setDescCentroCustos(txtDescCentroCustos.getText());
-		objeto.setCodContaContabil(Utilitarios.tentarConverterParaDouble(txtCodContaContabil.getText()));
+		objeto.setCodContaContabil(txtCodContaContabil.getText());
 		objeto.setDescContaContabil(txtDescContaContabil.getText());
-		objeto.setCodMaterial(Utilitarios.tentarConverterParaDouble(txtCodMaterial.getText()));
+		objeto.setCodMaterial(txtCodMaterial.getText());
 		objeto.setDescMovimento(txtDescMovimento.getText());
 		objeto.setUnidadeMedida(txtUnidadeMedida.getText());
 		objeto.setQuantidade(Utilitarios.tentarConverterParaDouble(txtQuantidade.getText()));
 		objeto.setPrecoUnitario(Utilitarios.tentarConverterParaDouble(txtPrecoUnitario.getText()));
 		objeto.setValorMovimento(Utilitarios.tentarConverterParaDouble(txtValorMovimento.getText()));
-		objeto.setReferenciaOS(txtReferenciaOS.getText());
-		objeto.setNumeroOS(Utilitarios.tentarConverterParaDouble(txtNumeroOS.getText()));
+		objeto.setNumeroOS(txtNumeroOS.getText());
+		objeto.setFrotaOuCC(txtFrotaOuCC.getText());
 		objeto.setDocumentoErp(txtDocumentoErp.getText());
 		if(dpDataMovimento.getValue() != null) {
 			Instant instant = Instant.from(dpDataMovimento.getValue().atStartOfDay(ZoneId.systemDefault()));
 			objeto.setDataMovimento(Date.from(instant));
 		}
 		objeto.setImportar(Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText()));
-		objeto.setCriticas(txtCriticas.getText());
+		objeto.setPoliticas(txtPoliticas.getText());
 		objeto.setSalvarOS_Material(Utilitarios.tentarConverterParaMaiusculo(txtSalvarOS_Material.getText()));
 		objeto.setSalvarCstg_IntVM(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntVM.getText()));
 		objeto.setSalvarCstg_IntCM(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntCM.getText()));
@@ -350,9 +348,6 @@ public class ErpFormController implements Initializable {
 	}
 
 	private Erp substituirNull(Erp objeto) {
-		if (objeto.getCodContaContabil() == null) { objeto.setCodContaContabil(0.00);	}
-		if (objeto.getCodMaterial() == null) { objeto.setCodMaterial(0.00);	}
-		if (objeto.getNumeroOS() == null) { objeto.setNumeroOS(0.00);	}
 		if (objeto.getQuantidade() == null) { objeto.setQuantidade(0.00);	}
 		if (objeto.getPrecoUnitario() == null) { objeto.setPrecoUnitario(0.00);	}
 		if (objeto.getValorMovimento() == null) { objeto.setValorMovimento(0.00);	}

@@ -93,7 +93,7 @@ public class AnalisarErpService {
 		CriticaErp criticaErp = criticasErpService.pesquisarPorChave("S", 001);
 		zerarContadores();
 		for (Erp erp : listaErp) {
-			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
+			if (erp.getNumeroOS() != null) {
 				qtdeAnalisados += 1;
 				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(), usuarioPimsCS);
 				if (!existeOS) {
@@ -111,7 +111,7 @@ public class AnalisarErpService {
 		CriticaErp criticaErp = criticasErpService.pesquisarPorChave("S", 002);
 		zerarContadores();
 		for (Erp erp : listaErp) {
-			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
+			if (erp.getNumeroOS() != null) {
 				qtdeAnalisados += 1;
 				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(), usuarioPimsCS);
 				if (existeOS) {
@@ -132,7 +132,7 @@ public class AnalisarErpService {
 		CriticaErp criticaErp = criticasErpService.pesquisarPorChave("S", 003);
 		zerarContadores();
 		for (Erp erp : listaErp) {
-			if (erp.getReferenciaOS() != null && erp.getReferenciaOS().equals("P") && erp.getNumeroOS() != null) {
+			if (erp.getNumeroOS() != null) {
 				qtdeAnalisados += 1;
 				Boolean existeOS = pimsGeralDao.existeApt_os_he(erp.getNumeroOS(), usuarioPimsCS);
 				if (existeOS) {
@@ -211,12 +211,12 @@ public class AnalisarErpService {
 		}
 
 		String essaCriticaTxt = criticaErp.getTipoCritica() + String.format("%03d", criticaErp.getCodigoCritica()) + " ";
-		String criticasDesseRegistros = erp.getCriticas();
+		String criticasDesseRegistros = erp.getPoliticas();
 		if (criticasDesseRegistros == null) {
-			erp.setCriticas(essaCriticaTxt);
+			erp.setPoliticas(essaCriticaTxt);
 		} else {
 			if (criticasDesseRegistros.indexOf(essaCriticaTxt) == -1) {
-				erp.setCriticas(criticasDesseRegistros + essaCriticaTxt);
+				erp.setPoliticas(criticasDesseRegistros + essaCriticaTxt);
 			}
 		}
 		return erp;

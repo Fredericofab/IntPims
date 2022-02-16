@@ -119,13 +119,16 @@ public class VerbasFolhaFormController implements Initializable {
 	
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodVerba);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodVerba, 5);	
 		RestricoesDeDigitacao.soPermiteTextFieldPDB(txtTipoVerba);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoVerba, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtImportar);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtConsiderarReferencia);
+
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodVerba, 5);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescVerba, 50);	
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoVerba, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtConsiderarReferencia, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
+
 		if (flagIncluir.equals("S")) {
 			desabilitarCompoenentes(false);
 		}
