@@ -640,8 +640,8 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="72" language="java" name="model.entities.CriticaErp" project="intPims" 
-    file="/intPims/src/model/entities/CriticaErp.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="72" language="java" name="model.entities.PoliticasErp" project="intPims" 
+    file="/intPims/src/model/entities/PoliticasErp.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="471" y="-177"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -658,8 +658,8 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="74" language="java" name="gui.AnalisarErpViewController" project="intPims" 
-    file="/intPims/src/gui/AnalisarErpViewController.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="74" language="java" name="gui.AplicarPoliticasErpViewController" project="intPims" 
+    file="/intPims/src/gui/AplicarPoliticasErpViewController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="381" y="379"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -667,8 +667,8 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="75" language="java" name="gui.CriticaErpListController" project="intPims" 
-    file="/intPims/src/gui/CriticaErpListController.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="75" language="java" name="gui.PoliticasErpListController" project="intPims" 
+    file="/intPims/src/gui/PoliticasErpListController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="647" y="188"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -676,8 +676,8 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="76" language="java" name="gui.CriticaErpFormController" project="intPims" 
-    file="/intPims/src/gui/CriticaErpFormController.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="76" language="java" name="gui.PoliticasErpFormController" project="intPims" 
+    file="/intPims/src/gui/PoliticasErpFormController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="647" y="238"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -695,32 +695,36 @@
     </display>  
   </class>  
   <realization id="78">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="29"/>  
-  </realization>  
-  <realization id="79">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="20"/>  
   </realization>  
-  <realization id="80">    
-    <end type="SOURCE" refId="71"/>    
-    <end type="TARGET" refId="70"/>  
-  </realization>  
-  <realization id="81">    
+  <realization id="79">    
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="19"/>  
   </realization>  
-  <realization id="82">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="10"/>  
-  </realization>  
-  <realization id="83">    
+  <realization id="80">    
     <end type="SOURCE" refId="65"/>    
     <end type="TARGET" refId="20"/>  
+  </realization>  
+  <realization id="81">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="29"/>  
+  </realization>  
+  <realization id="82">    
+    <end type="SOURCE" refId="71"/>    
+    <end type="TARGET" refId="70"/>  
+  </realization>  
+  <realization id="83">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="10"/>  
   </realization>  
   <realization id="84">    
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="9"/>  
+  </realization>  
+  <realization id="85">    
+    <end type="SOURCE" refId="75"/>    
+    <end type="TARGET" refId="20"/>  
   </realization>  
   <classifier-display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

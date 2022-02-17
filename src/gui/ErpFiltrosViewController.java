@@ -37,13 +37,13 @@ public class ErpFiltrosViewController implements Initializable {
 	String anoMes;
 
 	private String importar;
-	private String critica;
+	private String politica;
 	private String filtro;
 	
 	@FXML
 	private TextField txtImportar;
 	@FXML
-	private TextField txtCritica;
+	private TextField txtPolitica;
 	@FXML
 	private ComboBox<String> cboxCamposOracle;
 	@FXML
@@ -61,14 +61,14 @@ public class ErpFiltrosViewController implements Initializable {
 	@FXML
 	public void onBtLimparAction(ActionEvent evento) {
 		txtImportar.setText(null);
-		txtCritica.setText(null);
+		txtPolitica.setText(null);
 		txtAreaFiltro.setText(null);
 	}
 
 	@FXML
 	public void onBtSalvarAction(ActionEvent evento) {
 		getDadosDoForm();
-		if ((( importar != null) || ( critica != null) ) &&
+		if ((( importar != null) || ( politica != null) ) &&
 			( filtro != null )){
 			Alertas.mostrarAlertas(null, "Um tipo de Filtro OU outro", 
 							"Limpar os filtros e \n" +
@@ -76,7 +76,7 @@ public class ErpFiltrosViewController implements Initializable {
 							AlertType.ERROR);
 		}
 		else {
-			erpFiltrosService.salvarFiltro(importar, critica, filtro);
+			erpFiltrosService.salvarFiltro(importar, politica, filtro);
 			notificarDadosAlteradosListeners();
 			Utilitarios.atualStage(evento).close();
 		}
@@ -107,9 +107,10 @@ public class ErpFiltrosViewController implements Initializable {
 
 	private void inicializarComponentes() {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCritica, 4);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtPolitica, 4);
 		
-		List<String> listaCamposOracle = erpFiltrosService.criarListaCamposOracle();
+//		List<String> listaCamposOracle = erpFiltrosService.criarListaCamposOracle();
+		List<String> listaCamposOracle = Utilitarios.camposErp();
 
 		obsCamposOracle = FXCollections.observableArrayList(listaCamposOracle);
 		cboxCamposOracle.setItems(obsCamposOracle);
@@ -119,7 +120,7 @@ public class ErpFiltrosViewController implements Initializable {
 
 	private void atualizarTela() {
 		txtImportar.setText(null);
-		txtCritica.setText(null);
+		txtPolitica.setText(null);
 		processoAtual	= processoAtualService.pesquisarPorChave(anoMes);
 		filtro = processoAtual.getFiltroErp();
 		txtAreaFiltro.setText(filtro);
@@ -127,7 +128,7 @@ public class ErpFiltrosViewController implements Initializable {
 
 	private void getDadosDoForm() {
 		importar = Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText());
-		critica  = Utilitarios.tentarConverterParaMaiusculo(txtCritica.getText());
+		politica  = Utilitarios.tentarConverterParaMaiusculo(txtPolitica.getText());
 		filtro = txtAreaFiltro.getText();
 	}
 

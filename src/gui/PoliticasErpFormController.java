@@ -13,24 +13,27 @@ import gui.listeners.DadosAlteradosListener;
 import gui.util.Alertas;
 import gui.util.RestricoesDeDigitacao;
 import gui.util.Utilitarios;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import model.entities.CriticaErp;
+import model.entities.PoliticasErp;
 import model.exceptions.ValidacaoException;
-import model.services.CriticaErpService;
+import model.services.PoliticasErpService;
 import model.services.ParametrosService;
 
-public class CriticaErpFormController implements Initializable {
+public class PoliticasErpFormController implements Initializable {
 
-	private CriticaErp entidade;
+	private PoliticasErp entidade;
 	
-	private CriticaErpService servico;
+	private PoliticasErpService servico;
 	private ParametrosService parametrosService = new ParametrosService();
 
 	
@@ -41,9 +44,7 @@ public class CriticaErpFormController implements Initializable {
 	String flagAlterar;
 
 	@FXML
-	private TextField txtTipoCritica;
-	@FXML
-	private TextField txtCodigoCritica; 
+	private TextField txtCodPolitica; 
 	@FXML
 	private TextField txtFlagAtiva;
 	
@@ -59,24 +60,33 @@ public class CriticaErpFormController implements Initializable {
 	private TextField txtSalvarCstg_IntDG;
 
 	@FXML
-	private TextField txtNomeCritica;
+	private TextField txtNomePolitica;
 	@FXML
-	private TextArea txtAreaDescCritica;
+	private TextArea txtAreaDescPolitica;
 	@FXML
 	private TextArea txtAreaClausulaWhere;
 	@FXML
-	private Label labelErroTipoCritica;	
+	private ComboBox<String> cboxCamposOracle;
+
 	@FXML
-	private Label labelErroDescCritica;	
+	private Label labelErroPolitica;	
 	@FXML
 	private Label labelErroAtiva;	
 	@FXML
 	private Label labelErroImportar;
+
+	@FXML
+	private Label labelErroDescPolitica;
+	@FXML
+	private Label labelErroClausulaWhere;	
+
 	@FXML
 	private Button btSalvar;
 	@FXML
 	private Button btCancelar;
 	
+	private ObservableList<String> obsCamposOracle;
+
 	@FXML
 	public void onBtSalvarAction(ActionEvent evento) {
 		if (entidade == null) {
@@ -96,7 +106,7 @@ public class CriticaErpFormController implements Initializable {
 			mostrarErrosDeDigitacao(e.getErros());
 		}
 		catch (DbException e){
-			Alertas.mostrarAlertas("erro Salvando DadosCriticasErp", null, e.getMessage(), AlertType.ERROR);
+			Alertas.mostrarAlertas("erro Salvando DadosPoliticasErp", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 	
@@ -106,11 +116,11 @@ public class CriticaErpFormController implements Initializable {
 		Utilitarios.atualStage(evento).close();
 	}
 	
-	public void setCriticasErp(CriticaErp entidade) {
+	public void setPoliticasErp(PoliticasErp entidade) {
 		this.entidade = entidade;
 	}
 	
-	public void setCriticasErpService(CriticaErpService servico) {
+	public void setPoliticasErpService(PoliticasErpService servico) {
 		this.servico = servico;
 	}
 	
@@ -131,15 +141,14 @@ public class CriticaErpFormController implements Initializable {
 	}
 	
 	private void lerParametros() {
-		flagIncluir = (parametrosService.pesquisarPorChave("CriticasErp", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("CriticasErp", "FlagAlterar")).getValor().toUpperCase();
+		flagIncluir = (parametrosService.pesquisarPorChave("PoliticasErp", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("PoliticasErp", "FlagAlterar")).getValor().toUpperCase();
 	}
 
 	private void inicializarComponentes() {
-		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodigoCritica);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoCritica, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodigoCritica, 3);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtNomeCritica, 250);
+		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodPolitica);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodPolitica, 4);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtNomePolitica, 250);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtFlagAtiva, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarOS_Material, 1);
@@ -153,14 +162,14 @@ public class CriticaErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntCM);
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntDG);
 
-		if (flagIncluir.equals("S")) {
-			txtTipoCritica.setText("U");
-			desabilitarCompoenentes(false);
-//			txtTipoCritica.setDisable(true);
-//			txtCodigoCritica.setDisable(true);
-//FRED normalmente NAO comentar as 2 linhas acima e comentar a de abaixo
-			System.out.println("FRED Manutencao em CriticaErpFormController - inicializarComponentes");
+		List<String> listaCamposOracle = Utilitarios.camposErp();
 
+		obsCamposOracle = FXCollections.observableArrayList(listaCamposOracle);
+		cboxCamposOracle.setItems(obsCamposOracle);
+
+		
+		if (flagIncluir.equals("S")) {
+			desabilitarCompoenentes(false);
 		}
 		else {
 			if (flagAlterar.equals("S")) {
@@ -180,13 +189,8 @@ public class CriticaErpFormController implements Initializable {
 	}
 	
 	private void desabilitarCompoenentes(boolean b) {
-		b = false;
-		System.out.println("FRED Manutencao em CriticaErpFormController - desabilitarCompoenentes");
-//FRED normalmente manter comentada as 2 linha acima
-		
-		txtTipoCritica.setDisable(b);
-		txtCodigoCritica.setDisable(b);
-		txtAreaDescCritica.setDisable(b);
+		txtCodPolitica.setDisable(b);
+		txtAreaDescPolitica.setDisable(b);
 		txtFlagAtiva.setDisable(b);
 		txtImportar.setDisable(b);
 		txtSalvarOS_Material.setDisable(b);
@@ -202,10 +206,9 @@ public class CriticaErpFormController implements Initializable {
 		}
 		Locale.setDefault(Locale.US);
 
-		txtTipoCritica.setText(entidade.getTipoCritica());
-		txtCodigoCritica.setText(String.format("%d", entidade.getCodigoCritica()));
-		txtNomeCritica.setText(entidade.getNomeCritica());
-		txtAreaDescCritica.setText(entidade.getDescCritica());
+		txtCodPolitica.setText(String.format("%d", entidade.getCodPolitica()));
+		txtNomePolitica.setText(entidade.getNomePolitica());
+		txtAreaDescPolitica.setText(entidade.getDescPolitica());
 		txtFlagAtiva.setText(entidade.getFlagAtiva());
 		txtImportar.setText(entidade.getImportar());
 		txtSalvarOS_Material.setText(entidade.getSalvarOS_Material());
@@ -214,19 +217,14 @@ public class CriticaErpFormController implements Initializable {
 		txtSalvarCstg_IntDG.setText(entidade.getSalvarCstg_IntDG());
 		txtAreaClausulaWhere.setText(entidade.getClausulaWhere());
 
-		if (entidade.getTipoCritica().equals("S") ) {
-			desabilitarCompoenentes(true);
-			txtFlagAtiva.setDisable(false);
-		}
 	}
 	
-	private CriticaErp getDadosDoForm() {
-		CriticaErp objeto = new CriticaErp();
+	private PoliticasErp getDadosDoForm() {
+		PoliticasErp objeto = new PoliticasErp();
 		ValidacaoException validacao = new ValidacaoException("Erros Na Digitacao do Form");
-		objeto.setTipoCritica(Utilitarios.tentarConverterParaMaiusculo(txtTipoCritica.getText()));
-		objeto.setCodigoCritica(Utilitarios.tentarConverterParaInt(txtCodigoCritica.getText()));
-		objeto.setNomeCritica(txtNomeCritica.getText());
-		objeto.setDescCritica(txtAreaDescCritica.getText());
+		objeto.setCodPolitica(Utilitarios.tentarConverterParaInt(txtCodPolitica.getText()));
+		objeto.setNomePolitica(txtNomePolitica.getText());
+		objeto.setDescPolitica(txtAreaDescPolitica.getText());
 		objeto.setFlagAtiva(Utilitarios.tentarConverterParaMaiusculo(txtFlagAtiva.getText()));
 		objeto.setImportar(Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText()));
 		objeto.setSalvarOS_Material(Utilitarios.tentarConverterParaMaiusculo(txtSalvarOS_Material.getText()));
@@ -236,13 +234,13 @@ public class CriticaErpFormController implements Initializable {
 		objeto.setClausulaWhere(txtAreaClausulaWhere.getText());
 
 		if (txtFlagAtiva.getText() == null || txtFlagAtiva.getText().trim().equals("")) {
-			validacao.adicionarErro("txtFlagAtiva", "Informe se essa Critica esta Ativa ou Nao");
+			validacao.adicionarErro("txtFlagAtiva", "Informe se essa Politica esta Ativa ou Nao");
 		}
 		
 		if (txtImportar.getText() == null || txtImportar.getText().trim().equals("")) {
 			validacao.adicionarErro("txtImportar", "Informe se é para Importar ou Nao");
 		}
-		
+
 		if (txtImportar.getText() != null) {
 			String as4acoes = ( (txtSalvarOS_Material.getText() == null) ? " " : txtSalvarOS_Material.getText().toUpperCase() )
 							+ ( (txtSalvarCstg_IntVM.getText()  == null) ? " " : txtSalvarCstg_IntVM.getText().toUpperCase() )
@@ -256,44 +254,38 @@ public class CriticaErpFormController implements Initializable {
 			}
 		}
 
-
-		if (txtNomeCritica.getText() == null || txtNomeCritica.getText().trim().equals("")) {
-			validacao.adicionarErro("txtDescCritica", "Informe um Nome para essa Critica");
-		}
-
-		if (txtAreaDescCritica.getText() == null || txtAreaDescCritica.getText().trim().equals("")) {
-			validacao.adicionarErro("txtDescCritica", "Informe uma descricao para essa Critica");
+		if (txtCodPolitica.getText() == null || txtCodPolitica.getText().trim().equals("")) {
+			validacao.adicionarErro("txtPolitica", "Informe o Codigo para essa Politica");
 		}
 		
-		if ((txtTipoCritica.getText() != null) && (txtTipoCritica.getText().toUpperCase().equals("U")) && 
-			(txtAreaClausulaWhere.getText() == null || txtAreaClausulaWhere.getText().trim().equals(""))) {
-			validacao.adicionarErro("txtTipoCritica", "Critica do tipo U (Usuario). Informe a Clausula Where");
+		if (txtNomePolitica.getText() == null || txtNomePolitica.getText().trim().equals("")) {
+			validacao.adicionarErro("txtPolitica", "Informe um Nome para essa Politica");
 		}
-	
-		if ((txtTipoCritica.getText() != null) && (txtTipoCritica.getText().toUpperCase().equals("S")) && 
-				(txtAreaClausulaWhere.getText() != null && ! txtAreaClausulaWhere.getText().trim().equals(""))) {
-				validacao.adicionarErro("txtTipoCritica", "Critica do tipo S (Sistema). Apague a Clausula Where");
-			}
-		
+		if (txtAreaDescPolitica.getText() == null || txtAreaDescPolitica.getText().trim().equals("")) {
+			validacao.adicionarErro("txtDescPolitica", "Informe uma descricao para essa Politica");
+		}
+		if (txtAreaClausulaWhere.getText() == null || txtAreaClausulaWhere.getText().trim().equals("")) {
+			validacao.adicionarErro("txtClausulaWhere", "Informe a Clausula Where");
+		}
+			
 		if (validacao.getErros().size() > 0) {
 			throw validacao;
 		}
 		return objeto;
 	}
-	
-	private CriticaErp substituirNull(CriticaErp objeto) {
-		if (objeto.getRegistrosAnalisados() == null) objeto.setRegistrosAnalisados(0);
-		if (objeto.getRegistrosLiberados() == null) objeto.setRegistrosLiberados(0);
-		if (objeto.getRegistrosIgnorados() == null) objeto.setRegistrosIgnorados(0);
-		if (objeto.getRegistrosPendentes() == null) objeto.setRegistrosPendentes(0);
+
+	private PoliticasErp substituirNull(PoliticasErp objeto) {
+		if (objeto.getRegistrosAplicados() == null) objeto.setRegistrosAplicados(0);
 		return objeto;
 	}
-
+	
+	
 	private void mostrarErrosDeDigitacao(Map<String, String> erros) {
 		Set<String> campos = erros.keySet();
-		labelErroTipoCritica.setText((campos.contains("txtTipoCritica") ? erros.get("txtTipoCritica") : ""));
+		labelErroPolitica.setText((campos.contains("txtPolitica") ? erros.get("txtPolitica") : ""));
+		labelErroClausulaWhere.setText((campos.contains("txtClausulaWhere") ? erros.get("txtClausulaWhere") : ""));
 		labelErroAtiva.setText((campos.contains("txtFlagAtiva") ? erros.get("txtFlagAtiva") : ""));
-		labelErroDescCritica.setText((campos.contains("txtDescCritica") ? erros.get("txtDescCritica") : ""));
+		labelErroDescPolitica.setText((campos.contains("txtDescPolitica") ? erros.get("txtDescPolitica") : ""));
 		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
 	}
 }

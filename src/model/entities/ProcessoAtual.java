@@ -15,8 +15,8 @@ public class ProcessoAtual implements Serializable {
 	private String importarErpMT;
 	private String importarErpCD;
 	private String importarErpDG;
-	private String criticarErp;
-	private String analisarErp;
+	private String validarErp;
+	private String aplicarPoliticaErp;
 	private String exportarErp;
 	private String verbaAlterada;
 	private String folhaAlterada;
@@ -27,7 +27,7 @@ public class ProcessoAtual implements Serializable {
 	}
 	public ProcessoAtual(String anoMes, String importarFolha, String sumarizarFolha, String exportarFolha,
 			String importarFuncionario, String sumarizarFuncionario, String importarErpMT, String importarErpCD,
-			String importarErpDG, String criticarErp, String analisarErp, String exportarErp, String verbaAlterada,
+			String importarErpDG, String validarErp, String aplicarPoliticaErp, String exportarErp, String verbaAlterada,
 			String folhaAlterada, String funcionarioAlterado, String filtroErp) {
 		super();
 		this.anoMes = anoMes;
@@ -39,8 +39,8 @@ public class ProcessoAtual implements Serializable {
 		this.importarErpMT = importarErpMT;
 		this.importarErpCD = importarErpCD;
 		this.importarErpDG = importarErpDG;
-		this.criticarErp = criticarErp;
-		this.analisarErp = analisarErp;
+		this.validarErp = validarErp;
+		this.aplicarPoliticaErp = aplicarPoliticaErp;
 		this.exportarErp = exportarErp;
 		this.verbaAlterada = verbaAlterada;
 		this.folhaAlterada = folhaAlterada;
@@ -102,17 +102,17 @@ public class ProcessoAtual implements Serializable {
 	public void setImportarErpDG(String importarErpDG) {
 		this.importarErpDG = importarErpDG;
 	}
-	public String getCriticarErp() {
-		return criticarErp;
+	public String getValidarErp() {
+		return validarErp;
 	}
-	public void setCriticarErp(String criticarErp) {
-		this.criticarErp = criticarErp;
+	public void setValidarErp(String validarErp) {
+		this.validarErp = validarErp;
 	}
-	public String getAnalisarErp() {
-		return analisarErp;
+	public String getAplicarPoliticaErp() {
+		return aplicarPoliticaErp;
 	}
-	public void setAnalisarErp(String analisarErp) {
-		this.analisarErp = analisarErp;
+	public void setAplicarPoliticaErp(String aplicarPoliticaErp) {
+		this.aplicarPoliticaErp = aplicarPoliticaErp;
 	}
 	public String getExportarErp() {
 		return exportarErp;
@@ -173,8 +173,8 @@ public class ProcessoAtual implements Serializable {
 		return "ProcessoAtual [anoMes=" + anoMes + ", importarFolha=" + importarFolha + ", sumarizarFolha="
 				+ sumarizarFolha + ", exportarFolha=" + exportarFolha + ", importarFuncionario=" + importarFuncionario
 				+ ", sumarizarFuncionario=" + sumarizarFuncionario + ", importarErpMT=" + importarErpMT
-				+ ", importarErpCD=" + importarErpCD + ", importarErpDG=" + importarErpDG + ", criticarErp="
-				+ criticarErp + ", analisarErp=" + analisarErp + ", exportarErp=" + exportarErp + ", verbaAlterada="
+				+ ", importarErpCD=" + importarErpCD + ", importarErpDG=" + importarErpDG + ", validarErp="
+				+ validarErp + ", aplicarPoliticaErp=" + aplicarPoliticaErp + ", exportarErp=" + exportarErp + ", verbaAlterada="
 				+ verbaAlterada + ", folhaAlterada=" + folhaAlterada + ", funcionarioAlterado=" + funcionarioAlterado
 				+ ", filtroErp=" + filtroErp + "]";
 	}

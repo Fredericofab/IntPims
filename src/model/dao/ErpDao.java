@@ -9,8 +9,8 @@ public interface ErpDao {
 	void deletarPorChave(Integer sequencial);
 	Erp pesquisarPorChave(Integer sequencial);
 	List<Erp> listarTodos();
-	List<Erp> listarCriticaFiltrada(String tipoCritica, Integer codigoCritica, String filtro);
-	List<Erp> listarTodosFiltrado(String filtro);
+	List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere);
+	List<Erp> listarTodosFiltrado(String clausulaWhere);
 
 	Integer deletarTodos();
 	Integer deletarPorOrigem(String origem);

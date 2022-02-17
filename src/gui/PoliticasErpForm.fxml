@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CriticaErpFormController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PoliticasErpFormController">
    <content>
       <VBox prefHeight="559.0" prefWidth="766.0">
          <children>
@@ -36,26 +37,13 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Tipo Critica (U/S)">
-                     <GridPane.margin>
-                        <Insets left="5.0" />
-                     </GridPane.margin></Label>
-                  <TextField fx:id="txtTipoCritica" focusTraversable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" />
-                  <Label fx:id="labelErroTipoCritica" textFill="RED" GridPane.columnIndex="2">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin></Label>
-                  <Label text="Sequencial" GridPane.rowIndex="1">
+                  <Label text="Código da Politica" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtCodigoCritica" focusTraversable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="labelErroDescCritica" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin>
-                  </Label>
+                  <TextField fx:id="txtCodPolitica" maxWidth="-Infinity" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtNomePolitica" prefHeight="100.0" prefWidth="693.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Label text="Ativa (S/N)" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
@@ -71,17 +59,18 @@
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
+                  <Label fx:id="labelErroImportar" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
                   <Label text="Importar Registro" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="txtImportar" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label fx:id="labelErroImportar" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </Label>
+                  <Label text="Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <Label text="Salvar OS_material" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets left="15.0" />
@@ -110,7 +99,11 @@
                   </Label>
                   <TextField fx:id="txtSalvarCstg_IntDG" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                   <Label text="Deixar em BRANCO para não alterar. Ou Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                  <Label text="Informe S (sim), N (não) ou ? (para analisar caso a caso)." GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Label fx:id="labelErroPolitica" textFill="RED" GridPane.columnIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
                </children>
             </GridPane>
             <GridPane prefHeight="269.0" prefWidth="766.0">
@@ -120,23 +113,22 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="766.0" minWidth="10.0" prefWidth="693.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="119.0" minHeight="0.0" prefHeight="93.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="189.0" minHeight="0.0" prefHeight="96.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="189.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="189.0" minHeight="0.0" prefHeight="119.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="189.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Nome" GridPane.columnIndex="1" />
-                  <TextField fx:id="txtNomeCritica" prefHeight="100.0" prefWidth="693.0" GridPane.columnIndex="2" />
-                  <Label text="Descrição" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                  <TextArea fx:id="txtAreaDescCritica" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Descrição" GridPane.columnIndex="1" GridPane.valignment="TOP" />
+                  <TextArea fx:id="txtAreaDescPolitica" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
                   <Label text="Where" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
                   <TextArea fx:id="txtAreaClausulaWhere" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <HBox prefHeight="39.0" prefWidth="657.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <HBox prefHeight="39.0" prefWidth="657.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <children>
                         <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" prefHeight="25.0" prefWidth="59.0" text="Salvar">
                            <HBox.margin>
@@ -146,11 +138,21 @@
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin></Button>
+                        <ComboBox fx:id="cboxCamposOracle" prefHeight="25.0" prefWidth="516.0" promptText="Consultar nomes dos campos Oracle..." />
                      </children>
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </HBox>
+                  <Label fx:id="labelErroDescPolitica" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="labelErroClausulaWhere" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin></Label>
                </children>
             </GridPane>
          </children>

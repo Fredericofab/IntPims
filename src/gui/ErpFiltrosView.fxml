@@ -46,17 +46,18 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></TextField>
-            <Label prefHeight="17.0" prefWidth="79.0" text="Critica (Tnnn)" GridPane.rowIndex="2">
+            <Label prefHeight="17.0" prefWidth="79.0" text="Politica" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txtCritica" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="57.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="txtPolitica" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="57.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></TextField>
             <Label text="Filtro Personalizado" GridPane.rowIndex="4" />
             <ComboBox fx:id="cboxCamposOracle" prefHeight="25.0" prefWidth="448.0" promptText="Consultar Nome dos Campos Oracle..." GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="Digitar &quot;x&quot; para considerar o Importar = Null" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <TextArea fx:id="txtAreaFiltro" prefHeight="200.0" prefWidth="200.0" />

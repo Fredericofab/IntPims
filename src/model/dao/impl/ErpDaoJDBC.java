@@ -49,13 +49,13 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setString(15, objeto.getFrotaOuCC());
 			st.setString(16, objeto.getDocumentoErp());
 			st.setDate(17, new java.sql.Date(objeto.getDataMovimento().getTime()));
-			st.setString(18, objeto.getImportar().toUpperCase());
+			st.setString(18, objeto.getImportar());
 			st.setString(19, objeto.getObservacao());
 			st.setString(20, objeto.getPoliticas());
-			st.setString(21, objeto.getSalvarOS_Material().toUpperCase());
-			st.setString(22, objeto.getSalvarCstg_IntVM().toUpperCase());
-			st.setString(23, objeto.getSalvarCstg_IntCM().toUpperCase());
-			st.setString(24, objeto.getSalvarCstg_IntDG().toUpperCase());
+			st.setString(21, objeto.getSalvarOS_Material());
+			st.setString(22, objeto.getSalvarCstg_IntVM());
+			st.setString(23, objeto.getSalvarCstg_IntCM());
+			st.setString(24, objeto.getSalvarCstg_IntDG());
 			st.setInt(25, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -363,11 +363,11 @@ public class ErpDaoJDBC implements ErpDao {
 
 
 	@Override
-	public List<Erp> listarCriticaFiltrada(String tipoCritica, Integer codigoCritica, String filtro) {
+	public List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conexao.prepareStatement("SELECT * FROM Erp WHERE " + filtro);
+			st = conexao.prepareStatement("SELECT * FROM Erp WHERE " + clausulaWhere);
 			rs = st.executeQuery();
 			List<Erp> lista = new ArrayList<Erp>();
 			while (rs.next()) {
@@ -377,8 +377,8 @@ public class ErpDaoJDBC implements ErpDao {
 			return lista;
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp \n \n" +
-								  "erro na consulta da critica " 
-							 	  + tipoCritica + String.format("%03d", codigoCritica)
+								  "erro na consulta da politica " 
+							 	  + String.format("%03d", codPolitica)
 								  + "\n" + e.toString());
 		} finally {
 			DB.fecharResultSet(rs);

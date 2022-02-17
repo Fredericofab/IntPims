@@ -52,7 +52,7 @@ public class ProcessoAtualService {
 			bw.write("anoMes,importarFolha,sumarizarFolha,exportarFolha," +
 					 "importarFuncionario,sumarizarFuncionario," +
 					 "importarErpMT,importarErpCD,importarErpDG," +
-					 "analisarErp,criticarErp,exportarErp," +
+					 "aplicarPoliticaErp,validarErp,exportarErp," +
 					 "verbaAlterada, folhaAlterada, funcionarioAlterado");
 						bw.newLine();
 			for (ProcessoAtual processoAtual : lista) {
@@ -65,8 +65,8 @@ public class ProcessoAtualService {
 						processoAtual.getImportarErpMT() + "," +
 						processoAtual.getImportarErpCD() + "," + 
 						processoAtual.getImportarErpDG() + "," +
-						processoAtual.getCriticarErp()	+ "," +
-						processoAtual.getAnalisarErp()	+ "," +
+						processoAtual.getValidarErp()	+ "," +
+						processoAtual.getAplicarPoliticaErp()	+ "," +
 						processoAtual.getExportarErp()   + "," +
 				processoAtual.getVerbaAlterada()  + "," +
 				processoAtual.getFolhaAlterada() + "," +
@@ -106,8 +106,8 @@ public class ProcessoAtualService {
 		if (campo.equals("ImportarErpMT")) processoAtual.setImportarErpMT(valor); 
 		if (campo.equals("ImportarErpCD")) processoAtual.setImportarErpCD(valor); 
 		if (campo.equals("ImportarErpDG")) processoAtual.setImportarErpDG(valor); 
-		if (campo.equals("CriticarErp")) processoAtual.setCriticarErp(valor); 
-		if (campo.equals("AnalisarErp")) processoAtual.setAnalisarErp(valor); 
+		if (campo.equals("ValidarErp")) processoAtual.setValidarErp(valor); 
+		if (campo.equals("AplicarPoliticaErp")) processoAtual.setAplicarPoliticaErp(valor); 
 		if (campo.equals("ExportarErp")) processoAtual.setExportarErp(valor); 
 		
 		if (campo.equals("VerbaAlterada")) processoAtual.setVerbaAlterada(valor); 

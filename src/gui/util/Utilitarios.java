@@ -3,7 +3,9 @@ package gui.util;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javafx.event.ActionEvent;
@@ -127,6 +129,36 @@ public class Utilitarios {
 				}
 			}
 		});
+	}
+
+	public static List<String> camposErp() {
+		List<String> listaCamposOracle = new ArrayList<String>();
+		listaCamposOracle.add("Origem da Importacao		ORIGEM					C02");
+		listaCamposOracle.add("Tipo Movimento			TIPO_MOVIMENTO			C06");
+		listaCamposOracle.add("Ano e Mes de Referencia	ANO_MES				N06");
+		listaCamposOracle.add("Codigo Centro de Custos	COD_CENTRO_CUSTOS		N20");
+		listaCamposOracle.add("Descricao Centro de Custos	DESC_CENTRO_CUSTOS		C50");
+		listaCamposOracle.add("Codigo Conta Contabil		COD_CONTA_CONTABIL		C20");
+		listaCamposOracle.add("Descricao Conta Contabil	DESC_CONTA_CONTABIL	C50");
+		listaCamposOracle.add("Codigo Material			COD_MATERIAL			C10");
+		listaCamposOracle.add("Desc.  Material / Movimento	DESC_MOVIMENTO			C255");	
+		listaCamposOracle.add("Unidade de Medida			UNIDADE_MEDIDA			C05");
+		listaCamposOracle.add("Quantidade				QUANTIDADE				N14.2");
+		listaCamposOracle.add("Preco Unitario				PRECO_UNITARIO			N14.2");
+		listaCamposOracle.add("Valor do Movimento		VALOR_MOVIMENTO		N14.2");
+		listaCamposOracle.add("Numero da O.S.			NUMERO_OS				C10");
+		listaCamposOracle.add("Frota ou CC da O.S.			FROTA_OU_CC				C20");
+		listaCamposOracle.add("Documento no ERP			DOCUMENTO_ERP			C10");
+		listaCamposOracle.add("Data Movimento			DATA_MOVIMENTO		DATA");
+		listaCamposOracle.add("Flag Importar				IMPORTAR				C01");
+		listaCamposOracle.add("Observacao				OBSERVACAO				C255");
+		listaCamposOracle.add("Politicas					POLITICAS				C255");
+		listaCamposOracle.add("Flag Salvar Material na OS	SALVAR_OS_MATERIAL		C01");
+		listaCamposOracle.add("Flag Salvar Valor do Material	SALVAR_CSTG_INTVM		C01");
+		listaCamposOracle.add("Flag Salvar Consumo Material	SALVAR_CSTG_INTCM		C01");
+		listaCamposOracle.add("Flag Salvar Despesas Gerais	SALVAR_CSTG_INTDG		C01");
+		listaCamposOracle.add("Numero do Registro		SEQUENCIAL				N10");
+		return listaCamposOracle;
 	}
 
 }

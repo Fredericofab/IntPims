@@ -28,7 +28,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 										+ "Importar_Folha,Sumarizar_Folha, Exportar_Folha, "
 										+ "Importar_Funcionario,Sumarizar_Funcionario,"
 										+ "Importar_ErpMT, Importar_ErpCD, Importar_ErpDD, "
-										+ "Criticar_Erp, Analisar_Erp, Exportar_Erp, "
+										+ "Validar_Erp, aplicar_Politica_Erp, Exportar_Erp, "
 										+ "Verba_Alterada, Folha_Alterada, Funcionario_alterado,Filtro_Erp) "
 										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
 			st.setString(1, objeto.getAnoMes());
@@ -40,8 +40,8 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(7, objeto.getImportarErpMT());
 			st.setString(8, objeto.getImportarErpCD());
 			st.setString(9, objeto.getImportarErpDG());
-			st.setString(10, objeto.getCriticarErp());
-			st.setString(11, objeto.getAnalisarErp());
+			st.setString(10, objeto.getValidarErp());
+			st.setString(11, objeto.getAplicarPoliticaErp());
 			st.setString(12, objeto.getExportarErp());
 			st.setString(13, objeto.getVerbaAlterada());
 			st.setString(14, objeto.getFolhaAlterada());
@@ -63,7 +63,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 										+ "Importar_Folha = ? ,Sumarizar_Folha = ?, Exportar_Folha = ?, "
 										+ "Importar_Funcionario = ?,Sumarizar_Funcionario = ?,"
 										+ "Importar_ErpMT = ? , Importar_ErpCD = ?, Importar_ErpDD = ?, "
-										+ "Criticar_Erp = ? , Analisar_Erp = ? , Exportar_Erp = ?, "
+										+ "Validar_Erp = ? , aplicar_Politica_Erp = ? , Exportar_Erp = ?, "
 										+ "Verba_alterada = ? , Folha_Alterada = ?, Funcionario_Alterado =?, "
 										+ "Filtro_Erp = ? "
 										+ "WHERE Ano_Mes = ? ");
@@ -75,8 +75,8 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(6, objeto.getImportarErpMT());
 			st.setString(7, objeto.getImportarErpCD());
 			st.setString(8, objeto.getImportarErpDG());
-			st.setString(9, objeto.getCriticarErp());
-			st.setString(10, objeto.getAnalisarErp());
+			st.setString(9, objeto.getValidarErp());
+			st.setString(10, objeto.getAplicarPoliticaErp());
 			st.setString(11, objeto.getExportarErp());
 			st.setString(12, objeto.getVerbaAlterada());
 			st.setString(13, objeto.getFolhaAlterada());
@@ -182,8 +182,8 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 		processoAtual.setImportarErpMT(rs.getString("Importar_ErpMT"));		
 		processoAtual.setImportarErpCD(rs.getString("Importar_ErpCD"));		
 		processoAtual.setImportarErpDG(rs.getString("Importar_ErpDD"));		
-		processoAtual.setCriticarErp(rs.getString("Criticar_Erp"));		
-		processoAtual.setAnalisarErp(rs.getString("Analisar_Erp"));		
+		processoAtual.setValidarErp(rs.getString("Validar_Erp"));		
+		processoAtual.setAplicarPoliticaErp(rs.getString("aplicar_Politica_Erp"));		
 		processoAtual.setExportarErp(rs.getString("Exportar_Erp"));		
 		processoAtual.setVerbaAlterada(rs.getString("Verba_Alterada"));		
 		processoAtual.setFolhaAlterada(rs.getString("Folha_Alterada"));		

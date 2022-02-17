@@ -178,6 +178,7 @@ public class ErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtOrigem, 2);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodCentroCustos, 20);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodContaContabil,20);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtUnidadeMedida,5);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescMovimento,35);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtObservacao, 255);

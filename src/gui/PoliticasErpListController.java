@@ -28,13 +28,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.CriticaErp;
-import model.services.CriticaErpService;
+import model.entities.PoliticasErp;
+import model.services.PoliticasErpService;
 import model.services.ParametrosService;
 
-public class CriticaErpListController implements Initializable, DadosAlteradosListener {
+public class PoliticasErpListController implements Initializable, DadosAlteradosListener {
 
-	private CriticaErpService servico;
+	private PoliticasErpService servico;
 	
 	private ParametrosService parametrosService = new ParametrosService();
 
@@ -45,34 +45,32 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 	String flagExcluir;
 
 	@FXML
-	private TableView<CriticaErp> tableViewDadosCriticasErp;
+	private TableView<PoliticasErp> tableViewDadosPoliticasErp;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnTipoCritica;
+	private TableColumn<PoliticasErp, Integer> tableColumnCodPolitica;
 	@FXML
-	private TableColumn<CriticaErp, Integer> tableColumnCodCritica;
+	private TableColumn<PoliticasErp, String> tableColumnNomePolitica;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnNomeCritica;
+	private TableColumn<PoliticasErp, String> tableColumnDescPolitica;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnDescCritica;
+	private TableColumn<PoliticasErp, String> tableColumnFlagAtiva;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnFlagAtiva;
+	private TableColumn<PoliticasErp, String> tableColumnClausulaWhere;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnClausulaWhere;
+	private TableColumn<PoliticasErp, String> tableColumnImportar;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnImportar;
+	private TableColumn<PoliticasErp, String> tableColumnSalvarOS_Material;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnSalvarOS_Material;
+	private TableColumn<PoliticasErp, String> tableColumnSalvarCstg_IntVM;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnSalvarCstg_IntVM;
+	private TableColumn<PoliticasErp, String> tableColumnSalvarCstg_IntCM;
 	@FXML
-	private TableColumn<CriticaErp, String> tableColumnSalvarCstg_IntCM;
-	@FXML
-	private TableColumn<CriticaErp, String> tableColumnSalvarCstg_IntDG;
+	private TableColumn<PoliticasErp, String> tableColumnSalvarCstg_IntDG;
 
 	@FXML
-	private TableColumn<CriticaErp, CriticaErp> tableColumnEDIT;
+	private TableColumn<PoliticasErp, PoliticasErp> tableColumnEDIT;
 	@FXML
-	private TableColumn<CriticaErp, CriticaErp> tableColumnREMOVE;
+	private TableColumn<PoliticasErp, PoliticasErp> tableColumnREMOVE;
 
 	@FXML
 	private Button btIncluir;
@@ -83,16 +81,13 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 	@FXML
 	private Button btSair;
 
-	private ObservableList<CriticaErp> obsLista;
+	private ObservableList<PoliticasErp> obsLista;
 
 	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
 		Stage parentStage = Utilitarios.atualStage(evento);
-		String caminhoDaView = "/gui/CriticaErpForm.fxml";
-		CriticaErp entidade = new CriticaErp();
-		entidade.setTipoCritica("U");
-		Integer sequencial = servico.ultimoSequencial(entidade) + 1;
-		entidade.setCodigoCritica(sequencial);
+		String caminhoDaView = "/gui/PoliticasErpForm.fxml";
+		PoliticasErp entidade = new PoliticasErp();
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
 	@FXML
@@ -110,7 +105,7 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 		Utilitarios.atualStage(evento).close();
 	}
 
-	public void setCriticasErpServico(CriticaErpService servico) {
+	public void setPoliticasErpServico(PoliticasErpService servico) {
 		this.servico = servico;
 	}
 
@@ -121,16 +116,15 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 	}
 
 	private void lerParametros() {
-		flagIncluir = (parametrosService.pesquisarPorChave("CriticasErp", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("CriticasErp", "FlagAlterar")).getValor().toUpperCase();
-		flagExcluir = (parametrosService.pesquisarPorChave("CriticasErp", "FlagExcluir")).getValor().toUpperCase();
+		flagIncluir = (parametrosService.pesquisarPorChave("PoliticasErp", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("PoliticasErp", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("PoliticasErp", "FlagExcluir")).getValor().toUpperCase();
 	}
 
 	private void inicializarComponentes() {
-		tableColumnTipoCritica.setCellValueFactory(new PropertyValueFactory<>("tipoCritica"));
-		tableColumnCodCritica.setCellValueFactory(new PropertyValueFactory<>("codigoCritica"));
-		tableColumnNomeCritica.setCellValueFactory(new PropertyValueFactory<>("nomeCritica"));
-		tableColumnDescCritica.setCellValueFactory(new PropertyValueFactory<>("descCritica"));
+		tableColumnCodPolitica.setCellValueFactory(new PropertyValueFactory<>("codPolitica"));
+		tableColumnNomePolitica.setCellValueFactory(new PropertyValueFactory<>("nomePolitica"));
+		tableColumnDescPolitica.setCellValueFactory(new PropertyValueFactory<>("descPolitica"));
 		tableColumnFlagAtiva.setCellValueFactory(new PropertyValueFactory<>("flagAtiva"));
 		tableColumnClausulaWhere.setCellValueFactory(new PropertyValueFactory<>("clausulaWhere"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
@@ -140,8 +134,7 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 		tableColumnSalvarCstg_IntDG.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntDG"));
 
 		
-		tableColumnTipoCritica.setStyle("-fx-alignment: TOP-CENTER");
-		tableColumnCodCritica.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnCodPolitica.setStyle("-fx-alignment: TOP-RIGHT");
 		tableColumnFlagAtiva.setStyle("-fx-alignment: TOP-CENTER");
 		tableColumnImportar.setStyle("-fx-alignment: TOP-CENTER");
 		tableColumnSalvarOS_Material.setStyle("-fx-alignment: TOP-CENTER");
@@ -156,27 +149,27 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 		if (servico == null) {
 			throw new IllegalStateException("o servico nao foi carregado pelo outro programador");
 		}
-		List<CriticaErp> lista = servico.pesquisarTodos();
+		List<PoliticasErp> lista = servico.pesquisarTodos();
 
 		obsLista = FXCollections.observableArrayList(lista);
-		tableViewDadosCriticasErp.setItems(obsLista);
+		tableViewDadosPoliticasErp.setItems(obsLista);
 		initEditButtons();
 		initRemoveButtons();
 	}
 
-	private void criarDialogoForm(CriticaErp entidade, String caminhoDaView, Stage parentStage) {
+	private void criarDialogoForm(PoliticasErp entidade, String caminhoDaView, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
 			ScrollPane pane = loader.load();
 
-			CriticaErpFormController controller = loader.getController();
-			controller.setCriticasErp(entidade);
-			controller.setCriticasErpService(new CriticaErpService());
+			PoliticasErpFormController controller = loader.getController();
+			controller.setPoliticasErp(entidade);
+			controller.setPoliticasErpService(new PoliticasErpService());
 			controller.serOuvinteDeDadosAlteradosListener(this);
 			controller.atualizarFormulario();
 
 			Stage dialogoStage = new Stage();
-			dialogoStage.setTitle("CriticaErp");
+			dialogoStage.setTitle("PoliticaErp");
 			dialogoStage.setScene(new Scene(pane));
 			dialogoStage.setResizable(false);
 			dialogoStage.initOwner(parentStage);
@@ -197,11 +190,11 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 	private void initEditButtons() {
 		// codigo adaptado da material do curso Udemy
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEDIT.setCellFactory(param -> new TableCell<CriticaErp, CriticaErp>() {
+		tableColumnEDIT.setCellFactory(param -> new TableCell<PoliticasErp, PoliticasErp>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(CriticaErp obj, boolean empty) {
+			protected void updateItem(PoliticasErp obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -210,18 +203,18 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 				setGraphic(button);
 				button.setDisable((flagAlterar.equals("N") ? true : false));
 				button.setOnAction(
-						event -> criarDialogoForm(obj, "/gui/CriticaErpForm.fxml", Utilitarios.atualStage(event)));
+						event -> criarDialogoForm(obj, "/gui/PoliticasErpForm.fxml", Utilitarios.atualStage(event)));
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<CriticaErp, CriticaErp>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<PoliticasErp, PoliticasErp>() {
 			private final Button button = new Button("Excluir");
 
 			@Override
-			protected void updateItem(CriticaErp obj, boolean empty) {
+			protected void updateItem(PoliticasErp obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -234,7 +227,7 @@ public class CriticaErpListController implements Initializable, DadosAlteradosLi
 		});
 	}
 
-	private void removeEntity(CriticaErp objeto) {
+	private void removeEntity(PoliticasErp objeto) {
 		Optional<ButtonType> clicado = Alertas.mostrarConfirmacao("Confirmacao", null, "Tem certeza da delecao?", AlertType.CONFIRMATION );
 		if (clicado.get() == ButtonType.OK) {
 			if (servico == null) {

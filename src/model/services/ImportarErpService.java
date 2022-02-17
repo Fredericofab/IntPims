@@ -16,7 +16,7 @@ import gui.util.Alertas;
 import gui.util.Utilitarios;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import model.entities.CriticaErp;
+import model.entities.PoliticasErp;
 import model.entities.Erp;
 import model.exceptions.TxtIntegridadeException;
 
@@ -58,15 +58,14 @@ public class ImportarErpService {
 	SimpleDateFormat sdf;
 	Date dataMovimento;
 
-	String importar = " ";
-	String observacao = "";
-	String criticas = "";
-	String salvarOS_Material = " ";
-	String salvarCstg_IntVM = " ";
-	String salvarCstg_IntCM = " ";
-	String salvarCstg_IntDG = " ";
-
-
+	String importar;
+	String observacao;
+	String politicas;
+	String salvarOS_Material;
+	String salvarCstg_IntVM;
+	String salvarCstg_IntCM;
+	String salvarCstg_IntDG;
+	
 	public String getEntrada() {
 		return entrada;
 	}
@@ -111,8 +110,6 @@ public class ImportarErpService {
 		}
 		processoAtualService.atualizarEtapa("CriticarErp", "N");
 		processoAtualService.atualizarEtapa("ExportarErp", "N");
-		apagarAnaliseAnteriores();
-		zerarContadorDeCriticas();
 	}
 
 	private void deletarPorOrigem(String origem) {
@@ -178,7 +175,7 @@ public class ImportarErpService {
 			}
 			Erp dadosErp = new Erp(origem, tipoMovimento, anoMes, codCentroCustos, descCentroCustos, codContaContabil,
 					descContaContabil, codMaterial, descMovimento, unidadeMedida, quantidade, precoUnitario,
-					valorMovimento, manfroOS, frotaOuCC, documentoErp, dataMovimento, importar, observacao, criticas,
+					valorMovimento, manfroOS, frotaOuCC, documentoErp, dataMovimento, importar, observacao, politicas,
 					salvarOS_Material, salvarCstg_IntVM, salvarCstg_IntCM, salvarCstg_IntDG, sequencial);
 			return dadosErp;
 		} catch (TxtIntegridadeException e) {
@@ -239,37 +236,32 @@ public class ImportarErpService {
 	}
 
 	private void converteRegistroCD(String[] campos) throws ParseException {
-		System.out.println("Implementar converteRegistroCD");
+		if (campos.length == 16) {
+			tipoMovimento = campos[0];
+			documentoErp = campos[1];
+			anoMes = campos[2];
+			codCentroCustos = Double.parseDouble(campos[3]);
+			descCentroCustos = campos[4];
+			codMaterial = campos[5];
+			descMovimento = campos[6];
+			unidadeMedida = campos[7];
+			quantidade = Double.parseDouble(campos[8]);
+			precoUnitario = Double.parseDouble(campos[9]);
+			valorMovimento = Double.parseDouble(campos[10]);
+			codContaContabil = campos[11];
+			descContaContabil = campos[12];
+			manfroOS = campos[13];
+			frotaOuCC = campos[14];
+			sdf = new SimpleDateFormat(arqEntradaFormatoData);
+			dataMovimento = (Date) sdf.parse(campos[15]);
+			sequencial = sequencial + 1;
+		} else {
+			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado 16 recebido " + campos.length );
+		}
 	}
 
 	private void converteRegistroDG(String[] campos) throws ParseException {
 		System.out.println("Implementar converteRegistroDG");
-	}
-
-	private void zerarContadorDeCriticas() {
-		CriticaErpService criticasErpService = new CriticaErpService();
-		List<CriticaErp> lista = criticasErpService.pesquisarTodos();
-		for (CriticaErp criticasErp : lista) {
-			criticasErp.setAnoMesAnalisado(null);
-			criticasErp.setRegistrosAnalisados(0);
-			criticasErp.setRegistrosLiberados(0);
-			criticasErp.setRegistrosIgnorados(0);
-			criticasErp.setRegistrosPendentes(0);
-			criticasErpService.salvarOuAtualizar(criticasErp);
-		}
-	}
-
-	private void apagarAnaliseAnteriores() {
-		List<Erp> lista = erpService.pesquisarTodos();	
-		for (Erp erp : lista ) {
-			erp.setImportar(null);
-			erp.setSalvarOS_Material(null);
-			erp.setSalvarCstg_IntVM(null);
-			erp.setSalvarCstg_IntCM(null);
-			erp.setSalvarCstg_IntDG(null);
-			erp.setPoliticas(null);
-			erpService.salvarOuAtualizar(erp);
-		}
 	}
 
 	private void lerParametros() {

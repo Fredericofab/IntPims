@@ -48,8 +48,8 @@ public class ErpService {
 		return dao.ultimoSequencial();
 	}
 	
-	public List<Erp> pesquisarCriticaFiltrada(String tipoCritica, Integer codigoCritica, String filtro) {
-		return dao.listarCriticaFiltrada(tipoCritica, codigoCritica, filtro);
+	public List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere) {
+		return dao.pesquisarQuemAtendeAPolitica(codPolitica, clausulaWhere);
 	}
 
 	public List<Erp> pesquisarTodosFiltrado(String filtro) {
@@ -102,7 +102,7 @@ public class ErpService {
 							   dadosErp.getCodContaContabil() + "," + 
 							   dadosErp.getDescContaContabil() + "," + 
 							   dadosErp.getCodMaterial() + "," + 
-							   dadosErp.getDescMovimento() + "," + 
+							   dadosErp.getDescMovimento().replace(",",".") + "," + 
 							   dadosErp.getUnidadeMedida() + "," + 
 							   String.format("%.0f",dadosErp.getQuantidade()) + "," + 
 							   String.format("%.0f",dadosErp.getPrecoUnitario()) + "," + 

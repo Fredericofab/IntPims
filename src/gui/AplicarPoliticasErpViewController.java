@@ -20,40 +20,30 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.entities.CriticaErp;
+import model.entities.PoliticasErp;
 import model.exceptions.IntegridadeException;
-import model.services.AnalisarErpService;
-import model.services.CriticaErpService;
+import model.services.AplicarPoliticasErpService;
+import model.services.PoliticasErpService;
 
-public class AnalisarErpViewController implements Initializable {
+public class AplicarPoliticasErpViewController implements Initializable {
 
-	private AnalisarErpService servico;
-
-	@FXML
-	private TableView<CriticaErp> tableViewCriticasErp;
-	@FXML
-	private TableColumn<CriticaErp, String> tableColumnTipoCritica;
-	@FXML
-	private TableColumn<CriticaErp, Integer> tableColumnCodCritica;
-	@FXML
-	private TableColumn<CriticaErp, String> tableColumnNomeCritica;
-	@FXML
-	private TableColumn<CriticaErp, String> tableColumnFlagAtiva;
-	@FXML
-	private TableColumn<CriticaErp, String> tableColumnAnoMesAnalisado;
-	@FXML
-	private TableColumn<CriticaErp, Integer> tableColumnRegistrosAnalisados;
-	@FXML
-	private TableColumn<CriticaErp, Integer> tableColumnRegistrosLiberados;
-	@FXML
-	private TableColumn<CriticaErp, Integer> tableColumnRegistrosIgnorados;
-	@FXML
-	private TableColumn<CriticaErp, Integer> tableColumnRegistrosPendentes;
+	private AplicarPoliticasErpService servico;
 
 	@FXML
-	private TextField txtTipoCritica;
+	private TableView<PoliticasErp> tableViewPoliticasErp;
 	@FXML
-	private TextField txtCodigoCritica;
+	private TableColumn<PoliticasErp, Integer> tableColumnCodPolitica;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnNomePolitica;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnFlagAtiva;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnAnoMesAnalisado;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnQtdeAplicados;
+
+	@FXML
+	private TextField txtCodPolitica;
 	@FXML
 	private TextField txtTotalRegistros;
 	@FXML
@@ -73,15 +63,15 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	private TextField txtTotalLiberados;
 	@FXML
-	private Button btAnalisarUm;
+	private Button btAplicarUma;
 	@FXML
-	private Button btAnalisarTodos;
+	private Button btAplicarTodas;
 	@FXML
 	private Button btCalcular;
 	@FXML
 	private Button btSair;
 
-	private ObservableList<CriticaErp> obsLista;
+	private ObservableList<PoliticasErp> obsLista;
 
 	@FXML
 	public void onBtSairAction(ActionEvent evento) {
@@ -89,11 +79,10 @@ public class AnalisarErpViewController implements Initializable {
 	}
 
 	@FXML
-	public void onBtAnalisarUmAction(ActionEvent evento) {
-		String tipo = txtTipoCritica.getText().toUpperCase();
-		Integer codigo = Utilitarios.tentarConverterParaInt(txtCodigoCritica.getText());
+	public void onBtAplicarUmaAction(ActionEvent evento) {
+		Integer codigo = Utilitarios.tentarConverterParaInt(txtCodPolitica.getText());
 		try {
-			servico.analisarUm(tipo, codigo);
+			servico.aplicarUma(codigo);
 			atualizarEstatisticaGeral();
 			atualizarTableView();
 		} catch (IntegridadeException e) {
@@ -104,9 +93,9 @@ public class AnalisarErpViewController implements Initializable {
 	}
 
 	@FXML
-	public void onBtAnalisarTodosAction(ActionEvent evento) {
+	public void onBtAplicarTodasAction(ActionEvent evento) {
 		try {
-			servico.analisarTodos();
+			servico.aplicarTodas();
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro na aplicacao do Filtro", e.getMessage(), AlertType.ERROR);
 		} finally {
@@ -118,12 +107,11 @@ public class AnalisarErpViewController implements Initializable {
 	@FXML
 	public void onBtCalcularAction(ActionEvent evento) {
 		atualizarEstatisticaGeral();
-		atualizarEstatisticaPorCritica();
+		atualizarEstatisticaPorPolitica();
 		atualizarTableView();
 	}
 
-
-	public void setAnalisarErpServico(AnalisarErpService servico) {
+	public void setAplicarPoliticaErpServico(AplicarPoliticasErpService servico) {
 		this.servico = servico;
 	}
 
@@ -133,33 +121,22 @@ public class AnalisarErpViewController implements Initializable {
 	}
 
 	private void inicializarComponentes() {
-		tableColumnTipoCritica.setCellValueFactory(new PropertyValueFactory<>("tipoCritica"));
-		tableColumnCodCritica.setCellValueFactory(new PropertyValueFactory<>("codigoCritica"));
-		tableColumnNomeCritica.setCellValueFactory(new PropertyValueFactory<>("nomeCritica"));
+		tableColumnCodPolitica.setCellValueFactory(new PropertyValueFactory<>("codPolitica"));
+		tableColumnNomePolitica.setCellValueFactory(new PropertyValueFactory<>("nomePolitica"));
 		tableColumnFlagAtiva.setCellValueFactory(new PropertyValueFactory<>("flagAtiva"));
-		tableColumnAnoMesAnalisado.setCellValueFactory(new PropertyValueFactory<>("anoMesAnalisado"));
-		tableColumnRegistrosAnalisados.setCellValueFactory(new PropertyValueFactory<>("registrosAnalisados"));
-		tableColumnRegistrosLiberados.setCellValueFactory(new PropertyValueFactory<>("registrosLiberados"));
-		tableColumnRegistrosIgnorados.setCellValueFactory(new PropertyValueFactory<>("registrosIgnorados"));
-		tableColumnRegistrosPendentes.setCellValueFactory(new PropertyValueFactory<>("registrosPendentes"));
 
-		tableColumnTipoCritica.setStyle("-fx-alignment: TOP-CENTER");
-		tableColumnCodCritica.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnCodPolitica.setStyle("-fx-alignment: TOP-RIGHT");
 		tableColumnFlagAtiva.setStyle("-fx-alignment: TOP-CENTER");
-		tableColumnRegistrosAnalisados.setStyle("-fx-alignment: TOP-RIGHT");
-		tableColumnRegistrosLiberados.setStyle("-fx-alignment: TOP-RIGHT");
-		tableColumnRegistrosIgnorados.setStyle("-fx-alignment: TOP-RIGHT");
-		tableColumnRegistrosPendentes.setStyle("-fx-alignment: TOP-RIGHT");
 
-		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodigoCritica);
+		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodPolitica);
 	}
 
 	public void atualizarTableView() {
-		CriticaErpService criticasErpService = new CriticaErpService();
-		List<CriticaErp> lista = criticasErpService.pesquisarTodos();
+		PoliticasErpService politicasErpService = new PoliticasErpService();
+		List<PoliticasErp> lista = politicasErpService.pesquisarTodos();
 		obsLista = FXCollections.observableArrayList(lista);
-		tableViewCriticasErp.setItems(obsLista);
-		tableViewCriticasErp.refresh();
+		tableViewPoliticasErp.setItems(obsLista);
+		tableViewPoliticasErp.refresh();
 	}
 
 	private void atualizarEstatisticaGeral() {
@@ -196,8 +173,8 @@ public class AnalisarErpViewController implements Initializable {
 				
 	}
 	
-	private void atualizarEstatisticaPorCritica() {
-		servico.atualizarEstatisticaPorCritica();
+	private void atualizarEstatisticaPorPolitica() {
+		servico.atualizarEstatisticaPorPolitica();
 	}
 
 }

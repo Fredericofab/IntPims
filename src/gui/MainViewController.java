@@ -19,8 +19,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.ProcessoAtual;
-import model.services.AnalisarErpService;
-import model.services.CriticaErpService;
+import model.services.AplicarPoliticasErpService;
+import model.services.PoliticasErpService;
 import model.services.ErpService;
 import model.services.ExportarFolhaService;
 import model.services.FolhaService;
@@ -61,9 +61,9 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemImportarErpDG;
 	@FXML
-	private MenuItem menuItemCriticarErp;
+	private MenuItem menuItemValidarErp;
 	@FXML
-	private MenuItem menuItemAnalisarErp;
+	private MenuItem menuItemAplicarPoliticasErp;
 	@FXML
 	private MenuItem menuItemExportarErp;
 	@FXML
@@ -77,7 +77,7 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemParametros;
 	@FXML
-	private MenuItem menuItemCriticasErp;
+	private MenuItem menuItemPoliticasErp;
 	
 	@FXML
 	private Menu menuMovimentos;
@@ -175,22 +175,17 @@ public class MainViewController implements Initializable {
 		});
 	}
 	@FXML
-	private void onMenuItemCriticarErpAction() {
-System.out.println("FRED - MAINVIEWCONTROLER");		
-		
-//		Stage paiStage = paiStage();
-//		criarJanelaFilha("/gui/CriticarErpView.fxml", "Critica do ERP", paiStage,
-//				(CriticarErpViewController controle) -> {
-//					controle.setCriticarErpServico(new CriticarErpService());
-//					controle.atualizarTableView();
-//		});
+	private void onMenuItemValidarErpAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/ValidarErpView.fxml", "Validação dos dados importados do ERP", paiStage, x -> {
+		});
 	}
 	@FXML
-	private void onMenuItemAnalisarErpAction() {
+	private void onMenuItemAplicarPoliticasErpAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/AnalisarErpView.fxml", "Analise do ERP", paiStage,
-				(AnalisarErpViewController controle) -> {
-					controle.setAnalisarErpServico(new AnalisarErpService());
+		criarJanelaFilha("/gui/AplicarPoliticasErpView.fxml", "Aplicar Politicas do ERP", paiStage,
+				(AplicarPoliticasErpViewController controle) -> {
+					controle.setAplicarPoliticaErpServico(new AplicarPoliticasErpService());
 					controle.atualizarTableView();
 		});
 	}
@@ -214,11 +209,11 @@ System.out.println("FRED - MAINVIEWCONTROLER");
 				});
 	}
 	@FXML
-	private void onMenuItemCriticasErpAction() {
+	private void onMenuItemPoliticasErpAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/CriticaErpList.fxml", "Criticas do ERP", paiStage,
-				(CriticaErpListController controle) -> {
-					controle.setCriticasErpServico(new CriticaErpService());
+		criarJanelaFilha("/gui/PoliticasErpList.fxml", "Politicas do ERP", paiStage,
+				(PoliticasErpListController controle) -> {
+					controle.setPoliticasErpServico(new PoliticasErpService());
 					controle.atualizarTableView();
 				});
 	}
@@ -322,8 +317,8 @@ System.out.println("FRED - MAINVIEWCONTROLER");
 			menuItemImportarErpMT.setDisable(true);
 			menuItemImportarErpCD.setDisable(true);
 			menuItemImportarErpDG.setDisable(true);
-			menuItemCriticarErp.setDisable(true);
-			menuItemAnalisarErp.setDisable(true);
+			menuItemValidarErp.setDisable(true);
+			menuItemAplicarPoliticasErp.setDisable(true);
 			menuItemExportarErp.setDisable(true);
 		}
 		else {
@@ -339,13 +334,13 @@ System.out.println("FRED - MAINVIEWCONTROLER");
 			if (processoAtual.getImportarErpMT().equals("S") ||
 				processoAtual.getImportarErpCD().equals("S") ||
 				processoAtual.getImportarErpDG().equals("S")) {
-				menuItemCriticarErp.setDisable(false);
+				menuItemValidarErp.setDisable(false);
 			}
 			else {
-				menuItemCriticarErp.setDisable(true);
+				menuItemValidarErp.setDisable(true);
 			}
-			menuItemAnalisarErp.setDisable(processoAtual.getCriticarErp().equals("S") ? false : true);
-			menuItemExportarErp.setDisable(processoAtual.getAnalisarErp().equals("S") ? false : true);
+			menuItemAplicarPoliticasErp.setDisable(processoAtual.getValidarErp().equals("S") ? false : true);
+			menuItemExportarErp.setDisable(processoAtual.getAplicarPoliticaErp().equals("S") ? false : true);
 		}
 	}
 	
@@ -364,10 +359,10 @@ System.out.println("FRED - MAINVIEWCONTROLER");
 
 			Stage janelaFilhaStage = new Stage();
 			janelaFilhaStage.setTitle(titulo);
-			janelaFilhaStage.setScene(new Scene(pane)); // a cena é exatamente a view carregada
-			janelaFilhaStage.setResizable(true); // pode ser redimensionada
-			janelaFilhaStage.initOwner(paiStage); // quem é o pai dessa janela
-			janelaFilhaStage.initModality(Modality.WINDOW_MODAL); // fica preso na janela
+			janelaFilhaStage.setScene(new Scene(pane)); 
+			janelaFilhaStage.setResizable(true); 
+			janelaFilhaStage.initOwner(paiStage); 
+			janelaFilhaStage.initModality(Modality.WINDOW_MODAL); 
 			janelaFilhaStage.showAndWait();
 
 		} catch (IOException e) {

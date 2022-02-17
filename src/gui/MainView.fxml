@@ -27,8 +27,8 @@
                         <MenuItem fx:id="menuItemImportarErpMT" mnemonicParsing="false" onAction="#onMenuItemImportarErpMTAction" text="Importar ErpMT (Requisicao Materiais)" />
                         <MenuItem fx:id="menuItemImportarErpCD" mnemonicParsing="false" onAction="#onMenuItemImportarErpCDAction" text="Importar ErpCD (Compras Diretas)" />
                         <MenuItem fx:id="menuItemImportarErpDG" mnemonicParsing="false" onAction="#onMenuItemImportarErpDGAction" text="Importar ErpDG (Despesas Gerais)" />
-                        <MenuItem fx:id="menuItemCriticarErp" mnemonicParsing="false" text="Criticar ERP" />
-                        <MenuItem fx:id="menuItemAnalisarErp" mnemonicParsing="false" onAction="#onMenuItemAnalisarErpAction" text="Analisar ERP" />
+                        <MenuItem fx:id="menuItemValidarErp" mnemonicParsing="false" onAction="#onMenuItemValidarErpAction" text="Validar ERP" />
+                        <MenuItem fx:id="menuItemAplicarPoliticasErp" mnemonicParsing="false" onAction="#onMenuItemAplicarPoliticasErpAction" text="Aplicar Politicas ERP" />
                         <MenuItem fx:id="menuItemExportarErp" mnemonicParsing="false" onAction="#onMenuItemExportarErpAction" text="Exportar ERP" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="menuItemSair2" mnemonicParsing="false" onAction="#onMenuItemSairAction" text="Sair" />
@@ -48,7 +48,7 @@
                 <Menu fx:id="menuTabelas" mnemonicParsing="false" text="Tabelas">
                   <items>
                         <MenuItem fx:id="menuItemVerbaFolha" mnemonicParsing="false" onAction="#onMenuItemVerbaFolhaAction" text="Verbas da Folha" />
-                        <MenuItem fx:id="menuItemCriticasErp" mnemonicParsing="false" onAction="#onMenuItemCriticasErpAction" text="Criticas do ERP" />
+                        <MenuItem fx:id="menuItemPoliticasErp" mnemonicParsing="false" onAction="#onMenuItemPoliticasErpAction" text="Politicas do ERP" />
                     <MenuItem fx:id="menuItemParametros" mnemonicParsing="false" onAction="#onMenuItemParametrosAction" text="Parametros" />
                   </items>
                 </Menu>

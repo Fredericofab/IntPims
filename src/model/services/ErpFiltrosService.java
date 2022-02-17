@@ -13,41 +13,13 @@ public class ErpFiltrosService {
 
 	String anoMes;
 
-	public List<String> criarListaCamposOracle() {
-		List<String> listaCamposOracle = new ArrayList<String>();
-		listaCamposOracle.add("Origem da Importacao		ORIGEM ");
-		listaCamposOracle.add("Ano e Mes de Referencia	ANO_MES ");
-		listaCamposOracle.add("Codigo Centro de Custos	COD_CENTRO_CUSTOS ");
-		listaCamposOracle.add("Descricao Centro de Custos	DESC_CENTRO_CUSTOS ");
-		listaCamposOracle.add("Codigo Conta Contabil		COD_CONTA_CONTABIL ");
-		listaCamposOracle.add("Descricao Conta Contabil	DESC_CONTA_CONTABIL ");
-		listaCamposOracle.add("Codigo Material			COD_MATERIAL ");
-		listaCamposOracle.add("Desc.  Material / Movimento	DESC_MOVIMENTO ");	
-		listaCamposOracle.add("Unidade de Medida			UNIDADE_MEDIDA ");
-		listaCamposOracle.add("Quantidade				QUANTIDADE ");
-		listaCamposOracle.add("Preco Unitario				PRECO_UNITARIO ");
-		listaCamposOracle.add("Valor do Movimento		VALOR_MOVIMENTO ");
-		listaCamposOracle.add("Referencia da O.S			REFERENCIA_OS ");
-		listaCamposOracle.add("Numero da O.S.			NUMERO_OS ");
-		listaCamposOracle.add("Documento no ERP			DOCUMENTO_ERP ");
-		listaCamposOracle.add("Data Movimento			DATA_MOVIMENTO ");
-		listaCamposOracle.add("Flag Importar				IMPORTAR ");
-		listaCamposOracle.add("Observacao				OBSERVACAO ");
-		listaCamposOracle.add("Criticas					CRITICAS ");
-		listaCamposOracle.add("Flag Salvar Material na OS	SALVAR_OS_MATERIAL ");
-		listaCamposOracle.add("Flag Salvar Valor do Material	SALVAR_CSTG_INTVM ");
-		listaCamposOracle.add("Flag Salvar Consumo Material	SALVAR_CSTG_INTCM ");
-		listaCamposOracle.add("Flag Salvar Despesas Gerais	SALVAR_CSTG_INTDG ");
-		listaCamposOracle.add("Numero do Registro		SEQUENCIAL ");
-		return listaCamposOracle;
-	}
 	
-	public void salvarFiltro(String importar, String critica, String filtro) {
+	public void salvarFiltro(String importar, String politica, String filtro) {
 		String clausulaWhere;
 		if (filtro != null) {
 			clausulaWhere = filtro;
 		} else {
-			clausulaWhere = montarFiltro(importar, critica);
+			clausulaWhere = montarFiltro(importar, politica);
 		}
 		gravarWhere(clausulaWhere);
 	}	
@@ -60,10 +32,10 @@ public class ErpFiltrosService {
 		dao.atualizar(processoAtual);
 	}
 
-	private String montarFiltro(String importar, String critica) {
+	private String montarFiltro(String importar, String politica) {
 		String clausulaWhere  = "";
 		String filtroImportar = "";;
-		String filtroCritica  = "";
+		String filtroPolitica  = "";
 
 		if (importar != null) {
 			if (importar.toLowerCase().equals("x") ) {
@@ -73,12 +45,12 @@ public class ErpFiltrosService {
 				filtroImportar =  ("IMPORTAR = '" + importar + "'") ;
 			}
 		}
-		filtroCritica = (critica != null) ? ("CRITICAS LIKE '%" + critica + "%'") : "";
+		filtroPolitica = (politica != null) ? ("POLITICAS LIKE '%" + politica + "%'") : "";
 
-		if (importar != null && critica != null) {
-			clausulaWhere = filtroImportar + " AND " + filtroCritica;
+		if (importar != null && politica != null) {
+			clausulaWhere = filtroImportar + " AND " + filtroPolitica;
 		} else {
-			clausulaWhere = filtroImportar + filtroCritica;
+			clausulaWhere = filtroImportar + filtroPolitica;
 		}
 		return clausulaWhere;
 	}

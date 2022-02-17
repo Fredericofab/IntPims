@@ -335,10 +335,10 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 
 			Stage janelaFilhaStage = new Stage();
 			janelaFilhaStage.setTitle(titulo);
-			janelaFilhaStage.setScene(new Scene(pane)); // a cena é exatamente a view carregada
-			janelaFilhaStage.setResizable(true); // pode ser redimensionada
-			janelaFilhaStage.initOwner(paiStage); // quem é o pai dessa janela
-			janelaFilhaStage.initModality(Modality.WINDOW_MODAL); // fica preso na janela
+			janelaFilhaStage.setScene(new Scene(pane)); 
+			janelaFilhaStage.setResizable(true); 
+			janelaFilhaStage.initOwner(paiStage); 
+			janelaFilhaStage.initModality(Modality.WINDOW_MODAL); 
 			janelaFilhaStage.showAndWait();
 
 		} catch (IOException e) {

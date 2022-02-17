@@ -51,9 +51,9 @@ public class ProcessoAtualViewController implements Initializable {
 	@FXML
 	private TextField txtImportarErpDG;
 	@FXML
-	private TextField txtCriticarErp;
+	private TextField txtValidarErp;
 	@FXML
-	private TextField txtAnalisarErp;
+	private TextField txtAplicarPoliticaErp;
 	@FXML
 	private TextField txtExportarErp;
 
@@ -141,8 +141,8 @@ public class ProcessoAtualViewController implements Initializable {
 		entidade.setImportarErpMT("N");
 		entidade.setImportarErpCD("N");
 		entidade.setImportarErpDG("N");
-		entidade.setCriticarErp("N");
-		entidade.setAnalisarErp("N");
+		entidade.setValidarErp("N");
+		entidade.setAplicarPoliticaErp("N");
 		entidade.setExportarErp("N");
 		entidade.setVerbaAlterada("N");
 		entidade.setFolhaAlterada("N");
@@ -159,8 +159,8 @@ public class ProcessoAtualViewController implements Initializable {
 		txtImportarErpMT.setText(entidade.getImportarErpMT());
 		txtImportarErpCD.setText(entidade.getImportarErpCD());
 		txtImportarErpDG.setText(entidade.getImportarErpDG());
-		txtCriticarErp.setText(entidade.getCriticarErp());
-		txtAnalisarErp.setText(entidade.getAnalisarErp());
+		txtValidarErp.setText(entidade.getValidarErp());
+		txtAplicarPoliticaErp.setText(entidade.getAplicarPoliticaErp());
 		txtExportarErp.setText(entidade.getExportarErp());
 		txtVerbaAlterada.setText(entidade.getVerbaAlterada());
 		txtFolhaAlterada.setText(entidade.getFolhaAlterada());
@@ -178,8 +178,8 @@ public class ProcessoAtualViewController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpMT, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpCD, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpDG, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCriticarErp, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnalisarErp, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtValidarErp, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAplicarPoliticaErp, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErp, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtVerbaAlterada, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtFolhaAlterada, 1);
@@ -200,8 +200,8 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setImportarErpMT(txtImportarErpMT.getText());
 		objeto.setImportarErpCD(txtImportarErpCD.getText());
 		objeto.setImportarErpDG(txtImportarErpDG.getText());
-		objeto.setCriticarErp(txtCriticarErp.getText());
-		objeto.setAnalisarErp(txtAnalisarErp.getText());
+		objeto.setValidarErp(txtValidarErp.getText());
+		objeto.setAplicarPoliticaErp(txtAplicarPoliticaErp.getText());
 		objeto.setExportarErp(txtExportarErp.getText());
 		objeto.setVerbaAlterada(txtVerbaAlterada.getText());
 		objeto.setFolhaAlterada(txtFolhaAlterada.getText());
@@ -215,8 +215,8 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setImportarErpMT(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpMT.getText()));
 		objeto.setImportarErpCD(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpCD.getText()));
 		objeto.setImportarErpDG(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpDG.getText()));
-		objeto.setCriticarErp(Utilitarios.tentarConverterParaMaiusculo(txtCriticarErp.getText()));
-		objeto.setAnalisarErp(Utilitarios.tentarConverterParaMaiusculo(txtAnalisarErp.getText()));
+		objeto.setValidarErp(Utilitarios.tentarConverterParaMaiusculo(txtValidarErp.getText()));
+		objeto.setAplicarPoliticaErp(Utilitarios.tentarConverterParaMaiusculo(txtAplicarPoliticaErp.getText()));
 		objeto.setExportarErp(Utilitarios.tentarConverterParaMaiusculo(txtExportarErp.getText()));
 		objeto.setVerbaAlterada(Utilitarios.tentarConverterParaMaiusculo(txtVerbaAlterada.getText()));
 		objeto.setFolhaAlterada(Utilitarios.tentarConverterParaMaiusculo(txtFolhaAlterada.getText()));

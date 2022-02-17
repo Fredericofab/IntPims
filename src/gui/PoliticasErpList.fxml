@@ -7,7 +7,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="353.0" prefWidth="948.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CriticaErpListController">
+<VBox prefHeight="353.0" prefWidth="948.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PoliticasErpListController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -18,12 +18,11 @@
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewDadosCriticasErp" prefHeight="311.0" prefWidth="792.0">
+      <TableView fx:id="tableViewDadosPoliticasErp" prefHeight="311.0" prefWidth="792.0">
         <columns>
-          <TableColumn fx:id="tableColumnTipoCritica" prefWidth="32.0" text="Tipo" />
-          <TableColumn fx:id="tableColumnCodCritica" prefWidth="46.0" text="Codigo" />
-            <TableColumn fx:id="tableColumnNomeCritica" prefWidth="294.0" text="Critica" />
-            <TableColumn fx:id="tableColumnDescCritica" prefWidth="250.0" text="Descricao" />
+          <TableColumn fx:id="tableColumnCodPolitica" prefWidth="46.0" text="Codigo" />
+            <TableColumn fx:id="tableColumnNomePolitica" prefWidth="294.0" text="Politica" />
+            <TableColumn fx:id="tableColumnDescPolitica" prefWidth="250.0" text="Descricao" />
             <TableColumn fx:id="tableColumnFlagAtiva" prefWidth="40.0" text="Ativa" />
             <TableColumn fx:id="tableColumnImportar" prefWidth="55.0" text="Importar" />
             <TableColumn fx:id="tableColumnSalvarOS_Material" prefWidth="25.0" text="OS" />
