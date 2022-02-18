@@ -29,7 +29,8 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 			Integer contagem = st.getUpdateCount();
 			return contagem;
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao do CSTG_INTFP " + dataref + "\n" + e.getMessage());
+			throw new DbException("Tabela CSTG_INTFP \n \n" + e.getMessage() + "\n \n" 
+								+ "Data de Referencia " + dataref);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -51,12 +52,33 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 			st.setString(6, cstg_IntFP.getInstancia());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Insercao do CSTG_INTFP " + "\n" + e.getMessage());
+			throw new DbException("Tabela CSTG_INTFP \n \n" + e.getMessage() + "\n \n" 
+								+ "Registro " + cstg_IntFP);
 		} finally {
 			DB.fecharStatement(st);
 		}
 	}
 
+	@Override
+	public Boolean existeCCustos(Double codCCustos, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".ccustos WHERE cd_ccusto = ?");
+			st.setDouble(1, codCCustos);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			throw new DbException("Tabela CCUSTOS \n \n" + e.getMessage() + "\n \n" 
+								+ "Centro de Custos: "+ codCCustos);
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
 
 	@Override
 	public Boolean existeApt_os_he(String numeroOS, String usuarioPimsCS) {
@@ -71,13 +93,13 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 			}
 			return false;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa " + e.getMessage());
+			throw new DbException("Tabela APT_OS_HE \n \n" + e.getMessage() + "\n \n" 
+					+ "Numero da OS " + numeroOS);
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
 		}
 	}
-
 
 	@Override
 	public Date dataSaidaApt_os_he(String numeroOS, String usuarioPimsCS) {
@@ -96,7 +118,50 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa " + e.getMessage());
+			throw new DbException("Tabela APT_OS_HE (Data de Saida) \n \n" + e.getMessage() + "\n \n" 
+					+ "Numero da OS " + numeroOS);
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Double codCCustoApt_os_he(String numeroOS, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".apt_os_he WHERE no_boletim = ?");
+			st.setString(1, numeroOS);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				return rs.getDouble("cd_ccusto");
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela APT_OS_HE (Centro de Custos) \n \n" + e.getMessage() + "\n \n" 
+					+ "Numero da OS " + numeroOS);
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	@Override
+	public Double codEquiptoApt_os_he(String numeroOS, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".apt_os_he WHERE no_boletim = ?");
+			st.setString(1, numeroOS);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				return rs.getDouble("cd_equipto");
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela APT_OS_HE (Equipamentos) \n \n" + e.getMessage() + "\n \n" 
+					+ "Numero da OS " + numeroOS);
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);

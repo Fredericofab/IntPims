@@ -132,7 +132,7 @@ public class MainViewController implements Initializable {
 			servico.processar();
 			Alertas.mostrarAlertas(null, "Registros gravados com Sucesso no CSTG_INTFP", null, AlertType.INFORMATION);
 		} catch (DbException e) {
-			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo CSTG_INTFP", e.getMessage(),
+			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
 					AlertType.ERROR);
 		}
 	}

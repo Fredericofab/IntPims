@@ -2,19 +2,16 @@ package model.services;
 
 import java.util.List;
 
-import model.dao.FabricaDeDao;
-import model.dao.PimsGeralDao;
 import model.entities.Cstg_IntPF;
 import model.entities.FolhaSumarizada;
 
 public class ExportarFolhaService {
 
-	private PimsGeralDao dao = FabricaDeDao.criarPimsGeralDao();
-
 	private	FolhaSumarizadaService folhaSumarizadaService = new FolhaSumarizadaService();
 	private FolhaService folhaService = new FolhaService();
 	private VerbasFolhaService verbasDaFolhaService = new VerbasFolhaService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
+	private PimsGeralService pimsGeralService = new PimsGeralService();
 
 //	parametros
 	String anoMes;
@@ -42,7 +39,7 @@ public class ExportarFolhaService {
 	}
 
 	private void deletarCstgIntFP(String dataref) {
-		dao.deletarCstg_IntFP(dataref, usuarioPimsCS);
+		pimsGeralService.deletarCstg_IntFP(dataref, usuarioPimsCS);
 	}
 
 	private void gravarCstgIntFP(String dataref, String usuarioPimsCS) {
@@ -55,14 +52,11 @@ public class ExportarFolhaService {
 			cstg_intfp.setQtHoras(sumarioFolha.getTotalReferenciaSim());
 			cstg_intfp.setQtValor(sumarioFolha.getTotalImportarSim());
 			cstg_intfp.setInstancia(instancia);
-			dao.gravarCstg_IntFP(cstg_intfp, usuarioPimsCS);
+			pimsGeralService.gravarCstg_IntFP(cstg_intfp, usuarioPimsCS);
 		}
 	}
 
 	private Double colocarPrefixo(String prefixo, Double codCCusto) {
-//		Integer tamanho = (String.format("%.0f", codCCusto)).length();
-//		String x = prefixo.repeat(10 - tamanho);
-//		Double cdFunc = Double.parseDouble((x + codCCusto.toString()));
 		Double cdFunc = Double.parseDouble(prefixo) + codCCusto;
 		return cdFunc;
 	}

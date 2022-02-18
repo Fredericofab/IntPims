@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="388.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ValidarErpViewController">
+<VBox prefHeight="388.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ValidarErpViewController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -31,7 +31,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -53,7 +56,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txtRegCCInexistentes" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtCCInexistentes" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="labelMsgCCInexistentes" text="xxxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label text="Materiais sem Conversão de UN" GridPane.rowIndex="3">
                <GridPane.margin>
@@ -62,28 +65,49 @@
             </Label>
             <TextField fx:id="txtMatSemConversao" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="labelMsgMatSemConversao" text="xxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label text="O.S. Iniexistentes" GridPane.rowIndex="4">
+            <Label text="O.S. Válidas" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txtOSInexistentes" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="labelMsgOSInexistentes" text="xxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Label text="O.S. Incoerente (frota ou CC)" GridPane.rowIndex="5">
+            <TextField fx:id="txtOSValidas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="labelMsgOSValidas" text="xxx" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="O.S. Falta NumeroOS ou Frota/CC" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txtOSIncoerentes" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label fx:id="labelMsgOSIncoerentes" text="xxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Label text="O.S. Muito Antigas" GridPane.rowIndex="6">
+            <TextField fx:id="txtFaltaOSouFrotaCC" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="labelMsgFaltaOSouFrotaCC" text="xxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label text="O.S. Iniexistentes" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txtOSAntigas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="labelMsgRegIncluidos" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Label fx:id="labelMsgOSAntigas" text="xxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <TextField fx:id="txtOSInexistentes" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="labelMsgOSInexistentes" text="xxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label text="O.S. Incoerentes (frota ou CC)" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="txtOSIncoerentes" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="labelMsgOSIncoerentes" text="xxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label text="O.S. Muito Antigas" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="txtOSAntigas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label fx:id="labelMsgRegIncluidos" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Label fx:id="labelMsgOSAntigas" text="xxx" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Label text="Materiais da Oficina sem OS" GridPane.rowIndex="9">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtMatSemOS" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label fx:id="labelMsgMatSemOS" text="xxx" GridPane.columnIndex="2" GridPane.rowIndex="9" />
          </children>
          <VBox.margin>
             <Insets top="30.0" />

@@ -28,6 +28,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -111,6 +112,8 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	
 	@FXML
 	private TextArea txtAreaFiltro;
+	@FXML
+	private TextField txtQtdeReg;
 	@FXML
 	private Button btIncluir;
 	@FXML
@@ -216,14 +219,16 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 			if (servico == null) {
 				throw new IllegalStateException("o servico nao foi carregado pelo outro programador");
 			}
-			lerClausulaWhere();
+			lerFiltroMovimentoErp();
 			txtAreaFiltro.setText(filtro);
+
 			List<Erp> lista;
 			lista = (filtro == null) ? servico.pesquisarTodos() : servico.pesquisarTodosFiltrado(filtro);
-	
 			obsLista = FXCollections.observableArrayList(lista);
 			tableViewDadosErp.setItems(obsLista);
 			
+			txtQtdeReg.setText(String.format("%d", lista.size()));
+		
 			initEditButtons();
 			initRemoveButtons();
 		} catch (DbException e) {
@@ -231,7 +236,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		}
 	}
 
-	private void lerClausulaWhere() {
+	private void lerFiltroMovimentoErp() {
 		ProcessoAtualService processoAtualService = new ProcessoAtualService();
 		ProcessoAtual processoAtual = processoAtualService.pesquisarPorChave(anoMes);
 		filtro = processoAtual.getFiltroErp();
