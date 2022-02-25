@@ -1,9 +1,10 @@
 package model.services;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.Set;
 import db.DbException;
 import gui.util.Alertas;
 import gui.util.Utilitarios;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import model.entities.Folha;
 import model.entities.VerbasFolha;
 import model.exceptions.TxtIntegridadeException;
@@ -115,7 +116,7 @@ public class ImportarFolhaService {
 		lista = new ArrayList<Folha>();
 		setVerbas = new HashSet<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(entrada))) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(entrada),"UTF-8"))) {
 			linha = br.readLine();
 			while (linha != null) {
 				qtdeLidas = qtdeLidas + 1;
@@ -175,8 +176,7 @@ public class ImportarFolhaService {
 		}
 	}
 
-	private Folha converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha)
-			throws TxtIntegridadeException {
+	private Folha converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha) {
 		String[] campos = linha.split(arqEntradaDelimitador);
 		if ( numeroLinha == 1 ) {
 			campos[0] = Utilitarios.excluiCaracterNaoEditavel(campos[0], 6);

@@ -26,17 +26,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import model.entities.PoliticasErp;
 import model.exceptions.ValidacaoException;
-import model.services.PoliticasErpService;
 import model.services.ParametrosService;
+import model.services.PoliticasErpService;
 
 public class PoliticasErpFormController implements Initializable {
 
 	private PoliticasErp entidade;
-	
 	private PoliticasErpService servico;
 	private ParametrosService parametrosService = new ParametrosService();
-
-	
 	private List<DadosAlteradosListener> ouvintes = new ArrayList<DadosAlteradosListener>();
 	
 //	Parametros
@@ -47,7 +44,6 @@ public class PoliticasErpFormController implements Initializable {
 	private TextField txtCodPolitica; 
 	@FXML
 	private TextField txtFlagAtiva;
-	
 	@FXML
 	private TextField txtImportar;
 	@FXML
@@ -73,8 +69,9 @@ public class PoliticasErpFormController implements Initializable {
 	@FXML
 	private Label labelErroAtiva;	
 	@FXML
-	private Label labelErroImportar;
-
+	private Label labelErroAcao;
+	@FXML
+	private Label labelErroImportar;	
 	@FXML
 	private Label labelErroDescPolitica;
 	@FXML
@@ -89,12 +86,6 @@ public class PoliticasErpFormController implements Initializable {
 
 	@FXML
 	public void onBtSalvarAction(ActionEvent evento) {
-		if (entidade == null) {
-			throw new IllegalStateException("o outro programador esqueceu de injetar a entuidade");
-		}
-		if (servico == null) {
-			throw new IllegalStateException("o outro programador esqueceu de injetar o servico");
-		}
 		try {
 			entidade = getDadosDoForm();
 			entidade = substituirNull(entidade);
@@ -109,7 +100,6 @@ public class PoliticasErpFormController implements Initializable {
 			Alertas.mostrarAlertas("erro Salvando DadosPoliticasErp", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
 
 	@FXML
 	public void onBtCancelarAction(ActionEvent evento) {
@@ -156,7 +146,7 @@ public class PoliticasErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntCM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntDG, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtFlagAtiva);
-		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtImportar);
+		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtImportar);
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarOS_Material);
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntVM);
 		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntCM);
@@ -233,34 +223,38 @@ public class PoliticasErpFormController implements Initializable {
 		objeto.setSalvarCstg_IntDG(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntDG.getText()));
 		objeto.setClausulaWhere(txtAreaClausulaWhere.getText());
 
-		if (txtFlagAtiva.getText() == null || txtFlagAtiva.getText().trim().equals("")) {
+		substituirEspacoPorNull();
+		int acoesSim = contarAcoes("S");
+		int acoesInterrogacao = contarAcoes("?");
+
+		if (txtFlagAtiva.getText() == null ) {
 			validacao.adicionarErro("txtFlagAtiva", "Informe se essa Politica esta Ativa ou Nao");
 		}
 		
-		if (txtImportar.getText() == null || txtImportar.getText().trim().equals("")) {
-			validacao.adicionarErro("txtImportar", "Informe se é para Importar ou Nao");
+		if ( txtImportar.getText() == null && txtSalvarCstg_IntVM.getText() == null ) {
+			validacao.adicionarErro("acao", "Informe qual Ação: Salvar VM ou Importar ?");
+		}
+		if ( txtImportar.getText() != null && txtSalvarCstg_IntVM.getText() != null ) {
+			validacao.adicionarErro("acao", "Informe apenas UMA Ação: Salvar VM ou Importar.");
 		}
 
 		if (txtImportar.getText() != null) {
-			String as4acoes = ( (txtSalvarOS_Material.getText() == null) ? " " : txtSalvarOS_Material.getText().toUpperCase() )
-							+ ( (txtSalvarCstg_IntVM.getText()  == null) ? " " : txtSalvarCstg_IntVM.getText().toUpperCase() )
-							+ ( (txtSalvarCstg_IntCM.getText()  == null) ? " " : txtSalvarCstg_IntCM.getText().toUpperCase() )
-							+ ( (txtSalvarCstg_IntDG.getText()  == null) ? " " : txtSalvarCstg_IntDG.getText().toUpperCase() ) ;
-			if ( txtImportar.getText().toUpperCase().equals("S")  &&  as4acoes.indexOf("S") == -1 &&  as4acoes.indexOf("?") == -1  ) { 
-				validacao.adicionarErro("txtImportar", "Importar SIM. Então infome pelo menos um Salvar");
-			}
-			if ( txtImportar.getText().toUpperCase().equals("N")  &&  ( as4acoes.indexOf("S") != -1  || as4acoes.indexOf("?") != -1)) {
+			if (txtImportar.getText().toUpperCase().equals("S") && ( (acoesSim + acoesInterrogacao) != 1 ) ) { 
+				validacao.adicionarErro("txtImportar", "Importar SIM. Então infome um, e apenas um, Salvar");
+				}
+			if ( txtImportar.getText().toUpperCase().equals("N")  &&  (acoesSim + acoesInterrogacao) != 0 ) {
 				validacao.adicionarErro("txtImportar", "Importar NAO. Então nao faz sentido ter algum Salvar");
 			}
 		}
 
-		if (txtCodPolitica.getText() == null || txtCodPolitica.getText().trim().equals("")) {
-			validacao.adicionarErro("txtPolitica", "Informe o Codigo para essa Politica");
-		}
 		
 		if (txtNomePolitica.getText() == null || txtNomePolitica.getText().trim().equals("")) {
 			validacao.adicionarErro("txtPolitica", "Informe um Nome para essa Politica");
 		}
+		if (txtCodPolitica.getText() == null || txtCodPolitica.getText().trim().equals("")) {
+			validacao.adicionarErro("txtPolitica", "Informe o Codigo para essa Politica");
+		}
+
 		if (txtAreaDescPolitica.getText() == null || txtAreaDescPolitica.getText().trim().equals("")) {
 			validacao.adicionarErro("txtDescPolitica", "Informe uma descricao para essa Politica");
 		}
@@ -274,17 +268,51 @@ public class PoliticasErpFormController implements Initializable {
 		return objeto;
 	}
 
+	private int contarAcoes(String simNaoInterogacao) {
+		int contaOS = 0;
+		int contaCM = 0;
+		int contaDG = 0;
+		if ( txtSalvarOS_Material.getText() != null ) {
+			contaOS = (txtSalvarOS_Material.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		}
+		if ( txtSalvarCstg_IntCM.getText() != null ) {
+			contaCM = (txtSalvarCstg_IntCM.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		}
+		if ( txtSalvarCstg_IntDG.getText() != null ) {
+			contaDG = (txtSalvarCstg_IntDG.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		}
+		return contaOS + contaCM + contaDG;
+	}
+
+	private void substituirEspacoPorNull() {
+		if ((txtImportar.getText() != null && txtImportar.getText().equals(" "))) {
+			txtImportar.setText(null);
+		}
+		if ((txtSalvarCstg_IntVM.getText() != null && txtSalvarCstg_IntVM.getText().equals(" "))) {
+			txtSalvarCstg_IntVM.setText(null);
+		}
+		if ((txtSalvarCstg_IntCM.getText() != null && txtSalvarCstg_IntCM.getText().equals(" "))) {
+			txtSalvarCstg_IntCM.setText(null);
+		}
+		if ((txtSalvarCstg_IntDG.getText() != null && txtSalvarCstg_IntDG.getText().equals(" "))) {
+			txtSalvarCstg_IntDG.setText(null);
+		}
+		if ((txtSalvarCstg_IntVM.getText() != null && txtSalvarCstg_IntVM.getText().equals(" "))) {
+			txtSalvarCstg_IntVM.setText(null);
+		}
+	}
+
 	private PoliticasErp substituirNull(PoliticasErp objeto) {
 		if (objeto.getRegistrosAplicados() == null) objeto.setRegistrosAplicados(0);
 		return objeto;
 	}
-	
 	
 	private void mostrarErrosDeDigitacao(Map<String, String> erros) {
 		Set<String> campos = erros.keySet();
 		labelErroPolitica.setText((campos.contains("txtPolitica") ? erros.get("txtPolitica") : ""));
 		labelErroClausulaWhere.setText((campos.contains("txtClausulaWhere") ? erros.get("txtClausulaWhere") : ""));
 		labelErroAtiva.setText((campos.contains("txtFlagAtiva") ? erros.get("txtFlagAtiva") : ""));
+		labelErroAcao.setText((campos.contains("acao") ? erros.get("acao") : ""));
 		labelErroDescPolitica.setText((campos.contains("txtDescPolitica") ? erros.get("txtDescPolitica") : ""));
 		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
 	}

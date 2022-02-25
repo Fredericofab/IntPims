@@ -23,6 +23,7 @@ import model.services.AplicarPoliticasErpService;
 import model.services.PoliticasErpService;
 import model.services.ErpService;
 import model.services.ExportarFolhaService;
+import model.services.FatorMedidaService;
 import model.services.FolhaService;
 import model.services.FolhaSumarizadaService;
 import model.services.FuncionariosService;
@@ -69,16 +70,6 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemSair;
 
-	
-	@FXML
-	private Menu menuTabelas;
-	@FXML
-	private MenuItem menuItemVerbaFolha;
-	@FXML
-	private MenuItem menuItemParametros;
-	@FXML
-	private MenuItem menuItemPoliticasErp;
-	
 	@FXML
 	private Menu menuMovimentos;
 	@FXML
@@ -91,6 +82,18 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemFuncionariosSumarizados;
 	@FXML
 	private MenuItem menuItemErp;
+
+	
+	@FXML
+	private Menu menuTabelas;
+	@FXML
+	private MenuItem menuItemVerbaFolha;
+	@FXML
+	private MenuItem menuItemFatorMedida;
+	@FXML
+	private MenuItem menuItemPoliticasErp;
+	@FXML
+	private MenuItem menuItemParametros;
 
 	@FXML
 	private Menu menuAjuda;
@@ -205,6 +208,16 @@ public class MainViewController implements Initializable {
 		criarJanelaFilha("/gui/VerbaFolhaList.fxml", "Cadastro de Verbas da Folha", paiStage,
 				(VerbasFolhaListController controle) -> {
 					controle.setVerbaFolhaServico(new VerbasFolhaService());
+					controle.atualizarTableView();
+				});
+	}
+	
+	@FXML
+	private void onMenuItemFatorMedidaAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/FatorMedidaList.fxml", "Cadastro dos Fatores de Conversao das Medidas", paiStage,
+				(FatorMedidaListController controle) -> {
+					controle.setFatorMedidaServico(new FatorMedidaService());
 					controle.atualizarTableView();
 				});
 	}
@@ -331,8 +344,8 @@ public class MainViewController implements Initializable {
 			menuItemSumarizarFolha.setDisable(processoAtual.getImportarFolha().equals("S") ? false : true);
 			menuItemExportarFolha.setDisable(processoAtual.getSumarizarFolha().equals("S") ? false : true);
 			menuItemSumarizarFuncionarios.setDisable(processoAtual.getImportarFuncionario().equals("S") ? false : true);
-			if (processoAtual.getImportarErpMT().equals("S") ||
-				processoAtual.getImportarErpCD().equals("S") ||
+			if (processoAtual.getImportarErpMT().equals("S") &&
+				processoAtual.getImportarErpCD().equals("S") &&
 				processoAtual.getImportarErpDG().equals("S")) {
 				menuItemValidarErp.setDisable(false);
 			}

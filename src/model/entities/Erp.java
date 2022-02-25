@@ -26,6 +26,7 @@ public class Erp implements Serializable {
 	private Date dataMovimento;
 	private String importar;
 	private String observacao;
+	private String validacoesOS;
 	private String politicas;
 	private String salvarOS_Material;
 	private String salvarCstg_IntVM;
@@ -35,13 +36,12 @@ public class Erp implements Serializable {
 
 	public Erp() {
 	}
-
 	public Erp(String origem, String tipoMovimento, String anoMes, Double codCentroCustos, String descCentroCustos,
 			String codContaContabil, String descContaContabil, String codMaterial, String descMovimento,
 			String unidadeMedida, Double quantidade, Double precoUnitario, Double valorMovimento, String numeroOS,
 			String frotaOuCC, String documentoErp, Date dataMovimento, String importar, String observacao,
-			String politicas, String salvarOS_Material, String salvarCstg_IntVM, String salvarCstg_IntCM,
-			String salvarCstg_IntDG, Integer sequencial) {
+			String validacoesOS, String politicas, String salvarOS_Material, String salvarCstg_IntVM,
+			String salvarCstg_IntCM, String salvarCstg_IntDG, Integer sequencial) {
 		super();
 		this.origem = origem;
 		this.tipoMovimento = tipoMovimento;
@@ -62,6 +62,7 @@ public class Erp implements Serializable {
 		this.dataMovimento = dataMovimento;
 		this.importar = importar;
 		this.observacao = observacao;
+		this.validacoesOS = validacoesOS;
 		this.politicas = politicas;
 		this.salvarOS_Material = salvarOS_Material;
 		this.salvarCstg_IntVM = salvarCstg_IntVM;
@@ -69,208 +70,164 @@ public class Erp implements Serializable {
 		this.salvarCstg_IntDG = salvarCstg_IntDG;
 		this.sequencial = sequencial;
 	}
-
+	
 	public String getOrigem() {
 		return origem;
 	}
-
 	public void setOrigem(String origem) {
 		this.origem = origem;
 	}
-
 	public String getTipoMovimento() {
 		return tipoMovimento;
 	}
-
 	public void setTipoMovimento(String tipoMovimento) {
 		this.tipoMovimento = tipoMovimento;
 	}
-
 	public String getAnoMes() {
 		return anoMes;
 	}
-
 	public void setAnoMes(String anoMes) {
 		this.anoMes = anoMes;
 	}
-
 	public Double getCodCentroCustos() {
 		return codCentroCustos;
 	}
-
 	public void setCodCentroCustos(Double codCentroCustos) {
 		this.codCentroCustos = codCentroCustos;
 	}
-
 	public String getDescCentroCustos() {
 		return descCentroCustos;
 	}
-
 	public void setDescCentroCustos(String descCentroCustos) {
 		this.descCentroCustos = descCentroCustos;
 	}
-
 	public String getCodContaContabil() {
 		return codContaContabil;
 	}
-
 	public void setCodContaContabil(String codContaContabil) {
 		this.codContaContabil = codContaContabil;
 	}
-
 	public String getDescContaContabil() {
 		return descContaContabil;
 	}
-
 	public void setDescContaContabil(String descContaContabil) {
 		this.descContaContabil = descContaContabil;
 	}
-
 	public String getCodMaterial() {
 		return codMaterial;
 	}
-
 	public void setCodMaterial(String codMaterial) {
 		this.codMaterial = codMaterial;
 	}
-
 	public String getDescMovimento() {
 		return descMovimento;
 	}
-
 	public void setDescMovimento(String descMovimento) {
 		this.descMovimento = descMovimento;
 	}
-
 	public String getUnidadeMedida() {
 		return unidadeMedida;
 	}
-
 	public void setUnidadeMedida(String unidadeMedida) {
 		this.unidadeMedida = unidadeMedida;
 	}
-
 	public Double getQuantidade() {
 		return quantidade;
 	}
-
 	public void setQuantidade(Double quantidade) {
 		this.quantidade = quantidade;
 	}
-
 	public Double getPrecoUnitario() {
 		return precoUnitario;
 	}
-
 	public void setPrecoUnitario(Double precoUnitario) {
 		this.precoUnitario = precoUnitario;
 	}
-
 	public Double getValorMovimento() {
 		return valorMovimento;
 	}
-
 	public void setValorMovimento(Double valorMovimento) {
 		this.valorMovimento = valorMovimento;
 	}
-
 	public String getNumeroOS() {
 		return numeroOS;
 	}
-
 	public void setNumeroOS(String numeroOS) {
 		this.numeroOS = numeroOS;
 	}
-
 	public String getFrotaOuCC() {
 		return frotaOuCC;
 	}
-
 	public void setFrotaOuCC(String frotaOuCC) {
 		this.frotaOuCC = frotaOuCC;
 	}
-
 	public String getDocumentoErp() {
 		return documentoErp;
 	}
-
 	public void setDocumentoErp(String documentoErp) {
 		this.documentoErp = documentoErp;
 	}
-
 	public Date getDataMovimento() {
 		return dataMovimento;
 	}
-
 	public void setDataMovimento(Date dataMovimento) {
 		this.dataMovimento = dataMovimento;
 	}
-
 	public String getImportar() {
 		return importar;
 	}
-
 	public void setImportar(String importar) {
 		this.importar = importar;
 	}
-
 	public String getObservacao() {
 		return observacao;
 	}
-
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-
+	public String getValidacoesOS() {
+		return validacoesOS;
+	}
+	public void setValidacoesOS(String validacoesOS) {
+		this.validacoesOS = validacoesOS;
+	}
 	public String getPoliticas() {
 		return politicas;
 	}
-
 	public void setPoliticas(String politicas) {
 		this.politicas = politicas;
 	}
-
 	public String getSalvarOS_Material() {
 		return salvarOS_Material;
 	}
-
 	public void setSalvarOS_Material(String salvarOS_Material) {
 		this.salvarOS_Material = salvarOS_Material;
 	}
-
 	public String getSalvarCstg_IntVM() {
 		return salvarCstg_IntVM;
 	}
-
 	public void setSalvarCstg_IntVM(String salvarCstg_IntVM) {
 		this.salvarCstg_IntVM = salvarCstg_IntVM;
 	}
-
 	public String getSalvarCstg_IntCM() {
 		return salvarCstg_IntCM;
 	}
-
 	public void setSalvarCstg_IntCM(String salvarCstg_IntCM) {
 		this.salvarCstg_IntCM = salvarCstg_IntCM;
 	}
-
 	public String getSalvarCstg_IntDG() {
 		return salvarCstg_IntDG;
 	}
-
 	public void setSalvarCstg_IntDG(String salvarCstg_IntDG) {
 		this.salvarCstg_IntDG = salvarCstg_IntDG;
 	}
-
 	public Integer getSequencial() {
 		return sequencial;
 	}
-
 	public void setSequencial(Integer sequencial) {
 		this.sequencial = sequencial;
 	}
 	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -278,7 +235,6 @@ public class Erp implements Serializable {
 		result = prime * result + ((sequencial == null) ? 0 : sequencial.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -305,8 +261,9 @@ public class Erp implements Serializable {
 				+ unidadeMedida + ", quantidade=" + quantidade + ", precoUnitario=" + precoUnitario
 				+ ", valorMovimento=" + valorMovimento + ", numeroOS=" + numeroOS + ", frotaOuCC=" + frotaOuCC
 				+ ", documentoErp=" + documentoErp + ", dataMovimento=" + dataMovimento + ", importar=" + importar
-				+ ", observacao=" + observacao + ", politicas=" + politicas + ", salvarOS_Material=" + salvarOS_Material
-				+ ", salvarCstg_IntVM=" + salvarCstg_IntVM + ", salvarCstg_IntCM=" + salvarCstg_IntCM
-				+ ", salvarCstg_IntDG=" + salvarCstg_IntDG + ", sequencial=" + sequencial + "]";
+				+ ", observacao=" + observacao + ", validacoesOS=" + validacoesOS + ", politicas=" + politicas
+				+ ", salvarOS_Material=" + salvarOS_Material + ", salvarCstg_IntVM=" + salvarCstg_IntVM
+				+ ", salvarCstg_IntCM=" + salvarCstg_IntCM + ", salvarCstg_IntDG=" + salvarCstg_IntDG + ", sequencial="
+				+ sequencial + "]";
 	}
 }

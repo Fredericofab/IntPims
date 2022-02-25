@@ -51,6 +51,8 @@ public class ErpFormController implements Initializable {
 	@FXML
 	private TextField txtAnoMes;
 	@FXML
+	private TextField txtTipoMovimento;
+	@FXML
 	private TextField txtOrigem;
 	@FXML
 	private TextField txtCodCentroCustos;
@@ -113,12 +115,6 @@ public class ErpFormController implements Initializable {
 
 	@FXML
 	public void onBtSalvarAction(ActionEvent evento) {
-		if (entidade == null) {
-			throw new IllegalStateException("o outro progrmador esqueceu de injetar a entuidade");
-		}
-		if (servico == null) {
-			throw new IllegalStateException("o outro progrmador esqueceu de injetar o servico");
-		}
 		try {
 			entidade = getDadosDoForm();
 			entidade = substituirNull(entidade);
@@ -176,10 +172,14 @@ public class ErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldDouble(txtValorMovimento);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAnoMes, 6);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtOrigem, 2);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoMovimento, 6);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodCentroCustos, 20);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescCentroCustos, 50);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodContaContabil,20);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescContaContabil,50);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodMaterial, 10);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtUnidadeMedida,5);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescMovimento,35);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescMovimento,255);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtObservacao, 255);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarOS_Material,1);
@@ -213,6 +213,7 @@ public class ErpFormController implements Initializable {
 	private void desabilitarCompoenentes(boolean b) {
 		txtAnoMes.setDisable(b);
 		txtOrigem.setDisable(b);
+		txtTipoMovimento.setDisable(b);
 		txtCodCentroCustos.setDisable(b);
 		txtDescCentroCustos.setDisable(b);
 		txtCodContaContabil.setDisable(b);
@@ -243,6 +244,7 @@ public class ErpFormController implements Initializable {
 
 		txtSequencial.setText(String.valueOf(entidade.getSequencial()));
 		txtAnoMes.setText(entidade.getAnoMes());
+		txtTipoMovimento.setText(entidade.getTipoMovimento());
 		txtOrigem.setText(entidade.getOrigem());
 		txtCodCentroCustos.setText(String.format("%.0f", entidade.getCodCentroCustos()));
 		txtDescCentroCustos.setText(entidade.getDescCentroCustos());
@@ -287,6 +289,7 @@ public class ErpFormController implements Initializable {
 		objeto.setSequencial(Utilitarios.tentarConverterParaInt(txtSequencial.getText()));
 		objeto.setAnoMes(txtAnoMes.getText());
 		objeto.setOrigem(Utilitarios.tentarConverterParaMaiusculo(txtOrigem.getText()));
+		objeto.setTipoMovimento(txtTipoMovimento.getText());
 		objeto.setCodCentroCustos(Utilitarios.tentarConverterParaDouble(txtCodCentroCustos.getText()));
 		objeto.setDescCentroCustos(txtDescCentroCustos.getText());
 		objeto.setCodContaContabil(txtCodContaContabil.getText());
@@ -334,7 +337,11 @@ public class ErpFormController implements Initializable {
 		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("MT")) && 
 				(txtCodMaterial.getText() == null || txtCodMaterial.getText().trim().equals(""))) {
 				validacao.adicionarErro("txtCodMaterial", "Origem MT - Informe o Material");
-			}
+		}
+		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("CD")) && 
+				(txtCodMaterial.getText() == null || txtCodMaterial.getText().trim().equals(""))) {
+				validacao.adicionarErro("txtCodMaterial", "Origem CD - Informe o Material/Serviço");
+		}
 
 		if (txtObservacao.getText() == null || txtObservacao.getText().trim().equals("")) {
 			if (flagObservacao.equals("S")) {

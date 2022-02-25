@@ -1,9 +1,10 @@
 package model.services;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import gui.util.Alertas;
 import gui.util.Utilitarios;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import model.entities.PoliticasErp;
 import model.entities.Erp;
 import model.exceptions.TxtIntegridadeException;
 
@@ -60,6 +60,7 @@ public class ImportarErpService {
 
 	String importar;
 	String observacao;
+	String validacoes;
 	String politicas;
 	String salvarOS_Material;
 	String salvarCstg_IntVM;
@@ -108,7 +109,8 @@ public class ImportarErpService {
 		} else {
 			processoAtualService.atualizarEtapa("ImportarErp" + origem, "N");
 		}
-		processoAtualService.atualizarEtapa("CriticarErp", "N");
+		processoAtualService.atualizarEtapa("ValidarErp", "N");
+		processoAtualService.atualizarEtapa("AplicarPoliticaErp", "N");
 		processoAtualService.atualizarEtapa("ExportarErp", "N");
 	}
 
@@ -120,7 +122,7 @@ public class ImportarErpService {
 		String linha = null;
 		lista = new ArrayList<Erp>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(entrada))) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(entrada),"UTF-8"))) {
 			linha = br.readLine();
 			while (linha != null) {
 				qtdeLidas = qtdeLidas + 1;
@@ -158,8 +160,7 @@ public class ImportarErpService {
 		}
 	}
 
-	private Erp converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha)
-			throws TxtIntegridadeException {
+	private Erp converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha) {
 		String[] campos = linha.split(arqEntradaDelimitador);
 		if ( numeroLinha == 1 ) {
 			campos[0] = Utilitarios.excluiCaracterNaoEditavel(campos[0], 6);
@@ -175,7 +176,7 @@ public class ImportarErpService {
 			}
 			Erp dadosErp = new Erp(origem, tipoMovimento, anoMes, codCentroCustos, descCentroCustos, codContaContabil,
 					descContaContabil, codMaterial, descMovimento, unidadeMedida, quantidade, precoUnitario,
-					valorMovimento, manfroOS, frotaOuCC, documentoErp, dataMovimento, importar, observacao, politicas,
+					valorMovimento, manfroOS, frotaOuCC, documentoErp, dataMovimento, importar, observacao, validacoes, politicas,
 					salvarOS_Material, salvarCstg_IntVM, salvarCstg_IntCM, salvarCstg_IntDG, sequencial);
 			return dadosErp;
 		} catch (TxtIntegridadeException e) {
@@ -260,7 +261,7 @@ public class ImportarErpService {
 		}
 	}
 
-	private void converteRegistroDG(String[] campos) throws ParseException {
+	private void converteRegistroDG(String[] campos)  {
 		System.out.println("Implementar converteRegistroDG");
 	}
 

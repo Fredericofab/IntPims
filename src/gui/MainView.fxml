@@ -48,6 +48,7 @@
                 <Menu fx:id="menuTabelas" mnemonicParsing="false" text="Tabelas">
                   <items>
                         <MenuItem fx:id="menuItemVerbaFolha" mnemonicParsing="false" onAction="#onMenuItemVerbaFolhaAction" text="Verbas da Folha" />
+                        <MenuItem fx:id="menuItemFatorMedida" mnemonicParsing="false" onAction="#onMenuItemFatorMedidaAction" text="Fator de Medidas" />
                         <MenuItem fx:id="menuItemPoliticasErp" mnemonicParsing="false" onAction="#onMenuItemPoliticasErpAction" text="Politicas do ERP" />
                     <MenuItem fx:id="menuItemParametros" mnemonicParsing="false" onAction="#onMenuItemParametrosAction" text="Parametros" />
                   </items>

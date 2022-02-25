@@ -28,66 +28,52 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.PoliticasErp;
+import model.entities.FatorMedida;
 import model.services.ParametrosService;
-import model.services.PoliticasErpService;
+import model.services.FatorMedidaService;
 
-public class PoliticasErpListController implements Initializable, DadosAlteradosListener {
+public class FatorMedidaListController implements Initializable, DadosAlteradosListener {
 
-	private PoliticasErpService servico;
-	
+	private FatorMedidaService servico;
 	private ParametrosService parametrosService = new ParametrosService();
-
-
+	
 //	Parametros
 	String flagIncluir;
 	String flagAlterar;
 	String flagExcluir;
+	String atualizarNovos;
 
 	@FXML
-	private TableView<PoliticasErp> tableViewDadosPoliticasErp;
+	private TableView<FatorMedida> tableViewFatorMedida;
 	@FXML
-	private TableColumn<PoliticasErp, Integer> tableColumnCodPolitica;
+	private TableColumn<FatorMedida, String> tableColumnCodMaterial;
 	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnNomePolitica;
+	private TableColumn<FatorMedida, String> tableColumnDescMaterial;
 	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnDescPolitica;
+	private TableColumn<FatorMedida, String> tableColumnUnidadeMedida;
 	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnFlagAtiva;
+	private TableColumn<FatorMedida, Double> tableColumnFatorDivisao;
 	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnClausulaWhere;
+	private TableColumn<FatorMedida, FatorMedida> tableColumnEDIT;
 	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnImportar;
-	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnSalvarOS_Material;
-	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnSalvarCstg_IntVM;
-	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnSalvarCstg_IntCM;
-	@FXML
-	private TableColumn<PoliticasErp, String> tableColumnSalvarCstg_IntDG;
-
-	@FXML
-	private TableColumn<PoliticasErp, PoliticasErp> tableColumnEDIT;
-	@FXML
-	private TableColumn<PoliticasErp, PoliticasErp> tableColumnREMOVE;
-
+	private TableColumn<FatorMedida, FatorMedida> tableColumnREMOVE;
+	
 	@FXML
 	private Button btIncluir;
 	@FXML
 	private Button btGerarTxt;
 	@FXML
-	private Button btRelatorioTxt;
+	private Button btAtualizarNovos;
 	@FXML
 	private Button btSair;
 
-	private ObservableList<PoliticasErp> obsLista;
+	private ObservableList<FatorMedida> obsLista;
 
 	@FXML
 	public void onBtIncluirAction(ActionEvent evento) {
 		Stage parentStage = Utilitarios.atualStage(evento);
-		String caminhoDaView = "/gui/PoliticasErpForm.fxml";
-		PoliticasErp entidade = new PoliticasErp();
+		String caminhoDaView = "/gui/FatorMedidaForm.fxml";
+		FatorMedida entidade = new FatorMedida();
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
 	}
 	@FXML
@@ -96,16 +82,21 @@ public class PoliticasErpListController implements Initializable, DadosAlterados
 		servico.gerarTxt(oficial);
 	}
 	@FXML
-	public void onRelatorioTxtAction(ActionEvent evento) {
-		Boolean oficial = false;
-		servico.relatorioTxt(oficial);
+	public void onAtualizarNovosAction(ActionEvent evento) {
+		try {
+		servico.atualizarNovos();
+		atualizarTableView();
+		}
+		catch (DbException e){
+			Alertas.mostrarAlertas("erro Salvando FatorMedida", null, e.getMessage(), AlertType.ERROR);
+		}
 	}
 	@FXML
 	public void onBtSairAction(ActionEvent evento) {
 		Utilitarios.atualStage(evento).close();
 	}
 
-	public void setPoliticasErpServico(PoliticasErpService servico) {
+	public void setFatorMedidaServico(FatorMedidaService servico) {
 		this.servico = servico;
 	}
 
@@ -114,56 +105,47 @@ public class PoliticasErpListController implements Initializable, DadosAlterados
 		lerParametros();
 		inicializarComponentes();
 	}
-
+	
 	private void inicializarComponentes() {
-		tableColumnCodPolitica.setCellValueFactory(new PropertyValueFactory<>("codPolitica"));
-		tableColumnNomePolitica.setCellValueFactory(new PropertyValueFactory<>("nomePolitica"));
-		tableColumnDescPolitica.setCellValueFactory(new PropertyValueFactory<>("descPolitica"));
-		tableColumnFlagAtiva.setCellValueFactory(new PropertyValueFactory<>("flagAtiva"));
-		tableColumnClausulaWhere.setCellValueFactory(new PropertyValueFactory<>("clausulaWhere"));
-		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
-		tableColumnSalvarOS_Material.setCellValueFactory(new PropertyValueFactory<>("salvarOS_Material"));
-		tableColumnSalvarCstg_IntVM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntVM"));
-		tableColumnSalvarCstg_IntCM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntCM"));
-		tableColumnSalvarCstg_IntDG.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntDG"));
-
+		tableColumnCodMaterial.setCellValueFactory(new PropertyValueFactory<>("codMaterial"));
+		tableColumnDescMaterial.setCellValueFactory(new PropertyValueFactory<>("descMaterial"));
+		tableColumnUnidadeMedida.setCellValueFactory(new PropertyValueFactory<>("unidadeMedida"));
+		tableColumnFatorDivisao.setCellValueFactory(new PropertyValueFactory<>("fatorDivisao"));
 		
-		tableColumnCodPolitica.setStyle("-fx-alignment: TOP-RIGHT");
-		tableColumnFlagAtiva.setStyle("-fx-alignment: TOP-CENTER");
-		tableColumnImportar.setStyle("-fx-alignment: TOP-CENTER");
-		tableColumnSalvarOS_Material.setStyle("-fx-alignment: TOP-CENTER");
-		tableColumnSalvarCstg_IntVM.setStyle("-fx-alignment: TOP-CENTER");
-		tableColumnSalvarCstg_IntCM.setStyle("-fx-alignment: TOP-CENTER");
-		tableColumnSalvarCstg_IntDG.setStyle("-fx-alignment: TOP-CENTER");
+		Utilitarios.formatarTableColumnDouble(tableColumnFatorDivisao, 4);
+
+		tableColumnCodMaterial.setStyle("-fx-alignment: TOP-RIGHT");
 
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
+		btAtualizarNovos.setDisable((atualizarNovos.equals("N") ? true : false));
 	}
 
 	public void atualizarTableView() {
 		if (servico == null) {
 			throw new IllegalStateException("o servico nao foi carregado pelo outro programador");
 		}
-		List<PoliticasErp> lista = servico.pesquisarTodos();
+		List<FatorMedida> lista = servico.pesquisarTodos();
 
 		obsLista = FXCollections.observableArrayList(lista);
-		tableViewDadosPoliticasErp.setItems(obsLista);
+		tableViewFatorMedida.setItems(obsLista);
+
 		initEditButtons();
 		initRemoveButtons();
 	}
 
-	private void criarDialogoForm(PoliticasErp entidade, String caminhoDaView, Stage parentStage) {
+	private void criarDialogoForm(FatorMedida entidade, String caminhoDaView, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
 			ScrollPane pane = loader.load();
 
-			PoliticasErpFormController controller = loader.getController();
-			controller.setPoliticasErp(entidade);
-			controller.setPoliticasErpService(new PoliticasErpService());
+			FatorMedidaFormController controller = loader.getController();
+			controller.setFatorMedida(entidade);
+			controller.setFatorMedidaService(new FatorMedidaService());
 			controller.serOuvinteDeDadosAlteradosListener(this);
 			controller.atualizarFormulario();
 
 			Stage dialogoStage = new Stage();
-			dialogoStage.setTitle("PoliticaErp");
+			dialogoStage.setTitle("Fator de Conversão de Medidas");
 			dialogoStage.setScene(new Scene(pane));
 			dialogoStage.setResizable(false);
 			dialogoStage.initOwner(parentStage);
@@ -184,11 +166,11 @@ public class PoliticasErpListController implements Initializable, DadosAlterados
 	private void initEditButtons() {
 		// codigo adaptado da material do curso Udemy
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEDIT.setCellFactory(param -> new TableCell<PoliticasErp, PoliticasErp>() {
+		tableColumnEDIT.setCellFactory(param -> new TableCell<FatorMedida, FatorMedida>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(PoliticasErp obj, boolean empty) {
+			protected void updateItem(FatorMedida obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -197,18 +179,19 @@ public class PoliticasErpListController implements Initializable, DadosAlterados
 				setGraphic(button);
 				button.setDisable((flagAlterar.equals("N") ? true : false));
 				button.setOnAction(
-						event -> criarDialogoForm(obj, "/gui/PoliticasErpForm.fxml", Utilitarios.atualStage(event)));
+						event -> criarDialogoForm(obj, "/gui/FatorMedidaForm.fxml", Utilitarios.atualStage(event)));
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<PoliticasErp, PoliticasErp>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<FatorMedida, FatorMedida>() {
 			private final Button button = new Button("Excluir");
 
+
 			@Override
-			protected void updateItem(PoliticasErp obj, boolean empty) {
+			protected void updateItem(FatorMedida obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -221,8 +204,8 @@ public class PoliticasErpListController implements Initializable, DadosAlterados
 		});
 	}
 
-	private void removeEntity(PoliticasErp objeto) {
-		Optional<ButtonType> clicado = Alertas.mostrarConfirmacao("Confirmacao", null, "Tem certeza da delecao?", AlertType.CONFIRMATION );
+	private void removeEntity(FatorMedida objeto) {
+		Optional<ButtonType> clicado = Alertas.mostrarConfirmacao("Confirmacao", null, "Tem certeza da delecao?", AlertType.CONFIRMATION);
 		if (clicado.get() == ButtonType.OK) {
 			if (servico == null) {
 				throw new IllegalStateException("O service foi passado nulo pelo outro programador!");
@@ -230,15 +213,18 @@ public class PoliticasErpListController implements Initializable, DadosAlterados
 			try {
 				servico.remover(objeto);
 				atualizarTableView();
+				
 			} catch (DbException e) {
 				Alertas.mostrarAlertas("Erro removendo Objeto", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}
-
+	
 	private void lerParametros() {
-		flagIncluir = (parametrosService.pesquisarPorChave("PoliticasErp", "FlagIncluir")).getValor().toUpperCase();
-		flagAlterar = (parametrosService.pesquisarPorChave("PoliticasErp", "FlagAlterar")).getValor().toUpperCase();
-		flagExcluir = (parametrosService.pesquisarPorChave("PoliticasErp", "FlagExcluir")).getValor().toUpperCase();
+		flagIncluir = (parametrosService.pesquisarPorChave("FatorMedida", "FlagIncluir")).getValor().toUpperCase();
+		flagAlterar = (parametrosService.pesquisarPorChave("FatorMedida", "FlagAlterar")).getValor().toUpperCase();
+		flagExcluir = (parametrosService.pesquisarPorChave("FatorMedida", "FlagExcluir")).getValor().toUpperCase();
+		atualizarNovos = (parametrosService.pesquisarPorChave("FatorMedida", "AtualizarNovos")).getValor().toUpperCase();
 	}
+
 }

@@ -1,15 +1,16 @@
 package model.dao;
 
 import db.DB;
-import model.dao.impl.ProcessoAtualDaoJDBC;
-import model.dao.impl.FolhaDaoJDBC;
-import model.dao.impl.ParametrosDaoJDBC;
-import model.dao.impl.PoliticasErpDaoJDBC;
 import model.dao.impl.ErpDaoJDBC;
-import model.dao.impl.PimsGeralDaoJDBC;
-import model.dao.impl.FuncionariosDaoJDBC;
+import model.dao.impl.FatorMedidaDaoJDBC;
+import model.dao.impl.FolhaDaoJDBC;
 import model.dao.impl.FolhaSumarizadaDaoJDBC;
+import model.dao.impl.FuncionariosDaoJDBC;
 import model.dao.impl.FuncionariosSumarizadosDaoJDBC;
+import model.dao.impl.ParametrosDaoJDBC;
+import model.dao.impl.PimsGeralDaoJDBC;
+import model.dao.impl.PoliticasErpDaoJDBC;
+import model.dao.impl.ProcessoAtualDaoJDBC;
 import model.dao.impl.VerbasFolhaDaoJDBC;
 
 public class FabricaDeDao {
@@ -45,6 +46,9 @@ public class FabricaDeDao {
 	}
 	public static ErpDao criarErpDao() {
 		return new ErpDaoJDBC(DB.abrirConexao());
+	}
+	public static FatorMedidaDao criarFatorMedidaDao() {
+		return new FatorMedidaDaoJDBC(DB.abrirConexao());
 	}
 
 

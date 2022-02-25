@@ -41,6 +41,16 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	private TableColumn<PoliticasErp, String> tableColumnAnoMesAnalisado;
 	@FXML
 	private TableColumn<PoliticasErp, String> tableColumnQtdeAplicados;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnIMP;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnVM;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnCM;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnDG;
+	@FXML
+	private TableColumn<PoliticasErp, String> tableColumnOS;
 
 	@FXML
 	private TextField txtCodPolitica;
@@ -49,23 +59,27 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	@FXML
 	private TextField txtTotalIndefinidos;
 	@FXML
-	private TextField txtTotalPendentes;
+	private TextField txtImpPendentes;
 	@FXML
-	private TextField txtTotalIgnorados;
+	private TextField txtImpIgnorados;
 	@FXML
-	private TextField txtTotalLiberadosOS;
+	private TextField txtImpLiberados;
 	@FXML
-	private TextField txtTotalLiberadosCM;
+	private TextField txtImpLiberadosOS;
 	@FXML
-	private TextField txtTotalLiberadosDG;
+	private TextField txtImpLiberadosCM;
 	@FXML
-	private TextField txtTotalLiberadosVM;
+	private TextField txtImpLiberadosDG;
 	@FXML
-	private TextField txtTotalLiberados;
+	private TextField txtVmPendentes;
 	@FXML
-	private Button btAplicarUma;
+	private TextField txtVmIgnorados;
+	@FXML
+	private TextField txtVmlLiberados;
 	@FXML
 	private Button btAplicarTodas;
+	@FXML
+	private Button btAplicarUma;
 	@FXML
 	private Button btCalcular;
 	@FXML
@@ -83,7 +97,6 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		Integer codigo = Utilitarios.tentarConverterParaInt(txtCodPolitica.getText());
 		try {
 			servico.aplicarUma(codigo);
-			atualizarEstatisticaGeral();
 			atualizarTableView();
 		} catch (IntegridadeException e) {
 			Alertas.mostrarAlertas("IntegridadeException", "Erro de Digitação", e.getMessage(), AlertType.ERROR);
@@ -124,6 +137,14 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		tableColumnCodPolitica.setCellValueFactory(new PropertyValueFactory<>("codPolitica"));
 		tableColumnNomePolitica.setCellValueFactory(new PropertyValueFactory<>("nomePolitica"));
 		tableColumnFlagAtiva.setCellValueFactory(new PropertyValueFactory<>("flagAtiva"));
+		tableColumnAnoMesAnalisado.setCellValueFactory(new PropertyValueFactory<>(""));
+		tableColumnIMP.setCellValueFactory(new PropertyValueFactory<>("importar"));
+		tableColumnCM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntCM"));
+		tableColumnDG.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntDG"));
+		tableColumnOS.setCellValueFactory(new PropertyValueFactory<>("salvarOS_Material"));
+		tableColumnVM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntVM"));
+		tableColumnQtdeAplicados.setCellValueFactory(new PropertyValueFactory<>("registrosAplicados"));
+		
 
 		tableColumnCodPolitica.setStyle("-fx-alignment: TOP-RIGHT");
 		tableColumnFlagAtiva.setStyle("-fx-alignment: TOP-CENTER");
@@ -140,36 +161,41 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	}
 
 	private void atualizarEstatisticaGeral() {
-		Integer qtdeTotalIndefinidos = servico.getQtdeTotal(null);
-		Integer qtdeTotalPendentes = servico.getQtdeTotal("?");
-		Integer qtdeTotalIgnorados = servico.getQtdeTotal("N");
-		Integer qtdeTotalLiberados = servico.getQtdeTotal("S");
-		Integer qtdeTotalRegistros = qtdeTotalLiberados + qtdeTotalIgnorados + qtdeTotalPendentes
-				+ qtdeTotalIndefinidos;
-		Integer qtdeLiberadosOS = servico.getQtdeLiberadosOS();
-		Integer qtdeLiberadosCM = servico.getQtdeLiberadosCM();
-		Integer qtdeLiberadosDG = servico.getQtdeLiberadosDG();
-		Integer qtdeLiberadosVM = servico.getQtdeLiberadosVM();
+		Integer qtdeTotalRegistros = servico.getTotalRegistros();
+		Integer qtdeTotalIndefinidos = servico.getQtdeIndefinidos();
+		Integer qtdeImpPendentes = servico.getQtdeImportar("?");
+		Integer qtdeImpIgnorados = servico.getQtdeImportar("N");
+		Integer qtdeImpLiberados = servico.getQtdeImportar("S");
+		Integer qtdeImpLiberadosOS = servico.getQtdeImpLiberadosOS();
+		Integer qtdeImpLiberadosCM = servico.getQtdeImpLiberadosCM();
+		Integer qtdeImpLiberadosDG = servico.getQtdeImpLiberadosDG();
+		Integer qtdeVmPendentes = servico.getQtdeValorMaterial("?");
+		Integer qtdeVmIgnorados = servico.getQtdeValorMaterial("N");
+		Integer qtdeVmLiberados = servico.getQtdeValorMaterial("S");
 
-		txtTotalIndefinidos.setText(qtdeTotalIndefinidos.toString());
-		txtTotalPendentes.setText(qtdeTotalPendentes.toString());
-		txtTotalIgnorados.setText(qtdeTotalIgnorados.toString());
-		txtTotalLiberados.setText(qtdeTotalLiberados.toString());
 		txtTotalRegistros.setText(qtdeTotalRegistros.toString());
-		txtTotalLiberadosOS.setText(qtdeLiberadosOS.toString());
-		txtTotalLiberadosCM.setText(qtdeLiberadosCM.toString());
-		txtTotalLiberadosDG.setText(qtdeLiberadosDG.toString());
-		txtTotalLiberadosVM.setText(qtdeLiberadosVM.toString());
-		
-		txtTotalIndefinidos.setStyle("-fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
-		txtTotalPendentes.setStyle("  -fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
-		txtTotalIgnorados.setStyle("  -fx-alignment: CENTER-RIGHT");
-		txtTotalLiberados.setStyle("  -fx-alignment: CENTER-RIGHT");
+		txtTotalIndefinidos.setText(qtdeTotalIndefinidos.toString());
+		txtImpPendentes.setText(qtdeImpPendentes.toString());
+		txtImpIgnorados.setText(qtdeImpIgnorados.toString());
+		txtImpLiberados.setText(qtdeImpLiberados.toString());
+		txtImpLiberadosOS.setText(qtdeImpLiberadosOS.toString());
+		txtImpLiberadosCM.setText(qtdeImpLiberadosCM.toString());
+		txtImpLiberadosDG.setText(qtdeImpLiberadosDG.toString());
+		txtVmPendentes.setText(qtdeVmPendentes.toString());
+		txtVmIgnorados.setText(qtdeVmIgnorados.toString());
+		txtVmlLiberados.setText(qtdeVmLiberados.toString());
+
 		txtTotalRegistros.setStyle("  -fx-alignment: CENTER-RIGHT");
-		txtTotalLiberadosOS.setStyle("-fx-alignment: CENTER-RIGHT");
-		txtTotalLiberadosCM.setStyle("-fx-alignment: CENTER-RIGHT");
-		txtTotalLiberadosDG.setStyle("-fx-alignment: CENTER-RIGHT");
-		txtTotalLiberadosVM.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtTotalIndefinidos.setStyle("-fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
+		txtImpPendentes.setStyle("  -fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
+		txtImpIgnorados.setStyle("  -fx-alignment: CENTER-RIGHT");
+		txtImpLiberados.setStyle("  -fx-alignment: CENTER-RIGHT");
+		txtImpLiberadosOS.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtImpLiberadosCM.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtImpLiberadosDG.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtVmPendentes.setStyle("  -fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
+		txtVmIgnorados.setStyle("  -fx-alignment: CENTER-RIGHT");
+		txtVmlLiberados.setStyle("-fx-alignment: CENTER-RIGHT");
 				
 	}
 	

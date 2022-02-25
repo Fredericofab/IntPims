@@ -29,9 +29,9 @@ public class ErpDaoJDBC implements ErpDao {
 							+ "cod_Conta_Contabil,desc_Conta_Contabil,"
 							+ "cod_Material,desc_Movimento,unidade_Medida,"
 							+ "quantidade,preco_Unitario,valor_Movimento,"
-							+ "numero_OS,frota_ou_cc,documento_Erp,data_Movimento," + "importar,observacao,politicas,"
+							+ "numero_OS,frota_ou_cc,documento_Erp,data_Movimento," + "importar,observacao,validacoes_OS,politicas,"
 							+ "salvar_OS_Material,salvar_Cstg_IntVM,salvar_Cstg_intCM,salvar_Cstg_intDG," + "sequencial)"
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			st.setString(1, objeto.getOrigem().toUpperCase());
 			st.setString(2, objeto.getTipoMovimento());
 			st.setString(3, objeto.getAnoMes());
@@ -51,12 +51,13 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setDate(17, new java.sql.Date(objeto.getDataMovimento().getTime()));
 			st.setString(18, objeto.getImportar());
 			st.setString(19, objeto.getObservacao());
-			st.setString(20, objeto.getPoliticas());
-			st.setString(21, objeto.getSalvarOS_Material());
-			st.setString(22, objeto.getSalvarCstg_IntVM());
-			st.setString(23, objeto.getSalvarCstg_IntCM());
-			st.setString(24, objeto.getSalvarCstg_IntDG());
-			st.setInt(25, objeto.getSequencial());
+			st.setString(20, objeto.getValidacoesOS());
+			st.setString(21, objeto.getPoliticas());
+			st.setString(22, objeto.getSalvarOS_Material());
+			st.setString(23, objeto.getSalvarCstg_IntVM());
+			st.setString(24, objeto.getSalvarCstg_IntCM());
+			st.setString(25, objeto.getSalvarCstg_IntDG());
+			st.setInt(26, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -64,7 +65,6 @@ public class ErpDaoJDBC implements ErpDao {
 			DB.fecharStatement(st);
 		}
 	}
-
 	@Override
 	public void atualizar(Erp objeto) {
 		PreparedStatement st = null;
@@ -74,7 +74,7 @@ public class ErpDaoJDBC implements ErpDao {
 					+ "cod_Material = ?,	desc_Movimento = ?,	unidade_Medida = ?, "
 					+ "quantidade = ?,	preco_Unitario = ?,	valor_Movimento = ?, "
 					+ "numero_OS = ?,	frota_ou_cc = ?, documento_Erp = ?,	data_Movimento = ?,	"
-					+ "importar = ?,	observacao = ?,	politicas = ?,	"
+					+ "importar = ?,	observacao = ?, validacoes_OS = ?,	politicas = ?,	"
 					+ "salvar_OS_Material = ?, salvar_Cstg_IntVM = ?, salvar_Cstg_intCM = ?, salvar_Cstg_intDG = ?"
 					+ "WHERE sequencial = ?");
 
@@ -97,12 +97,13 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setDate(17, new java.sql.Date(objeto.getDataMovimento().getTime()));
 			st.setString(18, objeto.getImportar());
 			st.setString(19, objeto.getObservacao());
-			st.setString(20, objeto.getPoliticas());
-			st.setString(21, objeto.getSalvarOS_Material());
-			st.setString(22, objeto.getSalvarCstg_IntVM());
-			st.setString(23, objeto.getSalvarCstg_IntCM());
-			st.setString(24, objeto.getSalvarCstg_IntDG());
-			st.setInt(25, objeto.getSequencial());
+			st.setString(20, objeto.getValidacoesOS());
+			st.setString(21, objeto.getPoliticas());
+			st.setString(22, objeto.getSalvarOS_Material());
+			st.setString(23, objeto.getSalvarCstg_IntVM());
+			st.setString(24, objeto.getSalvarCstg_IntCM());
+			st.setString(25, objeto.getSalvarCstg_IntDG());
+			st.setInt(26, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -110,7 +111,6 @@ public class ErpDaoJDBC implements ErpDao {
 			DB.fecharStatement(st);
 		}
 	}
-
 	@Override
 	public void deletarPorChave(Integer sequencial) {
 		PreparedStatement st = null;
@@ -124,7 +124,6 @@ public class ErpDaoJDBC implements ErpDao {
 			DB.fecharStatement(st);
 		}
 	}
-
 	@Override
 	public Erp pesquisarPorChave(Integer sequencial) {
 		PreparedStatement st = null;
@@ -146,7 +145,6 @@ public class ErpDaoJDBC implements ErpDao {
 		}
 
 	}
-
 	@Override
 	public List<Erp> listarTodos() {
 		PreparedStatement st = null;
@@ -167,7 +165,63 @@ public class ErpDaoJDBC implements ErpDao {
 			DB.fecharStatement(st);
 		}
 	}
-
+	@Override
+	public List<Erp> listarTodosFiltrado(String filtro) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM Erp WHERE " + filtro);
+			rs = st.executeQuery();
+			List<Erp> lista = new ArrayList<Erp>();
+			while (rs.next()) {
+				Erp dadosErp = instanciaDadosErp(rs);
+				lista.add(dadosErp);
+			}
+			return lista;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na consulta filtrada \n"  +  e.toString());
+		} finally {
+			DB.fecharResultSet(rs);
+			DB.fecharStatement(st);
+		}
+	}
+	@Override
+	public List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM Erp WHERE " + clausulaWhere);
+			rs = st.executeQuery();
+			List<Erp> lista = new ArrayList<Erp>();
+			while (rs.next()) {
+				Erp dadosErp = instanciaDadosErp(rs);
+				lista.add(dadosErp);
+			}
+			return lista;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na consulta da politica " 
+							 	  + String.format("%03d", codPolitica)
+								  + "\n" + e.toString());
+		} finally {
+			DB.fecharResultSet(rs);
+			DB.fecharStatement(st);
+		}
+	}
+	@Override
+	public void limparValidacoesOS() {
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement("UPDATE Erp " + "SET validacoes_OS = null");
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n");
+		} finally {
+			DB.fecharStatement(st);
+		}
+		
+	}
 	@Override
 	public Integer deletarTodos() {
 		PreparedStatement st = null;
@@ -182,7 +236,6 @@ public class ErpDaoJDBC implements ErpDao {
 			DB.fecharStatement(st);
 		}
 	}
-
 	@Override
 	public Integer deletarPorOrigem(String origem) {
 		PreparedStatement st = null;
@@ -198,7 +251,6 @@ public class ErpDaoJDBC implements ErpDao {
 			DB.fecharStatement(st);
 		}
 	}
-
 	@Override
 	public Integer ultimoSequencial() {
 		PreparedStatement st = null;
@@ -220,16 +272,54 @@ public class ErpDaoJDBC implements ErpDao {
 	}
 
 	@Override
-	public Integer qtdeTotal(String importar) {
+	public Integer getTotalRegistros() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			if (importar == null ) {
-				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar is null");
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +  e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+	@Override
+	public Integer getQtdeIndefinidos() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intVM IS NULL AND importar IS NULL");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +  e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+	@Override
+	public Integer getQtdeValorMaterial(String tipo) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			if (tipo == null ) {
+				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intVM is null");
 			}
 			else {
-				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar = ?");
-				st.setString(1, importar);
+				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intVM = ?");
+				st.setString(1, tipo);
 			}
 			rs = st.executeQuery();
 			if (rs.next()) {
@@ -239,12 +329,123 @@ public class ErpDaoJDBC implements ErpDao {
 			return null;
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp \n \n" +
-								  "Importar = " + importar + " \n \n"+ e.getMessage());
+								  "VM = " + tipo + " \n \n"+ e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
 		}
 	}
+	@Override
+	public Integer getQtdeImportar(String tipo) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			if (tipo == null ) {
+				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar is null");
+			}
+			else {
+				st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE importar = ?");
+				st.setString(1, tipo);
+			}
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +
+								  "Importar = " + tipo + " \n \n"+ e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+	@Override
+	public Integer qtdeLiberadosOS() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_os_material = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para Ordem de Servico = " + " \n" 
+								  + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+	@Override
+	public Integer qtdeLiberadosCM() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intCM = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para CM Consumo de Material = " + " \n" 
+								  + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+	@Override
+	public Integer qtdeLiberadosDG() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intDG = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para DG Despesas Gerais = " + " \n" 
+								  + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+	@Override
+	public Integer qtdeLiberadosVM() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intVM = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para VM Valores de Materiais = " + " \n" 
+								  + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
 
 	@Override
 	public Integer qtdeDessaCritica(String essaCriticaTxt, String importar) {
@@ -273,141 +474,6 @@ public class ErpDaoJDBC implements ErpDao {
 		}
 	}
 
-	@Override
-	public Integer qtdeLiberadosOS() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_os_material = 'S'");
-			rs = st.executeQuery();
-			if (rs.next()) {
-				int qtde = rs.getInt(1);
-				return qtde;
-			}
-			return null;
-		} catch (SQLException e) {
-			throw new DbException("Tabela Erp \n \n" +
-								  "erro na Contagem do Erp para Ordem de Servico = " + " \n" 
-								  + e.getMessage());
-		} finally {
-			DB.fecharStatement(st);
-			DB.fecharResultSet(rs);
-		}
-	}
-
-	@Override
-	public Integer qtdeLiberadosCM() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intCM = 'S'");
-			rs = st.executeQuery();
-			if (rs.next()) {
-				int qtde = rs.getInt(1);
-				return qtde;
-			}
-			return null;
-		} catch (SQLException e) {
-			throw new DbException("Tabela Erp \n \n" +
-								  "erro na Contagem do Erp para CM Consumo de Material = " + " \n" 
-								  + e.getMessage());
-		} finally {
-			DB.fecharStatement(st);
-			DB.fecharResultSet(rs);
-		}
-	}
-
-	@Override
-	public Integer qtdeLiberadosDG() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intDG = 'S'");
-			rs = st.executeQuery();
-			if (rs.next()) {
-				int qtde = rs.getInt(1);
-				return qtde;
-			}
-			return null;
-		} catch (SQLException e) {
-			throw new DbException("Tabela Erp \n \n" +
-								  "erro na Contagem do Erp para DG Despesas Gerais = " + " \n" 
-								  + e.getMessage());
-		} finally {
-			DB.fecharStatement(st);
-			DB.fecharResultSet(rs);
-		}
-	}
-
-	@Override
-	public Integer qtdeLiberadosVM() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE salvar_cstg_intVM = 'S'");
-			rs = st.executeQuery();
-			if (rs.next()) {
-				int qtde = rs.getInt(1);
-				return qtde;
-			}
-			return null;
-		} catch (SQLException e) {
-			throw new DbException("Tabela Erp \n \n" +
-								  "erro na Contagem do Erp para VM Valores de Materiais = " + " \n" 
-								  + e.getMessage());
-		} finally {
-			DB.fecharStatement(st);
-			DB.fecharResultSet(rs);
-		}
-	}
-
-
-	@Override
-	public List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT * FROM Erp WHERE " + clausulaWhere);
-			rs = st.executeQuery();
-			List<Erp> lista = new ArrayList<Erp>();
-			while (rs.next()) {
-				Erp dadosErp = instanciaDadosErp(rs);
-				lista.add(dadosErp);
-			}
-			return lista;
-		} catch (SQLException e) {
-			throw new DbException("Tabela Erp \n \n" +
-								  "erro na consulta da politica " 
-							 	  + String.format("%03d", codPolitica)
-								  + "\n" + e.toString());
-		} finally {
-			DB.fecharResultSet(rs);
-			DB.fecharStatement(st);
-		}
-	}
-
-	@Override
-	public List<Erp> listarTodosFiltrado(String filtro) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conexao.prepareStatement("SELECT * FROM Erp WHERE " + filtro);
-			rs = st.executeQuery();
-			List<Erp> lista = new ArrayList<Erp>();
-			while (rs.next()) {
-				Erp dadosErp = instanciaDadosErp(rs);
-				lista.add(dadosErp);
-			}
-			return lista;
-		} catch (SQLException e) {
-			throw new DbException("Tabela Erp \n \n" +
-								  "erro na consulta filtrada \n"  +  e.toString());
-		} finally {
-			DB.fecharResultSet(rs);
-			DB.fecharStatement(st);
-		}
-	}
-
 
 	private Erp instanciaDadosErp(ResultSet rs) throws SQLException {
 		Erp dadosErp = new Erp();
@@ -431,6 +497,7 @@ public class ErpDaoJDBC implements ErpDao {
 
 		dadosErp.setImportar(rs.getString("Importar"));
 		dadosErp.setObservacao(rs.getString("Observacao"));
+		dadosErp.setValidacoesOS(rs.getString("validacoes_OS"));
 		dadosErp.setPoliticas(rs.getString("Politicas"));
 		dadosErp.setSalvarOS_Material(rs.getString("Salvar_OS_Material"));
 		dadosErp.setSalvarCstg_IntVM(rs.getString("Salvar_Cstg_IntVM"));

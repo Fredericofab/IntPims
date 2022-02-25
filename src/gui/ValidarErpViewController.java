@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -60,7 +61,19 @@ public class ValidarErpViewController implements Initializable {
 	private TextField txtOSIncoerentes;
 	@FXML
 	private TextField txtOSAntigas;
-	
+	@FXML
+	private TextField txtCCInexistentesDistintos;
+	@FXML
+	private TextField txtMatSemConversaoDistintos;
+	@FXML
+	private TextField txtOSValidasDistintas;
+	@FXML
+	private TextField txtOSInexistentesDistintas;
+	@FXML
+	private TextField txtOSIncoerentesDistintas;
+	@FXML
+	private TextField txtOSAntigasDistintas;
+
 	@FXML
 	public void onBtValidarAction(ActionEvent evento) {
 		try {
@@ -69,7 +82,14 @@ public class ValidarErpViewController implements Initializable {
 			atualizarTela(servico);
 		}
 		catch (DbException e) {
-			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
+			e.printStackTrace();
+			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo",
+					e.getMessage() + "\n \n",
+					AlertType.ERROR);
+		} catch (IOException e) {
+			e.printStackTrace();
+			Alertas.mostrarAlertas("IOException", "Erro no Acesso aos Arquivos de Log \n \n",
+					e.getMessage() + "\n \n",
 					AlertType.ERROR);
 		}
 	}
@@ -88,7 +108,9 @@ public class ValidarErpViewController implements Initializable {
 		Integer qtdeCCInexistentes = servico.getQtdeCCInexistentes();
 		Integer qtdeCCInexistentesDistintos = servico.getQtdeCCInexistentesDistintos();
 		Integer qtdeMatSemConversao = servico.getQtdeMatSemConversao();
+		Integer qtdeMatSemConversaoDistintos = servico.getQtdeMatSemConversaoDistintos();
 		Integer qtdeOSValidas = servico.getQtdeOSValidas();
+		Integer qtdeOSValidasDistintas = servico.getQtdeOSValidasDistintas();
 		Integer qtdeOSInexistentes = servico.getQtdeOSInexistentes();
 		Integer qtdeOSInexistentesDistintas = servico.getQtdeOSInexistentesDistintas();
 		Integer qtdeOSIncoerentes = servico.getQtdeOSIncoerentes();
@@ -102,11 +124,17 @@ public class ValidarErpViewController implements Initializable {
 
 		txtRegProcessados.setText(qtdeProcessados.toString());
 		txtCCInexistentes.setText(qtdeCCInexistentes.toString());
+		txtCCInexistentesDistintos.setText(qtdeCCInexistentesDistintos.toString());
 		txtMatSemConversao.setText(qtdeMatSemConversao.toString());
+		txtMatSemConversaoDistintos.setText(qtdeMatSemConversaoDistintos.toString());
 		txtOSValidas.setText(qtdeOSValidas.toString());
+		txtOSValidasDistintas.setText(qtdeOSValidasDistintas.toString());
 		txtOSInexistentes.setText(qtdeOSInexistentes.toString());
+		txtOSInexistentesDistintas.setText(qtdeOSInexistentesDistintas.toString());
 		txtOSIncoerentes.setText(qtdeOSIncoerentes.toString());
+		txtOSIncoerentesDistintas.setText(qtdeOSIncoerentesDistintas.toString());
 		txtOSAntigas.setText(qtdeOSAntigas.toString());
+		txtOSAntigasDistintas.setText(qtdeOSAntigasDistintas.toString());
 		txtFaltaOSouFrotaCC.setText(qtdeFaltaOSouFrotaCC.toString());
 		txtMatSemOS.setText(qtdeMatSemOS.toString());
 		
@@ -132,29 +160,30 @@ public class ValidarErpViewController implements Initializable {
 			labelMsgRegProcessados.setText("Informação: Qtde de Registros no Movimento Erp");
 		}
 		if (qtdeCCInexistentes > 0) {
-			labelMsgCCInexistentes.setText("PENDENCIA: Existe " + qtdeCCInexistentesDistintos + " CC distintos. Ver Log");
+			labelMsgCCInexistentes.setText("PENDENCIA: Centros de Custos não cadastrados no PimsCS. Ver LogCC");
 		}
 		if (qtdeOSValidas > 0) {
 			labelMsgOSValidas.setText("Informação: Qtde de Registros com OS Validas no Movimento Erp");
 		}
 		if (qtdeOSInexistentes > 0) {
-			labelMsgOSInexistentes.setText("PENDENCIA: Existe " + qtdeOSInexistentesDistintas + " OS distintas. Ver Log");
+			labelMsgOSInexistentes.setText("PENDENCIA: Ordem de Serviço nao existe no Manfro. Ver LogOS.");
 		}
 		if (qtdeOSIncoerentes > 0) {
-			labelMsgOSIncoerentes.setText("PENDENCIA: Existe " + qtdeOSIncoerentesDistintas + " OS distintas. Ver Log.");
+			labelMsgOSIncoerentes.setText("PENDENCIA: Ordem de Serviço não é para a Frota/CC informado. Ver LogOS.");
 		}
 		if (qtdeOSAntigas > 0) {
-			labelMsgOSAntigas.setText("PENDENCIA: Existe " + qtdeOSAntigasDistintas + " OS distintas. Ver Log.");
+			labelMsgOSAntigas.setText("PENDENCIA: Ordem de Serviço fechada a muitos dias. Ver LogOS.");
 		}
 
 		if (qtdeMatSemConversao > 0) {
-			labelMsgMatSemConversao.setText("PENDENCIA: Fazer Manutenção no Cadastro de Conversao de UN");
+			labelMsgMatSemConversao.setText("PENDENCIA: Fazer Manutenção na Tabela Fator de Medidas.");
 		}
+		
 		if (qtdeMatSemOS > 0) {
-			labelMsgMatSemOS.setText("Existem Materiais solicitados para Oficina que nao tem OS. Ver Log.");
+			labelMsgMatSemOS.setText("ALERTA: Existem Movimentos para Oficina que nao tem OS. Ver LogOS.");
 		}
 		if (qtdeFaltaOSouFrotaCC > 0) {
-			labelMsgFaltaOSouFrotaCC.setText("PENDENCIA: Se preenchido, necessário os dois campos. Ver Log.");
+			labelMsgFaltaOSouFrotaCC.setText("PENDENCIA: Se preenchido, necessário os dois campos. Ver LogOS.");
 		}
 	}
 }

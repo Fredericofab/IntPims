@@ -1,37 +1,51 @@
 package model.services;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import gui.util.Alertas;
 import gui.util.Utilitarios;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Erp;
+import model.entities.FatorMedida;
 
 public class ValidarErpService {
 
 	private ErpService erpService = new ErpService();
 	private PimsGeralService pimsGeralService = new PimsGeralService();
-//	private VerbasFolhaService verbasDaFolhaService = new VerbasFolhaService();
-//	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
+	private FatorMedidaService fatorMedidaService = new FatorMedidaService();
+	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 	
 //	parametros
 	String usuarioPimsCS;
 	String anoMes;
 	String qtdeDiasOS;
+	String matPossiveisFator;
+	String matOficinaSemOS;
+	String arqLogCC;
+	String arqLogOS;
+	
+	char aspas = '"';
 	
 	Integer qtdeProcessados;
 	Integer qtdeCCInexistentes;
 	Integer qtdeCCInexistentesDistintos;
-
-	Integer qtdeMatSemConversao = 100;
-	Integer qtdeMatSemOS = 100;
-	Integer qtdeFaltaOSouFrotaCC = 100;
-
+	Integer qtdeMatSemConversaoDistintos;
+	Integer qtdeMatSemConvencao;
+	Integer qtdeMatSemOS;
+	Integer qtdeFaltaOSouFrotaCC;;
 	Integer qtdeOSValidas;
+	Integer qtdeOSValidasDistintas;
 	Integer qtdeOSInexistentes;
 	Integer qtdeOSInexistentesDistintas;
 	Integer qtdeOSIncoerentes;
@@ -39,20 +53,19 @@ public class ValidarErpService {
 	Integer qtdeOSAntigas;
 	Integer qtdeOSAntigasDistintas;
 
+	List<Erp> lista;
+	List<Erp> listaFiltrada;
+	Set<FatorMedida> setFatorMedida;
 	Map<Double, Integer> mapCCInexistentes = new HashMap<>();
 	Map<String, Integer> mapOSInexistentes = new HashMap<>();
 	Map<String, Integer> mapOSIncoerentes = new HashMap<>();
 	Map<String, Integer> mapOSAntigas = new HashMap<>();
-
-	
-	List<Erp> lista;
-//	Set<VerbasFolha> setVerbas;
-
+	Map<String, Integer> mapOSValidas = new HashMap<>();
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public Integer getQtdeProcessados() {
 		return qtdeProcessados;
 	}
-	
 	public Integer getQtdeCCInexistentes() {
 		return qtdeCCInexistentes;
 	}
@@ -60,82 +73,228 @@ public class ValidarErpService {
 		return qtdeCCInexistentesDistintos;
 	}
 	public Integer getQtdeMatSemConversao() {
-		return qtdeMatSemConversao;
+		return qtdeMatSemConvencao;
 	}
-	public Integer getQtdeOSValidas() {
-		return qtdeOSValidas;
+	public Integer getQtdeMatSemConversaoDistintos() {
+		return qtdeMatSemConversaoDistintos;
 	}
-
-	public Integer getQtdeOSInexistentes() {
-		return qtdeOSInexistentes;
-	}
-	public Integer getQtdeOSInexistentesDistintas() {
-		return qtdeOSInexistentesDistintas;
-	}
-//	public Map<String, Integer> getMapOSInexistentes() {
-//		return mapOSInexistentes;
-//	}
-
-	public Integer getQtdeOSIncoerentes() {
-		return qtdeOSIncoerentes;
-	}
-	public Integer getQtdeOSIncoerentesDistintas() {
-		return qtdeOSIncoerentesDistintas;
-	}
-//	public Map<String, Integer> getMapOSIncoerentes() {
-//		return mapOSIncoerentes;
-//	}
-	
-	public Integer getQtdeOSAntigas() {
-		return qtdeOSAntigas;
-	}
-	public Integer getQtdeOSAntigasDistintas() {
-		return qtdeOSAntigasDistintas;
-	}
-//	public Map<String, Integer> getMapOSAntigas() {
-//		return mapOSAntigas;
-//	}
-
 	public Integer getQtdeMatSemOS() {
 		return qtdeMatSemOS;
 	}
 	public Integer getQtdeFaltaOSouFrotaCC() {
 		return qtdeFaltaOSouFrotaCC;
 	}
+	public Integer getQtdeOSValidas() {
+		return qtdeOSValidas;
+	}
+	public Integer getQtdeOSValidasDistintas() {
+		return qtdeOSValidasDistintas;
+	}
+	public Integer getQtdeOSInexistentes() {
+		return qtdeOSInexistentes;
+	}
+	public Integer getQtdeOSInexistentesDistintas() {
+		return qtdeOSInexistentesDistintas;
+	}
+	public Integer getQtdeOSIncoerentes() {
+		return qtdeOSIncoerentes;
+	}
+	public Integer getQtdeOSIncoerentesDistintas() {
+		return qtdeOSIncoerentesDistintas;
+	}
+	public Integer getQtdeOSAntigas() {
+		return qtdeOSAntigas;
+	}
+	public Integer getQtdeOSAntigasDistintas() {
+		return qtdeOSAntigasDistintas;
+	}
 
-//	public List<Folha> getLista() {
-//		return lista;
-//	}
-//	public Set<VerbasFolha> getSetVerbas() {
-//		return setVerbas;
-//	}
-//
-
-	public void validarERP() {
-		lerParametros();
+	public void validarERP() throws IOException {
+		lerParametros(false);
+		criarArqLog();
+		erpService.limparValidacoesOS();
 		lista = erpService.pesquisarTodos();
 		qtdeProcessados = lista.size();
-		validarCCustos();
-		validarMateriais();
 		validarFaltaOSouFrotaCC();
 		validarOS();
-	}
-	
-	private void validarMateriais() {
-		// TODO Auto-generated method stub
+		validarMatSemOS();
+		validarCCustos();
+		validarMatSemConversao();
+		Integer totaLPendente = qtdeCCInexistentes + 
+								qtdeFaltaOSouFrotaCC + 
+								qtdeMatSemConvencao +
+								qtdeOSInexistentes +  qtdeOSIncoerentes + qtdeOSAntigas;
+		if (totaLPendente == 0) {
+			processoAtualService.atualizarEtapa("ValidarErp", "S");
+		} else {
+			processoAtualService.atualizarEtapa("ValidarErp", "N");
+		}
 	}
 
-	private void validarFaltaOSouFrotaCC() {
+//9 Rotinas Auxiliares de Validacao (Inicio)	
+	
+	private void validarFaltaOSouFrotaCC() throws IOException {
 		qtdeFaltaOSouFrotaCC = 0;
 		for (Erp erp : lista) {
 			if (( erp.getNumeroOS() == null && erp.getFrotaOuCC() != null ) ||
 			    ( erp.getNumeroOS() != null && erp.getFrotaOuCC() == null )    ){
 				qtdeFaltaOSouFrotaCC += 1;
+				erp.setValidacoesOS("Falta OS ou FrotaCC. Informar os 2 ou nenhum.");
+				erpService.salvarOuAtualizar(erp);
+				gravaLogOSDetalhe("FaltaOSouFrotaCC", erp);
 			}
 		}
 	}
 
-	private void validarCCustos() {
+	private void validarOS() throws IOException {
+		qtdeOSValidas = 0;
+		qtdeOSInexistentes = 0;
+		qtdeOSIncoerentes = 0;
+		qtdeOSAntigas = 0;
+		for (Erp erp : lista) {
+			if (erp.getNumeroOS() != null) {
+				if (pimsGeralService.existeApt_os_he(erp.getNumeroOS(), usuarioPimsCS) == false ) {
+					osInexistentes(erp);
+				}
+				else {
+					Boolean flagOSIncoerentes = osIncoerentes(erp);
+					Boolean flagOSAntigas = osAntigas(erp);
+					if ((flagOSIncoerentes == false) && (flagOSAntigas == false) ) {
+						osValidas(erp);
+					}
+				}
+			}
+		}
+		qtdeOSInexistentesDistintas = mapOSInexistentes.size();
+		qtdeOSIncoerentesDistintas = mapOSIncoerentes.size();
+		qtdeOSAntigasDistintas = mapOSAntigas.size();
+		qtdeOSValidasDistintas = mapOSValidas.size();
+		
+		for (String numeroOS : mapOSInexistentes.keySet() ) {
+			for (Erp erp : lista) {
+				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
+					gravaLogOSDetalhe("osInexistentes", erp);
+				}
+			}
+		}
+		for (String numeroOS : mapOSIncoerentes.keySet() ) {
+			for (Erp erp : lista) {
+				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
+					gravaLogOSDetalhe("osIncoerentes", erp);
+				}
+			}
+		}
+		for (String numeroOS : mapOSAntigas.keySet() ) {
+			for (Erp erp : lista) {
+				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
+					gravaLogOSDetalhe("osAntigas", erp);
+				}
+			}
+		}
+		for (String numeroOS : mapOSValidas.keySet() ) {
+			for (Erp erp : lista) {
+				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
+					gravaLogOSDetalhe("osValidas", erp);
+				}
+			}
+		}
+		
+	}
+
+	private void osInexistentes(Erp erp) {
+		qtdeOSInexistentes += 1;
+		erp.setValidacoesOS("Ordem de Serviço Inexistente no Manfro");
+		erpService.salvarOuAtualizar(erp);
+		Integer qtde;
+		if (mapOSInexistentes.get(erp.getNumeroOS()) == null) {
+			qtde = 1;
+		}
+		else {
+			qtde = mapOSInexistentes.get(erp.getNumeroOS()) + 1;
+		}
+		mapOSInexistentes.put(erp.getNumeroOS(), qtde);
+	}
+
+	private Boolean osIncoerentes(Erp erp) {
+		Boolean flagOSIncoerentes = false;
+		Double codEquipto = pimsGeralService.codEquiptoApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
+		Double codCCusto  = pimsGeralService.codCCustoApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
+		Double codObjeto = ((codEquipto != 0) ? codEquipto : codCCusto);
+		Double frotaOuCC = Utilitarios.tentarConverterParaDouble(erp.getFrotaOuCC());
+		if (( frotaOuCC == null ) || ((frotaOuCC - codObjeto) != 0.00) ) {
+			qtdeOSIncoerentes += 1;
+			erp.setValidacoesOS("Ordem de Serviço Incoerente. Não é a mesma Frota/CC no Manfro");
+			erpService.salvarOuAtualizar(erp);
+			Integer qtde;
+			if (mapOSIncoerentes.get(erp.getNumeroOS()) == null) {
+				qtde = 1;
+			}
+			else {
+				qtde = mapOSIncoerentes.get(erp.getNumeroOS()) + 1;
+			}
+			mapOSIncoerentes.put(erp.getNumeroOS(), qtde);
+			flagOSIncoerentes = true;
+		}
+		return flagOSIncoerentes;
+	}
+
+	private Boolean osAntigas(Erp erp) {
+		Boolean flagOSAntigas = false;
+		Date dataSaida    = pimsGeralService.dataSaidaApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
+		Long maxDiasOS = Utilitarios.tentarConverterParaLong(qtdeDiasOS);
+		if (maxDiasOS != null) {
+			if ((dataSaida != null) && (diferencaDias(dataSaida) > maxDiasOS)) {
+				qtdeOSAntigas += 1;
+				erp.setValidacoesOS("Ordem de Serviço Fechada a mais de " + maxDiasOS + " dias. Não é obrigatoriamente um erro.");
+				erpService.salvarOuAtualizar(erp);
+				Integer qtde;
+				if (mapOSAntigas.get(erp.getNumeroOS()) == null) {
+					qtde = 1;
+				}
+				else {
+					qtde = mapOSAntigas.get(erp.getNumeroOS()) + 1;
+				}
+				mapOSAntigas.put(erp.getNumeroOS(), qtde);
+				flagOSAntigas = true;
+			}
+		}
+		else {
+			Alertas.mostrarAlertas("Erro de Integridade no Parametro",
+					"Parametro: Secao = ValidarErp, Entrada =  QtdeDiasOS",
+					"O Parametro não é um numero válido. \n \n" + 
+					"Informe um número Inteiro", AlertType.ERROR);
+		}
+		return flagOSAntigas;	
+	}
+
+	private void osValidas(Erp erp) {
+		qtdeOSValidas += 1;
+		erp.setValidacoesOS("Ordem de Serviço Válida. OK !");
+		erpService.salvarOuAtualizar(erp);
+		Integer qtde;
+		if (mapOSValidas.get(erp.getNumeroOS()) == null) {
+			qtde = 1;
+		}
+		else {
+			qtde = mapOSValidas.get(erp.getNumeroOS()) + 1;
+		}
+		mapOSValidas.put(erp.getNumeroOS(), qtde);
+	}
+
+	private void validarMatSemOS() throws IOException {
+		qtdeMatSemOS = 0;
+		listaFiltrada = erpService.pesquisarTodosFiltrado(matOficinaSemOS);
+		for (Erp erp : listaFiltrada) {
+			if ( erp.getNumeroOS() == null && erp.getFrotaOuCC() == null )  {
+				qtdeMatSemOS += 1;
+				erp.setValidacoesOS("Material sem OS. Não é obrigatoriamente erro.");
+				erpService.salvarOuAtualizar(erp);
+				gravaLogOSDetalhe("MatSemOS", erp);
+			}
+		}
+	}
+	
+	private void validarCCustos() throws IOException {
 		qtdeCCInexistentes = 0;
 		Integer qtde;
 		for (Erp erp : lista) {
@@ -151,244 +310,117 @@ public class ValidarErpService {
 				}
 		}
 		qtdeCCInexistentesDistintos = mapCCInexistentes.size();
+		for (Double codCentroCustos :  mapCCInexistentes.keySet()) {
+			qtde = mapCCInexistentes.get(codCentroCustos);
+			for (Erp erp : lista) {
+				if ( codCentroCustos == erp.getCodCentroCustos()) {
+					gravaLogCCDetalhe("CCInexistentes", qtde, erp);
+					break;
+				}
+			}
+		}
 	}
 
-
-	
-	private void validarOS() {
-		qtdeOSValidas = 0;
-		qtdeOSInexistentes = 0;
-		qtdeOSIncoerentes = 0;
-		qtdeOSAntigas = 0;
-		for (Erp erp : lista) {
-			if (erp.getNumeroOS() != null) {
-				if (pimsGeralService.existeApt_os_he(erp.getNumeroOS(), usuarioPimsCS) == false ) {
-					osInexistentes(erp.getNumeroOS());
-				}
-				else {
-					Boolean flagOSIncoerentes = false;
-					Boolean flagOSAntigas = false;
-					Double codEquipto = pimsGeralService.codEquiptoApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
-					Double codCCusto  = pimsGeralService.codCCustoApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
-					Date dataSaida    = pimsGeralService.dataSaidaApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
-
-					Double codObjeto = ((codEquipto != 0) ? codEquipto : codCCusto);
-					Double frotaOuCC = Utilitarios.tentarConverterParaDouble(erp.getFrotaOuCC());
-					if (( frotaOuCC == null ) || ((frotaOuCC - codObjeto) != 0.00) ) {
-						osIncoerentes(erp.getNumeroOS());
-						flagOSIncoerentes = true;
-					}
-
-					if ((dataSaida != null) && (diferencaDias(dataSaida) > Long.parseLong(qtdeDiasOS))) {
-						osAntigas(erp.getNumeroOS());
-						flagOSAntigas = true;
-					}
-					if ((flagOSIncoerentes == false) && (flagOSAntigas == false) ) {
-						qtdeOSValidas += 1;
+	private void validarMatSemConversao() {
+		listaFiltrada = erpService.pesquisarTodosFiltrado(matPossiveisFator);
+		setFatorMedida  = new HashSet<>();
+		for (Erp erp : listaFiltrada) {
+			FatorMedida fatorMedida = new FatorMedida(erp.getCodMaterial(), 
+								erp.getDescMovimento(),	erp.getUnidadeMedida(), 0.00);
+			setFatorMedida.add(fatorMedida);
+		}
+		if (setFatorMedida.size() > 0) {
+			gravarFatorMedida();
+		}
+		qtdeMatSemConvencao = 0;
+		qtdeMatSemConversaoDistintos = 0;
+		List<FatorMedida> listaFatorMedida = fatorMedidaService.pesquisarTodos();
+		for (FatorMedida fatorMedida : listaFatorMedida) {
+			if (fatorMedida.getFatorDivisao() == 0.00) {
+				qtdeMatSemConversaoDistintos += 1;
+				for (Erp erp : listaFiltrada) {
+					if (fatorMedida.getCodMaterial().equals(erp.getCodMaterial()) ) {
+						qtdeMatSemConvencao += 1;
 					}
 				}
 			}
 		}
-		qtdeOSInexistentesDistintas = mapOSInexistentes.size();
-		qtdeOSIncoerentesDistintas = mapOSIncoerentes.size();
-		qtdeOSAntigasDistintas = mapOSAntigas.size();
 	}
 
-
-
-	private void osInexistentes(String numeroOS) {
-		qtdeOSInexistentes += 1;
-		Integer qtde;
-		if (mapOSInexistentes.get(numeroOS) == null) {
-			qtde = 1;
-		}
-		else {
-			qtde = mapOSInexistentes.get(numeroOS) + 1;
-		}
-		mapOSInexistentes.put(numeroOS, qtde);
-	}
-
-	private void osIncoerentes(String numeroOS) {
-		qtdeOSIncoerentes += 1;
-		Integer qtde;
-		if (mapOSIncoerentes.get(numeroOS) == null) {
-			qtde = 1;
-		}
-		else {
-			qtde = mapOSIncoerentes.get(numeroOS) + 1;
-		}
-		mapOSIncoerentes.put(numeroOS, qtde);
-	}
-
-	private void osAntigas(String numeroOS) {
-		qtdeOSAntigas += 1;
-		Integer qtde;
-		if (mapOSAntigas.get(numeroOS) == null) {
-			qtde = 1;
-		}
-		else {
-			qtde = mapOSAntigas.get(numeroOS) + 1;
-		}
-		mapOSAntigas.put(numeroOS, qtde);
-	}
+//9 Rotinas Auxiliares de Validacao (Termino)	
 	
+//3 Rotinas do Arquivo de Log (Inicio)
 	
-//	public void processarTXT() {
-//		try {
-//			lerParametros();
-//			deletarTodosFolha();
-//			deletarTodosFolhaSumarizada();
-//			lerFolhaTXT(entrada, anoMes);
-//			if (setVerbas.size() > 0) {
-//				qtdeVerbasDistintas = setVerbas.size();
-//				gravarVerbasNovas();
-//			}
-//			contarVerbasSemDefinicao();
-//			if (qtdeVerbasSemDefinicao == 0 && qtdeCorrompidas == 0) {
-//				gravarDadosFolha();
-//			}
-//		} catch (DbException e) {
-//			Alertas.mostrarAlertas("Erro Banco Oracle", "Processo Cancelado", e.getMessage(),
-//					AlertType.ERROR);
-//		}
-//		
-//		if ((qtdeIncluidas > 0) && (qtdeLidas - qtdeIncluidas - qtdeNaoImportadas) == 0) {
-//			processoAtualService.atualizarEtapa("ImportarFolha", "S");
-//		} else {
-//			processoAtualService.atualizarEtapa("ImportarFolha", "N");
-//		}
-//		processoAtualService.atualizarEtapa("SumarizarFolha", "N");
-//		processoAtualService.atualizarEtapa("ExportarFolha", "N");
-//		processoAtualService.atualizarEtapa("VerbaAlterada", "N");
-//		processoAtualService.atualizarEtapa("FolhaAlterada", "N");
-//	}
-//	
-//	private void deletarTodosFolhaSumarizada() {
-//		folhaSumarizadaService.deletarTodos();
-//	}
-//	private void deletarTodosFolha() {
-//		qtdeDeletadas = folhaService.deletarTodos();
-//	}
-//
-//	private void lerFolhaTXT(String entrada, String anoMesReferencia) {
-//		String linha = null;
-//		lista = new ArrayList<Folha>();
-//		setVerbas = new HashSet<>();
-//
-//		try (BufferedReader br = new BufferedReader(new FileReader(entrada))) {
-//			linha = br.readLine();
-//			while (linha != null) {
-//				qtdeLidas = qtdeLidas + 1;
-//				Folha dadosFolha = null;
-//				dadosFolha = converteRegistro(linha, anoMesReferencia, qtdeLidas);
-//				if (dadosFolha != null) {
-//					if (naoImportar.indexOf(dadosFolha.getTipoVerba()) >= 0) {
-//						qtdeNaoImportadas = qtdeNaoImportadas + 1;
-//					}
-//					else {
-//						lista.add(dadosFolha);
-//						VerbasFolha verbaFolha = new VerbasFolha(dadosFolha.getCodVerba(), dadosFolha.getDescVerba(),
-//								dadosFolha.getTipoVerba(), null, null);
-//						setVerbas.add(verbaFolha);
-//					}
-//				}
-//				linha = br.readLine();
-//			}
-//		} catch (TxtIntegridadeException e) {
-//			Alertas.mostrarAlertas("Erro de Integridade no Arquivo", "Processo de Leitura do TXT interrompido",
-//					e.getMessage(), AlertType.ERROR);
-//		} catch (FileNotFoundException e) {
-//			Alertas.mostrarAlertas("Arquivo não encontrado", "Processo Cancelado",
-//					e.getMessage(), AlertType.ERROR);
-//		} catch (IOException e) {
-//			Alertas.mostrarAlertas("IOException", "Erro na Importacao Dados da Folha",
-//					e.getMessage(), AlertType.ERROR);
-//		} catch (RuntimeException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	private void gravarVerbasNovas() {
-//		for (VerbasFolha verbaFolha : setVerbas) {
-//			if (verbasDaFolhaService.pesquisarPorChave(verbaFolha.getCodVerba()) == null) {
-//				verbasDaFolhaService.salvarOuAtualizar(verbaFolha);
-//			}
-//		}
-//	}
-//	private void contarVerbasSemDefinicao() {
-//		qtdeVerbasSemDefinicao = verbasDaFolhaService.contarVerbasSemDefinicao();
-//	}
-//
-//	private void gravarDadosFolha() {
-//		VerbasFolha verbaFolha;
-//		qtdeIncluidas = 0;
-//		Double codVerba;
-//		for (Folha dadosFolha : lista) {
-//			codVerba = dadosFolha.getCodVerba();
-//			verbaFolha = verbasDaFolhaService.pesquisarPorChave(codVerba);
-//			if (verbaFolha != null) {
-//				dadosFolha.setImportar(verbaFolha.getImportar());
-//				dadosFolha.setConsiderarReferencia(verbaFolha.getConsiderarReferencia());
-//				folhaService.salvarOuAtualizar(dadosFolha);
-//				qtdeIncluidas = qtdeIncluidas + 1;
-//			}
-//		}
-//	}
-//
-//	private Folha converteRegistro(String linha, String anoMesReferencia, Integer numeroLinha)
-//			throws TxtIntegridadeException {
-//		String[] campos = linha.split(arqEntradaDelimitador);
-//		if ( numeroLinha == 1 ) {
-//			campos[0] = Utilitarios.excluiCaracterNaoEditavel(campos[0], 6);
-//		}
-//		Optional<ButtonType> continuar = null;
-//		try {
-//			if (campos.length == 8) {
-//				String anoMes = campos[0];
-//				Double codCentroCustos = Double.parseDouble(campos[1]);
-//				String descCentroCustos = campos[2];
-//				Double codVerba = Double.parseDouble(campos[3]);
-//				String descVerba = campos[4];
-//				String tipoVerba = campos[5];
-//				Double referenciaVerba = Double.parseDouble(campos[6]);
-//				Double valorVerba = Double.parseDouble(campos[7]);
-//				String importar = null;
-//				String considerarReferencia = null;
-//				String observacao = null;
-//				if (!anoMes.equals(anoMesReferencia)) {
-//					throw new TxtIntegridadeException("Registro nao Coerente com o Mês de Referencia");
-//				}
-//				Folha dadosFolha = new Folha(anoMes, codCentroCustos, descCentroCustos, codVerba, descVerba, valorVerba,
-//						referenciaVerba, tipoVerba, importar, considerarReferencia, observacao);
-//				return dadosFolha;
-//			} else {
-//				throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (8)");
-//			}
-//		} catch (TxtIntegridadeException e) {
-//			qtdeCorrompidas = qtdeCorrompidas + 1;
-//			continuar = Alertas.mostrarConfirmacao("Erro de Integridade no Arquivo",
-//					"Continuar Processo de Leitura do TXT ?",
-//					e.getMessage() + "\n \n" + "na linha No.: " + numeroLinha.toString() + "\n" + "\n" + linha,
-//					AlertType.CONFIRMATION);
-//		} catch (NumberFormatException e) {
-//			qtdeCorrompidas = qtdeCorrompidas + 1;
-//			continuar = Alertas.mostrarConfirmacao("Erro de Integridade no Arquivo",
-//					"Continuar Processo de Leitura do TXT ?",
-//					"Campo numerico esperado. \n \n" + e.getMessage() + "\n \n" +
-//					"na linha No.: " + numeroLinha.toString() + "\n" + "\n" + linha,
-//					AlertType.CONFIRMATION);
-//		} catch (RuntimeException e) {
-//			qtdeCorrompidas = qtdeCorrompidas + 1;
-//			continuar = Alertas.mostrarConfirmacao("RuntimeException", "Erro na Importacao Dados da Folha",
-//					e.getClass() + "\n" + e.getMessage(), AlertType.CONFIRMATION);
-//		} finally {
-//			if ((continuar != null) && (continuar.get() == ButtonType.CANCEL)) {
-//				throw new TxtIntegridadeException("Processo Interrompido pelo usuário");
-//			}
-//		}
-//		return null;
-//	}
-//
+	private void criarArqLog() throws IOException {
+		BufferedWriter bwCC = new BufferedWriter(new FileWriter(arqLogCC, false));
+		bwCC.write("VALIDAÇÃO: Centros de Custos Inexistentes no PimsCS.");
+		bwCC.newLine();
+		bwCC.write("AnoMes de Referencia: " + anoMes);
+		bwCC.newLine();
+		bwCC.write("CCustos,DescCCustos,qtde" );
+		bwCC.newLine();
+		bwCC.close();
+
+		BufferedWriter bwOS = new BufferedWriter(new FileWriter(arqLogOS, false));
+		bwOS.write("VALIDAÇÃO: Das Ordens de Serviços.");
+		bwOS.newLine();
+		bwOS.write("AnoMes de Referencia: " + anoMes);
+		bwOS.newLine();
+		bwOS.write("Validacoes,TArq,TMov," +
+				 "CCustos,DescCCustos,"   +
+				 "CContabil,DescCContabil," +
+				 "Material,DescMaterial,UN," +
+				 "Qtde,PUnit,VTotal," +
+				 "NumeroOS,FrotaOuCC,NumeroERP,DataMov");
+		bwOS.newLine();
+		bwOS.close();
+	}
+
+	private void gravaLogOSDetalhe(String secao, Erp erp) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogOS, true));	
+		String linha = erp.getValidacoesOS() + "," + 
+					   erp.getOrigem() + "," + 
+					   erp.getTipoMovimento() + "," + 
+					   String.format("%.0f", erp.getCodCentroCustos()) + "," + 
+					   erp.getDescCentroCustos() + "," + 
+					   erp.getCodContaContabil() + "," + 
+					   erp.getDescContaContabil() + "," + 
+					   aspas + erp.getCodMaterial() + aspas + "," + 
+					   erp.getDescMovimento().replace(",",".") + "," + 
+					   erp.getUnidadeMedida() + "," + 
+					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getQuantidade()) + "," + 
+					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
+					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getValorMovimento()) + "," + 
+					   erp.getNumeroOS() + "," + 
+					   erp.getFrotaOuCC() + "," + 
+					   erp.getDocumentoErp() + "," + 
+					   sdf.format(erp.getDataMovimento());
+		bw.write(linha);
+		bw.newLine();
+		bw.close();
+	}
+
+	private void gravaLogCCDetalhe(String secao, Integer qtde, Erp erp) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogCC, true));	
+		String linha = String.format("%.0f", erp.getCodCentroCustos()) + "," + 
+					   erp.getDescCentroCustos() + "," + 
+					   qtde;
+		bw.write(linha);
+		bw.newLine();
+		bw.close();
+	}
+
+//	3 Rotinas do Arquivo de Log (Termino)
+	
+//	3 Rotinas de Apoio (Inicio)
+
+	private void gravarFatorMedida() {
+		for (FatorMedida fatorMedida : setFatorMedida) {
+			if (fatorMedidaService.pesquisarPorChave(fatorMedida.getCodMaterial()) == null) {
+				fatorMedidaService.salvarOuAtualizar(fatorMedida);
+			}
+		}
+	}
 
 	private Long diferencaDias(Date dataSaida) {
 		try {
@@ -407,13 +439,26 @@ public class ValidarErpService {
 		}
 		return null;
 	}
-	private void lerParametros() {
+
+	private void lerParametros(Boolean oficial) {
 		ParametrosService parametrosService = new ParametrosService();
 		usuarioPimsCS  = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 		qtdeDiasOS = (parametrosService.pesquisarPorChave("ValidarErp", "QtdeDiasOS")).getValor();	
+		matPossiveisFator = (parametrosService.pesquisarPorChave("ValidarErp", "MatPossiveisFator")).getValor();	
+		matOficinaSemOS = (parametrosService.pesquisarPorChave("ValidarErp", "MatOficinaSemOS")).getValor();
+
+		String arqLogCCPasta = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogCCPasta")).getValor();
+		String arqLogCCNome  = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogCCNome")).getValor();
+		String arqLogCCTipo  = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogCCTipo")).getValor();
+		arqLogCC = arqLogCCPasta + arqLogCCNome + anoMes + arqLogCCTipo ;
+
+		String arqLogOSPasta = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogOSPasta")).getValor();
+		String arqLogOSNome  = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogOSNome")).getValor();
+		String arqLogOSTipo  = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogOSTipo")).getValor();
+		arqLogOS = arqLogOSPasta + arqLogOSNome + anoMes + arqLogOSTipo ;
+
 	}
 
-
-
+//	3 Rotinas de Apoio (termino)	
 }

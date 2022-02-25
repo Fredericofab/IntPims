@@ -3,9 +3,11 @@ package model.services;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import gui.util.Alertas;
+import gui.util.Utilitarios;
 import javafx.scene.control.Alert.AlertType;
 import model.dao.ErpDao;
 import model.dao.FabricaDeDao;
@@ -23,7 +25,6 @@ public class ErpService {
 	public List<Erp> pesquisarTodos() {
 		return dao.listarTodos();
 	}
-
 	public void salvarOuAtualizar(Erp objeto) {
 		if (dao.pesquisarPorChave(objeto.getSequencial()) == null) {
 			dao.inserir(objeto);
@@ -31,69 +32,39 @@ public class ErpService {
 			dao.atualizar(objeto);
 		}
 	}
-
 	public void remover(Erp objeto) {
 		dao.deletarPorChave(objeto.getSequencial());
 	}
-
-	public Integer deletarTodos() {
-		return dao.deletarTodos();
-	}
-
-	public Integer deletarOrigem(String origem) {
-		return dao.deletarPorOrigem(origem);
-	}
-
 	public Integer ultimoSequencial() {
 		return dao.ultimoSequencial();
 	}
-	
-	public List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere) {
-		return dao.pesquisarQuemAtendeAPolitica(codPolitica, clausulaWhere);
+	public Integer deletarOrigem(String origem) {
+		return dao.deletarPorOrigem(origem);
 	}
-
 	public List<Erp> pesquisarTodosFiltrado(String filtro) {
 		return dao.listarTodosFiltrado(filtro);
 	}
-
-	public Integer qtdeTotal(String importar) {
-		return dao.qtdeTotal(importar);
+	public void limparValidacoesOS() {
+		dao.limparValidacoesOS();
 	}
-	
-	public Integer qtdeDessaCritica(String essaCriticaTxt, String importar) {
-		return dao.qtdeDessaCritica(essaCriticaTxt, importar);
-	}
-
-	public Integer qtdeLiberadosOS() {
-		return dao.qtdeLiberadosOS();
-	}
-	public Integer qtdeLiberadosCM() {
-		return dao.qtdeLiberadosCM();
-	}
-	public Integer qtdeLiberadosDG() {
-		return dao.qtdeLiberadosDG();
-	}
-	public Integer qtdeLiberadosVM() {
-		return dao.qtdeLiberadosVM();
-	}
-
-
-
 	public void gerarTxt(Boolean oficial) {
 		lerParametros(oficial);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		List<Erp> lista = pesquisarTodos();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("origem,TipoMovimento,anoMes," +
-					 "codCentroCustos,descCentroCustos,"   +
-					 "codContaContabil,descContaContabil," +
-					 "codMaterial,descMaterialDespesa,unidadeMedida," +
-					 "quantidade,precoUnitario,valorMovimento," +
-					 "manfroOS,manfroFrotaOuCC,documentoErp,dataMovimento," +
-					 "importar,observacao,criticas," +
-					 "salvarOS_Material,salvarCstg_IntVM,salvarCstg_intCM,salvarCstg_intDG," +
-					 "sequencial");
+			bw.write("TArq,TMov,anoMes," +
+					 "CCustos,DescCCustos,"   +
+					 "CContabil,DescCContabil," +
+					 "Material,DescMaterial,UN," +
+					 "Qtde,PUnit,VTotal," +
+					 "NumeroOS,FrotaOuCC,NumeroERP,Data," +
+					 "IMP,Observacao,Validacoes,Politicas," +
+					 "OS,VM,CM,DG," +
+					 "NumReg");
+
 			bw.newLine();
 			for (Erp dadosErp : lista) {
+
 				String linha = dadosErp.getOrigem() + "," + 
 							   dadosErp.getTipoMovimento() + "," + 
 							   dadosErp.getAnoMes() + "," + 
@@ -104,15 +75,16 @@ public class ErpService {
 							   dadosErp.getCodMaterial() + "," + 
 							   dadosErp.getDescMovimento().replace(",",".") + "," + 
 							   dadosErp.getUnidadeMedida() + "," + 
-							   String.format("%.0f",dadosErp.getQuantidade()) + "," + 
-							   String.format("%.0f",dadosErp.getPrecoUnitario()) + "," + 
-							   String.format("%.0f",dadosErp.getValorMovimento()) + "," + 
+							   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getQuantidade())  + "," + 
+							   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getPrecoUnitario())  + "," + 
+							   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getValorMovimento())  + "," + 
 							   dadosErp.getNumeroOS() + "," + 
 							   dadosErp.getFrotaOuCC() + "," + 
 							   dadosErp.getDocumentoErp() + "," + 
-							   dadosErp.getDataMovimento() + "," + 
+							   sdf.format(dadosErp.getDataMovimento()) + "," + 
 							   dadosErp.getImportar() + "," + 
 							   dadosErp.getObservacao() + "," + 
+							   dadosErp.getValidacoesOS() + "," + 
 							   dadosErp.getPoliticas() + "," + 
 							   dadosErp.getSalvarOS_Material() + "," + 
 							   dadosErp.getSalvarCstg_IntVM() + "," + 
@@ -141,6 +113,45 @@ public class ErpService {
 		else {
 			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
 		}
+	}
+
+	
+//usadas no AplicarPoliticasErpService	
+	public List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere) {
+			return dao.pesquisarQuemAtendeAPolitica(codPolitica, clausulaWhere);
+	}
+	public Integer getTotalRegistros() {
+		return dao.getTotalRegistros();
+	}
+	public Integer getQtdeIndefinidos() {
+		return dao.getQtdeIndefinidos();
+	}
+	public Integer getQtdeImportar(String tipo) {
+		return dao.getQtdeImportar(tipo);
+	}
+	public Integer getQtdeValorMaterial(String tipo) {
+		return dao.getQtdeValorMaterial(tipo);
+	}
+	public Integer qtdeDessaCritica(String essaCriticaTxt, String importar) {
+		return dao.qtdeDessaCritica(essaCriticaTxt, importar);
+	}
+	public Integer qtdeLiberadosOS() {
+		return dao.qtdeLiberadosOS();
+	}
+	public Integer qtdeLiberadosCM() {
+		return dao.qtdeLiberadosCM();
+	}
+	public Integer qtdeLiberadosDG() {
+		return dao.qtdeLiberadosDG();
+	}
+	public Integer qtdeLiberadosVM() {
+		return dao.qtdeLiberadosVM();
+	}
+
+	
+//nao usadas	
+	public Integer deletarTodos() {
+		return dao.deletarTodos();
 	}
 
 

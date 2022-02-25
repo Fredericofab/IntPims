@@ -1,5 +1,8 @@
 package gui.util;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +33,6 @@ public class Utilitarios {
 			return null;
 		}
 	}
-
 	public static Double tentarConverterParaDouble(String x) {
 		try {
 			return Double.parseDouble(x);
@@ -38,7 +40,13 @@ public class Utilitarios {
 			return null;
 		}
 	}
-
+	public static Long tentarConverterParaLong(String x) {
+		try {
+			return Long.parseLong(x);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
 	public static String tentarConverterParaMaiusculo(String x) {
 		try {
 			if (x != null) {
@@ -48,15 +56,6 @@ public class Utilitarios {
 		} catch (NumberFormatException e) {
 			return null;
 		}
-	}
-
-	public static String excluiCaracterNaoEditavel(String campo, Integer tamanho) {
-		if ( campo.length() != tamanho ) {
-			int inicio = campo.length() - tamanho;
-			int termino = campo.length();
-			campo = campo.substring(inicio, termino);
-		}
-		return campo;
 	}
 	
 	public static <T> void formatarTableColumnDate(TableColumn<T, Date> tableColumn, String format) {
@@ -80,7 +79,6 @@ public class Utilitarios {
 			return cell;
 		});
 	}
-
 	public static <T> void formatarTableColumnDouble(TableColumn<T, Double> tableColumn, int decimalPlaces) {
 		// Codigo copiado do curso -291 SellerList TableView
 
@@ -131,9 +129,36 @@ public class Utilitarios {
 		});
 	}
 
+	public static NumberFormat formatarNumeroDecimalComMilhar(char decimal, char milhar ) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
+        symbols.setDecimalSeparator(decimal);
+        symbols.setGroupingSeparator(milhar);
+        return new DecimalFormat("#,##0.00", symbols);
+    }
+	public static NumberFormat formatarNumeroDecimalSemMilhar(char decimal) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
+        symbols.setDecimalSeparator(decimal);
+        return new DecimalFormat("#0.00", symbols);
+    }
+	public static NumberFormat formatarNumeroInteiroComMilhar(char milhar) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
+        symbols.setGroupingSeparator(milhar);
+        return new DecimalFormat("#,##0", symbols);
+    }
+	
+// 2 Rotinas Exclusivas para o Sistema IntPims (Inicio)
+	
+	public static String excluiCaracterNaoEditavel(String campo, Integer tamanho) {
+		if ( campo.length() != tamanho ) {
+			int inicio = campo.length() - tamanho;
+			int termino = campo.length();
+			campo = campo.substring(inicio, termino);
+		}
+		return campo;
+	}
 	public static List<String> camposErp() {
 		List<String> listaCamposOracle = new ArrayList<String>();
-		listaCamposOracle.add("Origem da Importacao		ORIGEM					C02");
+		listaCamposOracle.add("Arquivo de Origem			ORIGEM					C02");
 		listaCamposOracle.add("Tipo Movimento			TIPO_MOVIMENTO			C06");
 		listaCamposOracle.add("Ano e Mes de Referencia	ANO_MES				N06");
 		listaCamposOracle.add("Codigo Centro de Custos	COD_CENTRO_CUSTOS		N20");
@@ -161,4 +186,6 @@ public class Utilitarios {
 		return listaCamposOracle;
 	}
 
+// 2 Rotinas Exclusivas para o Sistema IntPims (Termino)
+	
 }
