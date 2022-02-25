@@ -146,11 +146,11 @@ public class PoliticasErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntCM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntDG, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldSN(txtFlagAtiva);
-		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtImportar);
-		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarOS_Material);
-		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntVM);
-		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntCM);
-		RestricoesDeDigitacao.soPermiteTextFieldBrancoSNinterrogacao(txtSalvarCstg_IntDG);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtImportar);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarOS_Material);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntVM);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntCM);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntDG);
 
 		List<String> listaCamposOracle = Utilitarios.camposErp();
 
@@ -223,21 +223,22 @@ public class PoliticasErpFormController implements Initializable {
 		objeto.setSalvarCstg_IntDG(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntDG.getText()));
 		objeto.setClausulaWhere(txtAreaClausulaWhere.getText());
 
-		substituirEspacoPorNull();
 		int acoesSim = contarAcoes("S");
 		int acoesInterrogacao = contarAcoes("?");
 
 		if (txtFlagAtiva.getText() == null ) {
 			validacao.adicionarErro("txtFlagAtiva", "Informe se essa Politica esta Ativa ou Nao");
 		}
+		if ((txtImportar.getText() == null || txtImportar.getText().trim().equals("")) &&
+		    (txtSalvarCstg_IntVM.getText() == null || txtSalvarCstg_IntVM.getText().trim().equals(""))){
+			 validacao.adicionarErro("acao", "Informe qual Ação: Salvar VM ou Importar ?");
+		}
 		
-		if ( txtImportar.getText() == null && txtSalvarCstg_IntVM.getText() == null ) {
-			validacao.adicionarErro("acao", "Informe qual Ação: Salvar VM ou Importar ?");
+		if ((txtImportar.getText() != null && ! txtImportar.getText().trim().equals("")) &&
+			(txtSalvarCstg_IntVM.getText() != null && ! txtSalvarCstg_IntVM.getText().trim().equals(""))){
+			 validacao.adicionarErro("acao", "Informe apenas UMA Ação: Salvar VM ou Importar.");
 		}
-		if ( txtImportar.getText() != null && txtSalvarCstg_IntVM.getText() != null ) {
-			validacao.adicionarErro("acao", "Informe apenas UMA Ação: Salvar VM ou Importar.");
-		}
-
+	
 		if (txtImportar.getText() != null) {
 			if (txtImportar.getText().toUpperCase().equals("S") && ( (acoesSim + acoesInterrogacao) != 1 ) ) { 
 				validacao.adicionarErro("txtImportar", "Importar SIM. Então infome um, e apenas um, Salvar");
@@ -284,23 +285,6 @@ public class PoliticasErpFormController implements Initializable {
 		return contaOS + contaCM + contaDG;
 	}
 
-	private void substituirEspacoPorNull() {
-		if ((txtImportar.getText() != null && txtImportar.getText().equals(" "))) {
-			txtImportar.setText(null);
-		}
-		if ((txtSalvarCstg_IntVM.getText() != null && txtSalvarCstg_IntVM.getText().equals(" "))) {
-			txtSalvarCstg_IntVM.setText(null);
-		}
-		if ((txtSalvarCstg_IntCM.getText() != null && txtSalvarCstg_IntCM.getText().equals(" "))) {
-			txtSalvarCstg_IntCM.setText(null);
-		}
-		if ((txtSalvarCstg_IntDG.getText() != null && txtSalvarCstg_IntDG.getText().equals(" "))) {
-			txtSalvarCstg_IntDG.setText(null);
-		}
-		if ((txtSalvarCstg_IntVM.getText() != null && txtSalvarCstg_IntVM.getText().equals(" "))) {
-			txtSalvarCstg_IntVM.setText(null);
-		}
-	}
 
 	private PoliticasErp substituirNull(PoliticasErp objeto) {
 		if (objeto.getRegistrosAplicados() == null) objeto.setRegistrosAplicados(0);

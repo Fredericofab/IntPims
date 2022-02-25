@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -17,19 +18,19 @@
                   <items>
                     <MenuItem fx:id="menuItemProcessoAtual" mnemonicParsing="false" onAction="#onMenuItemProcessoAtualAction" text="Processo Atual" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuItemImportarFolha" mnemonicParsing="false" onAction="#onMenuItemImportarFolhaAction" text="Importar Dados da Folha" />
-                        <MenuItem fx:id="menuItemSumarizarFolha" mnemonicParsing="false" onAction="#onMenuItemSumarizarFolhaAction" text="Sumarizar Dados Folha" />
-                        <MenuItem fx:id="menuItemExportarFolha" mnemonicParsing="false" onAction="#onMenuItemExportarFolhaAction" text="Exportar Dados da Folha" />
+                        <CheckMenuItem fx:id="menuItemImportarFolha" mnemonicParsing="false" onAction="#onMenuItemImportarFolhaAction" text="Importar Dados da Folha" />
+                        <CheckMenuItem fx:id="menuItemSumarizarFolha" mnemonicParsing="false" onAction="#onMenuItemSumarizarFolhaAction" text="Sumarizar Dados Folha" />
+                        <CheckMenuItem fx:id="menuItemExportarFolha" mnemonicParsing="false" onAction="#onMenuItemExportarFolhaAction" text="Exportar Dados da Folha" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuItemImportarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemImportarFuncionariosAction" text="Importar Funcionarios" />
-                        <MenuItem fx:id="menuItemSumarizarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemSumarizarFuncionariosAction" text="Sumarizar Funcionarios" />
+                        <CheckMenuItem fx:id="menuItemImportarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemImportarFuncionariosAction" text="Importar Funcionarios" />
+                        <CheckMenuItem fx:id="menuItemSumarizarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemSumarizarFuncionariosAction" text="Sumarizar Funcionarios" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuItemImportarErpMT" mnemonicParsing="false" onAction="#onMenuItemImportarErpMTAction" text="Importar ErpMT (Requisicao Materiais)" />
-                        <MenuItem fx:id="menuItemImportarErpCD" mnemonicParsing="false" onAction="#onMenuItemImportarErpCDAction" text="Importar ErpCD (Compras Diretas)" />
-                        <MenuItem fx:id="menuItemImportarErpDG" mnemonicParsing="false" onAction="#onMenuItemImportarErpDGAction" text="Importar ErpDG (Despesas Gerais)" />
-                        <MenuItem fx:id="menuItemValidarErp" mnemonicParsing="false" onAction="#onMenuItemValidarErpAction" text="Validar ERP" />
-                        <MenuItem fx:id="menuItemAplicarPoliticasErp" mnemonicParsing="false" onAction="#onMenuItemAplicarPoliticasErpAction" text="Aplicar Politicas ERP" />
-                        <MenuItem fx:id="menuItemExportarErp" mnemonicParsing="false" onAction="#onMenuItemExportarErpAction" text="Exportar ERP" />
+                        <CheckMenuItem fx:id="menuItemImportarErpMT" mnemonicParsing="false" onAction="#onMenuItemImportarErpMTAction" text="Importar ErpMT (Requisicao Materiais)" />
+                        <CheckMenuItem fx:id="menuItemImportarErpCD" mnemonicParsing="false" onAction="#onMenuItemImportarErpCDAction" text="Importar ErpCD (Compras Diretas)" />
+                        <CheckMenuItem fx:id="menuItemImportarErpDG" mnemonicParsing="false" onAction="#onMenuItemImportarErpDGAction" text="Importar ErpDG (DespesasGerais)" />
+                        <CheckMenuItem fx:id="menuItemValidarErp" mnemonicParsing="false" onAction="#onMenuItemValidarErpAction" text="Validar ERP" />
+                        <CheckMenuItem fx:id="menuItemAplicarPoliticasErp" mnemonicParsing="false" onAction="#onMenuItemAplicarPoliticasErpAction" text="Aplicar Politicas ERP" />
+                        <CheckMenuItem fx:id="menuItemExportarErp" mnemonicParsing="false" onAction="#onMenuItemExportarErpAction" text="Exportar ERP" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="menuItemSair2" mnemonicParsing="false" onAction="#onMenuItemSairAction" text="Sair" />
                   </items>

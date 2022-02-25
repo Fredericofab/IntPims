@@ -85,8 +85,6 @@ public class ErpFormController implements Initializable {
 	@FXML
 	private TextField txtImportar;
 	@FXML
-	private TextField txtPoliticas;
-	@FXML
 	private TextField txtSalvarOS_Material;
 	@FXML
 	private TextField txtSalvarCstg_IntVM;
@@ -106,6 +104,8 @@ public class ErpFormController implements Initializable {
 	private Label labelErroCodContaContabil;
 	@FXML
 	private Label labelErroCodMaterial;
+	@FXML
+	private Label labelErroImportar;
 	@FXML
 	private Label labelErroObservacao;
 	@FXML
@@ -186,11 +186,11 @@ public class ErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntVM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntCM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntDG, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtImportar);
-		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtSalvarOS_Material);
-		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtSalvarCstg_IntVM);
-		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtSalvarCstg_IntCM);
-		RestricoesDeDigitacao.soPermiteTextFieldSNinterrogacao(txtSalvarCstg_IntDG);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtImportar);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarOS_Material);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntVM);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntCM);
+		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntDG);
 		Utilitarios.formatarDatePicker(dpDataMovimento, "dd/MM/yyyy");
 	
 		if (flagIncluir.equals("S")) {
@@ -266,7 +266,6 @@ public class ErpFormController implements Initializable {
 		}
 		
 		txtImportar.setText(entidade.getImportar());
-		txtPoliticas.setText(entidade.getPoliticas());
 		txtSalvarOS_Material.setText(entidade.getSalvarOS_Material());
 		txtSalvarCstg_IntVM.setText(entidade.getSalvarCstg_IntVM());
 		txtSalvarCstg_IntCM.setText(entidade.getSalvarCstg_IntCM());
@@ -308,7 +307,6 @@ public class ErpFormController implements Initializable {
 			objeto.setDataMovimento(Date.from(instant));
 		}
 		objeto.setImportar(Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText()));
-		objeto.setPoliticas(txtPoliticas.getText());
 		objeto.setSalvarOS_Material(Utilitarios.tentarConverterParaMaiusculo(txtSalvarOS_Material.getText()));
 		objeto.setSalvarCstg_IntVM(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntVM.getText()));
 		objeto.setSalvarCstg_IntCM(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntCM.getText()));
@@ -321,10 +319,10 @@ public class ErpFormController implements Initializable {
 		if (txtAnoMes.getText() != null && txtAnoMes.getText().length() < 6) {
 			validacao.adicionarErro("txtAnoMes", "Informe no formato AAAAMM");
 		}
-		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("MT")
-				|| txtOrigem.getText().toUpperCase().equals("CD") || txtOrigem.getText().toUpperCase().equals("DG"))) {
-			// ok
-		} else {
+		if ((txtOrigem.getText() == null) || txtOrigem.getText().trim().equals("") ||
+			(( ! txtOrigem.getText().toUpperCase().equals("MT") ) &&
+			 ( ! txtOrigem.getText().toUpperCase().equals("CD") ) && 
+			 ( ! txtOrigem.getText().toUpperCase().equals("DG")))) {
 			validacao.adicionarErro("txtOrigem", "Informe a Origem: MT, CD ou DG");
 		}
 		if (txtCodCentroCustos.getText() == null || txtCodCentroCustos.getText().trim().equals("")) {
@@ -343,6 +341,18 @@ public class ErpFormController implements Initializable {
 				validacao.adicionarErro("txtCodMaterial", "Origem CD - Informe o Material/Serviço");
 		}
 
+		int acoesSim = contarAcoes("S");
+		int acoesInterrogacao = contarAcoes("?");
+		if (txtImportar.getText() != null) {
+			if (txtImportar.getText().toUpperCase().equals("S") && ( (acoesSim + acoesInterrogacao) != 1 ) ) { 
+				validacao.adicionarErro("txtImportar", "Importar SIM. Então infome um, e apenas um, Salvar");
+				}
+			if ( txtImportar.getText().toUpperCase().equals("N")  &&  (acoesSim + acoesInterrogacao) != 0 ) {
+				validacao.adicionarErro("txtImportar", "Importar NAO. Então nao faz sentido ter algum Salvar");
+			}
+		}
+		
+		
 		if (txtObservacao.getText() == null || txtObservacao.getText().trim().equals("")) {
 			if (flagObservacao.equals("S")) {
 				validacao.adicionarErro("txtObservacao",
@@ -372,6 +382,22 @@ public class ErpFormController implements Initializable {
 		return objeto;
 	}
 
+	private int contarAcoes(String simNaoInterogacao) {
+		int contaOS = 0;
+		int contaCM = 0;
+		int contaDG = 0;
+		if ( txtSalvarOS_Material.getText() != null ) {
+			contaOS = (txtSalvarOS_Material.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		}
+		if ( txtSalvarCstg_IntCM.getText() != null ) {
+			contaCM = (txtSalvarCstg_IntCM.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		}
+		if ( txtSalvarCstg_IntDG.getText() != null ) {
+			contaDG = (txtSalvarCstg_IntDG.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		}
+		return contaOS + contaCM + contaDG;
+	}
+
 
 	private void mostrarErrosDeDigitacao(Map<String, String> erros) {
 		Set<String> campos = erros.keySet();
@@ -380,6 +406,7 @@ public class ErpFormController implements Initializable {
 		labelErroCodCentroCustos.setText((campos.contains("txtCodCentroCustos") ? erros.get("txtCodCentroCustos") : ""));
 		labelErroCodContaContabil.setText((campos.contains("txtCodContaContabil") ? erros.get("txtCodContaContabil") : ""));
 		labelErroCodMaterial.setText((campos.contains("txtCodMaterial") ? erros.get("txtCodMaterial") : ""));
+		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
 		labelErroObservacao.setText((campos.contains("txtObservacao") ? erros.get("txtObservacao") : ""));
 	}
 }

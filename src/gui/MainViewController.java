@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -20,7 +21,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.ProcessoAtual;
 import model.services.AplicarPoliticasErpService;
-import model.services.PoliticasErpService;
 import model.services.ErpService;
 import model.services.ExportarFolhaService;
 import model.services.FatorMedidaService;
@@ -30,10 +30,14 @@ import model.services.FuncionariosService;
 import model.services.FuncionariosSumarizadosService;
 import model.services.MainViewService;
 import model.services.ParametrosService;
+import model.services.PoliticasErpService;
 import model.services.ProcessoAtualService;
 import model.services.VerbasFolhaService;
 
 public class MainViewController implements Initializable {
+
+	ProcessoAtualService processoAtualService = new ProcessoAtualService();
+	ProcessoAtual processoAtual;
 
 //	parametros
 	String anoMes;
@@ -46,27 +50,27 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemProcessoAtual;
 	@FXML
-	private MenuItem menuItemImportarFolha;
+	private CheckMenuItem menuItemImportarFolha;
 	@FXML
-	private MenuItem menuItemSumarizarFolha;
+	private CheckMenuItem menuItemSumarizarFolha;
 	@FXML
-	private MenuItem menuItemExportarFolha;
+	private CheckMenuItem menuItemExportarFolha;
 	@FXML
-	private MenuItem menuItemImportarFuncionarios;
+	private CheckMenuItem menuItemImportarFuncionarios;
 	@FXML
-	private MenuItem menuItemSumarizarFuncionarios;
+	private CheckMenuItem menuItemSumarizarFuncionarios;
 	@FXML
-	private MenuItem menuItemImportarErpMT;
+	private CheckMenuItem menuItemImportarErpMT;
 	@FXML
-	private MenuItem menuItemImportarErpCD;
+	private CheckMenuItem menuItemImportarErpCD;
 	@FXML
-	private MenuItem menuItemImportarErpDG;
+	private CheckMenuItem menuItemImportarErpDG;
 	@FXML
-	private MenuItem menuItemValidarErp;
+	private CheckMenuItem menuItemValidarErp;
 	@FXML
-	private MenuItem menuItemAplicarPoliticasErp;
+	private CheckMenuItem menuItemAplicarPoliticasErp;
 	@FXML
-	private MenuItem menuItemExportarErp;
+	private CheckMenuItem menuItemExportarErp;
 	@FXML
 	private MenuItem menuItemSair;
 
@@ -82,7 +86,6 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemFuncionariosSumarizados;
 	@FXML
 	private MenuItem menuItemErp;
-
 	
 	@FXML
 	private Menu menuTabelas;
@@ -105,10 +108,6 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemSair2;
 
-	@FXML
-	private void onMenuProcessosShown() {
-		habilitarEtapas();
-	}
 	@FXML
 	private void onMenuItemProcessoAtualAction() {
 		Stage paiStage = paiStage();
@@ -192,15 +191,12 @@ public class MainViewController implements Initializable {
 					controle.atualizarTableView();
 		});
 	}
-
-	
 	@FXML
 	private void onMenuItemExportarErpAction() {
 		Stage paiStage = paiStage();
 		criarJanelaFilha("/gui/ExportarErpView.fxml", "Exportação dos Dados do ERP", paiStage, x -> {
 		});
 	}
-
 	
 	@FXML
 	private void onMenuItemVerbaFolhaAction() {
@@ -211,7 +207,6 @@ public class MainViewController implements Initializable {
 					controle.atualizarTableView();
 				});
 	}
-	
 	@FXML
 	private void onMenuItemFatorMedidaAction() {
 		Stage paiStage = paiStage();
@@ -230,7 +225,6 @@ public class MainViewController implements Initializable {
 					controle.atualizarTableView();
 				});
 	}
-
 	@FXML
 	private void onMenuItemParametrosAction() {
 		Stage paiStage = paiStage();
@@ -303,6 +297,7 @@ public class MainViewController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		testarAcessoBanco();
+		lerParametros();
 	}
 
 	private void testarAcessoBanco() {
@@ -317,9 +312,42 @@ public class MainViewController implements Initializable {
 			menuMovimentos.setDisable(true);
 		}
 	}
+	
+	private <T> void criarJanelaFilha(String caminhoDaView, String titulo, Stage paiStage,
+			Consumer<T> acaoDeInicializacao) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
+			Pane pane = loader.load();
+
+			T controller = loader.getController();
+			acaoDeInicializacao.accept(controller);
+
+			Stage janelaFilhaStage = new Stage();
+			janelaFilhaStage.setTitle(titulo);
+			janelaFilhaStage.setScene(new Scene(pane)); 
+			janelaFilhaStage.setResizable(true); 
+			janelaFilhaStage.initOwner(paiStage); 
+			janelaFilhaStage.initModality(Modality.WINDOW_MODAL); 
+			janelaFilhaStage.showAndWait();
+
+		} catch (IOException e) {
+			Alertas.mostrarAlertas("IOException", "Erro carregando Stage (Janela)", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
+		}
+	}
+
+	private Stage paiStage() {
+		Stage telaPrincipal = (Stage) menuBarPrincipal.getScene().getWindow();
+		return telaPrincipal;
+	}
+	
+	@FXML
+	private void onMenuProcessosShown() {
+		processoAtual = processoAtualService.pesquisarPorChave(anoMes);
+		habilitarEtapas();
+		checkProcessos();
+	}
 	private void habilitarEtapas() {
-		lerParametros();
-		ProcessoAtual processoAtual = pegarProcessoAtual();
 		if (processoAtual == null) {
 			// Primeira utilizacao do sistema
 			menuItemImportarFolha.setDisable(true);
@@ -356,38 +384,20 @@ public class MainViewController implements Initializable {
 			menuItemExportarErp.setDisable(processoAtual.getAplicarPoliticaErp().equals("S") ? false : true);
 		}
 	}
+	private void checkProcessos() {
+		menuItemImportarFolha.setSelected(processoAtual.getImportarFolha().equals("S"));
+		menuItemSumarizarFolha.setSelected(processoAtual.getSumarizarFolha().equals("S"));
+		menuItemExportarFolha.setSelected(processoAtual.getExportarFolha().equals("S"));
+		menuItemImportarFuncionarios.setSelected(processoAtual.getImportarFuncionario().equals("S"));
+		menuItemSumarizarFuncionarios.setSelected(processoAtual.getSumarizarFuncionario().equals("S"));
+		menuItemImportarErpMT.setSelected(processoAtual.getImportarErpMT().equals("S"));
+		menuItemImportarErpCD.setSelected(processoAtual.getImportarErpCD().equals("S"));
+		menuItemImportarErpDG.setSelected(processoAtual.getImportarErpDG().equals("S"));
+		menuItemValidarErp.setSelected(processoAtual.getValidarErp().equals("S"));
+		menuItemAplicarPoliticasErp.setSelected(processoAtual.getAplicarPoliticaErp().equals("S"));
+		menuItemExportarErp.setSelected(processoAtual.getExportarErp().equals("S"));
+	}
 	
-	private ProcessoAtual pegarProcessoAtual() {
-		ProcessoAtualService processoAtualService = new ProcessoAtualService();
-		return processoAtualService.pesquisarPorChave(anoMes);
-	}
-	private <T> void criarJanelaFilha(String caminhoDaView, String titulo, Stage paiStage,
-			Consumer<T> acaoDeInicializacao) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDaView));
-			Pane pane = loader.load();
-
-			T controller = loader.getController();
-			acaoDeInicializacao.accept(controller);
-
-			Stage janelaFilhaStage = new Stage();
-			janelaFilhaStage.setTitle(titulo);
-			janelaFilhaStage.setScene(new Scene(pane)); 
-			janelaFilhaStage.setResizable(true); 
-			janelaFilhaStage.initOwner(paiStage); 
-			janelaFilhaStage.initModality(Modality.WINDOW_MODAL); 
-			janelaFilhaStage.showAndWait();
-
-		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro carregando Stage (Janela)", e.getMessage(), AlertType.ERROR);
-			e.printStackTrace();
-		}
-	}
-
-	private Stage paiStage() {
-		Stage telaPrincipal = (Stage) menuBarPrincipal.getScene().getWindow();
-		return telaPrincipal;
-	}
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();

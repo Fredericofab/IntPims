@@ -27,8 +27,9 @@
       <GridPane prefHeight="22.0" prefWidth="1106.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="548.0" minWidth="10.0" prefWidth="115.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1012.0" minWidth="0.0" prefWidth="866.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1012.0" minWidth="10.0" prefWidth="73.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1012.0" minWidth="0.0" prefWidth="811.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1012.0" minWidth="10.0" prefWidth="89.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1012.0" minWidth="10.0" prefWidth="75.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1012.0" minWidth="10.0" prefWidth="53.0" />
         </columnConstraints>
         <rowConstraints>
@@ -42,12 +43,17 @@
                </GridPane.margin>
             </Label>
             <TextArea fx:id="txtAreaFiltro" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Registros:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Label text="Registros:" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txtQtdeReg" prefHeight="25.0" prefWidth="447.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="txtQtdeReg" prefHeight="25.0" prefWidth="447.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Button fx:id="btLimparTxt" mnemonicParsing="false" onAction="#onBtLimparAction" prefHeight="25.0" prefWidth="66.0" text="Limpar" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
       <TableView fx:id="tableViewDadosErp" prefHeight="482.0" prefWidth="1106.0">
@@ -70,10 +76,10 @@
             <TableColumn fx:id="tableColumnFrotaOuCC" prefWidth="50.0" text="Frota" />
             <TableColumn fx:id="tableColumnDocumentoErp" prefWidth="10.0" text="Documento ERP" />
             <TableColumn fx:id="tableColumnDataMovimento" prefWidth="10.0" text="Data Movto" />
-            <TableColumn fx:id="tableColumnImportar" prefWidth="35.0" text="IMP" />
             <TableColumn fx:id="tableColumnPoliticas" prefWidth="60.0" text="Politicas" />
-            <TableColumn fx:id="tableColumnSalvarOS_Material" prefWidth="25.0" text="OS" />
             <TableColumn fx:id="tableColumnSalvarCstg_IntVM" prefWidth="25.0" text="VM" />
+            <TableColumn fx:id="tableColumnImportar" prefWidth="35.0" text="IMP" />
+            <TableColumn fx:id="tableColumnSalvarOS_Material" prefWidth="25.0" text="OS" />
             <TableColumn fx:id="tableColumnSalvarCstg_IntCM" prefWidth="25.0" text="CM" />
             <TableColumn fx:id="tableColumnSalvarCstg_IntDG" prefWidth="25.0" text="DG" />
             <TableColumn fx:id="tableColumnObservacao" prefWidth="85.0" text="Observacao" />

@@ -35,6 +35,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Erp;
 import model.entities.ProcessoAtual;
+import model.services.ErpFiltrosService;
 import model.services.ErpService;
 import model.services.ParametrosService;
 import model.services.ProcessoAtualService;
@@ -44,6 +45,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	private ErpService servico;
 	
 	private ParametrosService parametrosService = new ParametrosService();
+	private ErpFiltrosService erpFiltrosService = new ErpFiltrosService();
 
 
 //	Parametros
@@ -119,6 +121,8 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private Button btFiltroTxt;
 	@FXML
+	private Button btLimparTxt;
+	@FXML
 	private Button btGerarTxt;
 	@FXML
 	private Button btSair;
@@ -131,11 +135,6 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		String caminhoDaView = "/gui/ErpForm.fxml";
 		Erp entidade = new Erp();
 		entidade.setAnoMes(anoMes);
-		entidade.setImportar("S");
-		entidade.setSalvarOS_Material("N");
-		entidade.setSalvarCstg_IntVM("N");
-		entidade.setSalvarCstg_IntCM("N");
-		entidade.setSalvarCstg_IntDG("N");
 		Integer sequencial = servico.ultimoSequencial() + 1;
 		entidade.setSequencial(sequencial);
 		criarDialogoForm(entidade, caminhoDaView, parentStage);
@@ -148,7 +147,13 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		criarJanelaFilha(caminhoDaView, "Filtrar Dados Erp", parentStage,
 				(ErpFiltrosViewController controle) -> { controle.serOuvinteDeDadosAlteradosListener(this);	});
 	}
-
+	
+	@FXML
+	public void onBtLimparAction(ActionEvent evento) {
+		erpFiltrosService.salvarFiltro(null, null, null);
+		atualizarTableView();
+	}
+	
 	@FXML
 	public void onGerarTxtAction(ActionEvent evento) {
 		Boolean oficial = false;
@@ -210,7 +215,13 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnPrecoUnitario.setStyle("-fx-alignment: TOP-RIGHT");
 		tableColumnValorMovimento.setStyle("-fx-alignment: TOP-RIGHT");
 		tableColumnNumeroOS.setStyle("-fx-alignment: TOP-RIGHT");
-		
+
+		tableColumnSalvarCstg_IntVM.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnImportar.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnSalvarOS_Material.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnSalvarCstg_IntCM.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnSalvarCstg_IntDG.setStyle("-fx-alignment: TOP-CENTER");
+
 		btIncluir.setDisable((flagIncluir.equals("N") ? true : false));
 	}
 

@@ -137,7 +137,7 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		tableColumnCodPolitica.setCellValueFactory(new PropertyValueFactory<>("codPolitica"));
 		tableColumnNomePolitica.setCellValueFactory(new PropertyValueFactory<>("nomePolitica"));
 		tableColumnFlagAtiva.setCellValueFactory(new PropertyValueFactory<>("flagAtiva"));
-		tableColumnAnoMesAnalisado.setCellValueFactory(new PropertyValueFactory<>(""));
+		tableColumnAnoMesAnalisado.setCellValueFactory(new PropertyValueFactory<>("anoMesAnalisado"));
 		tableColumnIMP.setCellValueFactory(new PropertyValueFactory<>("importar"));
 		tableColumnCM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntCM"));
 		tableColumnDG.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntDG"));
@@ -147,8 +147,14 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		
 
 		tableColumnCodPolitica.setStyle("-fx-alignment: TOP-RIGHT");
+		tableColumnQtdeAplicados.setStyle("-fx-alignment: TOP-RIGHT");
 		tableColumnFlagAtiva.setStyle("-fx-alignment: TOP-CENTER");
-
+		tableColumnVM.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnIMP.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnOS.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnCM.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnDG.setStyle("-fx-alignment: TOP-CENTER");
+		
 		RestricoesDeDigitacao.soPermiteTextFieldInteiro(txtCodPolitica);
 	}
 

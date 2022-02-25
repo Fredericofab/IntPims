@@ -41,19 +41,21 @@ public class RestricoesDeDigitacao {
 	public static void soPermiteTextFieldSNinterrogacao(TextField txt) {
 		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
 			if (valorNovo != null && !valorNovo.toUpperCase().matches("[SN?]")) {
-				txt.setText(valorVelho);
+					txt.setText(valorVelho);
 			}
 		});
 	}
 	
-	public static void soPermiteTextFieldBrancoSNinterrogacao(TextField txt) {
+	
+	public static void soPermiteTextFieldNullSNInterrogacao(TextField txt) {
 		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
-			if (valorNovo != null && !valorNovo.toUpperCase().matches("[ SN?]")) {
+			if (valorNovo != null && !valorNovo.toUpperCase().matches("[SN?]") && !valorNovo.equals("")) {
 				txt.setText(valorVelho);
 			}
 		});
 	}
 
+	
 	public static void soPermiteTextFieldPDB(TextField txt) {
 		txt.textProperty().addListener((obs, valorVelho, valorNovo) -> {
 			if (valorNovo != null && !valorNovo.toUpperCase().matches("[PDB]")) {
