@@ -81,6 +81,8 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	private Button btCalcular;
 	@FXML
 	private Button btSair;
+	@FXML
+	private Label labelEvolucao;
 	
 	private ObservableList<PoliticasErp> obsLista;
 
@@ -92,21 +94,27 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	@FXML
 	public void onBtAplicarTodasAction(ActionEvent evento) {
 		try {
+			labelEvolucao.setText("Aplicando Politicas. Aguarde...");
 			servico.aplicarTodas();
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro na aplicacao do Filtro", e.getMessage(), AlertType.ERROR);
 		} finally {
+			labelEvolucao.setText("Atualizando as Estatisticas. Aguarde...");
 			atualizarEstatisticaGeral();
+			labelEvolucao.setText("Atualizando as Estatisticas Por Politica. Aguarde...");
 			atualizarEstatisticasPorPolitica();
 			atualizarTableView();
+			labelEvolucao.setText("Processo Concluido com Sucesso");
 		}
 	}
 
 	@FXML
 	public void onBtCalcularAction(ActionEvent evento) {
+		labelEvolucao.setText("Calculando as Estatisticas. Aguarde...");
 		atualizarEstatisticaGeral();
 		atualizarEstatisticasPorPolitica();
 		atualizarTableView();
+		labelEvolucao.setText("Processo Concluido com Sucesso");
 	}
 
 	public void setAplicarPoliticaErpServico(AplicarPoliticasErpService servico) {
@@ -114,18 +122,19 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	}
 
 	private void atualizarEstatisticaGeral() {
+		servico.atualizarEstatisticaGeral();
 		Integer qtdeTotalRegistros = servico.getTotalRegistros();
 		Integer qtdeTotalNaoCalculados = servico.getQtdeNaoCalculados();
 		Integer qtdeTotalIndefinidos = servico.getQtdeIndefinidos();
-		Integer qtdeImpPendentes = servico.getQtdeImportar("?");
-		Integer qtdeImpIgnorados = servico.getQtdeImportar("N");
-		Integer qtdeImpLiberados = servico.getQtdeImportar("S");
+		Integer qtdeImpPendentes = servico.getQtdeImportarI();
+		Integer qtdeImpIgnorados = servico.getQtdeImportarN();
+		Integer qtdeImpLiberados = servico.getQtdeImportarS();
 		Integer qtdeImpLiberadosOS = servico.getQtdeImpLiberadosOS();
 		Integer qtdeImpLiberadosCM = servico.getQtdeImpLiberadosCM();
 		Integer qtdeImpLiberadosDG = servico.getQtdeImpLiberadosDG();
-		Integer qtdeVmPendentes = servico.getQtdeValorMaterial("?");
-		Integer qtdeVmIgnorados = servico.getQtdeValorMaterial("N");
-		Integer qtdeVmLiberados = servico.getQtdeValorMaterial("S");
+		Integer qtdeVmPendentes = servico.getQtdeValorMaterialI();
+		Integer qtdeVmIgnorados = servico.getQtdeValorMaterialN();
+		Integer qtdeVmLiberados = servico.getQtdeValorMaterialS();
 
 		txtTotalRegistros.setText(qtdeTotalRegistros.toString());
 		txtTotalNaoCalculados.setText(qtdeTotalNaoCalculados.toString());

@@ -67,11 +67,8 @@ public class ProcessoAtualService {
 						processoAtual.getImportarErpDG() + "," +
 						processoAtual.getValidarErp()	+ "," +
 						processoAtual.getAplicarPoliticaErp()	+ "," +
-						processoAtual.getExportarErp()   + "," +
-				processoAtual.getVerbaAlterada()  + "," +
-				processoAtual.getFolhaAlterada() + "," +
-				processoAtual.getFuncionarioAlterado();
-				bw.write(linha);
+						processoAtual.getExportarErp();
+			bw.write(linha);
 				bw.newLine();
 			}
 			if (! oficial) {
@@ -109,11 +106,6 @@ public class ProcessoAtualService {
 		if (campo.equals("ValidarErp")) processoAtual.setValidarErp(valor); 
 		if (campo.equals("AplicarPoliticaErp")) processoAtual.setAplicarPoliticaErp(valor); 
 		if (campo.equals("ExportarErp")) processoAtual.setExportarErp(valor); 
-		
-		if (campo.equals("VerbaAlterada")) processoAtual.setVerbaAlterada(valor); 
-		if (campo.equals("FolhaAlterada")) processoAtual.setFolhaAlterada(valor); 
-		if (campo.equals("FuncionarioAlterado")) processoAtual.setFuncionarioAlterado(valor); 
-
 		salvarOuAtualizar(processoAtual);
 	}
 

@@ -81,6 +81,5 @@ public class FuncionariosService {
 	
 	private void reatualizarEtapaDoProcesso() {
 		processoAtualService.atualizarEtapa("SumarizarFuncionario","N");
-		processoAtualService.atualizarEtapa("FuncionarioAlterado","S");
 	}
 }

@@ -385,17 +385,19 @@ public class MainViewController implements Initializable {
 		}
 	}
 	private void checkProcessos() {
-		menuItemImportarFolha.setSelected(processoAtual.getImportarFolha().equals("S"));
-		menuItemSumarizarFolha.setSelected(processoAtual.getSumarizarFolha().equals("S"));
-		menuItemExportarFolha.setSelected(processoAtual.getExportarFolha().equals("S"));
-		menuItemImportarFuncionarios.setSelected(processoAtual.getImportarFuncionario().equals("S"));
-		menuItemSumarizarFuncionarios.setSelected(processoAtual.getSumarizarFuncionario().equals("S"));
-		menuItemImportarErpMT.setSelected(processoAtual.getImportarErpMT().equals("S"));
-		menuItemImportarErpCD.setSelected(processoAtual.getImportarErpCD().equals("S"));
-		menuItemImportarErpDG.setSelected(processoAtual.getImportarErpDG().equals("S"));
-		menuItemValidarErp.setSelected(processoAtual.getValidarErp().equals("S"));
-		menuItemAplicarPoliticasErp.setSelected(processoAtual.getAplicarPoliticaErp().equals("S"));
-		menuItemExportarErp.setSelected(processoAtual.getExportarErp().equals("S"));
+		if (processoAtual != null) {
+			menuItemImportarFolha.setSelected(processoAtual.getImportarFolha().equals("S"));
+			menuItemSumarizarFolha.setSelected(processoAtual.getSumarizarFolha().equals("S"));
+			menuItemExportarFolha.setSelected(processoAtual.getExportarFolha().equals("S"));
+			menuItemImportarFuncionarios.setSelected(processoAtual.getImportarFuncionario().equals("S"));
+			menuItemSumarizarFuncionarios.setSelected(processoAtual.getSumarizarFuncionario().equals("S"));
+			menuItemImportarErpMT.setSelected(processoAtual.getImportarErpMT().equals("S"));
+			menuItemImportarErpCD.setSelected(processoAtual.getImportarErpCD().equals("S"));
+			menuItemImportarErpDG.setSelected(processoAtual.getImportarErpDG().equals("S"));
+			menuItemValidarErp.setSelected(processoAtual.getValidarErp().equals("S"));
+			menuItemAplicarPoliticasErp.setSelected(processoAtual.getAplicarPoliticaErp().equals("S"));
+			menuItemExportarErp.setSelected(processoAtual.getExportarErp().equals("S"));
+		}
 	}
 	
 	private void lerParametros() {

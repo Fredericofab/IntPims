@@ -9,43 +9,64 @@ public class AplicarPoliticasErpService {
 
 	private ErpService erpService = new ErpService();
 	private PoliticasErpService politicasErpService = new PoliticasErpService();
-
+	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
+	
 //	parametros
 	String usuarioPimsCS;
 	String anoMes;
 
 	List<Erp> listaErp;
 
+	Integer totalRegistros;
+	Integer qtdeNaoCalculados;
+	Integer qtdeIndefinidos;
+	Integer qtdeImportarS;
+	Integer qtdeImportarN;
+	Integer qtdeImportarI;
+	Integer qtdeValorMaterialS;
+	Integer qtdeValorMaterialN;
+	Integer qtdeValorMaterialI;
+	Integer qtdeImpLiberadosOS;
+	Integer qtdeImpLiberadosCM;
+	Integer qtdeImpLiberadosDG;
+	
 	public Integer getTotalRegistros() {
-		return erpService.getTotalRegistros();
+		return totalRegistros;
 	}
-
 	public Integer getQtdeNaoCalculados() {
-		return erpService.getQtdeNaoCalculados();
+		return qtdeNaoCalculados;
 	}
 	public Integer getQtdeIndefinidos() {
-		return erpService.getQtdeIndefinidos();
+		return qtdeIndefinidos;
 	}
-	public Integer getQtdeImportar(String tipo) {
-		return erpService.getQtdeImportar(tipo);
+	public Integer getQtdeImportarS() {
+		return qtdeImportarS;
 	}
-	public Integer getQtdeValorMaterial(String tipo) {
-		return erpService.getQtdeValorMaterial(tipo);
+	public Integer getQtdeImportarN() {
+		return qtdeImportarN;
+	}
+	public Integer getQtdeImportarI() {
+		return qtdeImportarI;
+	}
+	public Integer getQtdeValorMaterialS() {
+		return qtdeValorMaterialS;
+	}
+	public Integer getQtdeValorMaterialN() {
+		return qtdeValorMaterialN;
+	}
+	public Integer getQtdeValorMaterialI() {
+		return qtdeValorMaterialI;
 	}
 
 	public Integer getQtdeImpLiberadosOS() {
-		return erpService.qtdeLiberadosOS();
+		return qtdeImpLiberadosOS;
 	}
 	public Integer getQtdeImpLiberadosCM() {
-		return erpService.qtdeLiberadosCM();
+		return qtdeImpLiberadosCM;
 	}
 	public Integer getQtdeImpLiberadosDG() {
-		return erpService.qtdeLiberadosDG();
+		return qtdeImpLiberadosDG;
 	}
-	public Integer getQtdeLiberadosVM() {
-		return erpService.qtdeLiberadosVM();
-	}
-
 
 	public void aplicarTodas() {
 		lerParametros();
@@ -99,6 +120,28 @@ public class AplicarPoliticasErpService {
 		return erp;
 	}
 
+	public void atualizarEstatisticaGeral() {
+		totalRegistros = erpService.getTotalRegistros();
+		qtdeNaoCalculados = erpService.getQtdeNaoCalculados();
+		qtdeIndefinidos = erpService.getQtdeIndefinidos();
+		qtdeImportarS = erpService.getQtdeImportar("S");
+		qtdeImportarN = erpService.getQtdeImportar("N");
+		qtdeImportarI = erpService.getQtdeImportar("?");
+		qtdeValorMaterialS = erpService.getQtdeValorMaterial("S");
+		qtdeValorMaterialN = erpService.getQtdeValorMaterial("N");
+		qtdeValorMaterialI = erpService.getQtdeValorMaterial("?");
+		qtdeImpLiberadosOS = erpService.qtdeLiberadosOS();
+		qtdeImpLiberadosCM = erpService.qtdeLiberadosCM();
+		qtdeImpLiberadosDG = erpService.qtdeLiberadosDG();
+
+		if (qtdeIndefinidos + qtdeValorMaterialI + qtdeImportarI == 0) {
+			processoAtualService.atualizarEtapa("AplicarPoliticaErp", "S");
+		}
+		else {
+			processoAtualService.atualizarEtapa("AplicarPoliticaErp", "N");
+		}
+	}
+	
 	public void atualizarEstatisticasPorPolitica() {
 		lerParametros();
 		listaErp = erpService.pesquisarTodos();

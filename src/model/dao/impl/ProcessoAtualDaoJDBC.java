@@ -29,8 +29,8 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 										+ "Importar_Funcionario,Sumarizar_Funcionario,"
 										+ "Importar_ErpMT, Importar_ErpCD, Importar_ErpDD, "
 										+ "Validar_Erp, aplicar_Politica_Erp, Exportar_Erp, "
-										+ "Verba_Alterada, Folha_Alterada, Funcionario_alterado,Filtro_Erp) "
-										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
+										+ "Filtro_Erp) "
+										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)" );
 			st.setString(1, objeto.getAnoMes());
 			st.setString(2, objeto.getImportarFolha());
 			st.setString(3, objeto.getSumarizarFolha());
@@ -43,10 +43,7 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(10, objeto.getValidarErp());
 			st.setString(11, objeto.getAplicarPoliticaErp());
 			st.setString(12, objeto.getExportarErp());
-			st.setString(13, objeto.getVerbaAlterada());
-			st.setString(14, objeto.getFolhaAlterada());
-			st.setString(15, objeto.getFuncionarioAlterado());
-			st.setString(16, objeto.getFiltroErp());
+			st.setString(13, objeto.getFiltroErp());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela Processo_Atual  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -64,7 +61,6 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 										+ "Importar_Funcionario = ?,Sumarizar_Funcionario = ?,"
 										+ "Importar_ErpMT = ? , Importar_ErpCD = ?, Importar_ErpDD = ?, "
 										+ "Validar_Erp = ? , aplicar_Politica_Erp = ? , Exportar_Erp = ?, "
-										+ "Verba_alterada = ? , Folha_Alterada = ?, Funcionario_Alterado =?, "
 										+ "Filtro_Erp = ? "
 										+ "WHERE Ano_Mes = ? ");
 			st.setString(1, objeto.getImportarFolha());
@@ -78,12 +74,9 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 			st.setString(9, objeto.getValidarErp());
 			st.setString(10, objeto.getAplicarPoliticaErp());
 			st.setString(11, objeto.getExportarErp());
-			st.setString(12, objeto.getVerbaAlterada());
-			st.setString(13, objeto.getFolhaAlterada());
-			st.setString(14, objeto.getFuncionarioAlterado());
-			st.setString(15, objeto.getFiltroErp());
+			st.setString(12, objeto.getFiltroErp());
 
-			st.setString(16, objeto.getAnoMes());
+			st.setString(13, objeto.getAnoMes());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela Processo_Atual  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -185,9 +178,6 @@ public class ProcessoAtualDaoJDBC implements ProcessoAtualDao {
 		processoAtual.setValidarErp(rs.getString("Validar_Erp"));		
 		processoAtual.setAplicarPoliticaErp(rs.getString("aplicar_Politica_Erp"));		
 		processoAtual.setExportarErp(rs.getString("Exportar_Erp"));		
-		processoAtual.setVerbaAlterada(rs.getString("Verba_Alterada"));		
-		processoAtual.setFolhaAlterada(rs.getString("Folha_Alterada"));		
-		processoAtual.setFuncionarioAlterado(rs.getString("Funcionario_Alterado"));		
 		processoAtual.setFiltroErp(rs.getString("Filtro_Erp"));		
 		return processoAtual;
 	}

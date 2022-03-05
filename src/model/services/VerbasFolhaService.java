@@ -99,7 +99,6 @@ public class VerbasFolhaService {
 		processoAtualService.atualizarEtapa("ImportarFolha","N");
 		processoAtualService.atualizarEtapa("SumarizarFolha","N");
 		processoAtualService.atualizarEtapa("ExportarFolha","N");
-		processoAtualService.atualizarEtapa("VerbaAlterada","S");
 	}
 
 	

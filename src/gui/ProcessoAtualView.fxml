@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="491.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessoAtualViewController">
+<VBox prefHeight="326.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessoAtualViewController">
    <children>
       <ToolBar prefHeight="21.0" prefWidth="431.0">
         <items>
@@ -60,11 +60,6 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="416.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -139,17 +134,6 @@
             <TextField fx:id="txtValidarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <TextField fx:id="txtAplicarPoliticaErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <TextField fx:id="txtExportarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <Label text="Ações que talvez necessite reprocessar etapas" GridPane.columnIndex="4" GridPane.rowIndex="7">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label text="Verbas Alterada ( Recomendado (re)importar Folha )" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-            <Label text="Dados da Folha Alterado ( Recomendado (re)sumarizar Folha )" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-            <TextField fx:id="txtVerbaAlterada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-            <TextField fx:id="txtFolhaAlterada" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-            <TextField fx:id="txtFuncionarioAlterado" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-            <Label text="Funcionarios Alterados ( Recomendado (re)sumarizar Funcionários )" GridPane.columnIndex="4" GridPane.rowIndex="10" />
          </children>
       </GridPane>
    </children>

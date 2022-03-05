@@ -94,6 +94,8 @@ public class FatorMedidaService {
 	}
 
 	private void reatualizarEtapaDoProcesso() {
-		processoAtualService.atualizarEtapa("FatorAlterado", "S");
+		processoAtualService.atualizarEtapa("ValidarErp", "N");
+		processoAtualService.atualizarEtapa("AplicarPoliticaErp", "N");
+		processoAtualService.atualizarEtapa("ExportarErp", "N");
 	}
 }

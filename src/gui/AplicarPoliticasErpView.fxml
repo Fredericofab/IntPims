@@ -26,7 +26,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -43,86 +42,86 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                 <Button fx:id="btAplicarTodas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBtAplicarTodasAction" prefHeight="25.0" prefWidth="182.0" text="Aplicar Politicas" textAlignment="CENTER" GridPane.rowIndex="1" />
-                  <Button fx:id="btCalcular" mnemonicParsing="false" onAction="#onBtCalcularAction" prefHeight="25.0" prefWidth="174.0" text="Calcular Estatisticas" GridPane.rowIndex="5" />
-                  <Label text="Total de Registros" GridPane.rowIndex="6" />
-                  <TextField fx:id="txtTotalRegistros" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="Reg. Indefinidos" GridPane.rowIndex="8">
+                  <Button fx:id="btCalcular" mnemonicParsing="false" onAction="#onBtCalcularAction" prefHeight="25.0" prefWidth="174.0" text="Calcular Estatisticas" GridPane.rowIndex="3" />
+                  <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="191.0" text="Sair" GridPane.rowIndex="19" />
+                  <Label text="Total de Registros" GridPane.rowIndex="4" />
+                  <Label text="Não Aplicadas aqui" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Reg. Indefinidos" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin></Label>
-                  <TextField fx:id="txtTotalIndefinidos" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label text="Reg. Pendentes" GridPane.rowIndex="11">
+                  <Label text="Valor Material" GridPane.rowIndex="7">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Reg. Ignorados" GridPane.rowIndex="8">
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Reg. Pendentes" GridPane.rowIndex="9">
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Reg. Liberados" GridPane.rowIndex="10">
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Importar" GridPane.rowIndex="11">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Reg. Ignorados" GridPane.rowIndex="12">
                      <GridPane.margin>
                         <Insets left="20.0" />
                      </GridPane.margin></Label>
-                  <TextField fx:id="txtImpPendentes" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                  <Label text="Reg. Ignorados" GridPane.rowIndex="10">
+                  <Label text="Reg. Pendentes" GridPane.rowIndex="13">
                      <GridPane.margin>
                         <Insets left="20.0" />
                      </GridPane.margin></Label>
-                  <TextField fx:id="txtImpIgnorados" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Label text="Reg. Liberados" GridPane.rowIndex="12">
+                  <Label text="Reg. Liberados" GridPane.rowIndex="14">
                      <GridPane.margin>
                         <Insets left="20.0" />
                      </GridPane.margin></Label>
-                  <TextField fx:id="txtImpLiberados" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                  <Label text="Ordem .Serviço" GridPane.rowIndex="13">
+                  <Label text="Ordem de .Serviço" GridPane.rowIndex="15">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtImpLiberadosOS" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                  <Label text="Consumo Material" GridPane.rowIndex="14">
+                  <Label text="Consumo Material" GridPane.rowIndex="16">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtImpLiberadosCM" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                  <Label text="Despesas gerais" GridPane.rowIndex="15">
+                  <Label text="Despesas gerais" GridPane.rowIndex="17">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtImpLiberadosDG" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-                  <Label text="Valor Material" GridPane.rowIndex="16">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="txtVmlLiberados" GridPane.columnIndex="1" GridPane.rowIndex="19" />
-                  <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="191.0" text="Sair" GridPane.rowIndex="3" />
-                  <Label text="Importar" GridPane.rowIndex="9">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Reg. Liberados" GridPane.rowIndex="19">
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Reg. Ignorados" GridPane.rowIndex="17">
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Reg. Pendentes" GridPane.rowIndex="18">
-                     <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="txtVmPendentes" GridPane.columnIndex="1" GridPane.rowIndex="18" />
-                  <TextField fx:id="txtVmIgnorados" GridPane.columnIndex="1" GridPane.rowIndex="17" />
-                  <Label text="Sobrepostos" GridPane.rowIndex="7">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="txtTotalNaoCalculados" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="txtTotalRegistros" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtTotalNaoCalculados" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="txtTotalIndefinidos" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="txtVmIgnorados" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="txtVmPendentes" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="txtVmlLiberados" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="txtImpIgnorados" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <TextField fx:id="txtImpPendentes" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <TextField fx:id="txtImpLiberados" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                  <TextField fx:id="txtImpLiberadosOS" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                  <TextField fx:id="txtImpLiberadosCM" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                  <TextField fx:id="txtImpLiberadosDG" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="17" />
                </children>
             </GridPane>
             <ScrollPane prefHeight="436.0" prefWidth="787.0">
@@ -145,6 +144,11 @@
             </ScrollPane>
         </items>
       </SplitPane>
+      <Label fx:id="labelEvolucao" text="Label">
+         <padding>
+            <Insets left="250.0" />
+         </padding>
+      </Label>
    </children>
    <padding>
       <Insets left="5.0" top="5.0" />

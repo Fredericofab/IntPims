@@ -120,24 +120,6 @@ public class ProcessoAtual implements Serializable {
 	public void setExportarErp(String exportarErp) {
 		this.exportarErp = exportarErp;
 	}
-	public String getVerbaAlterada() {
-		return verbaAlterada;
-	}
-	public void setVerbaAlterada(String verbaAlterada) {
-		this.verbaAlterada = verbaAlterada;
-	}
-	public String getFolhaAlterada() {
-		return folhaAlterada;
-	}
-	public void setFolhaAlterada(String folhaAlterada) {
-		this.folhaAlterada = folhaAlterada;
-	}
-	public String getFuncionarioAlterado() {
-		return funcionarioAlterado;
-	}
-	public void setFuncionarioAlterado(String funcionarioAlterado) {
-		this.funcionarioAlterado = funcionarioAlterado;
-	}
 	public String getFiltroErp() {
 		return filtroErp;
 	}
