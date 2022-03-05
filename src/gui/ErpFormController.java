@@ -83,6 +83,8 @@ public class ErpFormController implements Initializable {
 	@FXML
 	private DatePicker dpDataMovimento;
 	@FXML
+	private TextField txtSobreporPoliticas;
+	@FXML
 	private TextField txtImportar;
 	@FXML
 	private TextField txtSalvarOS_Material;
@@ -104,6 +106,8 @@ public class ErpFormController implements Initializable {
 	private Label labelErroCodContaContabil;
 	@FXML
 	private Label labelErroCodMaterial;
+	@FXML
+	private Label labelErroSobreporPoliticas;
 	@FXML
 	private Label labelErroImportar;
 	@FXML
@@ -180,12 +184,14 @@ public class ErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodMaterial, 10);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtUnidadeMedida,5);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescMovimento,255);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSobreporPoliticas, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtObservacao, 255);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarOS_Material,1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntVM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntCM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntDG, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldSN(txtSobreporPoliticas);
 		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtImportar);
 		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarOS_Material);
 		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntVM);
@@ -198,6 +204,7 @@ public class ErpFormController implements Initializable {
 		} else {
 			if (flagAlterar.equals("S")) {
 				desabilitarCompoenentes(true);
+				txtSobreporPoliticas.setDisable(false);
 				txtImportar.setDisable(false);
 				txtObservacao.setDisable(false);
 				txtSalvarOS_Material.setDisable(false);
@@ -228,6 +235,7 @@ public class ErpFormController implements Initializable {
 		txtFrotaOuCC.setDisable(b);
 		txtDocumentoErp.setDisable(b);
 		dpDataMovimento.setDisable(b);
+		txtSobreporPoliticas.setDisable(b);
 		txtImportar.setDisable(b);
 		txtObservacao.setDisable(b);
 		txtSalvarOS_Material.setDisable(b);
@@ -265,6 +273,7 @@ public class ErpFormController implements Initializable {
 			dpDataMovimento.setValue(LocalDate.ofInstant(entidade.getDataMovimento().toInstant(), ZoneId.systemDefault()));
 		}
 		
+		txtSobreporPoliticas.setText(entidade.getSobreporPoliticas());
 		txtImportar.setText(entidade.getImportar());
 		txtSalvarOS_Material.setText(entidade.getSalvarOS_Material());
 		txtSalvarCstg_IntVM.setText(entidade.getSalvarCstg_IntVM());
@@ -306,6 +315,7 @@ public class ErpFormController implements Initializable {
 			Instant instant = Instant.from(dpDataMovimento.getValue().atStartOfDay(ZoneId.systemDefault()));
 			objeto.setDataMovimento(Date.from(instant));
 		}
+		objeto.setSobreporPoliticas(Utilitarios.tentarConverterParaMaiusculo(txtSobreporPoliticas.getText()));
 		objeto.setImportar(Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText()));
 		objeto.setSalvarOS_Material(Utilitarios.tentarConverterParaMaiusculo(txtSalvarOS_Material.getText()));
 		objeto.setSalvarCstg_IntVM(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntVM.getText()));
@@ -341,6 +351,34 @@ public class ErpFormController implements Initializable {
 				validacao.adicionarErro("txtCodMaterial", "Origem CD - Informe o Material/Serviço");
 		}
 
+//		if (txtSobreporPoliticas.getText() != null && txtSobreporPoliticas.getText().toUpperCase().equals("N")) {
+//			if ((txtImportar.getText() != null          && ! txtImportar.getText().equals("")) 		 ||
+//				(txtSalvarCstg_IntVM.getText()  != null && ! txtSalvarCstg_IntVM.getText().equals("")) ||
+//				(txtSalvarCstg_IntCM.getText()  != null	&& ! txtSalvarCstg_IntCM.getText().equals("")) || 
+//				(txtSalvarCstg_IntDG.getText()  != null && ! txtSalvarCstg_IntDG.getText().equals("")) || 
+//				(txtSalvarOS_Material.getText() != null && ! txtSalvarOS_Material.getText().equals(""))   ) {
+//				validacao.adicionarErro("txtSobreporPoliticas", "Sobrepor Politica 'N' - apagar todas as politicas abaixo");
+//			}
+//		}
+
+//		if (txtSobreporPoliticas.getText() != null && txtSobreporPoliticas.getText().toUpperCase().equals("S")) {
+//			if (txtImportar.getText() == null           && txtSalvarCstg_IntVM.getText() == null &&
+//				txtSalvarCstg_IntCM.getText() == null	&& txtSalvarCstg_IntDG.getText() == null && 
+//				txtSalvarOS_Material.getText() == null ) {
+//				validacao.adicionarErro("txtSobreporPoliticas", "Sobrepor Politica 'S' - Informe as politicas abaixo");
+//			}
+//		}
+
+		if (txtSobreporPoliticas.getText() != null && txtSobreporPoliticas.getText().toUpperCase().equals("S")) {
+			if ((txtImportar.getText() == null         || txtImportar.getText().equals("")) 		 &&
+				(txtSalvarCstg_IntVM.getText() == null || txtSalvarCstg_IntVM.getText().equals("")) &&
+				(txtSalvarCstg_IntCM.getText() == null || txtSalvarCstg_IntCM.getText().equals("")) && 
+				(txtSalvarCstg_IntDG.getText() == null || txtSalvarCstg_IntDG.getText().equals("")) && 
+				(txtSalvarOS_Material.getText()== null || txtSalvarOS_Material.getText().equals(""))   ) {
+				validacao.adicionarErro("txtSobreporPoliticas", "Sobrepor Politica 'S' - Informe as politicas abaixo");
+			}
+		}
+		
 		int acoesSim = contarAcoes("S");
 		int acoesInterrogacao = contarAcoes("?");
 		if (txtImportar.getText() != null) {
@@ -406,6 +444,7 @@ public class ErpFormController implements Initializable {
 		labelErroCodCentroCustos.setText((campos.contains("txtCodCentroCustos") ? erros.get("txtCodCentroCustos") : ""));
 		labelErroCodContaContabil.setText((campos.contains("txtCodContaContabil") ? erros.get("txtCodContaContabil") : ""));
 		labelErroCodMaterial.setText((campos.contains("txtCodMaterial") ? erros.get("txtCodMaterial") : ""));
+		labelErroSobreporPoliticas.setText((campos.contains("txtSobreporPoliticas") ? erros.get("txtSobreporPoliticas") : ""));
 		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
 		labelErroObservacao.setText((campos.contains("txtObservacao") ? erros.get("txtObservacao") : ""));
 	}

@@ -17,8 +17,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import model.entities.ProcessoAtual;
 import model.services.ErpFiltrosService;
 import model.services.ParametrosService;
@@ -37,13 +39,24 @@ public class ErpFiltrosViewController implements Initializable {
 	String anoMes;
 
 	private String importar;
+	private String valorMaterial;
+	private String sobreporPolitica;
 	private String politica;
+	private String validacaoOS;
 	private String filtro;
 	
 	@FXML
 	private TextField txtImportar;
 	@FXML
+	private TextField txtValorMaterial;
+	@FXML
+	private TextField txtSobreporPolitica;
+	@FXML
 	private TextField txtPolitica;
+	@FXML	
+	private ToggleGroup validacoesOS;
+	@FXML
+	private RadioButton radioNenhum;
 	@FXML
 	private ComboBox<String> cboxCamposOracle;
 	@FXML
@@ -61,22 +74,26 @@ public class ErpFiltrosViewController implements Initializable {
 	@FXML
 	public void onBtLimparAction(ActionEvent evento) {
 		txtImportar.setText(null);
+		txtValorMaterial.setText(null);
+		txtSobreporPolitica.setText(null);
 		txtPolitica.setText(null);
 		txtAreaFiltro.setText(null);
+		radioNenhum.setSelected(true);
 	}
 
 	@FXML
 	public void onBtSalvarAction(ActionEvent evento) {
 		getDadosDoForm();
-		if ((( importar != null) || ( politica != null) ) &&
+		if (( importar != null ||  politica != null || validacaoOS != null || 
+			  valorMaterial != null || sobreporPolitica != null              ) &&
 			( filtro != null )){
-			Alertas.mostrarAlertas(null, "Um tipo de Filtro OU outro", 
+			Alertas.mostrarAlertas(null, "Filtro Básico ou Filtro Personalizado", 
 							"Limpar os filtros e \n" +
 							"Informar filtro(s) Basico(s) OU o Filtro Personalizado.",
 							AlertType.ERROR);
 		}
 		else {
-			erpFiltrosService.salvarFiltro(importar, politica, filtro);
+			erpFiltrosService.salvarFiltro(importar, valorMaterial, sobreporPolitica, politica, validacaoOS, filtro);
 			notificarDadosAlteradosListeners();
 			Utilitarios.atualStage(evento).close();
 		}
@@ -120,6 +137,8 @@ public class ErpFiltrosViewController implements Initializable {
 
 	private void atualizarTela() {
 		txtImportar.setText(null);
+		txtValorMaterial.setText(null);
+		txtSobreporPolitica.setText(null);
 		txtPolitica.setText(null);
 		processoAtual	= processoAtualService.pesquisarPorChave(anoMes);
 		filtro = processoAtual.getFiltroErp();
@@ -128,7 +147,19 @@ public class ErpFiltrosViewController implements Initializable {
 
 	private void getDadosDoForm() {
 		importar = Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText());
+		valorMaterial = Utilitarios.tentarConverterParaMaiusculo(txtValorMaterial.getText());
+		sobreporPolitica = Utilitarios.tentarConverterParaMaiusculo(txtSobreporPolitica.getText());
 		politica  = Utilitarios.tentarConverterParaMaiusculo(txtPolitica.getText());
+		if (validacoesOS.getSelectedToggle() == null ) {
+			validacaoOS = null;
+		}
+		else {
+			RadioButton radio = (RadioButton) validacoesOS.getSelectedToggle();
+			validacaoOS = radio.getText();
+			if (validacaoOS.equals("Nenhum")) {
+				validacaoOS = null;
+			}
+		}
 		filtro = txtAreaFiltro.getText();
 	}
 

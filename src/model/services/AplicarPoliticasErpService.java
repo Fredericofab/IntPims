@@ -4,7 +4,6 @@ import java.util.List;
 
 import model.entities.Erp;
 import model.entities.PoliticasErp;
-import model.exceptions.IntegridadeException;
 
 public class AplicarPoliticasErpService {
 
@@ -16,18 +15,14 @@ public class AplicarPoliticasErpService {
 	String anoMes;
 
 	List<Erp> listaErp;
-	Integer qtdeAplicados;
-	Integer qtdePendentes;
-	Integer qtdeLiberados;
-	Integer qtdeIgnorados;
-	Integer qtdeLiberadosOS;
-	Integer qtdeLiberadosCM;
-	Integer qtdeLiberadosDG;
 
 	public Integer getTotalRegistros() {
 		return erpService.getTotalRegistros();
 	}
 
+	public Integer getQtdeNaoCalculados() {
+		return erpService.getQtdeNaoCalculados();
+	}
 	public Integer getQtdeIndefinidos() {
 		return erpService.getQtdeIndefinidos();
 	}
@@ -41,31 +36,20 @@ public class AplicarPoliticasErpService {
 	public Integer getQtdeImpLiberadosOS() {
 		return erpService.qtdeLiberadosOS();
 	}
-
 	public Integer getQtdeImpLiberadosCM() {
 		return erpService.qtdeLiberadosCM();
 	}
-
 	public Integer getQtdeImpLiberadosDG() {
 		return erpService.qtdeLiberadosDG();
 	}
-
 	public Integer getQtdeLiberadosVM() {
 		return erpService.qtdeLiberadosVM();
 	}
 
-	public void aplicarUma(Integer codigo) {
-		PoliticasErp politicaErp = politicasErpService.pesquisarPorChave(codigo);
-		if (politicaErp == null) {
-			throw new IntegridadeException("Politica Informada não Existe");
-		}
-		lerParametros();
-		listaErp = erpService.pesquisarTodos();
-		aplicarPolitica(politicaErp);
-	}
 
 	public void aplicarTodas() {
 		lerParametros();
+		erpService.limparPoliticas();
 		listaErp = erpService.pesquisarTodos();
 		for (PoliticasErp politicaErp : politicasErpService.pesquisarTodos()) {
 			if ( politicaErp.getFlagAtiva().toUpperCase().equals("S")) {
@@ -73,41 +57,14 @@ public class AplicarPoliticasErpService {
 			}
 		}
 	}
-
+	
 	private void aplicarPolitica(PoliticasErp politicaErp) {
 		String clausulaWhere = politicaErp.getClausulaWhere();
 		Integer codPolitica = politicaErp.getCodPolitica();
-		listaErp = erpService.pesquisarQuemAtendeAPolitica(codPolitica, clausulaWhere);
-		zerarContadores();
-		for (Erp erp : listaErp) {
-			qtdeAplicados += 1;
-			if ((politicaErp.getImportar() != null) && (politicaErp.getImportar().equals("?"))) {
-				qtdePendentes += 1;
-			}
-			if ((politicaErp.getImportar() != null) && (politicaErp.getImportar().equals("S"))) {
-				qtdeLiberados += 1;
-			}
-			if ((politicaErp.getImportar() != null) && (politicaErp.getImportar().equals("N"))) {
-				qtdeIgnorados += 1;
-			}
+		List<Erp> listaErpDaPolitica = erpService.pesquisarQuemAtendeAPolitica(codPolitica, clausulaWhere);
+		for (Erp erp : listaErpDaPolitica) {
 			erp = atualizarRegistroErp(politicaErp, erp);
 			erpService.salvarOuAtualizar(erp);
-		}
-		politicaErp = atualizarRegistroPoliticaErp(politicaErp);
-		politicasErpService.salvarOuAtualizar(politicaErp);
-	}
-
-	public void atualizarEstatisticaPorPolitica() {
-		for (PoliticasErp politicaErp : politicasErpService.pesquisarTodos()) {
-			if (politicaErp.getFlagAtiva().toUpperCase().equals("S")) {
-				String essaPoliticaTxt = String.format("%04d", politicaErp.getCodPolitica());
-				zerarContadores();
-				qtdePendentes = erpService.qtdeDessaCritica(essaPoliticaTxt, "?");
-				qtdeLiberados = erpService.qtdeDessaCritica(essaPoliticaTxt, "S");
-				qtdeIgnorados = erpService.qtdeDessaCritica(essaPoliticaTxt, "N");
-				atualizarRegistroPoliticaErp(politicaErp);
-				politicasErpService.salvarOuAtualizar(politicaErp);
-			}
 		}
 	}
 
@@ -117,45 +74,49 @@ public class AplicarPoliticasErpService {
 			erp.setImportar(politicaErp.getImportar());
 		}
 
-		if ((politicaErp.getSalvarOS_Material() != null)
-				&& (!politicaErp.getSalvarOS_Material().toUpperCase().equals(" "))) {
+		if (politicaErp.getSalvarOS_Material() != null) {
 			erp.setSalvarOS_Material(politicaErp.getSalvarOS_Material());
 		}
-		if ((politicaErp.getSalvarCstg_IntVM() != null)
-				&& (!politicaErp.getSalvarCstg_IntVM().toUpperCase().equals(" "))) {
+		if (politicaErp.getSalvarCstg_IntVM() != null) {
 			erp.setSalvarCstg_IntVM(politicaErp.getSalvarCstg_IntVM());
 		}
-		if ((politicaErp.getSalvarCstg_IntCM() != null)
-				&& (!politicaErp.getSalvarCstg_IntCM().toUpperCase().equals(" "))) {
+		if (politicaErp.getSalvarCstg_IntCM() != null) {
 			erp.setSalvarCstg_IntCM(politicaErp.getSalvarCstg_IntCM());
 		}
-		if ((politicaErp.getSalvarCstg_IntDG() != null)
-				&& (!politicaErp.getSalvarCstg_IntDG().toUpperCase().equals(" "))) {
+		if (politicaErp.getSalvarCstg_IntDG() != null) {
 			erp.setSalvarCstg_IntDG(politicaErp.getSalvarCstg_IntDG());
 		}
 		String essaPoliticaTxt = String.format("%04d", politicaErp.getCodPolitica()) + " ";
-		String criticasDesseRegistros = erp.getPoliticas();
-		if (criticasDesseRegistros == null) {
+		String politicasDesseRegistros = erp.getPoliticas();
+		if (politicasDesseRegistros == null) {
 			erp.setPoliticas(essaPoliticaTxt);
-		} else {
-			if (criticasDesseRegistros.indexOf(essaPoliticaTxt) == -1) {
-				erp.setPoliticas(criticasDesseRegistros + essaPoliticaTxt);
+		}
+		else {
+			if (politicasDesseRegistros.indexOf(essaPoliticaTxt) == -1) {
+				erp.setPoliticas(politicasDesseRegistros + essaPoliticaTxt);
 			}
 		}
 		return erp;
 	}
 
-	private PoliticasErp atualizarRegistroPoliticaErp(PoliticasErp politicaErp) {
-		politicaErp.setAnoMesAnalisado(anoMes);
-		politicaErp.setRegistrosAplicados(qtdeAplicados);
-		return politicaErp;
-	}
-
-	private void zerarContadores() {
-		qtdeAplicados = 0;
-		qtdePendentes = 0;
-		qtdeLiberados = 0;
-		qtdeIgnorados = 0;
+	public void atualizarEstatisticasPorPolitica() {
+		lerParametros();
+		listaErp = erpService.pesquisarTodos();
+		List<PoliticasErp> listaPoliticas = politicasErpService.pesquisarTodos();
+		for (PoliticasErp politicaErp : listaPoliticas ) {
+			String essaPolitica = politicaErp.getCodPolitica().toString();
+			Integer qtdeAplicados = 0;
+			for (Erp erp : listaErp) {
+				String politicasAplicadas = erp.getPoliticas();
+				if ((politicasAplicadas != null) && 
+				    (politicasAplicadas.indexOf(essaPolitica) != -1)) {
+					qtdeAplicados += 1;
+				}
+				politicaErp.setAnoMesAnalisado(anoMes);
+				politicaErp.setRegistrosAplicados(qtdeAplicados);
+				politicasErpService.salvarOuAtualizar(politicaErp);
+			}
+		}
 	}
 
 	private void lerParametros() {
@@ -163,5 +124,4 @@ public class AplicarPoliticasErpService {
 		usuarioPimsCS = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 	}
-
 }

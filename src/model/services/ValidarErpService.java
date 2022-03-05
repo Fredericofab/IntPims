@@ -22,6 +22,7 @@ import model.entities.FatorMedida;
 public class ValidarErpService {
 
 	private ErpService erpService = new ErpService();
+	private PoliticasErpService politicasErpService = new PoliticasErpService();
 	private PimsGeralService pimsGeralService = new PimsGeralService();
 	private FatorMedidaService fatorMedidaService = new FatorMedidaService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
@@ -113,6 +114,8 @@ public class ValidarErpService {
 		lerParametros(false);
 		criarArqLog();
 		erpService.limparValidacoesOS();
+		erpService.limparPoliticas();
+		politicasErpService.limparEstatisticas();
 		lista = erpService.pesquisarTodos();
 		qtdeProcessados = lista.size();
 		validarFaltaOSouFrotaCC();
@@ -139,9 +142,9 @@ public class ValidarErpService {
 			if (( erp.getNumeroOS() == null && erp.getFrotaOuCC() != null ) ||
 			    ( erp.getNumeroOS() != null && erp.getFrotaOuCC() == null )    ){
 				qtdeFaltaOSouFrotaCC += 1;
-				erp.setValidacoesOS("Falta OS ou FrotaCC. Informar os 2 ou nenhum.");
+				erp.setValidacoesOS("Falta OS ou FrotaCC.");
 				erpService.salvarOuAtualizar(erp);
-				gravaLogOSDetalhe("FaltaOSouFrotaCC", erp);
+				gravaLogOSDetalhe("Falta OS ou FrotaCC", erp);
 			}
 		}
 	}
@@ -173,37 +176,29 @@ public class ValidarErpService {
 		for (String numeroOS : mapOSInexistentes.keySet() ) {
 			for (Erp erp : lista) {
 				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
-					gravaLogOSDetalhe("osInexistentes", erp);
+					gravaLogOSDetalhe("OS Inexistente.", erp);
 				}
 			}
 		}
 		for (String numeroOS : mapOSIncoerentes.keySet() ) {
 			for (Erp erp : lista) {
 				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
-					gravaLogOSDetalhe("osIncoerentes", erp);
+					gravaLogOSDetalhe("OS Incoerente.", erp);
 				}
 			}
 		}
 		for (String numeroOS : mapOSAntigas.keySet() ) {
 			for (Erp erp : lista) {
 				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
-					gravaLogOSDetalhe("osAntigas", erp);
+					gravaLogOSDetalhe("OS Antiga.", erp);
 				}
 			}
 		}
-		for (String numeroOS : mapOSValidas.keySet() ) {
-			for (Erp erp : lista) {
-				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
-					gravaLogOSDetalhe("osValidas", erp);
-				}
-			}
-		}
-		
 	}
 
 	private void osInexistentes(Erp erp) {
 		qtdeOSInexistentes += 1;
-		erp.setValidacoesOS("Ordem de Serviço Inexistente no Manfro");
+		erp.setValidacoesOS("OS Inexistente.");
 		erpService.salvarOuAtualizar(erp);
 		Integer qtde;
 		if (mapOSInexistentes.get(erp.getNumeroOS()) == null) {
@@ -223,7 +218,7 @@ public class ValidarErpService {
 		Double frotaOuCC = Utilitarios.tentarConverterParaDouble(erp.getFrotaOuCC());
 		if (( frotaOuCC == null ) || ((frotaOuCC - codObjeto) != 0.00) ) {
 			qtdeOSIncoerentes += 1;
-			erp.setValidacoesOS("Ordem de Serviço Incoerente. Não é a mesma Frota/CC no Manfro");
+			erp.setValidacoesOS("OS Incoerente.");
 			erpService.salvarOuAtualizar(erp);
 			Integer qtde;
 			if (mapOSIncoerentes.get(erp.getNumeroOS()) == null) {
@@ -245,7 +240,7 @@ public class ValidarErpService {
 		if (maxDiasOS != null) {
 			if ((dataSaida != null) && (diferencaDias(dataSaida) > maxDiasOS)) {
 				qtdeOSAntigas += 1;
-				erp.setValidacoesOS("Ordem de Serviço Fechada a mais de " + maxDiasOS + " dias. Não é obrigatoriamente um erro.");
+				erp.setValidacoesOS("OS Antiga.");
 				erpService.salvarOuAtualizar(erp);
 				Integer qtde;
 				if (mapOSAntigas.get(erp.getNumeroOS()) == null) {
@@ -269,8 +264,6 @@ public class ValidarErpService {
 
 	private void osValidas(Erp erp) {
 		qtdeOSValidas += 1;
-		erp.setValidacoesOS("Ordem de Serviço Válida. OK !");
-		erpService.salvarOuAtualizar(erp);
 		Integer qtde;
 		if (mapOSValidas.get(erp.getNumeroOS()) == null) {
 			qtde = 1;
@@ -287,9 +280,9 @@ public class ValidarErpService {
 		for (Erp erp : listaFiltrada) {
 			if ( erp.getNumeroOS() == null && erp.getFrotaOuCC() == null )  {
 				qtdeMatSemOS += 1;
-				erp.setValidacoesOS("Material sem OS. Não é obrigatoriamente erro.");
+				erp.setValidacoesOS("Material sem OS.");
 				erpService.salvarOuAtualizar(erp);
-				gravaLogOSDetalhe("MatSemOS", erp);
+				gravaLogOSDetalhe("Material sem OS.", erp);
 			}
 		}
 	}
@@ -314,7 +307,7 @@ public class ValidarErpService {
 			qtde = mapCCInexistentes.get(codCentroCustos);
 			for (Erp erp : lista) {
 				if ( codCentroCustos == erp.getCodCentroCustos()) {
-					gravaLogCCDetalhe("CCInexistentes", qtde, erp);
+					gravaLogCCDetalhe("CC Inexistentes", qtde, erp);
 					break;
 				}
 			}

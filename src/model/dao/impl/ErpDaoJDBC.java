@@ -29,9 +29,10 @@ public class ErpDaoJDBC implements ErpDao {
 							+ "cod_Conta_Contabil,desc_Conta_Contabil,"
 							+ "cod_Material,desc_Movimento,unidade_Medida,"
 							+ "quantidade,preco_Unitario,valor_Movimento,"
-							+ "numero_OS,frota_ou_cc,documento_Erp,data_Movimento," + "importar,observacao,validacoes_OS,politicas,"
+							+ "numero_OS,frota_ou_cc,documento_Erp,data_Movimento,"
+							+ "sobrepor_Politicas,importar,observacao,validacoes_OS,politicas,"
 							+ "salvar_OS_Material,salvar_Cstg_IntVM,salvar_Cstg_intCM,salvar_Cstg_intDG," + "sequencial)"
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			st.setString(1, objeto.getOrigem().toUpperCase());
 			st.setString(2, objeto.getTipoMovimento());
 			st.setString(3, objeto.getAnoMes());
@@ -49,15 +50,16 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setString(15, objeto.getFrotaOuCC());
 			st.setString(16, objeto.getDocumentoErp());
 			st.setDate(17, new java.sql.Date(objeto.getDataMovimento().getTime()));
-			st.setString(18, objeto.getImportar());
-			st.setString(19, objeto.getObservacao());
-			st.setString(20, objeto.getValidacoesOS());
-			st.setString(21, objeto.getPoliticas());
-			st.setString(22, objeto.getSalvarOS_Material());
-			st.setString(23, objeto.getSalvarCstg_IntVM());
-			st.setString(24, objeto.getSalvarCstg_IntCM());
-			st.setString(25, objeto.getSalvarCstg_IntDG());
-			st.setInt(26, objeto.getSequencial());
+			st.setString(18, objeto.getSobreporPoliticas());
+			st.setString(19, objeto.getImportar());
+			st.setString(20, objeto.getObservacao());
+			st.setString(21, objeto.getValidacoesOS());
+			st.setString(22, objeto.getPoliticas());
+			st.setString(23, objeto.getSalvarOS_Material());
+			st.setString(24, objeto.getSalvarCstg_IntVM());
+			st.setString(25, objeto.getSalvarCstg_IntCM());
+			st.setString(26, objeto.getSalvarCstg_IntDG());
+			st.setInt(27, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -74,7 +76,7 @@ public class ErpDaoJDBC implements ErpDao {
 					+ "cod_Material = ?,	desc_Movimento = ?,	unidade_Medida = ?, "
 					+ "quantidade = ?,	preco_Unitario = ?,	valor_Movimento = ?, "
 					+ "numero_OS = ?,	frota_ou_cc = ?, documento_Erp = ?,	data_Movimento = ?,	"
-					+ "importar = ?,	observacao = ?, validacoes_OS = ?,	politicas = ?,	"
+					+ "sobrepor_Politicas = ?,importar = ?,	observacao = ?, validacoes_OS = ?,	politicas = ?,	"
 					+ "salvar_OS_Material = ?, salvar_Cstg_IntVM = ?, salvar_Cstg_intCM = ?, salvar_Cstg_intDG = ?"
 					+ "WHERE sequencial = ?");
 
@@ -95,15 +97,16 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setString(15, objeto.getFrotaOuCC());
 			st.setString(16, objeto.getDocumentoErp());
 			st.setDate(17, new java.sql.Date(objeto.getDataMovimento().getTime()));
-			st.setString(18, objeto.getImportar());
-			st.setString(19, objeto.getObservacao());
-			st.setString(20, objeto.getValidacoesOS());
-			st.setString(21, objeto.getPoliticas());
-			st.setString(22, objeto.getSalvarOS_Material());
-			st.setString(23, objeto.getSalvarCstg_IntVM());
-			st.setString(24, objeto.getSalvarCstg_IntCM());
-			st.setString(25, objeto.getSalvarCstg_IntDG());
-			st.setInt(26, objeto.getSequencial());
+			st.setString(18, objeto.getSobreporPoliticas());
+			st.setString(19, objeto.getImportar());
+			st.setString(20, objeto.getObservacao());
+			st.setString(21, objeto.getValidacoesOS());
+			st.setString(22, objeto.getPoliticas());
+			st.setString(23, objeto.getSalvarOS_Material());
+			st.setString(24, objeto.getSalvarCstg_IntVM());
+			st.setString(25, objeto.getSalvarCstg_IntCM());
+			st.setString(26, objeto.getSalvarCstg_IntDG());
+			st.setInt(27, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -202,7 +205,7 @@ public class ErpDaoJDBC implements ErpDao {
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp \n \n" +
 								  "erro na consulta da politica " 
-							 	  + String.format("%03d", codPolitica)
+							 	  + String.format("%04d", codPolitica)
 								  + "\n" + e.toString());
 		} finally {
 			DB.fecharResultSet(rs);
@@ -213,10 +216,26 @@ public class ErpDaoJDBC implements ErpDao {
 	public void limparValidacoesOS() {
 		PreparedStatement st = null;
 		try {
-			st = conexao.prepareStatement("UPDATE Erp " + "SET validacoes_OS = null");
+			st = conexao.prepareStatement("UPDATE Erp SET validacoes_OS = null");
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n");
+			throw new DbException("Tabela Erp  \n \n" + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+		}
+		
+	}
+	@Override
+	public void limparPoliticas() {
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement("UPDATE Erp SET politicas = null, importar = null," +
+										  "salvar_OS_Material = null, salvar_Cstg_IntVM = null, "+
+										  "salvar_Cstg_intCM = null,salvar_Cstg_intDG = null " +
+										  "Where sobrepor_Politicas = 'N'");
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp  \n \n" + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -291,6 +310,25 @@ public class ErpDaoJDBC implements ErpDao {
 		}
 	}
 	@Override
+	public Integer getQtdeNaoCalculados() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp WHERE sobrepor_politicas = 'S'");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +  e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+	@Override
 	public Integer getQtdeIndefinidos() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -309,7 +347,6 @@ public class ErpDaoJDBC implements ErpDao {
 			DB.fecharResultSet(rs);
 		}
 	}
-	@Override
 	public Integer getQtdeValorMaterial(String tipo) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -495,6 +532,7 @@ public class ErpDaoJDBC implements ErpDao {
 		dadosErp.setDocumentoErp(rs.getString("Documento_Erp"));
 		dadosErp.setDataMovimento(new java.util.Date(rs.getTimestamp("Data_Movimento").getTime()));
 
+		dadosErp.setSobreporPoliticas(rs.getString("Sobrepor_Politicas"));
 		dadosErp.setImportar(rs.getString("Importar"));
 		dadosErp.setObservacao(rs.getString("Observacao"));
 		dadosErp.setValidacoesOS(rs.getString("validacoes_OS"));

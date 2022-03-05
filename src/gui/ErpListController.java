@@ -94,7 +94,11 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private TableColumn<Erp, Date> tableColumnDataMovimento;
 	@FXML
+	private TableColumn<Erp, String> tableColumnSobreporPoliticas;
+	@FXML
 	private TableColumn<Erp, String> tableColumnImportar;
+	@FXML
+	private TableColumn<Erp, String> tableColumnValidacoesOS;
 	@FXML
 	private TableColumn<Erp, String> tableColumnPoliticas;
 	@FXML
@@ -150,7 +154,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	
 	@FXML
 	public void onBtLimparAction(ActionEvent evento) {
-		erpFiltrosService.salvarFiltro(null, null, null);
+		erpFiltrosService.salvarFiltro(null, null, null, null, null, null);
 		atualizarTableView();
 	}
 	
@@ -194,7 +198,9 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnFrotaOuCC.setCellValueFactory(new PropertyValueFactory<>("frotaOuCC"));
 		tableColumnDocumentoErp.setCellValueFactory(new PropertyValueFactory<>("documentoErp"));
 		tableColumnDataMovimento.setCellValueFactory(new PropertyValueFactory<>("dataMovimento"));
+		tableColumnSobreporPoliticas.setCellValueFactory(new PropertyValueFactory<>("sobreporPoliticas"));
 		tableColumnImportar.setCellValueFactory(new PropertyValueFactory<>("importar"));
+		tableColumnValidacoesOS.setCellValueFactory(new PropertyValueFactory<>("validacoesOS"));
 		tableColumnPoliticas.setCellValueFactory(new PropertyValueFactory<>("politicas"));
 		tableColumnSalvarOS_Material.setCellValueFactory(new PropertyValueFactory<>("salvarOS_Material"));
 		tableColumnSalvarCstg_IntVM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntVM"));
@@ -217,6 +223,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnNumeroOS.setStyle("-fx-alignment: TOP-RIGHT");
 
 		tableColumnSalvarCstg_IntVM.setStyle("-fx-alignment: TOP-CENTER");
+		tableColumnSobreporPoliticas.setStyle("-fx-alignment: TOP-CENTER");
 		tableColumnImportar.setStyle("-fx-alignment: TOP-CENTER");
 		tableColumnSalvarOS_Material.setStyle("-fx-alignment: TOP-CENTER");
 		tableColumnSalvarCstg_IntCM.setStyle("-fx-alignment: TOP-CENTER");

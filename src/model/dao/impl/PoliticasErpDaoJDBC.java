@@ -44,7 +44,7 @@ public class PoliticasErpDaoJDBC implements PoliticasErpDao {
 			st.setInt(12, objeto.getRegistrosAplicados());			
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Insercao " + e.getMessage());
+			throw new DbException("Tabela Politicas_Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -75,7 +75,7 @@ public class PoliticasErpDaoJDBC implements PoliticasErpDao {
 			st.setInt(12, objeto.getCodPolitica());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("Erro na Atualizacao " + e.getMessage());
+			throw new DbException("Tabela Politicas_Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
 		} finally {
 			DB.fecharStatement(st);
 		}
@@ -90,7 +90,7 @@ public class PoliticasErpDaoJDBC implements PoliticasErpDao {
 			st.setInt(1, codPolitica);
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DbException("erro na delecao " + e.getMessage());
+			throw new DbException("Tabela Politicas_Erp  \n \n" + e.getMessage() + "\n \n" + "Politica : " + codPolitica);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -112,7 +112,7 @@ public class PoliticasErpDaoJDBC implements PoliticasErpDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			throw new DbException("erro na Pesquisa " + e.getMessage());
+			throw new DbException("Tabela Politicas_Erp  \n \n" + e.getMessage() + "\n \n" + "Politica : " + codPolitica);
 		}
 		finally {
 			DB.fecharStatement(st);
@@ -137,10 +137,24 @@ public class PoliticasErpDaoJDBC implements PoliticasErpDao {
 			return lista;
 		} 
 		catch (SQLException e) {
-			throw new DbException("erro na consulta todos - " + e.getMessage());
+			throw new DbException("Tabela Politicas_Erp  \n \n" + e.getMessage() );
 		}
 		finally {
 			DB.fecharResultSet(rs);
+			DB.fecharStatement(st);
+		}
+	}
+
+	@Override
+	public void limparEstatisticas() {
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement("UPDATE politicas_erp "
+										+ "SET ano_mes_analisado = null, registros_aplicados = null");
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException("Tabela Politicas_Erp  \n \n" + e.getMessage() );
+		} finally {
 			DB.fecharStatement(st);
 		}
 	}
@@ -164,6 +178,5 @@ public class PoliticasErpDaoJDBC implements PoliticasErpDao {
 
 		return politicasErp;
 	}
-
 }
 

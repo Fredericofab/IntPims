@@ -10,4 +10,5 @@ public interface PoliticasErpDao {
 	void deletarPorChave(Integer codPolitica);
 	PoliticasErp pesquisarPorChave(Integer codPolitica);
 	List<PoliticasErp> listarTodos();
+	void limparEstatisticas();
 }

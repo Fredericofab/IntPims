@@ -58,6 +58,7 @@ public class ImportarErpService {
 	SimpleDateFormat sdf;
 	Date dataMovimento;
 
+	String sobreporPoliticas;
 	String importar;
 	String observacao;
 	String validacoes;
@@ -155,6 +156,7 @@ public class ImportarErpService {
 	private void gravarDadosErp() {
 		qtdeIncluidas = 0;
 		for (Erp dadosErp : lista) {
+			dadosErp.setSobreporPoliticas("N");
 			erpService.salvarOuAtualizar(dadosErp);
 			qtdeIncluidas = qtdeIncluidas + 1;
 		}
@@ -176,7 +178,7 @@ public class ImportarErpService {
 			}
 			Erp dadosErp = new Erp(origem, tipoMovimento, anoMes, codCentroCustos, descCentroCustos, codContaContabil,
 					descContaContabil, codMaterial, descMovimento, unidadeMedida, quantidade, precoUnitario,
-					valorMovimento, manfroOS, frotaOuCC, documentoErp, dataMovimento, importar, observacao, validacoes, politicas,
+					valorMovimento, manfroOS, frotaOuCC, documentoErp, dataMovimento, sobreporPoliticas, importar, observacao, validacoes, politicas,
 					salvarOS_Material, salvarCstg_IntVM, salvarCstg_IntCM, salvarCstg_IntDG, sequencial);
 			return dadosErp;
 		} catch (TxtIntegridadeException e) {

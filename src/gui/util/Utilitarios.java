@@ -177,6 +177,7 @@ public class Utilitarios {
 		listaCamposOracle.add("Data Movimento			DATA_MOVIMENTO		DATA");
 		listaCamposOracle.add("Flag Importar				IMPORTAR				C01");
 		listaCamposOracle.add("Observacao				OBSERVACAO				C255");
+		listaCamposOracle.add("Validacoes da O.S.			VALIDACOES_OS			C255");
 		listaCamposOracle.add("Politicas					POLITICAS				C255");
 		listaCamposOracle.add("Flag Salvar Material na OS	SALVAR_OS_MATERIAL		C01");
 		listaCamposOracle.add("Flag Salvar Valor do Material	SALVAR_CSTG_INTVM		C01");

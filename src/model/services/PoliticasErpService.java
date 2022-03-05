@@ -41,7 +41,11 @@ public class PoliticasErpService {
 	public void remover(PoliticasErp objeto) {
 		dao.deletarPorChave(objeto.getCodPolitica());
 	}
-	
+
+	public void limparEstatisticas() {
+		dao.limparEstatisticas();
+	}
+
 	public void gerarTxt(Boolean oficial) {
 		lerParametros(oficial);
 		List<PoliticasErp> lista = pesquisarTodos();

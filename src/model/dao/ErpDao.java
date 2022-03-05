@@ -12,12 +12,14 @@ public interface ErpDao {
 	List<Erp> listarTodosFiltrado(String clausulaWhere);
 	List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere);
 	void limparValidacoesOS();
+	void limparPoliticas();
 
 	Integer deletarTodos();
 	Integer deletarPorOrigem(String origem);
 	Integer ultimoSequencial();
 
 	Integer getTotalRegistros();
+	Integer getQtdeNaoCalculados();
 	Integer getQtdeIndefinidos();
 	Integer getQtdeValorMaterial(String tipo);
 	Integer getQtdeImportar(String tipo);

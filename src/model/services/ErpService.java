@@ -47,6 +47,10 @@ public class ErpService {
 	public void limparValidacoesOS() {
 		dao.limparValidacoesOS();
 	}
+	public void limparPoliticas() {
+		dao.limparPoliticas();
+	}
+	
 	public void gerarTxt(Boolean oficial) {
 		lerParametros(oficial);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -122,6 +126,9 @@ public class ErpService {
 	}
 	public Integer getTotalRegistros() {
 		return dao.getTotalRegistros();
+	}
+	public Integer getQtdeNaoCalculados() {
+		return dao.getQtdeNaoCalculados();
 	}
 	public Integer getQtdeIndefinidos() {
 		return dao.getQtdeIndefinidos();

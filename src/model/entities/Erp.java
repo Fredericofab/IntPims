@@ -24,6 +24,7 @@ public class Erp implements Serializable {
 	private String frotaOuCC;
 	private String documentoErp;
 	private Date dataMovimento;
+	private String sobreporPoliticas;
 	private String importar;
 	private String observacao;
 	private String validacoesOS;
@@ -39,8 +40,8 @@ public class Erp implements Serializable {
 	public Erp(String origem, String tipoMovimento, String anoMes, Double codCentroCustos, String descCentroCustos,
 			String codContaContabil, String descContaContabil, String codMaterial, String descMovimento,
 			String unidadeMedida, Double quantidade, Double precoUnitario, Double valorMovimento, String numeroOS,
-			String frotaOuCC, String documentoErp, Date dataMovimento, String importar, String observacao,
-			String validacoesOS, String politicas, String salvarOS_Material, String salvarCstg_IntVM,
+			String frotaOuCC, String documentoErp, Date dataMovimento, String sobreporPoliticas, String importar,
+			String observacao, String validacoesOS, String politicas, String salvarOS_Material, String salvarCstg_IntVM,
 			String salvarCstg_IntCM, String salvarCstg_IntDG, Integer sequencial) {
 		super();
 		this.origem = origem;
@@ -60,6 +61,7 @@ public class Erp implements Serializable {
 		this.frotaOuCC = frotaOuCC;
 		this.documentoErp = documentoErp;
 		this.dataMovimento = dataMovimento;
+		this.sobreporPoliticas = sobreporPoliticas;
 		this.importar = importar;
 		this.observacao = observacao;
 		this.validacoesOS = validacoesOS;
@@ -70,7 +72,6 @@ public class Erp implements Serializable {
 		this.salvarCstg_IntDG = salvarCstg_IntDG;
 		this.sequencial = sequencial;
 	}
-	
 	public String getOrigem() {
 		return origem;
 	}
@@ -173,6 +174,12 @@ public class Erp implements Serializable {
 	public void setDataMovimento(Date dataMovimento) {
 		this.dataMovimento = dataMovimento;
 	}
+	public String getSobreporPoliticas() {
+		return sobreporPoliticas;
+	}
+	public void setSobreporPoliticas(String sobreporPoliticas) {
+		this.sobreporPoliticas = sobreporPoliticas;
+	}
 	public String getImportar() {
 		return importar;
 	}
@@ -227,7 +234,6 @@ public class Erp implements Serializable {
 	public void setSequencial(Integer sequencial) {
 		this.sequencial = sequencial;
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -260,10 +266,10 @@ public class Erp implements Serializable {
 				+ ", codMaterial=" + codMaterial + ", descMovimento=" + descMovimento + ", unidadeMedida="
 				+ unidadeMedida + ", quantidade=" + quantidade + ", precoUnitario=" + precoUnitario
 				+ ", valorMovimento=" + valorMovimento + ", numeroOS=" + numeroOS + ", frotaOuCC=" + frotaOuCC
-				+ ", documentoErp=" + documentoErp + ", dataMovimento=" + dataMovimento + ", importar=" + importar
-				+ ", observacao=" + observacao + ", validacoesOS=" + validacoesOS + ", politicas=" + politicas
-				+ ", salvarOS_Material=" + salvarOS_Material + ", salvarCstg_IntVM=" + salvarCstg_IntVM
-				+ ", salvarCstg_IntCM=" + salvarCstg_IntCM + ", salvarCstg_IntDG=" + salvarCstg_IntDG + ", sequencial="
-				+ sequencial + "]";
+				+ ", documentoErp=" + documentoErp + ", dataMovimento=" + dataMovimento + ", sobreporPoliticas="
+				+ sobreporPoliticas + ", importar=" + importar + ", observacao=" + observacao + ", validacoesOS="
+				+ validacoesOS + ", politicas=" + politicas + ", salvarOS_Material=" + salvarOS_Material
+				+ ", salvarCstg_IntVM=" + salvarCstg_IntVM + ", salvarCstg_IntCM=" + salvarCstg_IntCM
+				+ ", salvarCstg_IntDG=" + salvarCstg_IntDG + ", sequencial=" + sequencial + "]";
 	}
 }
