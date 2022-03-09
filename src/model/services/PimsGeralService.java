@@ -4,15 +4,17 @@ import java.util.Date;
 
 import model.dao.FabricaDeDao;
 import model.dao.PimsGeralDao;
-import model.entities.Cstg_IntPF;
 
 public class PimsGeralService {
 
 	private PimsGeralDao dao = FabricaDeDao.criarPimsGeralDao();
 
+	//tabela CCUSTOS (1)		
 	public Boolean existeCCustos(Double codCCustos, String usuarioPimsCS) {
 		return dao.existeCCustos(codCCustos, usuarioPimsCS);
 	}
+
+	//TABELA APT_OS_HE (4)
 	public Boolean existeApt_os_he(String numeroOS, String usuarioPimsCS) {
 		return dao.existeApt_os_he(numeroOS, usuarioPimsCS);
 	}
@@ -25,10 +27,4 @@ public class PimsGeralService {
 	public Date dataSaidaApt_os_he(String numeroOS, String usuarioPimsCS) {
 		return dao.dataSaidaApt_os_he(numeroOS, usuarioPimsCS);
 	}
-	public Integer deletarCstg_IntFP(String dataref, String usuarioPimsCS) {
-		return dao.deletarCstg_IntFP(dataref, usuarioPimsCS);
-	}
-	public void gravarCstg_IntFP(Cstg_IntPF objeto, String usuarioPimsCS) {
-		dao.gravarCstg_IntFP(objeto, usuarioPimsCS);
-	};
 }

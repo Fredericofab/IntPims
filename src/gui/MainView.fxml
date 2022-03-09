@@ -25,9 +25,9 @@
                         <CheckMenuItem fx:id="menuItemImportarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemImportarFuncionariosAction" text="Importar Funcionarios" />
                         <CheckMenuItem fx:id="menuItemSumarizarFuncionarios" mnemonicParsing="false" onAction="#onMenuItemSumarizarFuncionariosAction" text="Sumarizar Funcionarios" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <CheckMenuItem fx:id="menuItemImportarErpMT" mnemonicParsing="false" onAction="#onMenuItemImportarErpMTAction" text="Importar ErpMT (Requisicao Materiais)" />
-                        <CheckMenuItem fx:id="menuItemImportarErpCD" mnemonicParsing="false" onAction="#onMenuItemImportarErpCDAction" text="Importar ErpCD (Compras Diretas)" />
-                        <CheckMenuItem fx:id="menuItemImportarErpDG" mnemonicParsing="false" onAction="#onMenuItemImportarErpDGAction" text="Importar ErpDG (DespesasGerais)" />
+                        <CheckMenuItem fx:id="menuItemImportarErpRM" mnemonicParsing="false" onAction="#onMenuItemImportarErpRMAction" text="Importar ErpRM (Requisicao Materiais)" />
+                        <CheckMenuItem fx:id="menuItemImportarErpED" mnemonicParsing="false" onAction="#onMenuItemImportarErpEDAction" text="Importar ErpED (Entradas Diretas)" />
+                        <CheckMenuItem fx:id="menuItemImportarErpDF" mnemonicParsing="false" onAction="#onMenuItemImportarErpDFAction" text="Importar ErpDF (Despesas Financeiras)" />
                         <CheckMenuItem fx:id="menuItemValidarErp" mnemonicParsing="false" onAction="#onMenuItemValidarErpAction" text="Validar ERP" />
                         <CheckMenuItem fx:id="menuItemAplicarPoliticasErp" mnemonicParsing="false" onAction="#onMenuItemAplicarPoliticasErpAction" text="Aplicar Politicas ERP" />
                         <CheckMenuItem fx:id="menuItemExportarErp" mnemonicParsing="false" onAction="#onMenuItemExportarErpAction" text="Exportar ERP" />

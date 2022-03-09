@@ -9,7 +9,6 @@ import java.util.Date;
 import db.DB;
 import db.DbException;
 import model.dao.PimsGeralDao;
-import model.entities.Cstg_IntPF;
 
 public class PimsGeralDaoJDBC implements PimsGeralDao {
 	private Connection conexao;
@@ -18,47 +17,7 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 		this.conexao = conexao;
 	}
 	
-	@Override
-	public Integer deletarCstg_IntFP(String dataref, String usuarioPimsCS) {
-		PreparedStatement st = null;
-		try {
-			st = conexao.prepareStatement("DELETE FROM " +  usuarioPimsCS + ".cstg_intFP " +
-										  "WHERE TO_CHAR(dt_refer,'dd/mm/yyyy') = ? ");
-			st.setString(1, dataref);
-			st.executeUpdate();
-			Integer contagem = st.getUpdateCount();
-			return contagem;
-		} catch (SQLException e) {
-			throw new DbException("Tabela CSTG_INTFP \n \n" + e.getMessage() + "\n \n" 
-								+ "Data de Referencia " + dataref);
-		}
-		finally {
-			DB.fecharStatement(st);
-		}
-	}
-
-	@Override
-	public void gravarCstg_IntFP(Cstg_IntPF cstg_IntFP, String usuarioPimsCS) {
-		PreparedStatement st = null;
-		try {
-			st = conexao.prepareStatement("INSERT INTO " +  usuarioPimsCS + ".cstg_intFP " +
-										 "(Cd_empresa, dt_refer, cd_func, qt_horas, qt_valor, instancia) " +
-										 "VALUES (?,?,?,?,?,?)" );
-			st.setString(1, cstg_IntFP.getCdEmpresa());
-			st.setString(2, cstg_IntFP.getDtRefer());
-			st.setDouble(3, cstg_IntFP.getCdFunc());
-			st.setDouble(4, cstg_IntFP.getQtHoras());
-			st.setDouble(5, cstg_IntFP.getQtValor());
-			st.setString(6, cstg_IntFP.getInstancia());
-			st.executeUpdate();
-		} catch (SQLException e) {
-			throw new DbException("Tabela CSTG_INTFP \n \n" + e.getMessage() + "\n \n" 
-								+ "Registro " + cstg_IntFP);
-		} finally {
-			DB.fecharStatement(st);
-		}
-	}
-
+	//tabela CCUSTOS;
 	@Override
 	public Boolean existeCCustos(Double codCCustos, String usuarioPimsCS) {
 		PreparedStatement st = null;
@@ -80,6 +39,7 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 		}
 	}
 
+	//tabela APT_OS_HE
 	@Override
 	public Boolean existeApt_os_he(String numeroOS, String usuarioPimsCS) {
 		PreparedStatement st = null;
@@ -100,7 +60,6 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 			DB.fecharResultSet(rs);
 		}
 	}
-
 	@Override
 	public Date dataSaidaApt_os_he(String numeroOS, String usuarioPimsCS) {
 		PreparedStatement st = null;
@@ -125,7 +84,6 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 			DB.fecharResultSet(rs);
 		}
 	}
-
 	@Override
 	public Double codCCustoApt_os_he(String numeroOS, String usuarioPimsCS) {
 		PreparedStatement st = null;
@@ -146,7 +104,6 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 			DB.fecharResultSet(rs);
 		}
 	}
-
 	@Override
 	public Double codEquiptoApt_os_he(String numeroOS, String usuarioPimsCS) {
 		PreparedStatement st = null;
@@ -167,6 +124,7 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 			DB.fecharResultSet(rs);
 		}
 	}
+
 }
 
 

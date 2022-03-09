@@ -52,8 +52,8 @@ public class ProcessoAtualService {
 			bw.write("anoMes,importarFolha,sumarizarFolha,exportarFolha," +
 					 "importarFuncionario,sumarizarFuncionario," +
 					 "importarErpMT,importarErpCD,importarErpDG," +
-					 "aplicarPoliticaErp,validarErp,exportarErp," +
-					 "verbaAlterada, folhaAlterada, funcionarioAlterado");
+					 "validarErp,aplicarPoliticaErp,exportarErpVM," +
+					 "exportarErpCM, exportarErpDG, exportarErpOS");
 						bw.newLine();
 			for (ProcessoAtual processoAtual : lista) {
 				String linha = processoAtual.getAnoMes() + "," +
@@ -62,12 +62,15 @@ public class ProcessoAtualService {
 						processoAtual.getExportarFolha() + "," +
 						processoAtual.getImportarFuncionario() + "," +
 						processoAtual.getSumarizarFuncionario() + "," +
-						processoAtual.getImportarErpMT() + "," +
-						processoAtual.getImportarErpCD() + "," + 
-						processoAtual.getImportarErpDG() + "," +
+						processoAtual.getImportarErpRM() + "," +
+						processoAtual.getImportarErpED() + "," + 
+						processoAtual.getImportarErpDF() + "," +
 						processoAtual.getValidarErp()	+ "," +
 						processoAtual.getAplicarPoliticaErp()	+ "," +
-						processoAtual.getExportarErp();
+						processoAtual.getExportarErpVM() + "," +
+						processoAtual.getExportarErpCM() + "," +
+						processoAtual.getExportarErpDG() + "," +
+						processoAtual.getExportarErpOS();
 			bw.write(linha);
 				bw.newLine();
 			}
@@ -100,12 +103,15 @@ public class ProcessoAtualService {
 		if (campo.equals("ExportarFolha")) processoAtual.setExportarFolha(valor); 
 		if (campo.equals("ImportarFuncionario")) processoAtual.setImportarFuncionario(valor); 
 		if (campo.equals("SumarizarFuncionario")) processoAtual.setSumarizarFuncionario(valor); 
-		if (campo.equals("ImportarErpMT")) processoAtual.setImportarErpMT(valor); 
-		if (campo.equals("ImportarErpCD")) processoAtual.setImportarErpCD(valor); 
-		if (campo.equals("ImportarErpDG")) processoAtual.setImportarErpDG(valor); 
+		if (campo.equals("ImportarErpRM")) processoAtual.setImportarErpRM(valor); 
+		if (campo.equals("ImportarErpED")) processoAtual.setImportarErpED(valor); 
+		if (campo.equals("ImportarErpDF")) processoAtual.setImportarErpDF(valor); 
 		if (campo.equals("ValidarErp")) processoAtual.setValidarErp(valor); 
 		if (campo.equals("AplicarPoliticaErp")) processoAtual.setAplicarPoliticaErp(valor); 
-		if (campo.equals("ExportarErp")) processoAtual.setExportarErp(valor); 
+		if (campo.equals("ExportarErpVM")) processoAtual.setExportarErpVM(valor); 
+		if (campo.equals("ExportarErpCM")) processoAtual.setExportarErpCM(valor); 
+		if (campo.equals("ExportarErpDG")) processoAtual.setExportarErpDG(valor); 
+		if (campo.equals("ExportarErpOS")) processoAtual.setExportarErpOS(valor); 
 		salvarOuAtualizar(processoAtual);
 	}
 

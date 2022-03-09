@@ -45,17 +45,23 @@ public class ProcessoAtualViewController implements Initializable {
 	@FXML
 	private TextField txtSumarizarFuncionario;
 	@FXML
-	private TextField txtImportarErpMT;
+	private TextField txtImportarErpRM;
 	@FXML
-	private TextField txtImportarErpCD;
+	private TextField txtImportarErpED;
 	@FXML
-	private TextField txtImportarErpDG;
+	private TextField txtImportarErpDF;
 	@FXML
 	private TextField txtValidarErp;
 	@FXML
 	private TextField txtAplicarPoliticaErp;
 	@FXML
-	private TextField txtExportarErp;
+	private TextField txtExportarErpVM;
+	@FXML
+	private TextField txtExportarErpCM;
+	@FXML
+	private TextField txtExportarErpDG;
+	@FXML
+	private TextField txtExportarErpOS;
 
 	@FXML
 	private Label labelErroAnoMes;
@@ -131,12 +137,15 @@ public class ProcessoAtualViewController implements Initializable {
 		entidade.setExportarFolha("N");
 		entidade.setImportarFuncionario("N");
 		entidade.setSumarizarFuncionario("N");
-		entidade.setImportarErpMT("N");
-		entidade.setImportarErpCD("N");
-		entidade.setImportarErpDG("N");
+		entidade.setImportarErpRM("N");
+		entidade.setImportarErpED("N");
+		entidade.setImportarErpDF("N");
 		entidade.setValidarErp("N");
 		entidade.setAplicarPoliticaErp("N");
-		entidade.setExportarErp("N");
+		entidade.setExportarErpVM("N");
+		entidade.setExportarErpCM("N");
+		entidade.setExportarErpDG("N");
+		entidade.setExportarErpOS("N");
 	}
 
 	private void atualizarTela() {
@@ -146,12 +155,15 @@ public class ProcessoAtualViewController implements Initializable {
 		txtExportarFolha.setText(entidade.getExportarFolha());
 		txtImportarFuncionario.setText(entidade.getImportarFuncionario());
 		txtSumarizarFuncionario.setText(entidade.getSumarizarFuncionario());
-		txtImportarErpMT.setText(entidade.getImportarErpMT());
-		txtImportarErpCD.setText(entidade.getImportarErpCD());
-		txtImportarErpDG.setText(entidade.getImportarErpDG());
+		txtImportarErpRM.setText(entidade.getImportarErpRM());
+		txtImportarErpED.setText(entidade.getImportarErpED());
+		txtImportarErpDF.setText(entidade.getImportarErpDF());
 		txtValidarErp.setText(entidade.getValidarErp());
 		txtAplicarPoliticaErp.setText(entidade.getAplicarPoliticaErp());
-		txtExportarErp.setText(entidade.getExportarErp());
+		txtExportarErpVM.setText(entidade.getExportarErpVM());
+		txtExportarErpCM.setText(entidade.getExportarErpCM());
+		txtExportarErpDG.setText(entidade.getExportarErpDG());
+		txtExportarErpOS.setText(entidade.getExportarErpOS());
 	}
 
 	private void inicializarComponentes() {
@@ -162,12 +174,15 @@ public class ProcessoAtualViewController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarFolha, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarFuncionario, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSumarizarFuncionario, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpMT, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpCD, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpDG, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpRM, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpED, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportarErpDF, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtValidarErp, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAplicarPoliticaErp, 1);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErp, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErpVM, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErpCM, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErpDG, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErpOS, 1);
 	}
 
 	private ProcessoAtual getDadosDoForm() {
@@ -181,24 +196,30 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setExportarFolha(txtExportarFolha.getText());
 		objeto.setImportarFuncionario(txtImportarFuncionario.getText());
 		objeto.setSumarizarFuncionario(txtSumarizarFuncionario.getText());
-		objeto.setImportarErpMT(txtImportarErpMT.getText());
-		objeto.setImportarErpCD(txtImportarErpCD.getText());
-		objeto.setImportarErpDG(txtImportarErpDG.getText());
+		objeto.setImportarErpRM(txtImportarErpRM.getText());
+		objeto.setImportarErpED(txtImportarErpED.getText());
+		objeto.setImportarErpDF(txtImportarErpDF.getText());
 		objeto.setValidarErp(txtValidarErp.getText());
 		objeto.setAplicarPoliticaErp(txtAplicarPoliticaErp.getText());
-		objeto.setExportarErp(txtExportarErp.getText());
+		objeto.setExportarErpVM(txtExportarErpVM.getText());
+		objeto.setExportarErpCM(txtExportarErpCM.getText());
+		objeto.setExportarErpDG(txtExportarErpDG.getText());
+		objeto.setExportarErpOS(txtExportarErpOS.getText());
 
 		objeto.setImportarFolha(Utilitarios.tentarConverterParaMaiusculo(txtImportarFolha.getText()));
 		objeto.setSumarizarFolha(Utilitarios.tentarConverterParaMaiusculo(txtSumarizarFolha.getText()));
 		objeto.setExportarFolha(Utilitarios.tentarConverterParaMaiusculo(txtExportarFolha.getText()));
 		objeto.setImportarFuncionario(Utilitarios.tentarConverterParaMaiusculo(txtImportarFuncionario.getText()));
 		objeto.setSumarizarFuncionario(Utilitarios.tentarConverterParaMaiusculo(txtSumarizarFuncionario.getText()));
-		objeto.setImportarErpMT(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpMT.getText()));
-		objeto.setImportarErpCD(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpCD.getText()));
-		objeto.setImportarErpDG(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpDG.getText()));
+		objeto.setImportarErpRM(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpRM.getText()));
+		objeto.setImportarErpED(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpED.getText()));
+		objeto.setImportarErpDF(Utilitarios.tentarConverterParaMaiusculo(txtImportarErpDF.getText()));
 		objeto.setValidarErp(Utilitarios.tentarConverterParaMaiusculo(txtValidarErp.getText()));
 		objeto.setAplicarPoliticaErp(Utilitarios.tentarConverterParaMaiusculo(txtAplicarPoliticaErp.getText()));
-		objeto.setExportarErp(Utilitarios.tentarConverterParaMaiusculo(txtExportarErp.getText()));
+		objeto.setExportarErpVM(Utilitarios.tentarConverterParaMaiusculo(txtExportarErpVM.getText()));
+		objeto.setExportarErpCM(Utilitarios.tentarConverterParaMaiusculo(txtExportarErpCM.getText()));
+		objeto.setExportarErpDG(Utilitarios.tentarConverterParaMaiusculo(txtExportarErpDG.getText()));
+		objeto.setExportarErpOS(Utilitarios.tentarConverterParaMaiusculo(txtExportarErpOS.getText()));
 
 		if (txtAnoMes.getText() == null || txtAnoMes.getText().trim().equals("")) {
 			validacao.adicionarErro("txtAnoMes", "Informe o Ano e Mes de referencia");

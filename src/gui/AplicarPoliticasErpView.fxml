@@ -144,7 +144,7 @@
             </ScrollPane>
         </items>
       </SplitPane>
-      <Label fx:id="labelEvolucao" text="Label">
+      <Label fx:id="labelEvolucao">
          <padding>
             <Insets left="250.0" />
          </padding>

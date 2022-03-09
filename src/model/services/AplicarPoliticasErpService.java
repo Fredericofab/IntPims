@@ -139,6 +139,10 @@ public class AplicarPoliticasErpService {
 		}
 		else {
 			processoAtualService.atualizarEtapa("AplicarPoliticaErp", "N");
+			processoAtualService.atualizarEtapa("ExportarErpVM", "N");
+			processoAtualService.atualizarEtapa("ExportarErpCM", "N");
+			processoAtualService.atualizarEtapa("ExportarErpDG", "N");
+			processoAtualService.atualizarEtapa("ExportarErpOS", "N");
 		}
 	}
 	

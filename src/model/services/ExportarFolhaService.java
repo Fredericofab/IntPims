@@ -2,7 +2,7 @@ package model.services;
 
 import java.util.List;
 
-import model.entities.Cstg_IntPF;
+import model.entities.Cstg_IntFP;
 import model.entities.FolhaSumarizada;
 
 public class ExportarFolhaService {
@@ -11,7 +11,7 @@ public class ExportarFolhaService {
 	private FolhaService folhaService = new FolhaService();
 	private VerbasFolhaService verbasDaFolhaService = new VerbasFolhaService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
-	private PimsGeralService pimsGeralService = new PimsGeralService();
+	private Cstg_IntFPService cstg_IntFPService = new Cstg_IntFPService();
 
 //	parametros
 	String anoMes;
@@ -19,16 +19,16 @@ public class ExportarFolhaService {
 	String usuarioPimsCS;
 	String cdEmpresa;
 	String prefixoMatr;
+	
+	String dataref;
 
 	public void processar() {
 		lerParametros();
-		String dataref = "01/" + anoMes.substring(4, 6) + "/" + anoMes.substring(0, 4);
-		deletarCstgIntFP(dataref);
-		gravarCstgIntFP(dataref, usuarioPimsCS);
+		dataref = "01/" + anoMes.substring(4, 6) + "/" + anoMes.substring(0, 4);
+		deletarCstgIntFP();
+		gravarCstgIntFP();
 		gerarTxt();
 		processoAtualService.atualizarEtapa("ExportarFolha","S");
-		processoAtualService.atualizarEtapa("VerbaAlterada","N");
-		processoAtualService.atualizarEtapa("FolhaAlterada","N");
 	}
 
 	private void gerarTxt() {
@@ -38,21 +38,21 @@ public class ExportarFolhaService {
 		verbasDaFolhaService.gerarTxt(oficial);
 	}
 
-	private void deletarCstgIntFP(String dataref) {
-		pimsGeralService.deletarCstg_IntFP(dataref, usuarioPimsCS);
+	private void deletarCstgIntFP() {
+		cstg_IntFPService.deletarPeriodo(dataref, usuarioPimsCS);
 	}
 
-	private void gravarCstgIntFP(String dataref, String usuarioPimsCS) {
+	private void gravarCstgIntFP() {
 		List<FolhaSumarizada> lista = folhaSumarizadaService.pesquisarTodos();
 		for (FolhaSumarizada sumarioFolha : lista) {
-			Cstg_IntPF cstg_intfp = new Cstg_IntPF();
+			Cstg_IntFP cstg_intfp = new Cstg_IntFP();
 			cstg_intfp.setCdEmpresa(cdEmpresa);
 			cstg_intfp.setDtRefer(dataref);
 			cstg_intfp.setCdFunc(colocarPrefixo(prefixoMatr, sumarioFolha.getCodCentroCustos()));
 			cstg_intfp.setQtHoras(sumarioFolha.getTotalReferenciaSim());
 			cstg_intfp.setQtValor(sumarioFolha.getTotalImportarSim());
 			cstg_intfp.setInstancia(instancia);
-			pimsGeralService.gravarCstg_IntFP(cstg_intfp, usuarioPimsCS);
+			cstg_IntFPService.inserir(cstg_intfp, usuarioPimsCS);
 		}
 	}
 

@@ -351,23 +351,6 @@ public class ErpFormController implements Initializable {
 				validacao.adicionarErro("txtCodMaterial", "Origem CD - Informe o Material/Serviço");
 		}
 
-//		if (txtSobreporPoliticas.getText() != null && txtSobreporPoliticas.getText().toUpperCase().equals("N")) {
-//			if ((txtImportar.getText() != null          && ! txtImportar.getText().equals("")) 		 ||
-//				(txtSalvarCstg_IntVM.getText()  != null && ! txtSalvarCstg_IntVM.getText().equals("")) ||
-//				(txtSalvarCstg_IntCM.getText()  != null	&& ! txtSalvarCstg_IntCM.getText().equals("")) || 
-//				(txtSalvarCstg_IntDG.getText()  != null && ! txtSalvarCstg_IntDG.getText().equals("")) || 
-//				(txtSalvarOS_Material.getText() != null && ! txtSalvarOS_Material.getText().equals(""))   ) {
-//				validacao.adicionarErro("txtSobreporPoliticas", "Sobrepor Politica 'N' - apagar todas as politicas abaixo");
-//			}
-//		}
-
-//		if (txtSobreporPoliticas.getText() != null && txtSobreporPoliticas.getText().toUpperCase().equals("S")) {
-//			if (txtImportar.getText() == null           && txtSalvarCstg_IntVM.getText() == null &&
-//				txtSalvarCstg_IntCM.getText() == null	&& txtSalvarCstg_IntDG.getText() == null && 
-//				txtSalvarOS_Material.getText() == null ) {
-//				validacao.adicionarErro("txtSobreporPoliticas", "Sobrepor Politica 'S' - Informe as politicas abaixo");
-//			}
-//		}
 
 		if (txtSobreporPoliticas.getText() != null && txtSobreporPoliticas.getText().toUpperCase().equals("S")) {
 			if ((txtImportar.getText() == null         || txtImportar.getText().equals("")) 		 &&

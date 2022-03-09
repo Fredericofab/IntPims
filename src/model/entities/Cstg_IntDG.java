@@ -1,23 +1,26 @@
 package model.entities;
 
-public class Cstg_IntPF {
-	
+import java.util.Date;
+
+public class Cstg_IntDG {
+
 	private String cdEmpresa;
-	private String dtRefer;
-	private Double cdFunc;
-	private Double qtHoras;
+	private Date dtRefer;
+	private Double cdCCusto;
+	private String cdCtaCon;
 	private Double qtValor;
 	private String instancia;
-	
-	public Cstg_IntPF() {
+
+	public Cstg_IntDG() {
+		super();
 	}
-	public Cstg_IntPF(String cdEmpresa, String dtRefer, Double cdFunc, Double qtHoras, Double qtValor,
+	public Cstg_IntDG(String cdEmpresa, Date dtRefer, Double cdCCusto, String cdCtaCon, Double qtValor,
 			String instancia) {
 		super();
 		this.cdEmpresa = cdEmpresa;
 		this.dtRefer = dtRefer;
-		this.cdFunc = cdFunc;
-		this.qtHoras = qtHoras;
+		this.cdCCusto = cdCCusto;
+		this.cdCtaCon = cdCtaCon;
 		this.qtValor = qtValor;
 		this.instancia = instancia;
 	}
@@ -28,23 +31,23 @@ public class Cstg_IntPF {
 	public void setCdEmpresa(String cdEmpresa) {
 		this.cdEmpresa = cdEmpresa;
 	}
-	public String getDtRefer() {
+	public Date getDtRefer() {
 		return dtRefer;
 	}
-	public void setDtRefer(String dtRefer) {
+	public void setDtRefer(Date dtRefer) {
 		this.dtRefer = dtRefer;
 	}
-	public Double getCdFunc() {
-		return cdFunc;
+	public Double getCdCCusto() {
+		return cdCCusto;
 	}
-	public void setCdFunc(Double cdFunc) {
-		this.cdFunc = cdFunc;
+	public void setCdCCusto(Double cdCCusto) {
+		this.cdCCusto = cdCCusto;
 	}
-	public Double getQtHoras() {
-		return qtHoras;
+	public String getCdCtaCon() {
+		return cdCtaCon;
 	}
-	public void setQtHoras(Double qtHoras) {
-		this.qtHoras = qtHoras;
+	public void setCdCtaCon(String cdCtaCon) {
+		this.cdCtaCon = cdCtaCon;
 	}
 	public Double getQtValor() {
 		return qtValor;
@@ -63,8 +66,9 @@ public class Cstg_IntPF {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cdCCusto == null) ? 0 : cdCCusto.hashCode());
+		result = prime * result + ((cdCtaCon == null) ? 0 : cdCtaCon.hashCode());
 		result = prime * result + ((cdEmpresa == null) ? 0 : cdEmpresa.hashCode());
-		result = prime * result + ((cdFunc == null) ? 0 : cdFunc.hashCode());
 		result = prime * result + ((dtRefer == null) ? 0 : dtRefer.hashCode());
 		result = prime * result + ((instancia == null) ? 0 : instancia.hashCode());
 		return result;
@@ -77,16 +81,21 @@ public class Cstg_IntPF {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cstg_IntPF other = (Cstg_IntPF) obj;
+		Cstg_IntDG other = (Cstg_IntDG) obj;
+		if (cdCCusto == null) {
+			if (other.cdCCusto != null)
+				return false;
+		} else if (!cdCCusto.equals(other.cdCCusto))
+			return false;
+		if (cdCtaCon == null) {
+			if (other.cdCtaCon != null)
+				return false;
+		} else if (!cdCtaCon.equals(other.cdCtaCon))
+			return false;
 		if (cdEmpresa == null) {
 			if (other.cdEmpresa != null)
 				return false;
 		} else if (!cdEmpresa.equals(other.cdEmpresa))
-			return false;
-		if (cdFunc == null) {
-			if (other.cdFunc != null)
-				return false;
-		} else if (!cdFunc.equals(other.cdFunc))
 			return false;
 		if (dtRefer == null) {
 			if (other.dtRefer != null)
@@ -103,11 +112,7 @@ public class Cstg_IntPF {
 
 	@Override
 	public String toString() {
-		return "Cstg_IntPF [cdEmpresa=" + cdEmpresa + ", dtRefer=" + dtRefer + ", cdFunc=" + cdFunc + ", qtHoras="
-				+ qtHoras + ", qtValor=" + qtValor + ", instancia=" + instancia + "]";
+		return "Cstg_intDG [cdEmpresa=" + cdEmpresa + ", dtRefer=" + dtRefer + ", cdCCusto=" + cdCCusto + ", cdCtaCon="
+				+ cdCtaCon + ", qtValor=" + qtValor + ", instancia=" + instancia + "]";
 	}
-	
-	
-	
-
 }

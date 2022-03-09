@@ -169,9 +169,9 @@ public class ImportarErpService {
 		}
 		Optional<ButtonType> continuar = null;
 		try {
-			if (origem.equals("MT")) { 	converteRegistroMT(campos); }
-			if (origem.equals("CD")) { 	converteRegistroCD(campos); }
-			if (origem.equals("DG")) { 	converteRegistroDG(campos); }
+			if (origem.equals("RM")) { 	converteRegistroRM(campos); }
+			if (origem.equals("ED")) { 	converteRegistroED(campos); }
+			if (origem.equals("DF")) { 	converteRegistroDF(campos); }
 
 			if (!anoMes.equals(anoMesReferencia)) {
 				throw new TxtIntegridadeException("Registro nao Coerente com o Mês de Referencia");
@@ -213,7 +213,7 @@ public class ImportarErpService {
 		return null;
 	}
 
-	private void converteRegistroMT(String[] campos) throws ParseException {
+	private void converteRegistroRM(String[] campos) throws ParseException {
 		if (campos.length == 16) {
 			tipoMovimento = campos[0];
 			documentoErp = campos[1];
@@ -238,7 +238,7 @@ public class ImportarErpService {
 		}
 	}
 
-	private void converteRegistroCD(String[] campos) throws ParseException {
+	private void converteRegistroED(String[] campos) throws ParseException {
 		if (campos.length == 16) {
 			tipoMovimento = campos[0];
 			documentoErp = campos[1];
@@ -263,7 +263,7 @@ public class ImportarErpService {
 		}
 	}
 
-	private void converteRegistroDG(String[] campos)  {
+	private void converteRegistroDF(String[] campos)  {
 		System.out.println("Implementar converteRegistroDG");
 	}
 
@@ -275,7 +275,7 @@ public class ImportarErpService {
 		String arqEntradaNome = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "ArqEntradaNome")).getValor();
 		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "ArqEntradaTipo")).getValor();
 		entrada = arqEntradaPasta + arqEntradaNome + anoMes + arqEntradaTipo;
-		naoImportar = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "NaoImportar" + origem)).getValor();
+		naoImportar = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "NaoImportar")).getValor();
 		arqEntradaDelimitador = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "ArqEntradaDelimitador")).getValor();
 	}
 }

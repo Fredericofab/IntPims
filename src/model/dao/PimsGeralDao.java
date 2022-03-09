@@ -2,8 +2,6 @@ package model.dao;
 
 import java.util.Date;
 
-import model.entities.Cstg_IntPF;
-
 public interface PimsGeralDao {
 	//tabela CCUSTOS;
 	Boolean existeCCustos(Double codCCustos, String usuarioPimsCS);
@@ -13,8 +11,4 @@ public interface PimsGeralDao {
 	Date dataSaidaApt_os_he(String numeroOS, String usuarioPimsCS);
 	Double codCCustoApt_os_he(String numeroOS, String usuarioPimsCS);
 	Double codEquiptoApt_os_he(String numeroOS, String usuarioPimsCS);
-
-	//tabela CSTG_INTFP		
-	Integer deletarCstg_IntFP(String dataref, String usuarioPimsCS);
-	void gravarCstg_IntFP(Cstg_IntPF objeto, String usuarioPimsCS);
 }

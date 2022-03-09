@@ -12,12 +12,15 @@ public class ProcessoAtual implements Serializable {
 	private String exportarFolha;
 	private String importarFuncionario;
 	private String sumarizarFuncionario;
-	private String importarErpMT;
-	private String importarErpCD;
-	private String importarErpDG;
+	private String importarErpRM;
+	private String importarErpED;
+	private String importarErpDF;
 	private String validarErp;
 	private String aplicarPoliticaErp;
-	private String exportarErp;
+	private String exportarErpVM;
+	private String exportarErpCM;
+	private String exportarErpDG;
+	private String exportarErpOS;
 	private String verbaAlterada;
 	private String folhaAlterada;
 	private String funcionarioAlterado;
@@ -26,8 +29,9 @@ public class ProcessoAtual implements Serializable {
 	public ProcessoAtual() {
 	}
 	public ProcessoAtual(String anoMes, String importarFolha, String sumarizarFolha, String exportarFolha,
-			String importarFuncionario, String sumarizarFuncionario, String importarErpMT, String importarErpCD,
-			String importarErpDG, String validarErp, String aplicarPoliticaErp, String exportarErp, String verbaAlterada,
+			String importarFuncionario, String sumarizarFuncionario, String importarErpRM, String importarErpED,
+			String importarErpDF, String validarErp, String aplicarPoliticaErp, String exportarErpVM,
+			String exportarErpCM, String exportarErpDG, String exportarErpOS, String verbaAlterada,
 			String folhaAlterada, String funcionarioAlterado, String filtroErp) {
 		super();
 		this.anoMes = anoMes;
@@ -36,12 +40,15 @@ public class ProcessoAtual implements Serializable {
 		this.exportarFolha = exportarFolha;
 		this.importarFuncionario = importarFuncionario;
 		this.sumarizarFuncionario = sumarizarFuncionario;
-		this.importarErpMT = importarErpMT;
-		this.importarErpCD = importarErpCD;
-		this.importarErpDG = importarErpDG;
+		this.importarErpRM = importarErpRM;
+		this.importarErpED = importarErpED;
+		this.importarErpDF = importarErpDF;
 		this.validarErp = validarErp;
 		this.aplicarPoliticaErp = aplicarPoliticaErp;
-		this.exportarErp = exportarErp;
+		this.exportarErpVM = exportarErpVM;
+		this.exportarErpCM = exportarErpCM;
+		this.exportarErpDG = exportarErpDG;
+		this.exportarErpOS = exportarErpOS;
 		this.verbaAlterada = verbaAlterada;
 		this.folhaAlterada = folhaAlterada;
 		this.funcionarioAlterado = funcionarioAlterado;
@@ -84,23 +91,23 @@ public class ProcessoAtual implements Serializable {
 	public void setSumarizarFuncionario(String sumarizarFuncionario) {
 		this.sumarizarFuncionario = sumarizarFuncionario;
 	}
-	public String getImportarErpMT() {
-		return importarErpMT;
+	public String getImportarErpRM() {
+		return importarErpRM;
 	}
-	public void setImportarErpMT(String importarErpMT) {
-		this.importarErpMT = importarErpMT;
+	public void setImportarErpRM(String importarErpRM) {
+		this.importarErpRM = importarErpRM;
 	}
-	public String getImportarErpCD() {
-		return importarErpCD;
+	public String getImportarErpED() {
+		return importarErpED;
 	}
-	public void setImportarErpCD(String importarErpCD) {
-		this.importarErpCD = importarErpCD;
+	public void setImportarErpED(String importarErpED) {
+		this.importarErpED = importarErpED;
 	}
-	public String getImportarErpDG() {
-		return importarErpDG;
+	public String getImportarErpDF() {
+		return importarErpDF;
 	}
-	public void setImportarErpDG(String importarErpDG) {
-		this.importarErpDG = importarErpDG;
+	public void setImportarErpDF(String importarErpDF) {
+		this.importarErpDF = importarErpDF;
 	}
 	public String getValidarErp() {
 		return validarErp;
@@ -114,11 +121,47 @@ public class ProcessoAtual implements Serializable {
 	public void setAplicarPoliticaErp(String aplicarPoliticaErp) {
 		this.aplicarPoliticaErp = aplicarPoliticaErp;
 	}
-	public String getExportarErp() {
-		return exportarErp;
+	public String getExportarErpVM() {
+		return exportarErpVM;
 	}
-	public void setExportarErp(String exportarErp) {
-		this.exportarErp = exportarErp;
+	public void setExportarErpVM(String exportarErpVM) {
+		this.exportarErpVM = exportarErpVM;
+	}
+	public String getExportarErpCM() {
+		return exportarErpCM;
+	}
+	public void setExportarErpCM(String exportarErpCM) {
+		this.exportarErpCM = exportarErpCM;
+	}
+	public String getExportarErpDG() {
+		return exportarErpDG;
+	}
+	public void setExportarErpDG(String exportarErpDG) {
+		this.exportarErpDG = exportarErpDG;
+	}
+	public String getExportarErpOS() {
+		return exportarErpOS;
+	}
+	public void setExportarErpOS(String exportarErpOS) {
+		this.exportarErpOS = exportarErpOS;
+	}
+	public String getVerbaAlterada() {
+		return verbaAlterada;
+	}
+	public void setVerbaAlterada(String verbaAlterada) {
+		this.verbaAlterada = verbaAlterada;
+	}
+	public String getFolhaAlterada() {
+		return folhaAlterada;
+	}
+	public void setFolhaAlterada(String folhaAlterada) {
+		this.folhaAlterada = folhaAlterada;
+	}
+	public String getFuncionarioAlterado() {
+		return funcionarioAlterado;
+	}
+	public void setFuncionarioAlterado(String funcionarioAlterado) {
+		this.funcionarioAlterado = funcionarioAlterado;
 	}
 	public String getFiltroErp() {
 		return filtroErp;
@@ -154,11 +197,12 @@ public class ProcessoAtual implements Serializable {
 	public String toString() {
 		return "ProcessoAtual [anoMes=" + anoMes + ", importarFolha=" + importarFolha + ", sumarizarFolha="
 				+ sumarizarFolha + ", exportarFolha=" + exportarFolha + ", importarFuncionario=" + importarFuncionario
-				+ ", sumarizarFuncionario=" + sumarizarFuncionario + ", importarErpMT=" + importarErpMT
-				+ ", importarErpCD=" + importarErpCD + ", importarErpDG=" + importarErpDG + ", validarErp="
-				+ validarErp + ", aplicarPoliticaErp=" + aplicarPoliticaErp + ", exportarErp=" + exportarErp + ", verbaAlterada="
-				+ verbaAlterada + ", folhaAlterada=" + folhaAlterada + ", funcionarioAlterado=" + funcionarioAlterado
-				+ ", filtroErp=" + filtroErp + "]";
+				+ ", sumarizarFuncionario=" + sumarizarFuncionario + ", importarErpRM=" + importarErpRM
+				+ ", importarErpED=" + importarErpED + ", importarErpDF=" + importarErpDF + ", validarErp=" + validarErp
+				+ ", aplicarPoliticaErp=" + aplicarPoliticaErp + ", exportarErpVM=" + exportarErpVM + ", exportarErpCM="
+				+ exportarErpCM + ", exportarErpDG=" + exportarErpDG + ", exportarErpOS=" + exportarErpOS
+				+ ", verbaAlterada=" + verbaAlterada + ", folhaAlterada=" + folhaAlterada + ", funcionarioAlterado="
+				+ funcionarioAlterado + ", filtroErp=" + filtroErp + "]";
 	}
 
 }

@@ -60,11 +60,11 @@ public class MainViewController implements Initializable {
 	@FXML
 	private CheckMenuItem menuItemSumarizarFuncionarios;
 	@FXML
-	private CheckMenuItem menuItemImportarErpMT;
+	private CheckMenuItem menuItemImportarErpRM;
 	@FXML
-	private CheckMenuItem menuItemImportarErpCD;
+	private CheckMenuItem menuItemImportarErpED;
 	@FXML
-	private CheckMenuItem menuItemImportarErpDG;
+	private CheckMenuItem menuItemImportarErpDF;
 	@FXML
 	private CheckMenuItem menuItemValidarErp;
 	@FXML
@@ -152,28 +152,28 @@ public class MainViewController implements Initializable {
 	}
 
 	@FXML
-	private void onMenuItemImportarErpMTAction() {
+	private void onMenuItemImportarErpRMAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpMT (Requisicao de Materiais)", paiStage,
+		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpRM (Requisicao de Materiais)", paiStage,
 		(ImportarErpViewController controle) -> {
-			controle.setOrigem("MT");
+			controle.setOrigem("RM");
 		});
 
 	}
 	@FXML
-	private void onMenuItemImportarErpCDAction() {
+	private void onMenuItemImportarErpEDAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpCD (Compra Direta)", paiStage,
+		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpED (Entradas Diretas)", paiStage,
 				(ImportarErpViewController controle) -> {
-					controle.setOrigem("CD");
+					controle.setOrigem("ED");
 		});
 	}
 	@FXML
-	private void onMenuItemImportarErpDGAction() {
+	private void onMenuItemImportarErpDFAction() {
 		Stage paiStage = paiStage();
-		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpDG (Despesas Gerais)", paiStage,
+		criarJanelaFilha("/gui/ImportarErpView.fxml", "Importação Dados do ErpDF (Despesas Financeiras)", paiStage,
 				(ImportarErpViewController controle) -> {
-					controle.setOrigem("DG");
+					controle.setOrigem("DF");
 		});
 	}
 	@FXML
@@ -355,9 +355,9 @@ public class MainViewController implements Initializable {
 			menuItemExportarFolha.setDisable(true);
 			menuItemImportarFuncionarios.setDisable(true);
 			menuItemSumarizarFuncionarios.setDisable(true);
-			menuItemImportarErpMT.setDisable(true);
-			menuItemImportarErpCD.setDisable(true);
-			menuItemImportarErpDG.setDisable(true);
+			menuItemImportarErpRM.setDisable(true);
+			menuItemImportarErpED.setDisable(true);
+			menuItemImportarErpDF.setDisable(true);
 			menuItemValidarErp.setDisable(true);
 			menuItemAplicarPoliticasErp.setDisable(true);
 			menuItemExportarErp.setDisable(true);
@@ -365,16 +365,16 @@ public class MainViewController implements Initializable {
 		else {
 			menuItemImportarFolha.setDisable(false);
 			menuItemImportarFuncionarios.setDisable(false);
-			menuItemImportarErpMT.setDisable(false);
-			menuItemImportarErpCD.setDisable(false);
-			menuItemImportarErpDG.setDisable(false);
+			menuItemImportarErpRM.setDisable(false);
+			menuItemImportarErpED.setDisable(false);
+			menuItemImportarErpDF.setDisable(false);
 
 			menuItemSumarizarFolha.setDisable(processoAtual.getImportarFolha().equals("S") ? false : true);
 			menuItemExportarFolha.setDisable(processoAtual.getSumarizarFolha().equals("S") ? false : true);
 			menuItemSumarizarFuncionarios.setDisable(processoAtual.getImportarFuncionario().equals("S") ? false : true);
-			if (processoAtual.getImportarErpMT().equals("S") &&
-				processoAtual.getImportarErpCD().equals("S") &&
-				processoAtual.getImportarErpDG().equals("S")) {
+			if (processoAtual.getImportarErpRM().equals("S") &&
+				processoAtual.getImportarErpED().equals("S") &&
+				processoAtual.getImportarErpDF().equals("S")) {
 				menuItemValidarErp.setDisable(false);
 			}
 			else {
@@ -391,12 +391,16 @@ public class MainViewController implements Initializable {
 			menuItemExportarFolha.setSelected(processoAtual.getExportarFolha().equals("S"));
 			menuItemImportarFuncionarios.setSelected(processoAtual.getImportarFuncionario().equals("S"));
 			menuItemSumarizarFuncionarios.setSelected(processoAtual.getSumarizarFuncionario().equals("S"));
-			menuItemImportarErpMT.setSelected(processoAtual.getImportarErpMT().equals("S"));
-			menuItemImportarErpCD.setSelected(processoAtual.getImportarErpCD().equals("S"));
-			menuItemImportarErpDG.setSelected(processoAtual.getImportarErpDG().equals("S"));
+			menuItemImportarErpRM.setSelected(processoAtual.getImportarErpRM().equals("S"));
+			menuItemImportarErpED.setSelected(processoAtual.getImportarErpED().equals("S"));
+			menuItemImportarErpDF.setSelected(processoAtual.getImportarErpDF().equals("S"));
 			menuItemValidarErp.setSelected(processoAtual.getValidarErp().equals("S"));
 			menuItemAplicarPoliticasErp.setSelected(processoAtual.getAplicarPoliticaErp().equals("S"));
-			menuItemExportarErp.setSelected(processoAtual.getExportarErp().equals("S"));
+			Boolean exportarErp = processoAtual.getExportarErpVM().equals("S") &&
+					  			  processoAtual.getExportarErpCM().equals("S") &&
+					  			  processoAtual.getExportarErpDG().equals("S") &&
+					  			  processoAtual.getExportarErpOS().equals("S") ;
+			menuItemExportarErp.setSelected(exportarErp);
 		}
 	}
 	

@@ -11,22 +11,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="326.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessoAtualViewController">
+<VBox prefHeight="427.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessoAtualViewController">
    <children>
       <ToolBar prefHeight="21.0" prefWidth="431.0">
         <items>
           <Button fx:id="btNovo" mnemonicParsing="false" onAction="#onBtNovoAction" text="Novo" />
           <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Salvar" />
             <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="Cancelar" />
-            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="430.0" text="Button" visible="false" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="286.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" text="Sair" />
         </items>
       </ToolBar>
       <GridPane>
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="10.0" prefWidth="122.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="10.0" prefWidth="86.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="436.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="10.0" prefWidth="143.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="10.0" prefWidth="68.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="310.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -53,13 +53,14 @@
       </GridPane>
       <GridPane>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="35.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="145.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="32.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="33.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="416.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="34.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="164.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="43.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.0" minWidth="10.0" prefWidth="258.0" />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -114,26 +115,62 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></TextField>
-            <Label text="Importar Erp MT" GridPane.columnIndex="4">
+            <Label text="Importar Erp RM - Requisição Material" GridPane.columnIndex="3">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Label text="Importar Erp CD" GridPane.columnIndex="4" GridPane.rowIndex="1">
+            <Label text="Importar Erp ED - Entrada Direta" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Label text="Importar Erp DG" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <Label text="Validar Erp" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <Label text="Aplicar Politicas Erp" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-            <Label text="Exportar Erp" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-            <TextField fx:id="txtImportarErpMT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" />
-            <TextField fx:id="txtImportarErpCD" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField fx:id="txtImportarErpDG" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="txtValidarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <TextField fx:id="txtAplicarPoliticaErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <TextField fx:id="txtExportarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Label text="Importar Erp DF - Despesas Financeiras" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="Validar Erp" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label text="Aplicar Politicas Erp" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label text="Exportar Erp VM - Valor Material" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <TextField fx:id="txtImportarErpRM" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtImportarErpED" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtImportarErpDF" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtValidarErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtAplicarPoliticaErp" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtExportarErpVM" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtExportarErpCM" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="txtExportarErpDG" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="txtExportarErpOS" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text="Exportar Erp CM - Consumo Material" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Label text="Exportar Erp DG - Despesas Gerais" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Label text="Exportar Erp OS - Ordem de Serviço" GridPane.columnIndex="3" GridPane.rowIndex="8" />
          </children>
       </GridPane>
    </children>
