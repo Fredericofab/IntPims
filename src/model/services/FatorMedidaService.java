@@ -66,8 +66,10 @@ public class FatorMedidaService {
 			bw.write("CodMaterial,DescricaoMaterial,UnidMed, FatorDivisao");
 			bw.newLine();
 			for (FatorMedida fatorMedida : lista) {
-				String linha = fatorMedida.getCodMaterial() + "," + fatorMedida.getDescMaterial() + ","
-						+ fatorMedida.getUnidadeMedida() + "," + String.format("%.4f", fatorMedida.getFatorDivisao());
+				String linha = fatorMedida.getCodMaterial() + "," +
+							   fatorMedida.getDescMaterial().replace(",",".") + "," +
+							   fatorMedida.getUnidadeMedida() + "," +
+							   String.format("%.4f", fatorMedida.getFatorDivisao());
 				bw.write(linha);
 				bw.newLine();
 			}

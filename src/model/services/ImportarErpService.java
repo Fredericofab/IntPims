@@ -96,7 +96,7 @@ public class ImportarErpService {
 			lerParametros();
 			deletarPorOrigem(origem);
 			sequencial = erpService.ultimoSequencial();
-			lerErptxt(entrada, anoMes);
+			lerErptxt(entrada, anoMes, origem);
 			if (qtdeCorrompidas == 0) {
 				gravarDadosErp();
 			}
@@ -119,7 +119,7 @@ public class ImportarErpService {
 		qtdeDeletadas = erpService.deletarOrigem(origem);
 	}
 
-	private void lerErptxt(String entrada, String anoMesReferencia) {
+	private void lerErptxt(String entrada, String anoMesReferencia, String origem) {
 		String linha = null;
 		lista = new ArrayList<Erp>();
 
@@ -130,7 +130,8 @@ public class ImportarErpService {
 				Erp dadosErp = null;
 				dadosErp = converteRegistro(linha, anoMesReferencia, qtdeLidas);
 				if (dadosErp != null) {
-					if (naoImportar.indexOf(dadosErp.getTipoMovimento()) >= 0) {
+					if ((origem.equals("RM") || origem.equals("ED"))  &&
+						(naoImportar.indexOf(dadosErp.getTipoMovimento()) >= 0) ){
 						qtdeNaoImportadas = qtdeNaoImportadas + 1;
 					} 
 					else {
@@ -263,8 +264,28 @@ public class ImportarErpService {
 		}
 	}
 
-	private void converteRegistroDF(String[] campos)  {
-		System.out.println("Implementar converteRegistroDG");
+	private void converteRegistroDF(String[] campos) throws ParseException {
+		if (campos.length == 10 || campos.length == 11 ) {
+//			As vezes o usuário digita com um ";" no meio da descricao do movimento
+			documentoErp = campos[0];
+			codCentroCustos = Double.parseDouble(campos[1]);
+			descCentroCustos = campos[2];
+//			String naoUsadoCodDepto = campos[3];
+			sdf = new SimpleDateFormat(arqEntradaFormatoData);
+			dataMovimento = (Date) sdf.parse(campos[4]);
+			codContaContabil = campos[5];
+			descContaContabil = campos[6];
+			valorMovimento = Double.parseDouble(campos[7]);
+			descMovimento = ( campos.length == 10 ? campos[8] : campos[8] + "-" + campos[9] );
+			anoMes = ( campos.length == 10 ? campos[9] : campos[10] );
+
+			quantidade = 1.00;
+			precoUnitario = valorMovimento;
+
+			sequencial = sequencial + 1;
+		} else {
+			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado 10 recebido " + campos.length );
+		}
 	}
 
 	private void lerParametros() {

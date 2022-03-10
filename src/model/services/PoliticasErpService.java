@@ -7,8 +7,8 @@ import java.util.List;
 
 import gui.util.Alertas;
 import javafx.scene.control.Alert.AlertType;
-import model.dao.PoliticasErpDao;
 import model.dao.FabricaDeDao;
+import model.dao.PoliticasErpDao;
 import model.entities.PoliticasErp;
 
 public class PoliticasErpService {
@@ -16,6 +16,7 @@ public class PoliticasErpService {
 	private PoliticasErpDao dao = FabricaDeDao.criarPoliticasErpDao();
 	
 	private ParametrosService parametrosService = new ParametrosService();
+	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 
 //	parametros
 	String saida;
@@ -36,10 +37,12 @@ public class PoliticasErpService {
 		else {
 			dao.atualizar(objeto);
 		}
+		reatualizarEtapaDoProcesso();
 	}
 	
 	public void remover(PoliticasErp objeto) {
 		dao.deletarPorChave(objeto.getCodPolitica());
+		reatualizarEtapaDoProcesso();
 	}
 
 	public void limparEstatisticas() {
@@ -53,17 +56,20 @@ public class PoliticasErpService {
 			bw.write("codPolitica,nomePolitica,descPolitica,flagAtiva,"
 					+ "imp,OS,VM,CM,DG,clausulaWhere");
 			bw.newLine();
+			char pulalinha = 10;
+			char espaco = 32;
+			char aspas = 34;
 			for (PoliticasErp politicasErp : lista) {
 				String linha = politicasErp.getCodPolitica() + "," + 
-							   politicasErp.getNomePolitica() + "," + 
-						       politicasErp.getDescPolitica() + "," + 
+							   aspas + politicasErp.getNomePolitica() + aspas + "," + 
+						       aspas + politicasErp.getDescPolitica().replace(pulalinha, espaco) + aspas + "," + 
 							   politicasErp.getFlagAtiva() + "," + 
 							   politicasErp.getImportar() + "," +
 							   politicasErp.getSalvarOS_Material() + "," + 
 							   politicasErp.getSalvarCstg_IntVM() + "," +
 							   politicasErp.getSalvarCstg_IntCM() + "," +
 							   politicasErp.getSalvarCstg_IntDG() + "," +
-							   politicasErp.getClausulaWhere() ;
+							   aspas + politicasErp.getClausulaWhere().replace(pulalinha, espaco) + aspas ;
 				bw.write(linha);
 				bw.newLine();
 			}
@@ -100,7 +106,7 @@ public class PoliticasErpService {
 				bw.newLine();
 				bw.write("Salvar Valor Material.....(VM): " + (politicasErp.getSalvarCstg_IntVM() == null ? " " : politicasErp.getSalvarCstg_IntVM()));
 				bw.newLine();
-				bw.write("Importar......................: " + politicasErp.getImportar());
+				bw.write("Importar......................: " + (politicasErp.getImportar() == null ? " " : politicasErp.getImportar()));
 				bw.newLine();
 				bw.write("  Salvar OS_Material......(OS): " + (politicasErp.getSalvarOS_Material() == null ? " " : politicasErp.getSalvarOS_Material()));
 				bw.newLine();
@@ -138,4 +144,13 @@ public class PoliticasErpService {
 			saidaRelatorio = relatorioPasta + "PoliticasErpRelatorio" + anoMes + relatorioTipo ;
 		}
 	}
+	
+	private void reatualizarEtapaDoProcesso() {
+		processoAtualService.atualizarEtapa("AplicarPoliticaErp", "N");
+		processoAtualService.atualizarEtapa("ExportarErpVM", "N");
+		processoAtualService.atualizarEtapa("ExportarErpCM", "N");
+		processoAtualService.atualizarEtapa("ExportarErpDG", "N");
+		processoAtualService.atualizarEtapa("ExportarErpOS", "N");
+	}
+
 }

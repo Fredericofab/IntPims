@@ -67,14 +67,13 @@ public class FuncionariosSumarizadosService {
 
 	private void lerParametros(Boolean oficial) {
 		String anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		String arqSaidaPasta = (parametrosService.pesquisarPorChave("FuncionariosSumarizados", "ArqSaidaPasta")).getValor();
-		String arqSaidaNome  = (parametrosService.pesquisarPorChave("FuncionariosSumarizados", "ArqSaidaNome")).getValor();
-		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("FuncionariosSumarizados", "ArqSaidaTipo")).getValor();
+		String arqSaidaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaPasta")).getValor();
+		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaTipo")).getValor();
 		if (oficial) {
-			saida = arqSaidaPasta + arqSaidaNome + anoMes + "_oficial" + arqSaidaTipo ;
+			saida = arqSaidaPasta + "FuncSumarizados" + anoMes + "_oficial" + arqSaidaTipo ;
 		}
 		else {
-			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+			saida = arqSaidaPasta + "FuncSumarizados" + anoMes + arqSaidaTipo ;
 		}
 	}
 

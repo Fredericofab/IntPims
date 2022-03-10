@@ -91,7 +91,6 @@ public class VerbasFolhaService {
 		}
 		defaultImportar = (parametrosService.pesquisarPorChave("VerbasDaFolha", "DefaultImportar")).getValor().toUpperCase();
 		defaultConsiderarReferencia = (parametrosService.pesquisarPorChave("VerbasDaFolha", "DefaultConsiderarReferencia")).getValor().toUpperCase();
-
 	}
 	
 	private void reatualizarEtapaDoProcesso() {
@@ -99,6 +98,4 @@ public class VerbasFolhaService {
 		processoAtualService.atualizarEtapa("SumarizarFolha","N");
 		processoAtualService.atualizarEtapa("ExportarFolha","N");
 	}
-
-	
 }

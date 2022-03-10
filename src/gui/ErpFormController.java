@@ -330,25 +330,25 @@ public class ErpFormController implements Initializable {
 			validacao.adicionarErro("txtAnoMes", "Informe no formato AAAAMM");
 		}
 		if ((txtOrigem.getText() == null) || txtOrigem.getText().trim().equals("") ||
-			(( ! txtOrigem.getText().toUpperCase().equals("MT") ) &&
-			 ( ! txtOrigem.getText().toUpperCase().equals("CD") ) && 
-			 ( ! txtOrigem.getText().toUpperCase().equals("DG")))) {
-			validacao.adicionarErro("txtOrigem", "Informe a Origem: MT, CD ou DG");
+			(( ! txtOrigem.getText().toUpperCase().equals("RM") ) &&
+			 ( ! txtOrigem.getText().toUpperCase().equals("ED") ) && 
+			 ( ! txtOrigem.getText().toUpperCase().equals("DF")))) {
+			validacao.adicionarErro("txtOrigem", "Informe a Origem: RM, ED ou DF");
 		}
 		if (txtCodCentroCustos.getText() == null || txtCodCentroCustos.getText().trim().equals("")) {
 			validacao.adicionarErro("txtCodCentroCustos", "Informe o Centro de Custos");
 		}
-		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("DG")) && 
+		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("DF")) && 
 			(txtCodContaContabil.getText() == null || txtCodContaContabil.getText().trim().equals(""))) {
-			validacao.adicionarErro("txtCodContaContabil", "Origem DG - Informe a Conta Contabil");
+			validacao.adicionarErro("txtCodContaContabil", "Origem DF - Informe a Conta Contabil");
 		}
-		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("MT")) && 
+		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("RM")) && 
 				(txtCodMaterial.getText() == null || txtCodMaterial.getText().trim().equals(""))) {
-				validacao.adicionarErro("txtCodMaterial", "Origem MT - Informe o Material");
+				validacao.adicionarErro("txtCodMaterial", "Origem RM - Informe o Material");
 		}
-		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("CD")) && 
+		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("ED")) && 
 				(txtCodMaterial.getText() == null || txtCodMaterial.getText().trim().equals(""))) {
-				validacao.adicionarErro("txtCodMaterial", "Origem CD - Informe o Material/Serviço");
+				validacao.adicionarErro("txtCodMaterial", "Origem ED - Informe o Material/Serviço");
 		}
 
 
