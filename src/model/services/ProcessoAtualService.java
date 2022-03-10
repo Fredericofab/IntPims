@@ -84,9 +84,9 @@ public class ProcessoAtualService {
 
 	private void lerParametros(Boolean oficial) {
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		String arqSaidaPasta = (parametrosService.pesquisarPorChave("ControleProcesso", "ArqSaidaPasta")).getValor();
-		String arqSaidaNome  = (parametrosService.pesquisarPorChave("ControleProcesso", "ArqSaidaNome")).getValor();
-		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("ControleProcesso", "ArqSaidaTipo")).getValor();
+		String arqSaidaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaPasta")).getValor();
+		String arqSaidaNome  = "ControleProcesso";
+		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaTipo")).getValor();
 		if (oficial) {
 			saida = arqSaidaPasta + arqSaidaNome + anoMes + "_oficial" + arqSaidaTipo ;
 		}

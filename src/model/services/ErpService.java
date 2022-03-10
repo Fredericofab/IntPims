@@ -108,14 +108,13 @@ public class ErpService {
 
 	private void lerParametros(Boolean oficial) {
 		String anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		String arqSaidaPasta = (parametrosService.pesquisarPorChave("DadosErp", "ArqSaidaPasta")).getValor();
-		String arqSaidaNome  = (parametrosService.pesquisarPorChave("DadosErp", "ArqSaidaNome")).getValor();
-		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("DadosErp", "ArqSaidaTipo")).getValor();
+		String arqSaidaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaPasta")).getValor();
+		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaTipo")).getValor();
 		if (oficial) {
-			saida = arqSaidaPasta + arqSaidaNome + anoMes + "_oficial" + arqSaidaTipo ;
+			saida = arqSaidaPasta + "DadosErp" + anoMes + "_oficial" + arqSaidaTipo ;
 		}
 		else {
-			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+			saida = arqSaidaPasta + "DadosErp" + anoMes + arqSaidaTipo ;
 		}
 	}
 
@@ -154,12 +153,5 @@ public class ErpService {
 	public Integer qtdeLiberadosVM() {
 		return dao.qtdeLiberadosVM();
 	}
-
-	
-//nao usadas	
-	public Integer deletarTodos() {
-		return dao.deletarTodos();
-	}
-
 
 }

@@ -131,8 +131,9 @@ public class MainViewController implements Initializable {
 	private void onMenuItemExportarFolhaAction() {
 		try {
 			ExportarFolhaService servico = new ExportarFolhaService();
-			servico.processar();
-			Alertas.mostrarAlertas(null, "Registros gravados com Sucesso no CSTG_INTFP", null, AlertType.INFORMATION);
+			Integer qtdeProcessadaFP = servico.processar();
+			Alertas.mostrarAlertas(null, "Registros gravados com Sucesso no CSTG_INTFP",
+									"Inseridos " + qtdeProcessadaFP + " registros", AlertType.INFORMATION);
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
 					AlertType.ERROR);
@@ -343,6 +344,7 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	private void onMenuProcessosShown() {
+		lerParametros();
 		processoAtual = processoAtualService.pesquisarPorChave(anoMes);
 		habilitarEtapas();
 		checkProcessos();

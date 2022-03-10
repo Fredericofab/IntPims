@@ -21,14 +21,16 @@ public class ExportarFolhaService {
 	String prefixoMatr;
 	
 	String dataref;
+	Integer qtdeProcessadaFP;
 
-	public void processar() {
+	public Integer processar() {
 		lerParametros();
 		dataref = "01/" + anoMes.substring(4, 6) + "/" + anoMes.substring(0, 4);
 		deletarCstgIntFP();
 		gravarCstgIntFP();
 		gerarTxt();
 		processoAtualService.atualizarEtapa("ExportarFolha","S");
+		return qtdeProcessadaFP;
 	}
 
 	private void gerarTxt() {
@@ -43,6 +45,7 @@ public class ExportarFolhaService {
 	}
 
 	private void gravarCstgIntFP() {
+		qtdeProcessadaFP = 0;
 		List<FolhaSumarizada> lista = folhaSumarizadaService.pesquisarTodos();
 		for (FolhaSumarizada sumarioFolha : lista) {
 			Cstg_IntFP cstg_intfp = new Cstg_IntFP();
@@ -53,6 +56,7 @@ public class ExportarFolhaService {
 			cstg_intfp.setQtValor(sumarioFolha.getTotalImportarSim());
 			cstg_intfp.setInstancia(instancia);
 			cstg_IntFPService.inserir(cstg_intfp, usuarioPimsCS);
+			qtdeProcessadaFP += 1;
 		}
 	}
 

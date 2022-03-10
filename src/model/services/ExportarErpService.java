@@ -7,11 +7,13 @@ import model.entities.Cstg_IntCM;
 import model.entities.Cstg_IntDG;
 import model.entities.Cstg_IntVM;
 import model.entities.Erp;
+import model.entities.FatorMedida;
 import model.entities.OS_Material;
 
 public class ExportarErpService {
 
 	private ErpService erpService = new ErpService();
+	private FatorMedidaService fatorMedidaService = new FatorMedidaService();
 	private PoliticasErpService politicasErpService = new PoliticasErpService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 	private Cstg_IntVMService cstg_IntVMService = new Cstg_IntVMService();
@@ -137,12 +139,16 @@ public class ExportarErpService {
 		cstg_IntVMService.setQtdeAtualizada(0);
 		for (Erp erp : listaErp) {
 			if (erp.getSalvarCstg_IntVM() != null && erp.getSalvarCstg_IntVM().equals("S")) {
+
+				FatorMedida fatorMedida = fatorMedidaService.pesquisarPorChave(erp.getCodMaterial());
+				Double fator = (  fatorMedida == null ? 1 : fatorMedida.getFatorDivisao());
+				
 				Cstg_IntVM cstg_intVM = new Cstg_IntVM();
 				cstg_intVM.setCdEmpresa(cdEmpresa);
 				cstg_intVM.setCdMater(erp.getCodMaterial());
 				cstg_intVM.setDtRefer(erp.getDataMovimento());
 				cstg_intVM.setInstancia(instancia);
-				cstg_intVM.setPrecoUnit(erp.getPrecoUnitario());
+				cstg_intVM.setPrecoUnit(erp.getPrecoUnitario() / fator);
 				cstg_IntVMService.salvarOuAtualizar(cstg_intVM, usuarioPimsCS);
 				qtdeProcessadaVM += 1;
 			}
@@ -244,6 +250,7 @@ public class ExportarErpService {
 		erpService.gerarTxt(oficial);
 		politicasErpService.gerarTxt(oficial);
 		politicasErpService.relatorioTxt(oficial);
+		fatorMedidaService.gerarTxt(oficial);
 	}
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();

@@ -1,6 +1,7 @@
 package model.services;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
@@ -110,7 +111,7 @@ public class ValidarErpService {
 		return qtdeOSAntigasDistintas;
 	}
 
-	public void validarERP() throws IOException {
+	public void validarERP() throws IOException, FileNotFoundException {
 		lerParametros(false);
 		criarArqLog();
 		erpService.limparValidacoesOS();
@@ -349,7 +350,7 @@ public class ValidarErpService {
 	
 //3 Rotinas do Arquivo de Log (Inicio)
 	
-	private void criarArqLog() throws IOException {
+	private void criarArqLog() throws IOException, FileNotFoundException {
 		BufferedWriter bwCC = new BufferedWriter(new FileWriter(arqLogCC, false));
 		bwCC.write("VALIDAÇÃO: Centros de Custos Inexistentes no PimsCS.");
 		bwCC.newLine();
@@ -446,16 +447,10 @@ public class ValidarErpService {
 		matPossiveisFator = (parametrosService.pesquisarPorChave("ValidarErp", "MatPossiveisFator")).getValor();	
 		matOficinaSemOS = (parametrosService.pesquisarPorChave("ValidarErp", "MatOficinaSemOS")).getValor();
 
-		String arqLogCCPasta = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogCCPasta")).getValor();
-		String arqLogCCNome  = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogCCNome")).getValor();
-		String arqLogCCTipo  = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogCCTipo")).getValor();
-		arqLogCC = arqLogCCPasta + arqLogCCNome + anoMes + arqLogCCTipo ;
-
-		String arqLogOSPasta = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogOSPasta")).getValor();
-		String arqLogOSNome  = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogOSNome")).getValor();
-		String arqLogOSTipo  = (parametrosService.pesquisarPorChave("ValidarErp", "ArqLogOSTipo")).getValor();
-		arqLogOS = arqLogOSPasta + arqLogOSNome + anoMes + arqLogOSTipo ;
-
+		String arqLogPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogPasta")).getValor();
+		String arqLogTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogTipo")).getValor();
+		arqLogCC = arqLogPasta + "LogCC" + anoMes + arqLogTipo ;
+		arqLogOS = arqLogPasta + "LogOS" + anoMes + arqLogTipo ;
 	}
 
 //	3 Rotinas de Apoio (termino)	

@@ -81,14 +81,13 @@ public class VerbasFolhaService {
 
 	private void lerParametros(Boolean oficial) {
 		String anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		String arqSaidaPasta = (parametrosService.pesquisarPorChave("VerbasDaFolha", "ArqSaidaPasta")).getValor();
-		String arqSaidaNome  = (parametrosService.pesquisarPorChave("VerbasDaFolha", "ArqSaidaNome")).getValor();
-		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("VerbasDaFolha", "ArqSaidaTipo")).getValor();
+		String arqSaidaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaPasta")).getValor();
+		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaTipo")).getValor();
 		if (oficial) {
-			saida = arqSaidaPasta + arqSaidaNome + anoMes + "_oficial" + arqSaidaTipo ;
+			saida = arqSaidaPasta + "VerbasDaFolha" + anoMes + "_oficial" + arqSaidaTipo ;
 		}
 		else {
-			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+			saida = arqSaidaPasta + "VerbasDaFolha" + anoMes + arqSaidaTipo ;
 		}
 		defaultImportar = (parametrosService.pesquisarPorChave("VerbasDaFolha", "DefaultImportar")).getValor().toUpperCase();
 		defaultConsiderarReferencia = (parametrosService.pesquisarPorChave("VerbasDaFolha", "DefaultConsiderarReferencia")).getValor().toUpperCase();

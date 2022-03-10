@@ -125,19 +125,17 @@ public class PoliticasErpService {
 
 	private void lerParametros(Boolean oficial) {
 		String anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		String arqSaidaPasta = (parametrosService.pesquisarPorChave("PoliticasErp", "ArqSaidaPasta")).getValor();
-		String arqSaidaNome  = (parametrosService.pesquisarPorChave("PoliticasErp", "ArqSaidaNome")).getValor();
-		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("PoliticasErp", "ArqSaidaTipo")).getValor();
-		String relatorioPasta = (parametrosService.pesquisarPorChave("PoliticasErp", "RelatorioPasta")).getValor();
-		String relatorioNome  = (parametrosService.pesquisarPorChave("PoliticasErp", "RelatorioNome")).getValor();
-		String relatorioTipo  = (parametrosService.pesquisarPorChave("PoliticasErp", "RelatorioTipo")).getValor();
+		String arqSaidaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaPasta")).getValor();
+		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaTipo")).getValor();
+		String relatorioPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqRelatorioPasta")).getValor();
+		String relatorioTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqRelatorioTipo")).getValor();
 		if (oficial) {
-			saida = arqSaidaPasta + arqSaidaNome + anoMes + "_oficial" + arqSaidaTipo ;
-			saidaRelatorio = relatorioPasta + relatorioNome + anoMes + "_oficial" + relatorioTipo ;
+			saida = arqSaidaPasta + "PoliticasErp" + anoMes + "_oficial" + arqSaidaTipo ;
+			saidaRelatorio = relatorioPasta + "PoliticasErpRelatorio" + anoMes + "_oficial" + relatorioTipo ;
 		}
 		else {
-			saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
-			saidaRelatorio = relatorioPasta + relatorioNome + anoMes + relatorioTipo ;
+			saida = arqSaidaPasta + "PoliticasErp" + anoMes + arqSaidaTipo ;
+			saidaRelatorio = relatorioPasta + "PoliticasErpRelatorio" + anoMes + relatorioTipo ;
 		}
 	}
 }

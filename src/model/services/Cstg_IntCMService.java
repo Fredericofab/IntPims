@@ -37,7 +37,7 @@ public class Cstg_IntCMService {
 			Double qtde1 = pesquisado.getQtMater();
 			Double precoUnit1 = pesquisado.getPrecoUnit();
 			Double qtde2 = cstg_intCM.getQtMater();
-			Double precoUnit2 = pesquisado.getPrecoUnit();
+			Double precoUnit2 = cstg_intCM.getPrecoUnit();
 			Double qtde = qtde1 + qtde2;
 			Double precoUnit = ( ( qtde1 * precoUnit1 ) + (qtde2 * precoUnit2 ) ) / qtde;
 			pesquisado.setQtMater(qtde);

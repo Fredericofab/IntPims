@@ -232,11 +232,10 @@ public class ImportarFolhaService {
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaPasta")).getValor();
-		String arqEntradaNome = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaNome")).getValor();
-		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaTipo")).getValor();
-		entrada = arqEntradaPasta + arqEntradaNome + anoMes + arqEntradaTipo;
+		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaPasta")).getValor();
+		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaTipo")).getValor();
+		entrada = arqEntradaPasta + "Folha" + anoMes + arqEntradaTipo;
 		naoImportar = (parametrosService.pesquisarPorChave("ImportarFolha", "NaoImportar")).getValor();
-		arqEntradaDelimitador = (parametrosService.pesquisarPorChave("ImportarFolha", "ArqEntradaDelimitador")).getValor();
+		arqEntradaDelimitador = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaDelimitador")).getValor();
 	}
 }

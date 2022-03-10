@@ -2,7 +2,6 @@ package model.services;
 
 import model.dao.Cstg_IntDGDao;
 import model.dao.FabricaDeDao;
-import model.entities.Cstg_IntCM;
 import model.entities.Cstg_IntDG;
 
 public class Cstg_IntDGService {
@@ -35,9 +34,12 @@ public class Cstg_IntDGService {
 			dao.inserir(cstg_intDG, usuarioPimsCS);
 			qtdeIncluida += 1;
 		} else {
+			Double valor1 = pesquisado.getQtValor();
+			Double valor2 = cstg_intDG.getQtValor();
+			Double valor = valor1 + valor2;
+			pesquisado.setQtValor(valor);;
+			dao.atualizar(pesquisado,  usuarioPimsCS);
 			qtdeAtualizada += 1;
-			System.out.println("Atualizar DG " + cstg_intDG.getCdCtaCon() + " " + cstg_intDG.getDtRefer() + " " +  cstg_intDG.getCdCCusto());
-//			dao.atualizar(cstg_intDG, usuarioPimsCS);
 		}
 	}
 

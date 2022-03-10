@@ -82,12 +82,10 @@ public class ValidarErpViewController implements Initializable {
 			atualizarTela(servico);
 		}
 		catch (DbException e) {
-			e.printStackTrace();
 			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo",
 					e.getMessage() + "\n \n",
 					AlertType.ERROR);
 		} catch (IOException e) {
-			e.printStackTrace();
 			Alertas.mostrarAlertas("IOException", "Erro no Acesso aos Arquivos de Log \n \n",
 					e.getMessage() + "\n \n",
 					AlertType.ERROR);

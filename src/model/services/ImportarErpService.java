@@ -270,12 +270,11 @@ public class ImportarErpService {
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		arqEntradaFormatoData = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "ArqEntradaFormatoData")).getValor();
-		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "ArqEntradaPasta")).getValor();
-		String arqEntradaNome = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "ArqEntradaNome")).getValor();
-		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "ArqEntradaTipo")).getValor();
-		entrada = arqEntradaPasta + arqEntradaNome + anoMes + arqEntradaTipo;
-		naoImportar = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "NaoImportar")).getValor();
-		arqEntradaDelimitador = (parametrosService.pesquisarPorChave("ImportarErp" + origem, "ArqEntradaDelimitador")).getValor();
+		arqEntradaFormatoData = (parametrosService.pesquisarPorChave("ArquivosTextos" , "ArqEntradaFormatoData")).getValor();
+		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos" , "ArqEntradaPasta")).getValor();
+		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ArquivosTextos" , "ArqEntradaTipo")).getValor();
+		entrada = arqEntradaPasta + "Erp" + origem + anoMes + arqEntradaTipo;
+		naoImportar = (parametrosService.pesquisarPorChave("ImportarErp" , "NaoImportar" + origem)).getValor();
+		arqEntradaDelimitador = (parametrosService.pesquisarPorChave("ArquivosTextos" , "ArqEntradaDelimitador")).getValor();
 	}
 }

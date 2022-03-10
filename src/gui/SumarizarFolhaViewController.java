@@ -58,10 +58,10 @@ public class SumarizarFolhaViewController implements Initializable {
 		txtQtdeCCustos.setText(qtdeCCustos.toString());
 
 		Locale.setDefault(Locale.US);
-		txtValortotal.setText(String.format("%.2f", valorTotal));
-		txtValorExportarSim.setText(String.format("%.2f", valorExportarSim));
-		txtValorExportarNao.setText(String.format("%.2f", valorExportarNao));
-
+		txtValortotal.setText(Utilitarios.formatarNumeroDecimalComMilhar('.', ' ').format(valorTotal)) ; 
+		txtValorExportarSim.setText(Utilitarios.formatarNumeroDecimalComMilhar('.', ' ').format(valorExportarSim));
+		txtValorExportarNao.setText(Utilitarios.formatarNumeroDecimalComMilhar('.', ' ').format(valorExportarNao));
+		
 		txtRegLidos.setStyle("-fx-alignment: CENTER-RIGHT");
 		txtQtdeCCustos.setStyle("-fx-alignment: CENTER-RIGHT");
 		txtValortotal.setStyle("-fx-alignment: CENTER-RIGHT");

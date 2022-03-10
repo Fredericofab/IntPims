@@ -182,14 +182,9 @@ public class ImportarFuncionariosService {
 
 	private void lerParametros() {
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ImportarFuncionarios", "ArqEntradaPasta"))
-				.getValor();
-		String arqEntradaNome = (parametrosService.pesquisarPorChave("ImportarFuncionarios", "ArqEntradaNome"))
-				.getValor();
-		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ImportarFuncionarios", "ArqEntradaTipo"))
-				.getValor();
-		entrada = arqEntradaPasta + arqEntradaNome + anoMes + arqEntradaTipo;
-		arqEntradaDelimitador = (parametrosService.pesquisarPorChave("ImportarFuncionarios", "ArqEntradaDelimitador"))
-				.getValor();
+		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaPasta")).getValor();
+		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaTipo")).getValor();
+		entrada = arqEntradaPasta + "Func" + anoMes + arqEntradaTipo;
+		arqEntradaDelimitador = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaDelimitador")).getValor();
 	}
 }
