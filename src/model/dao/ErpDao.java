@@ -26,6 +26,7 @@ public interface ErpDao {
 	Integer qtdeLiberadosOS();
 	Integer qtdeLiberadosCM();
 	Integer qtdeLiberadosDG();
+	Integer qtdeLiberacaoDupla();
 	Integer qtdeLiberadosVM();
 	Integer qtdeDessaCritica(String essaCriticaTxt, String importar);
 	}

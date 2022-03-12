@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -41,6 +42,7 @@ public class ErpFiltrosViewController implements Initializable {
 	private String importar;
 	private String valorMaterial;
 	private String sobreporPolitica;
+	private Boolean liberacaoDupla;
 	private String politica;
 	private String validacaoOS;
 	private String filtro;
@@ -51,6 +53,8 @@ public class ErpFiltrosViewController implements Initializable {
 	private TextField txtValorMaterial;
 	@FXML
 	private TextField txtSobreporPolitica;
+	@FXML
+	private CheckBox checkLiberacaoDupla;
 	@FXML
 	private TextField txtPolitica;
 	@FXML	
@@ -78,6 +82,7 @@ public class ErpFiltrosViewController implements Initializable {
 		txtSobreporPolitica.setText(null);
 		txtPolitica.setText(null);
 		txtAreaFiltro.setText(null);
+		checkLiberacaoDupla.setSelected(false);
 		radioNenhum.setSelected(true);
 	}
 
@@ -85,7 +90,7 @@ public class ErpFiltrosViewController implements Initializable {
 	public void onBtSalvarAction(ActionEvent evento) {
 		getDadosDoForm();
 		if (( importar != null ||  politica != null || validacaoOS != null || 
-			  valorMaterial != null || sobreporPolitica != null              ) &&
+			  valorMaterial != null || sobreporPolitica != null ||  liberacaoDupla != null ) &&
 			( filtro != null )){
 			Alertas.mostrarAlertas(null, "Filtro Básico ou Filtro Personalizado", 
 							"Limpar os filtros e \n" +
@@ -93,11 +98,10 @@ public class ErpFiltrosViewController implements Initializable {
 							AlertType.ERROR);
 		}
 		else {
-			erpFiltrosService.salvarFiltro(importar, valorMaterial, sobreporPolitica, politica, validacaoOS, filtro);
+			erpFiltrosService.salvarFiltro(importar, valorMaterial, sobreporPolitica, liberacaoDupla, politica, validacaoOS, filtro);
 			notificarDadosAlteradosListeners();
 			Utilitarios.atualStage(evento).close();
 		}
-			
 	}
 
 	@FXML
@@ -126,12 +130,12 @@ public class ErpFiltrosViewController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtPolitica, 4);
 		
-//		List<String> listaCamposOracle = erpFiltrosService.criarListaCamposOracle();
 		List<String> listaCamposOracle = Utilitarios.camposErp();
 
+		checkLiberacaoDupla.setSelected(false);
+		
 		obsCamposOracle = FXCollections.observableArrayList(listaCamposOracle);
 		cboxCamposOracle.setItems(obsCamposOracle);
-
 	}
 
 
@@ -149,6 +153,7 @@ public class ErpFiltrosViewController implements Initializable {
 		importar = Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText());
 		valorMaterial = Utilitarios.tentarConverterParaMaiusculo(txtValorMaterial.getText());
 		sobreporPolitica = Utilitarios.tentarConverterParaMaiusculo(txtSobreporPolitica.getText());
+		liberacaoDupla  = checkLiberacaoDupla.isSelected();
 		politica  = Utilitarios.tentarConverterParaMaiusculo(txtPolitica.getText());
 		if (validacoesOS.getSelectedToggle() == null ) {
 			validacaoOS = null;

@@ -87,7 +87,6 @@ public class FolhaService {
 	private void reatualizarEtapaDoProcesso() {
 		processoAtualService.atualizarEtapa("SumarizarFolha","N");
 		processoAtualService.atualizarEtapa("ExportarFolha","N");
-		processoAtualService.atualizarEtapa("FolhaAlterada","S");
 	}
 
 }

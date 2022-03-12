@@ -475,14 +475,37 @@ public class ErpDaoJDBC implements ErpDao {
 			return null;
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp \n \n" +
-								  "erro na Contagem do Erp para VM Valores de Materiais = " + " \n" 
+								  "erro na Contagem do Erp para VM Valores de Materiais" + " \n" 
 								  + e.getMessage());
 		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
 		}
 	}
-
+	@Override
+	public Integer qtdeLiberacaoDupla() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT COUNT(*) FROM Erp " + 
+										  "WHERE (( SALVAR_CSTG_INTCM = 'S' AND SALVAR_CSTG_INTDG  = 'S') OR " +
+										  		 "( SALVAR_CSTG_INTCM = 'S' AND SALVAR_OS_MATERIAL = 'S') OR " +
+												 "( SALVAR_CSTG_INTDG = 'S' AND SALVAR_OS_MATERIAL = 'S')   )");
+			rs = st.executeQuery();
+			if (rs.next()) {
+				int qtde = rs.getInt(1);
+				return qtde;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp \n \n" +
+								  "erro na Contagem do Erp para Liberacao Dupla" + " \n" 
+								  + e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
 
 	@Override
 	public Integer qtdeDessaCritica(String essaCriticaTxt, String importar) {
@@ -544,6 +567,5 @@ public class ErpDaoJDBC implements ErpDao {
 		dadosErp.setSequencial(rs.getInt("Sequencial"));
 		return dadosErp;
 	}
-
 
 }

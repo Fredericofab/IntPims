@@ -29,6 +29,7 @@ public class AplicarPoliticasErpService {
 	Integer qtdeImpLiberadosOS;
 	Integer qtdeImpLiberadosCM;
 	Integer qtdeImpLiberadosDG;
+	Integer qtdeImpLiberacaoDupla;
 	
 	public Integer getTotalRegistros() {
 		return totalRegistros;
@@ -66,6 +67,9 @@ public class AplicarPoliticasErpService {
 	}
 	public Integer getQtdeImpLiberadosDG() {
 		return qtdeImpLiberadosDG;
+	}
+	public Integer getQtdeImpLiberacaoDupla() {
+		return qtdeImpLiberacaoDupla;
 	}
 
 	public void aplicarTodas() {
@@ -133,8 +137,9 @@ public class AplicarPoliticasErpService {
 		qtdeImpLiberadosOS = erpService.qtdeLiberadosOS();
 		qtdeImpLiberadosCM = erpService.qtdeLiberadosCM();
 		qtdeImpLiberadosDG = erpService.qtdeLiberadosDG();
+		qtdeImpLiberacaoDupla = erpService.qtdeLiberacaoDupla();
 
-		if (qtdeIndefinidos + qtdeValorMaterialI + qtdeImportarI == 0) {
+		if (qtdeIndefinidos + qtdeValorMaterialI + qtdeImportarI + qtdeImpLiberacaoDupla == 0) {
 			processoAtualService.atualizarEtapa("AplicarPoliticaErp", "S");
 		}
 		else {

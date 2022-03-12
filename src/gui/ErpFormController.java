@@ -79,11 +79,15 @@ public class ErpFormController implements Initializable {
 	@FXML
 	private TextField txtFrotaOuCC;
 	@FXML
+	private TextField txtValidacoesOS;
+	@FXML
 	private TextField txtDocumentoErp;
 	@FXML
 	private DatePicker dpDataMovimento;
 	@FXML
 	private TextField txtSobreporPoliticas;
+	@FXML
+	private TextField txtPoliticas;
 	@FXML
 	private TextField txtImportar;
 	@FXML
@@ -266,6 +270,7 @@ public class ErpFormController implements Initializable {
 		txtValorMovimento.setText(String.format("%.2f", entidade.getValorMovimento()));
 		txtNumeroOS.setText(entidade.getNumeroOS());
 		txtFrotaOuCC.setText(entidade.getFrotaOuCC());
+		txtValidacoesOS.setText(entidade.getValidacoesOS());
 		txtDocumentoErp.setText(entidade.getDocumentoErp());
 
 //		dpDataMovimento.setValue(entidade.getDataMovimento()); erro de compilação Date x LocalDate
@@ -274,6 +279,7 @@ public class ErpFormController implements Initializable {
 		}
 		
 		txtSobreporPoliticas.setText(entidade.getSobreporPoliticas());
+		txtPoliticas.setText(entidade.getPoliticas());
 		txtImportar.setText(entidade.getImportar());
 		txtSalvarOS_Material.setText(entidade.getSalvarOS_Material());
 		txtSalvarCstg_IntVM.setText(entidade.getSalvarCstg_IntVM());
@@ -310,12 +316,14 @@ public class ErpFormController implements Initializable {
 		objeto.setValorMovimento(Utilitarios.tentarConverterParaDouble(txtValorMovimento.getText()));
 		objeto.setNumeroOS(txtNumeroOS.getText());
 		objeto.setFrotaOuCC(txtFrotaOuCC.getText());
+		objeto.setValidacoesOS(txtValidacoesOS.getText());
 		objeto.setDocumentoErp(txtDocumentoErp.getText());
 		if(dpDataMovimento.getValue() != null) {
 			Instant instant = Instant.from(dpDataMovimento.getValue().atStartOfDay(ZoneId.systemDefault()));
 			objeto.setDataMovimento(Date.from(instant));
 		}
 		objeto.setSobreporPoliticas(Utilitarios.tentarConverterParaMaiusculo(txtSobreporPoliticas.getText()));
+		objeto.setPoliticas(txtPoliticas.getText());
 		objeto.setImportar(Utilitarios.tentarConverterParaMaiusculo(txtImportar.getText()));
 		objeto.setSalvarOS_Material(Utilitarios.tentarConverterParaMaiusculo(txtSalvarOS_Material.getText()));
 		objeto.setSalvarCstg_IntVM(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntVM.getText()));

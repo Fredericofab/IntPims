@@ -43,11 +43,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                 <Button fx:id="btAplicarTodas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBtAplicarTodasAction" prefHeight="25.0" prefWidth="182.0" text="Aplicar Politicas" textAlignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="btCalcular" mnemonicParsing="false" onAction="#onBtCalcularAction" prefHeight="25.0" prefWidth="174.0" text="Calcular Estatisticas" GridPane.rowIndex="3" />
-                  <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="191.0" text="Sair" GridPane.rowIndex="19" />
+                  <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="191.0" text="Sair" GridPane.rowIndex="20" />
                   <Label text="Total de Registros" GridPane.rowIndex="4" />
                   <Label text="Não Aplicadas aqui" GridPane.rowIndex="5">
                      <GridPane.margin>
@@ -110,6 +111,11 @@
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
+                  <Label text="Liberação. Dupla" GridPane.rowIndex="18">
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
                   <TextField fx:id="txtTotalRegistros" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField fx:id="txtTotalNaoCalculados" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField fx:id="txtTotalIndefinidos" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -122,6 +128,7 @@
                   <TextField fx:id="txtImpLiberadosOS" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="15" />
                   <TextField fx:id="txtImpLiberadosCM" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="16" />
                   <TextField fx:id="txtImpLiberadosDG" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                  <TextField fx:id="txtImpLiberacaoDupla" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="18" />
                </children>
             </GridPane>
             <ScrollPane prefHeight="436.0" prefWidth="787.0">

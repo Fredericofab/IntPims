@@ -284,7 +284,7 @@ public class ImportarErpService {
 
 			sequencial = sequencial + 1;
 		} else {
-			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado 10 recebido " + campos.length );
+			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (10 ou 11) recebido " + campos.length );
 		}
 	}
 

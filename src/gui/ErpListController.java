@@ -154,7 +154,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	
 	@FXML
 	public void onBtLimparAction(ActionEvent evento) {
-		erpFiltrosService.salvarFiltro(null, null, null, null, null, null);
+		erpFiltrosService.salvarFiltro(null, null, null, null, null, null, null);
 		atualizarTableView();
 	}
 	

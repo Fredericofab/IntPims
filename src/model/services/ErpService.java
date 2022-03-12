@@ -18,6 +18,7 @@ public class ErpService {
 	private ErpDao dao = FabricaDeDao.criarErpDao();
 	
 	private ParametrosService parametrosService = new ParametrosService();
+	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 
 //	parametros
 	String saida;
@@ -31,9 +32,11 @@ public class ErpService {
 		} else {
 			dao.atualizar(objeto);
 		}
+		reatualizarEtapaDoProcesso();
 	}
 	public void remover(Erp objeto) {
 		dao.deletarPorChave(objeto.getSequencial());
+		reatualizarEtapaDoProcesso();
 	}
 	public Integer ultimoSequencial() {
 		return dao.ultimoSequencial();
@@ -118,6 +121,14 @@ public class ErpService {
 		}
 	}
 
+	private void reatualizarEtapaDoProcesso() {
+		processoAtualService.atualizarEtapa("ValidarErp","N");
+		processoAtualService.atualizarEtapa("AplicarPoliticaErp","N");
+		processoAtualService.atualizarEtapa("ExportarErpVM","N");
+		processoAtualService.atualizarEtapa("ExportarErpCM","N");
+		processoAtualService.atualizarEtapa("ExportarErpDG","N");
+		processoAtualService.atualizarEtapa("ExportarErpOS","N");
+	}
 	
 //usadas no AplicarPoliticasErpService	
 	public List<Erp> pesquisarQuemAtendeAPolitica(Integer codPolitica, String clausulaWhere) {
@@ -149,6 +160,9 @@ public class ErpService {
 	}
 	public Integer qtdeLiberadosDG() {
 		return dao.qtdeLiberadosDG();
+	}
+	public Integer qtdeLiberacaoDupla() {
+		return dao.qtdeLiberacaoDupla();
 	}
 	public Integer qtdeLiberadosVM() {
 		return dao.qtdeLiberadosVM();

@@ -70,6 +70,8 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	@FXML
 	private TextField txtImpLiberadosDG;
 	@FXML
+	private TextField txtImpLiberacaoDupla;
+	@FXML
 	private TextField txtVmPendentes;
 	@FXML
 	private TextField txtVmIgnorados;
@@ -132,6 +134,7 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		Integer qtdeImpLiberadosOS = servico.getQtdeImpLiberadosOS();
 		Integer qtdeImpLiberadosCM = servico.getQtdeImpLiberadosCM();
 		Integer qtdeImpLiberadosDG = servico.getQtdeImpLiberadosDG();
+		Integer qtdeImpLiberacaoDupla = servico.getQtdeImpLiberacaoDupla();
 		Integer qtdeVmPendentes = servico.getQtdeValorMaterialI();
 		Integer qtdeVmIgnorados = servico.getQtdeValorMaterialN();
 		Integer qtdeVmLiberados = servico.getQtdeValorMaterialS();
@@ -145,6 +148,7 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		txtImpLiberadosOS.setText(qtdeImpLiberadosOS.toString());
 		txtImpLiberadosCM.setText(qtdeImpLiberadosCM.toString());
 		txtImpLiberadosDG.setText(qtdeImpLiberadosDG.toString());
+		txtImpLiberacaoDupla.setText(qtdeImpLiberacaoDupla.toString());
 		txtVmPendentes.setText(qtdeVmPendentes.toString());
 		txtVmIgnorados.setText(qtdeVmIgnorados.toString());
 		txtVmlLiberados.setText(qtdeVmLiberados.toString());
@@ -158,6 +162,7 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		txtImpLiberadosOS.setStyle("-fx-alignment: CENTER-RIGHT");
 		txtImpLiberadosCM.setStyle("-fx-alignment: CENTER-RIGHT");
 		txtImpLiberadosDG.setStyle("-fx-alignment: CENTER-RIGHT");
+		txtImpLiberacaoDupla.setStyle("  -fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
 		txtVmPendentes.setStyle("  -fx-alignment: CENTER-RIGHT; -fx-text-inner-color: red;");
 		txtVmIgnorados.setStyle("  -fx-alignment: CENTER-RIGHT");
 		txtVmlLiberados.setStyle("-fx-alignment: CENTER-RIGHT");

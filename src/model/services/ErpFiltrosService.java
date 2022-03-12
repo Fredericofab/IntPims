@@ -11,43 +11,50 @@ public class ErpFiltrosService {
 	String anoMes;
 
 	
-	public void salvarFiltro(String importar, String valorMaterial, String sobreporPolitica, String politica, String validacaoOS, String filtro) {
+	public void salvarFiltro(String importar, String valorMaterial, String sobreporPolitica, Boolean liberacaoDupla, String politica, String validacaoOS, String filtro) {
 		String clausulaWhere;
 		if (filtro != null) {
 			clausulaWhere = filtro;
 		} else {
-			clausulaWhere = montarFiltro(importar, valorMaterial, sobreporPolitica, politica, validacaoOS);
+			clausulaWhere = montarFiltro(importar, valorMaterial, sobreporPolitica, liberacaoDupla, politica, validacaoOS);
 		}
 		gravarWhere(clausulaWhere);
 	}	
 	
-	private String montarFiltro(String importar, String valorMaterial, String sobreporPolitica, String politica, String validacaoOS) {
+	private String montarFiltro(String importar, String valorMaterial, String sobreporPolitica, Boolean liberacaoDupla, String politica, String validacaoOS) {
 		String clausulaWhere  = "";
 		String filtroImportar = "";;
 		String filtroValorMaterial = "";;
 		String filtroSobreporPolitica = "";;
 		String filtroPolitica  = "";
 		String filtroValidacaoOS  = "";
+		String filtroLiberacaoDupla = "";
 
 		if (importar != null) {
 			if (importar.toUpperCase().equals("X") ) {
-				filtroImportar =  ("IMPORTAR IS NULL") ;
+				filtroImportar =  "IMPORTAR IS NULL" ;
 			}
 			else {
-				filtroImportar =  ("IMPORTAR = '" + importar + "'") ;
+				filtroImportar =  "IMPORTAR = '" + importar + "'" ;
 			}
 		}
 		if (valorMaterial != null) {
 			if (valorMaterial.toUpperCase().equals("X") ) {
-				filtroValorMaterial =  ("SALVAR_CSTG_INTVM IS NULL") ;
+				filtroValorMaterial =  "SALVAR_CSTG_INTVM IS NULL" ;
 			}
 			else {
-				filtroValorMaterial =  ("SALVAR_CSTG_INTVM = '" + valorMaterial + "'") ;
+				filtroValorMaterial =  "SALVAR_CSTG_INTVM = '" + valorMaterial + "'" ;
 			}
 		}
-		filtroSobreporPolitica = (sobreporPolitica != null) ? ("SOBREPOR_POLITICAS = '" + sobreporPolitica + "'") : "";
-		filtroPolitica = (politica != null) ? ("POLITICAS LIKE '%" + politica + "%'") : "";
-		filtroValidacaoOS = (validacaoOS != null) ? ("VALIDACOES_OS = '" + validacaoOS + "'") : "";
+		
+		if (liberacaoDupla) {
+			filtroLiberacaoDupla = "(( SALVAR_CSTG_INTCM = 'S' AND SALVAR_CSTG_INTDG  = 'S') OR " +
+									"( SALVAR_CSTG_INTCM = 'S' AND SALVAR_OS_MATERIAL = 'S') OR " +
+									"( SALVAR_CSTG_INTDG = 'S' AND SALVAR_OS_MATERIAL = 'S')   )" ;
+		}
+		filtroSobreporPolitica = (sobreporPolitica != null) ? "SOBREPOR_POLITICAS = '" + sobreporPolitica + "'" : "";
+		filtroPolitica = (politica != null) ? "POLITICAS LIKE '%" + politica + "%'" : "";
+		filtroValidacaoOS = (validacaoOS != null) ? "VALIDACOES_OS = '" + validacaoOS + "'" : "";
 		
 		clausulaWhere = null;
 		if (importar != null ) {
@@ -65,6 +72,10 @@ public class ErpFiltrosService {
 		if (validacaoOS != null ) {
 			clausulaWhere = ( clausulaWhere == null ) ? filtroValidacaoOS : clausulaWhere + " AND " + filtroValidacaoOS;
 		}
+		if (liberacaoDupla ) {
+			clausulaWhere = ( clausulaWhere == null ) ? filtroLiberacaoDupla : clausulaWhere + " AND " + filtroLiberacaoDupla;
+		}
+
 		return clausulaWhere;
 	}
 
