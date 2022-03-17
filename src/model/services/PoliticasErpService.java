@@ -30,14 +30,14 @@ public class PoliticasErpService {
 		return dao.pesquisarPorChave(codigo);
 	}
 
-	public void salvarOuAtualizar(PoliticasErp objeto) {
+	public void salvarOuAtualizar(PoliticasErp objeto, Boolean atualizarEtapaDoProcesso) {
 		if (dao.pesquisarPorChave(objeto.getCodPolitica()) == null) {
 			dao.inserir(objeto);
 		} 
 		else {
 			dao.atualizar(objeto);
 		}
-		reatualizarEtapaDoProcesso();
+		if (atualizarEtapaDoProcesso ) 	reatualizarEtapaDoProcesso();
 	}
 	
 	public void remover(PoliticasErp objeto) {

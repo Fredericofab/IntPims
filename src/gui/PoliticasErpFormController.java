@@ -89,7 +89,8 @@ public class PoliticasErpFormController implements Initializable {
 		try {
 			entidade = getDadosDoForm();
 			entidade = substituirNull(entidade);
-			servico.salvarOuAtualizar(entidade);
+			Boolean atualizarEtapaDoProcesso = true;
+			servico.salvarOuAtualizar(entidade, atualizarEtapaDoProcesso);
 			notificarDadosAlteradosListeners();
 			Utilitarios.atualStage(evento).close();
 		}

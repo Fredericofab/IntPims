@@ -149,7 +149,8 @@ public class ValidarErpService {
 			    ( erp.getNumeroOS() != null && erp.getFrotaOuCC() == null )    ){
 				qtdeFaltaOSouFrotaCC += 1;
 				erp.setValidacoesOS("Falta OS ou FrotaCC.");
-				erpService.salvarOuAtualizar(erp);
+				Boolean atualizarEtapaDoProcesso = false;
+				erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
 				gravaLogOSDetalhe("Falta OS ou FrotaCC", erp);
 			}
 		}
@@ -205,7 +206,8 @@ public class ValidarErpService {
 	private void osInexistentes(Erp erp) {
 		qtdeOSInexistentes += 1;
 		erp.setValidacoesOS("OS Inexistente.");
-		erpService.salvarOuAtualizar(erp);
+		Boolean atualizarEtapaDoProcesso = false;
+		erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
 		Integer qtde;
 		if (mapOSInexistentes.get(erp.getNumeroOS()) == null) {
 			qtde = 1;
@@ -225,7 +227,8 @@ public class ValidarErpService {
 		if (( frotaOuCC == null ) || ((frotaOuCC - codObjeto) != 0.00) ) {
 			qtdeOSIncoerentes += 1;
 			erp.setValidacoesOS("OS Incoerente.");
-			erpService.salvarOuAtualizar(erp);
+			Boolean atualizarEtapaDoProcesso = false;
+			erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
 			Integer qtde;
 			if (mapOSIncoerentes.get(erp.getNumeroOS()) == null) {
 				qtde = 1;
@@ -247,7 +250,8 @@ public class ValidarErpService {
 			if ((dataSaida != null) && (diferencaDias(dataSaida) > maxDiasOS)) {
 				qtdeOSAntigas += 1;
 				erp.setValidacoesOS("OS Antiga.");
-				erpService.salvarOuAtualizar(erp);
+				Boolean atualizarEtapaDoProcesso = false;
+				erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
 				Integer qtde;
 				if (mapOSAntigas.get(erp.getNumeroOS()) == null) {
 					qtde = 1;
@@ -287,7 +291,8 @@ public class ValidarErpService {
 			if ( erp.getNumeroOS() == null && erp.getFrotaOuCC() == null )  {
 				qtdeMatSemOS += 1;
 				erp.setValidacoesOS("Material sem OS.");
-				erpService.salvarOuAtualizar(erp);
+				Boolean atualizarEtapaDoProcesso = false;
+				erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
 				gravaLogOSDetalhe("Material sem OS.", erp);
 			}
 		}

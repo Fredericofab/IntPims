@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="528.0" prefWidth="986.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AplicarPoliticasErpViewController">
+<VBox prefHeight="542.0" prefWidth="986.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AplicarPoliticasErpViewController">
    <children>
       <SplitPane dividerPositions="0.19713993871297242" prefHeight="521.0" prefWidth="1007.0">
         <items>
@@ -151,11 +151,6 @@
             </ScrollPane>
         </items>
       </SplitPane>
-      <Label fx:id="labelEvolucao">
-         <padding>
-            <Insets left="250.0" />
-         </padding>
-      </Label>
    </children>
    <padding>
       <Insets left="5.0" top="5.0" />

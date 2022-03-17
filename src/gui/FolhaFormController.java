@@ -95,7 +95,8 @@ public class FolhaFormController implements Initializable {
 		}
 		try {
 			entidade = getDadosDoForm();
-			servico.salvarOuAtualizar(entidade);
+			Boolean atualizarEtapaDoProcesso = true;
+			servico.salvarOuAtualizar(entidade, atualizarEtapaDoProcesso );
 			notificarDadosAlteradosListeners();
 			Utilitarios.atualStage(evento).close();
 		}

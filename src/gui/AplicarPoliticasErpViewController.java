@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -51,8 +50,6 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	@FXML
 	private TableColumn<PoliticasErp, String> tableColumnOS;
 
-
-	
 	@FXML
 	private TextField txtTotalRegistros;
 	@FXML
@@ -85,9 +82,7 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	private Button btCalcular;
 	@FXML
 	private Button btSair;
-	@FXML
-	private Label labelEvolucao;
-	
+
 	private ObservableList<PoliticasErp> obsLista;
 
 	@FXML
@@ -98,27 +93,21 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	@FXML
 	public void onBtAplicarTodasAction(ActionEvent evento) {
 		try {
-			labelEvolucao.setText("Aplicando Politicas. Aguarde...");
 			servico.aplicarTodas();
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro na aplicacao do Filtro", e.getMessage(), AlertType.ERROR);
 		} finally {
-			labelEvolucao.setText("Atualizando as Estatisticas. Aguarde...");
 			atualizarEstatisticaGeral();
-			labelEvolucao.setText("Atualizando as Estatisticas Por Politica. Aguarde...");
 			atualizarEstatisticasPorPolitica();
 			atualizarTableView();
-			labelEvolucao.setText("Processo Concluido com Sucesso");
 		}
 	}
 
 	@FXML
 	public void onBtCalcularAction(ActionEvent evento) {
-		labelEvolucao.setText("Calculando as Estatisticas. Aguarde...");
 		atualizarEstatisticaGeral();
 		atualizarEstatisticasPorPolitica();
 		atualizarTableView();
-		labelEvolucao.setText("Processo Concluido com Sucesso");
 	}
 
 	public void setAplicarPoliticaErpServico(AplicarPoliticasErpService servico) {
@@ -190,7 +179,6 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		tableColumnOS.setCellValueFactory(new PropertyValueFactory<>("salvarOS_Material"));
 		tableColumnVM.setCellValueFactory(new PropertyValueFactory<>("salvarCstg_IntVM"));
 		tableColumnQtdeAplicados.setCellValueFactory(new PropertyValueFactory<>("registrosAplicados"));
-		
 
 		tableColumnCodPolitica.setStyle("-fx-alignment: TOP-RIGHT");
 		tableColumnQtdeAplicados.setStyle("-fx-alignment: TOP-RIGHT");
@@ -209,5 +197,4 @@ public class AplicarPoliticasErpViewController implements Initializable {
 		tableViewPoliticasErp.setItems(obsLista);
 		tableViewPoliticasErp.refresh();
 	}
-
 }

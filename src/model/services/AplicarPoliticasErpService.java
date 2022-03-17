@@ -10,7 +10,7 @@ public class AplicarPoliticasErpService {
 	private ErpService erpService = new ErpService();
 	private PoliticasErpService politicasErpService = new PoliticasErpService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
-	
+
 //	parametros
 	String usuarioPimsCS;
 	String anoMes;
@@ -89,7 +89,8 @@ public class AplicarPoliticasErpService {
 		List<Erp> listaErpDaPolitica = erpService.pesquisarQuemAtendeAPolitica(codPolitica, clausulaWhere);
 		for (Erp erp : listaErpDaPolitica) {
 			erp = atualizarRegistroErp(politicaErp, erp);
-			erpService.salvarOuAtualizar(erp);
+			Boolean atualizarEtapaDoProcesso = false;
+			erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
 		}
 	}
 
@@ -166,7 +167,8 @@ public class AplicarPoliticasErpService {
 				}
 				politicaErp.setAnoMesAnalisado(anoMes);
 				politicaErp.setRegistrosAplicados(qtdeAplicados);
-				politicasErpService.salvarOuAtualizar(politicaErp);
+				Boolean atualizarEtapaDoProcesso = false;
+				politicasErpService.salvarOuAtualizar(politicaErp, atualizarEtapaDoProcesso );
 			}
 		}
 	}

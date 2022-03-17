@@ -26,14 +26,14 @@ public class FolhaSumarizadaService {
 			
 	}
 
-	public void salvarOuAtualizar(FolhaSumarizada objeto) {
+	public void salvarOuAtualizar(FolhaSumarizada objeto, Boolean atualizarEtapaDoProcesso) {
 		if (dao.pesquisarPorChave(objeto.getAnoMes(), objeto.getCodCentroCustos()) == null ) {
 			dao.inserir(objeto);
 		}
 		else {
 			dao.atualizar(objeto);
 		}
-		reatualizarEtapaDoProcesso();
+		if (atualizarEtapaDoProcesso ) reatualizarEtapaDoProcesso();
 	}
 	
 	public void remover(FolhaSumarizada objeto) {

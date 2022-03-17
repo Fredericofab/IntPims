@@ -25,13 +25,13 @@ public class FuncionariosService {
 		return dao.listarTodos();
 	}
 
-	public void salvarOuAtualizar(Funcionarios objeto) {
+	public void salvarOuAtualizar(Funcionarios objeto, Boolean atualizarEtapaDoProcesso) {
 		if (dao.pesquisarPorChave(objeto.getAnoMes(), objeto.getCodCentroCustos(), objeto.getCodFuncionario()) == null) {
 			dao.inserir(objeto);
 		} else {
 			dao.atualizar(objeto);
 		}
-		reatualizarEtapaDoProcesso();
+		if ( atualizarEtapaDoProcesso ) reatualizarEtapaDoProcesso();
 	}
 
 	public void remover(Funcionarios objeto) {

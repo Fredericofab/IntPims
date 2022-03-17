@@ -58,8 +58,6 @@ public class SumarizarFolhaService {
 		gravarSumarioFolha();
 		processoAtualService.atualizarEtapa("SumarizarFolha","S");
 		processoAtualService.atualizarEtapa("ExportarFolha","N");
-		processoAtualService.atualizarEtapa("VerbaAlterada","N");
-		processoAtualService.atualizarEtapa("FolhaAlterada","N");
 	}
 
 	private void deletarTodosFolhaSumarizada() {
@@ -110,7 +108,8 @@ public class SumarizarFolhaService {
 
 	private void gravarSumarioFolha() {
 		for (Double chave : map.keySet()) {
-			folhaSumarizadaService.salvarOuAtualizar(map.get(chave));
+			Boolean atualizarEtapaDoProcesso = false;
+			folhaSumarizadaService.salvarOuAtualizar(map.get(chave), atualizarEtapaDoProcesso );
 		}
 	}
 

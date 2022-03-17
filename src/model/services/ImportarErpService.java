@@ -158,7 +158,8 @@ public class ImportarErpService {
 		qtdeIncluidas = 0;
 		for (Erp dadosErp : lista) {
 			dadosErp.setSobreporPoliticas("N");
-			erpService.salvarOuAtualizar(dadosErp);
+			Boolean atualizarEtapaDoProcesso = false;
+			erpService.salvarOuAtualizar(dadosErp, atualizarEtapaDoProcesso);
 			qtdeIncluidas = qtdeIncluidas + 1;
 		}
 	}

@@ -100,8 +100,6 @@ public class ImportarFolhaService {
 		}
 		processoAtualService.atualizarEtapa("SumarizarFolha", "N");
 		processoAtualService.atualizarEtapa("ExportarFolha", "N");
-		processoAtualService.atualizarEtapa("VerbaAlterada", "N");
-		processoAtualService.atualizarEtapa("FolhaAlterada", "N");
 	}
 	
 	private void deletarTodosFolhaSumarizada() {
@@ -170,7 +168,8 @@ public class ImportarFolhaService {
 			if (verbaFolha != null) {
 				dadosFolha.setImportar(verbaFolha.getImportar());
 				dadosFolha.setConsiderarReferencia(verbaFolha.getConsiderarReferencia());
-				folhaService.salvarOuAtualizar(dadosFolha);
+				Boolean atualizarEtapaDoProcesso = false;
+				folhaService.salvarOuAtualizar(dadosFolha, atualizarEtapaDoProcesso);
 				qtdeIncluidas = qtdeIncluidas + 1;
 			}
 		}

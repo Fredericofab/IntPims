@@ -25,13 +25,13 @@ public class FolhaService {
 		return dao.listarTodos();
 	}
 
-	public void salvarOuAtualizar(Folha objeto) {
+	public void salvarOuAtualizar(Folha objeto, Boolean atualizarEtapaDoProcesso) {
 		if (dao.pesquisarPorChave(objeto.getAnoMes(), objeto.getCodCentroCustos(), objeto.getCodVerba()) == null) {
 			dao.inserir(objeto);
 		} else {
 			dao.atualizar(objeto);
 		}
-		reatualizarEtapaDoProcesso();
+		if ( atualizarEtapaDoProcesso ) reatualizarEtapaDoProcesso();
 	}
 
 	public void remover(Folha objeto) {

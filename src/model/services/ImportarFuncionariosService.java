@@ -85,7 +85,6 @@ public class ImportarFuncionariosService {
 			processoAtualService.atualizarEtapa("ImportarFuncionario", "N");
 		}	
 		processoAtualService.atualizarEtapa("SumarizarFuncionario", "N");
-		processoAtualService.atualizarEtapa("FuncionarioAlterado", "N");
 	}
 
 	private void deletarTodosSumarioFuncionarios() {
@@ -127,7 +126,8 @@ public class ImportarFuncionariosService {
 	private void gravarFuncionarios() {
 		qtdeIncluidas = 0;
 		for (Funcionarios funcionarios : lista) {
-			funcionariosService.salvarOuAtualizar(funcionarios);
+			Boolean atualizarEtapaDoProcesso = false;
+			funcionariosService.salvarOuAtualizar(funcionarios, atualizarEtapaDoProcesso);
 			qtdeIncluidas = qtdeIncluidas + 1;
 		}
 	}

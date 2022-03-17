@@ -26,13 +26,13 @@ public class ErpService {
 	public List<Erp> pesquisarTodos() {
 		return dao.listarTodos();
 	}
-	public void salvarOuAtualizar(Erp objeto) {
+	public void salvarOuAtualizar(Erp objeto, Boolean atualizarEtapaDoProcesso) {
 		if (dao.pesquisarPorChave(objeto.getSequencial()) == null) {
 			dao.inserir(objeto);
 		} else {
 			dao.atualizar(objeto);
 		}
-		reatualizarEtapaDoProcesso();
+		if (atualizarEtapaDoProcesso ) 	reatualizarEtapaDoProcesso();
 	}
 	public void remover(Erp objeto) {
 		dao.deletarPorChave(objeto.getSequencial());
