@@ -1,4 +1,4 @@
 driver=oracle.jdbc.driver.OracleDriver
-urlIGP=jdbc:oracle:thin:@127.0.0.1:1521:dbfred
-usuarioIGP=IGPTG
-senhaIGP=IGPTG
+url=jdbc:oracle:thin:@127.0.0.1:1521:dbfred
+usuario=INTPIMS
+senha=INTPIMS

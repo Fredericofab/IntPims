@@ -90,7 +90,7 @@ public class ErpFiltrosViewController implements Initializable {
 	public void onBtSalvarAction(ActionEvent evento) {
 		getDadosDoForm();
 		if (( importar != null ||  politica != null || validacaoOS != null || 
-			  valorMaterial != null || sobreporPolitica != null ||  liberacaoDupla != null ) &&
+			  valorMaterial != null || sobreporPolitica != null ||  liberacaoDupla == true ) &&
 			( filtro != null )){
 			Alertas.mostrarAlertas(null, "Filtro Básico ou Filtro Personalizado", 
 							"Limpar os filtros e \n" +

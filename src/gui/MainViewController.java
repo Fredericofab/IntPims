@@ -28,7 +28,6 @@ import model.services.FolhaService;
 import model.services.FolhaSumarizadaService;
 import model.services.FuncionariosService;
 import model.services.FuncionariosSumarizadosService;
-import model.services.MainViewService;
 import model.services.ParametrosService;
 import model.services.PoliticasErpService;
 import model.services.ProcessoAtualService;
@@ -297,23 +296,10 @@ public class MainViewController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		testarAcessoBanco();
+//		testarAcessoBanco();
 		lerParametros();
 	}
 
-	private void testarAcessoBanco() {
-		try {
-			MainViewService servico = new MainViewService();
-			servico.testarAcessoBanco();
-		}
-		catch (DbException e) {
-			Alertas.mostrarAlertas("DbException", "Erro no Acesso ao Banco Oracle", e.getMessage(), AlertType.ERROR);
-			menuProcessos.setDisable(true);
-			menuTabelas.setDisable(true);
-			menuMovimentos.setDisable(true);
-		}
-	}
-	
 	private <T> void criarJanelaFilha(String caminhoDaView, String titulo, Stage paiStage,
 			Consumer<T> acaoDeInicializacao) {
 		try {

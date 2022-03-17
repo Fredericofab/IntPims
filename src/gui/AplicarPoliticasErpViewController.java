@@ -51,6 +51,8 @@ public class AplicarPoliticasErpViewController implements Initializable {
 	@FXML
 	private TableColumn<PoliticasErp, String> tableColumnOS;
 
+
+	
 	@FXML
 	private TextField txtTotalRegistros;
 	@FXML

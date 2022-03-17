@@ -22,8 +22,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.FatorMedida;
 import model.exceptions.ValidacaoException;
-import model.services.ParametrosService;
 import model.services.FatorMedidaService;
+import model.services.ParametrosService;
 
 public class FatorMedidaFormController implements Initializable {
 

@@ -17,9 +17,9 @@ public class DB {
 		if (conexao == null) {
 			try {
 				Properties propriedades =  lerPropriedades();
-				String urlIGP = propriedades.getProperty("urlIGP");
-				String usuarioIGP = propriedades.getProperty("usuarioIGP");
-				String senhaIGP = propriedades.getProperty("senhaIGP"); 
+				String urlIGP = propriedades.getProperty("url");
+				String usuarioIGP = propriedades.getProperty("usuario");
+				String senhaIGP = propriedades.getProperty("senha"); 
 				conexao = DriverManager.getConnection(urlIGP, usuarioIGP, senhaIGP);
 			} 
 			catch (SQLException e) {
