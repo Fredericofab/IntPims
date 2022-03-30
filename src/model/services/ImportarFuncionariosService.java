@@ -23,10 +23,12 @@ public class ImportarFuncionariosService {
 
 	private ParametrosService parametrosService = new ParametrosService();
 	private FuncionariosService funcionariosService = new FuncionariosService();
+	private PimsGeralService pimsGeralService = new PimsGeralService();
 	private FuncionariosSumarizadosService funcionariosSumarizadosService = new FuncionariosSumarizadosService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 
 //	prametros
+	String usuarioPimsCS;
 	String entrada;
 	String anoMes;
 	String arqEntradaDelimitador;
@@ -72,6 +74,7 @@ public class ImportarFuncionariosService {
 			deletarTodosSumarioFuncionarios();
 			lerFuncionariosTXT(entrada, anoMes);
 			if (qtdeCorrompidas == 0) {
+				incluirDescCC();
 				gravarFuncionarios();
 			}
 
@@ -123,6 +126,18 @@ public class ImportarFuncionariosService {
 		}
 	}
 
+	private void incluirDescCC() {
+		for (Funcionarios funcionarios : lista) {
+			if (funcionarios.getDescCentroCustos() == null || funcionarios.getDescCentroCustos().equals("")) {
+				String descCC =  pimsGeralService.descricaoCCustos(funcionarios.getCodCentroCustos(), usuarioPimsCS);
+				if ( descCC != null ) {
+					funcionarios.setDescCentroCustos("PimsCS " + descCC);
+				}
+			}	
+		}
+	}
+
+	
 	private void gravarFuncionarios() {
 		qtdeIncluidas = 0;
 		for (Funcionarios funcionarios : lista) {
@@ -181,6 +196,7 @@ public class ImportarFuncionariosService {
 
 
 	private void lerParametros() {
+		usuarioPimsCS  = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaPasta")).getValor();
 		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaTipo")).getValor();

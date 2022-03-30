@@ -9,11 +9,13 @@ public class PimsGeralService {
 
 	private PimsGeralDao dao = FabricaDeDao.criarPimsGeralDao();
 
-	//tabela CCUSTOS (1)		
+	//tabela CCUSTOS (2)		
 	public Boolean existeCCustos(Double codCCustos, String usuarioPimsCS) {
 		return dao.existeCCustos(codCCustos, usuarioPimsCS);
 	}
-
+	public String descricaoCCustos(Double codCCustos, String usuarioPimsCS) {
+		return dao.descricaoCCustos(codCCustos, usuarioPimsCS);
+	}
 	//TABELA APT_OS_HE (4)
 	public Boolean existeApt_os_he(String numeroOS, String usuarioPimsCS) {
 		return dao.existeApt_os_he(numeroOS, usuarioPimsCS);

@@ -25,9 +25,11 @@ public class ImportarFolhaService {
 	private FolhaService folhaService = new FolhaService();
 	private FolhaSumarizadaService folhaSumarizadaService = new FolhaSumarizadaService();
 	private VerbasFolhaService verbasDaFolhaService = new VerbasFolhaService();
+	private PimsGeralService pimsGeralService = new PimsGeralService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
 
 //	parametros
+	String usuarioPimsCS;
 	String entrada;
 	String anoMes;
 	String naoImportar;
@@ -86,6 +88,7 @@ public class ImportarFolhaService {
 			}
 			contarVerbasSemDefinicao();
 			if (qtdeVerbasSemDefinicao == 0 && qtdeCorrompidas == 0) {
+				incluirDescCC();
 				gravarDadosFolha();
 			}
 		} catch (DbException e) {
@@ -158,6 +161,18 @@ public class ImportarFolhaService {
 		qtdeVerbasSemDefinicao = verbasDaFolhaService.contarVerbasSemDefinicao();
 	}
 
+	private void incluirDescCC() {
+		for (Folha dadosFolha : lista) {
+			if (dadosFolha.getDescCentroCustos() == null || dadosFolha.getDescCentroCustos().equals("")) {
+				String descCC =  pimsGeralService.descricaoCCustos(dadosFolha.getCodCentroCustos(), usuarioPimsCS);
+				if ( descCC != null ) {
+					dadosFolha.setDescCentroCustos("PimsCS " + descCC);
+				}
+			}	
+		}
+	}
+
+	
 	private void gravarDadosFolha() {
 		VerbasFolha verbaFolha;
 		qtdeIncluidas = 0;
@@ -230,6 +245,7 @@ public class ImportarFolhaService {
 
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
+		usuarioPimsCS  = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 		String arqEntradaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaPasta")).getValor();
 		String arqEntradaTipo = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqEntradaTipo")).getValor();

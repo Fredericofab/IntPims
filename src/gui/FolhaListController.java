@@ -96,6 +96,7 @@ public class FolhaListController implements Initializable, DadosAlteradosListene
 		Boolean oficial = false;
 		servico.gerarTxt(oficial);
 	}
+
 	@FXML
 	public void onBtSairAction(ActionEvent evento) {
 		Utilitarios.atualStage(evento).close();

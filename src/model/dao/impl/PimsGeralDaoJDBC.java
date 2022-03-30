@@ -39,6 +39,30 @@ public class PimsGeralDaoJDBC implements PimsGeralDao {
 		}
 	}
 
+	
+	@Override
+	public String descricaoCCustos(Double codCCustos, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT DE_CCUSTO FROM " +  usuarioPimsCS + ".ccustos WHERE cd_ccusto = ?");
+			st.setDouble(1, codCCustos);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				return rs.getString("de_ccusto");
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela CCUSTOS \n \n" + e.getMessage() + "\n \n" 
+								+ "Centro de Custos: "+ codCCustos);
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+
+	
 	//tabela APT_OS_HE
 	@Override
 	public Boolean existeApt_os_he(String numeroOS, String usuarioPimsCS) {
