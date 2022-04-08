@@ -31,7 +31,7 @@ public class SobreViewController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		String texto = auxMontaTexto();
 		txtAreaSobre.setText(texto);
-		labelVersao.setText("Versão 1.30 : 30/03/2022");
+		labelVersao.setText("Versão 1.64 : 08/04/2022");
 		labelDesenvolvido.setText("Desenvolvido por Frederico Barros");
 	}
 

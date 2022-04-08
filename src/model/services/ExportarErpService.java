@@ -45,6 +45,7 @@ public class ExportarErpService {
 	Integer qtdeAtualizadaVM;
 	Integer qtdeAtualizadaCM;
 	Integer qtdeAtualizadaDG;
+	Integer qtdeAtualizadaOS;
 
 	public Integer getQtdeDeletadaVM() {
 		return qtdeDeletadaVM;
@@ -90,6 +91,9 @@ public class ExportarErpService {
 	}
 	public Integer getQtdeAtualizadaDG() {
 		return qtdeAtualizadaDG;
+	}
+	public Integer getQtdeAtualizadaOS() {
+		return qtdeAtualizadaOS;
 	}
 
 	public void processar(String destino) throws DbException{
@@ -173,7 +177,7 @@ public class ExportarErpService {
 				cstg_intCM.setFgTipo("D");
 				cstg_intCM.setQtMater(erp.getQuantidade());
 				if (erp.getDescMovimento().toString().length() > 60) {
-					cstg_intCM.setDeMater(erp.getDescMovimento().toString().substring(60));
+					cstg_intCM.setDeMater(erp.getDescMovimento().toString().substring(0,60));
 				}
 				else {
 					cstg_intCM.setDeMater(erp.getDescMovimento());
@@ -209,6 +213,7 @@ public class ExportarErpService {
 	private void gravarOSMaterial() {
 		qtdeProcessadaOS = 0;
 		os_MaterialService.setQtdeIncluida(0);
+		os_MaterialService.setQtdeAtualizada(0);
 		for (Erp erp : listaErp) {
 			if (erp.getSalvarOS_Material() != null && erp.getSalvarOS_Material().equals("S")) {
 				OS_Material os_Material = new OS_Material();
@@ -218,7 +223,13 @@ public class ExportarErpService {
 		
 				os_Material.setCdMaterial(codmatD);
 				os_Material.setCdMatCstg(codMatS);
-				os_Material.setDeMaterial(erp.getDescMovimento());
+				
+				if (erp.getDescMovimento().toString().length() > 60) {
+					os_Material.setDeMaterial(erp.getDescMovimento().toString().substring(0,60));
+				}
+				else {
+					os_Material.setDeMaterial(erp.getDescMovimento());
+				}
 				os_Material.setDtAplicacao(erp.getDataMovimento());
 				os_Material.setFgCaptado("S");
 				os_Material.setInstancia(instancia);
@@ -226,11 +237,12 @@ public class ExportarErpService {
 				os_Material.setNoReqExt(erp.getDocumentoErp());
 				os_Material.setQtUsada(erp.getQuantidade());
 				os_Material.setQtValor(erp.getPrecoUnitario());
-				os_MaterialService.inserir(os_Material, usuarioPimsCS);
+				os_MaterialService.salvarOuAtualizar(os_Material, usuarioPimsCS);
 				qtdeProcessadaOS += 1;
 			}
 		}
 		qtdeIncluidaOS = os_MaterialService.getQtdeIncluida();
+		qtdeAtualizadaOS = os_MaterialService.getQtdeAtualizada();
 	}
 
 	private void defineDatas() {

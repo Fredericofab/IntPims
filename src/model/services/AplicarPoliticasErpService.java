@@ -88,10 +88,12 @@ public class AplicarPoliticasErpService {
 		Integer codPolitica = politicaErp.getCodPolitica();
 		List<Erp> listaErpDaPolitica = erpService.pesquisarQuemAtendeAPolitica(codPolitica, clausulaWhere);
 		for (Erp erp : listaErpDaPolitica) {
-			erp = atualizarRegistroErp(politicaErp, erp);
-			Boolean atualizarEtapaDoProcesso = false;
-			erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
-		}
+			if (erp.getSobreporPoliticas() == null || erp.getSobreporPoliticas().equals("N")) {
+				erp = atualizarRegistroErp(politicaErp, erp);
+				Boolean atualizarEtapaDoProcesso = false;
+				erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
+			}
+		}	
 	}
 
 	private Erp atualizarRegistroErp(PoliticasErp politicaErp, Erp erp) {

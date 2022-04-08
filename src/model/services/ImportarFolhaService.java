@@ -166,7 +166,7 @@ public class ImportarFolhaService {
 			if (dadosFolha.getDescCentroCustos() == null || dadosFolha.getDescCentroCustos().equals("")) {
 				String descCC =  pimsGeralService.descricaoCCustos(dadosFolha.getCodCentroCustos(), usuarioPimsCS);
 				if ( descCC != null ) {
-					dadosFolha.setDescCentroCustos("PimsCS " + descCC);
+					dadosFolha.setDescCentroCustos(descCC);
 				}
 			}	
 		}

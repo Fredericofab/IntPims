@@ -124,6 +124,7 @@
             <Label fx:id="labelOS" textFill="#1100ff" GridPane.columnIndex="6" GridPane.rowIndex="3" />
             <Label fx:id="labelCM" textFill="#1100ff" GridPane.columnIndex="6" GridPane.rowIndex="4" />
             <Label fx:id="labelDG" textFill="#1100ff" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+            <TextField fx:id="txtQtdeAtualizadaOS" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
          </children>
          <VBox.margin>
             <Insets top="30.0" />

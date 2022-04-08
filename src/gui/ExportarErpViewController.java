@@ -49,6 +49,8 @@ public class ExportarErpViewController implements Initializable {
 	private TextField txtQtdeAtualizadaCM;
 	@FXML
 	private TextField txtQtdeAtualizadaDG;
+	@FXML
+	private TextField txtQtdeAtualizadaOS;
 
 	@FXML
 	private Label labelVM;
@@ -140,6 +142,7 @@ public class ExportarErpViewController implements Initializable {
 		Integer qtdeAtualizadaVM = servico.getQtdeAtualizadaVM();
 		Integer qtdeAtualizadaCM = servico.getQtdeAtualizadaCM();
 		Integer qtdeAtualizadaDG = servico.getQtdeAtualizadaDG();
+		Integer qtdeAtualizadaOS = servico.getQtdeAtualizadaOS();
 	
 		if (qtdeDeletadaVM != null) txtQtdeDeletadaVM.setText(qtdeDeletadaVM.toString()); 
 		if (qtdeDeletadaCM != null) txtQtdeDeletadaCM.setText(qtdeDeletadaCM.toString());
@@ -156,6 +159,7 @@ public class ExportarErpViewController implements Initializable {
 		if (qtdeAtualizadaVM != null) txtQtdeAtualizadaVM.setText(qtdeAtualizadaVM.toString()); 
 		if (qtdeAtualizadaCM != null) txtQtdeAtualizadaCM.setText(qtdeAtualizadaCM.toString()); 
 		if (qtdeAtualizadaDG != null) txtQtdeAtualizadaDG.setText(qtdeAtualizadaDG.toString()); 
+		if (qtdeAtualizadaOS != null) txtQtdeAtualizadaOS.setText(qtdeAtualizadaOS.toString()); 
 
 		Integer qtPro; 
 		Integer qtInc; 
@@ -178,7 +182,8 @@ public class ExportarErpViewController implements Initializable {
 
 		qtPro  = ( qtdeProcessadaOS == null ? 0 : qtdeProcessadaOS) ;
 		qtInc  = ( qtdeIncluidaOS == null ? 0 : qtdeIncluidaOS) ;
-		if (qtPro > 0) labelOS.setText(( qtPro == qtInc  ) ? "Processado com Sucesso" : "" );
+		qtAtu  = ( qtdeAtualizadaOS == null ? 0 : qtdeAtualizadaOS) ;
+		if (qtPro > 0) labelOS.setText(( qtPro == qtInc + qtAtu ) ? "Processado com Sucesso" : "" );
 	}
 
 	@FXML

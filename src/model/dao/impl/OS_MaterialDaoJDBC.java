@@ -2,7 +2,9 @@ package model.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import db.DB;
 import db.DbException;
@@ -45,6 +47,31 @@ public class OS_MaterialDaoJDBC implements OS_MaterialDao {
 	}
 
 	@Override
+	public void atualizar(OS_Material objeto, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement("UPDATE " +  usuarioPimsCS + ".OS_Material " 
+					 					+ "SET qt_usada = ?, vl_material = ?  " 
+										+ "WHERE No_boletim = ? AND dt_aplicacao = ? AND cd_material = ? "
+					 					+ "AND de_material = ? AND no_req_ext = ?");
+			st.setDouble(1, objeto.getQtUsada());
+			st.setDouble(2, objeto.getQtValor());
+			st.setString(3, objeto.getNoBoletim());
+			st.setDate(4, new java.sql.Date(objeto.getDtAplicacao().getTime()));
+			st.setDouble(5, objeto.getCdMaterial());
+			st.setString(6, objeto.getDeMaterial());
+			st.setString(7, objeto.getNoReqExt());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException("Tabela OS_Material  \n \n" + e.getMessage() + "\n \n" +
+								  "Atualizando "+ objeto);
+		} finally {
+			DB.fecharStatement(st);
+		}
+	}
+
+
+	@Override
 	public Integer deletarPeriodo(String dataInicio, String dataFim, String usuarioPimsCS) {
 		PreparedStatement st = null;
 		try {
@@ -62,5 +89,49 @@ public class OS_MaterialDaoJDBC implements OS_MaterialDao {
 		finally {
 			DB.fecharStatement(st);
 		}
+	}
+
+	@Override
+	public OS_Material pesquisarPorChave(String noBoletim, Date dtAplicacao, Double cdMaterial, String deMaterial,
+			String noReqExt, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".OS_Material " 
+										+ "WHERE No_boletim = ? AND dt_aplicacao = ? AND cd_material = ? "
+										+ "AND de_material = ? AND no_req_ext = ?");
+			st.setString(1, noBoletim);
+			st.setDate(2, new java.sql.Date(dtAplicacao.getTime()));
+			st.setDouble(3, cdMaterial);
+			st.setString(4, deMaterial);
+			st.setString(5, noReqExt);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				OS_Material os_Material = instanciaDados(rs);
+				return os_Material;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela OS_Material \n \n" + e.getMessage() + "\n \n" +
+								  "Pesquisando Material " + cdMaterial + " Data " + dtAplicacao + " Boletim " + noBoletim);
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
+
+	private OS_Material instanciaDados(ResultSet rs) throws SQLException {
+		OS_Material os_Material = new OS_Material();
+		os_Material.setNoBoletim(rs.getString("No_boletim"));
+		os_Material.setDtAplicacao(new java.util.Date(rs.getTimestamp("dt_aplicacao").getTime()));
+		os_Material.setCdMaterial(rs.getDouble("cd_material"));
+		os_Material.setDeMaterial(rs.getString("de_material"));
+		os_Material.setNoReqExt(rs.getString("no_req_ext"));
+		os_Material.setQtUsada(rs.getDouble("qt_usada"));
+		os_Material.setQtValor(rs.getDouble("vl_material"));
+		os_Material.setFgCaptado(rs.getString("fg_captado"));
+		os_Material.setCdMatCstg(rs.getString("cd_Mat_Cstg"));
+		os_Material.setInstancia(rs.getString("instancia"));
+		return os_Material;
 	}
 }

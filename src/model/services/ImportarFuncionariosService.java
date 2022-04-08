@@ -131,7 +131,7 @@ public class ImportarFuncionariosService {
 			if (funcionarios.getDescCentroCustos() == null || funcionarios.getDescCentroCustos().equals("")) {
 				String descCC =  pimsGeralService.descricaoCCustos(funcionarios.getCodCentroCustos(), usuarioPimsCS);
 				if ( descCC != null ) {
-					funcionarios.setDescCentroCustos("PimsCS " + descCC);
+					funcionarios.setDescCentroCustos(descCC);
 				}
 			}	
 		}
