@@ -123,9 +123,11 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private Button btIncluir;
 	@FXML
-	private Button btFiltroTxt;
+	private Button btFiltrar;
 	@FXML
-	private Button btLimparTxt;
+	private Button btLimparFiltro;
+	@FXML
+	private Button btAplicarScript;
 	@FXML
 	private Button btGerarTxt;
 	@FXML
@@ -145,7 +147,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	}
 	
 	@FXML
-	public void onBtFiltroAction(ActionEvent evento) {
+	public void onBtFiltrarAction(ActionEvent evento) {
 		String caminhoDaView = "/gui/ErpFiltrosView.fxml";
 		Stage parentStage = Utilitarios.atualStage(evento);
 		criarJanelaFilha(caminhoDaView, "Filtrar Dados Erp", parentStage,
@@ -153,11 +155,19 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	}
 	
 	@FXML
-	public void onBtLimparAction(ActionEvent evento) {
+	public void onBtLimparFiltroAction(ActionEvent evento) {
 		erpFiltrosService.salvarFiltro(null, null, null, false, null, null, null);
 		atualizarTableView();
 	}
-	
+
+	@FXML
+	public void onBtAplicarScriptAction(ActionEvent evento) {
+		String caminhoDaView = "/gui/ErpScriptView.fxml";
+		Stage parentStage = Utilitarios.atualStage(evento);
+		criarJanelaFilha(caminhoDaView, "Aplicar Script no Erp", parentStage,
+				(ErpScriptViewController controle) -> { controle.serOuvinteDeDadosAlteradosListener(this);	});
+	}
+
 	@FXML
 	public void onGerarTxtAction(ActionEvent evento) {
 		Boolean oficial = false;

@@ -535,6 +535,20 @@ public class ErpDaoJDBC implements ErpDao {
 	}
 
 
+	@Override
+	public void executarScript(String comando) {
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement(comando);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + comando);
+		} finally {
+			DB.fecharStatement(st);
+		}
+	}
+
+
 	private Erp instanciaDadosErp(ResultSet rs) throws SQLException {
 		Erp dadosErp = new Erp();
 		dadosErp.setAnoMes(rs.getString("Ano_Mes"));

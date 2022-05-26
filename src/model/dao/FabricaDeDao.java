@@ -14,6 +14,8 @@ import model.dao.impl.FuncionariosSumarizadosDaoJDBC;
 import model.dao.impl.OS_MaterialDaoJDBC;
 import model.dao.impl.ParametrosDaoJDBC;
 import model.dao.impl.PimsGeralDaoJDBC;
+import model.dao.impl.PlcPrimDaoJDBC;
+import model.dao.impl.PlcRatDaoJDBC;
 import model.dao.impl.PoliticasErpDaoJDBC;
 import model.dao.impl.ProcessoAtualDaoJDBC;
 import model.dao.impl.VerbasFolhaDaoJDBC;
@@ -23,7 +25,7 @@ public class FabricaDeDao {
 	public static ProcessoAtualDao criarProcessoAtualDao() {
 		return new ProcessoAtualDaoJDBC(DB.abrirConexao());
 	}
-	
+
 	public static VerbasFolhaDao criarVerbasFolhaDao() {
 		return new VerbasFolhaDaoJDBC(DB.abrirConexao());
 	}
@@ -70,5 +72,11 @@ public class FabricaDeDao {
 	}
 	public static OS_MaterialDao criarOS_MaterialDao() {
 		return new OS_MaterialDaoJDBC(DB.abrirConexao());
+	}
+	public static PlcPrimDao criarPlcPrimDao() {
+		return new PlcPrimDaoJDBC(DB.abrirConexao());
+	}
+	public static PlcRatDao criarPlcRatDao() {
+		return new PlcRatDaoJDBC(DB.abrirConexao());
 	}
 }

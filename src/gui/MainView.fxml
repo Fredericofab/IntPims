@@ -32,6 +32,9 @@
                         <CheckMenuItem fx:id="menuItemAplicarPoliticasErp" mnemonicParsing="false" onAction="#onMenuItemAplicarPoliticasErpAction" text="Aplicar Politicas ERP" />
                         <CheckMenuItem fx:id="menuItemExportarErp" mnemonicParsing="false" onAction="#onMenuItemExportarErpAction" text="Exportar ERP" />
                         <SeparatorMenuItem mnemonicParsing="false" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                      <MenuItem fx:id="menuItemContabilizar" mnemonicParsing="false" onAction="#onMenuItemContabilizarAction" text="Contabilizar" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="menuItemSair2" mnemonicParsing="false" onAction="#onMenuItemSairAction" text="Sair" />
                   </items>
                 </Menu>

@@ -53,6 +53,9 @@ public class ErpService {
 	public void limparPoliticas() {
 		dao.limparPoliticas();
 	}
+	public void executarScript(String linha) {
+		dao.executarScript(linha);
+	}
 	
 	public void gerarTxt(Boolean oficial) {
 		lerParametros(oficial);

@@ -29,4 +29,6 @@ public interface ErpDao {
 	Integer qtdeLiberacaoDupla();
 	Integer qtdeLiberadosVM();
 	Integer qtdeDessaCritica(String essaCriticaTxt, String importar);
+	
+	void executarScript(String comando);
 	}

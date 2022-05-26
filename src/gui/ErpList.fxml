@@ -18,7 +18,8 @@
       <ToolBar prefHeight="7.0" prefWidth="1965.0">
         <items>
           <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" text="Incluir" />
-            <Button fx:id="btFiltroTxt" mnemonicParsing="false" onAction="#onBtFiltroAction" prefHeight="25.0" prefWidth="56.0" text="Filtro" />
+            <Button fx:id="btFiltrar" mnemonicParsing="false" onAction="#onBtFiltrarAction" prefHeight="25.0" prefWidth="56.0" text="Filtro" />
+            <Button fx:id="btAplicarScript" mnemonicParsing="false" onAction="#onBtAplicarScriptAction" text="Aplicar Script" />
             <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="GerarTXT" />
             <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="479.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
@@ -49,7 +50,7 @@
                </GridPane.margin>
             </Label>
             <TextField fx:id="txtQtdeReg" prefHeight="25.0" prefWidth="447.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <Button fx:id="btLimparTxt" mnemonicParsing="false" onAction="#onBtLimparAction" prefHeight="25.0" prefWidth="66.0" text="Limpar" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Button fx:id="btLimparFiltro" mnemonicParsing="false" onAction="#onBtLimparFiltroAction" prefHeight="25.0" prefWidth="66.0" text="Limpar" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>

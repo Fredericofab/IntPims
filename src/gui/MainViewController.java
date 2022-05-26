@@ -71,6 +71,8 @@ public class MainViewController implements Initializable {
 	@FXML
 	private CheckMenuItem menuItemExportarErp;
 	@FXML
+	private MenuItem menuItemContabilizar;
+	@FXML
 	private MenuItem menuItemSair;
 
 	@FXML
@@ -197,6 +199,13 @@ public class MainViewController implements Initializable {
 		criarJanelaFilha("/gui/ExportarErpView.fxml", "Exportação dos Dados do ERP", paiStage, x -> {
 		});
 	}
+	@FXML
+	private void onMenuItemContabilizarAction() {
+		Stage paiStage = paiStage();
+		criarJanelaFilha("/gui/ContabilizarView.fxml", "Contabilizar dados do Custag", paiStage, x -> {
+		});
+	}
+
 	
 	@FXML
 	private void onMenuItemVerbaFolhaAction() {
@@ -281,6 +290,7 @@ public class MainViewController implements Initializable {
 					controle.atualizarTableView();
 				});
 	}
+
 
 	@FXML
 	private void onMenuItemSobreAction() {
