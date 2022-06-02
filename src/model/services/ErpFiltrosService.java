@@ -1,8 +1,11 @@
 package model.services;
 
+import gui.util.Alertas;
+import javafx.scene.control.Alert.AlertType;
 import model.dao.FabricaDeDao;
 import model.dao.ProcessoAtualDao;
 import model.entities.ProcessoAtual;
+import model.exceptions.ParametroInvalidoException;
 
 public class ErpFiltrosService {
 
@@ -81,11 +84,15 @@ public class ErpFiltrosService {
 
 	
 	private void gravarWhere(String clausulaWhere) {
-		lerParametros();
-		ProcessoAtualService processoAtualService = new ProcessoAtualService();
-		ProcessoAtual processoAtual = processoAtualService.pesquisarPorChave(anoMes);
-		processoAtual.setFiltroErp(clausulaWhere);
-		dao.atualizar(processoAtual);
+		try {
+			lerParametros();
+			ProcessoAtualService processoAtualService = new ProcessoAtualService();
+			ProcessoAtual processoAtual = processoAtualService.pesquisarPorChave(anoMes);
+			processoAtual.setFiltroErp(clausulaWhere);
+			dao.atualizar(processoAtual);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. GravarWhere do Filtro", e.getMessage(),AlertType.ERROR);
+		}
 	}
 
 	private void lerParametros() {

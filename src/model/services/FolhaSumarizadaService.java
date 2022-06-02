@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.FabricaDeDao;
 import model.dao.FolhaSumarizadaDao;
 import model.entities.FolhaSumarizada;
+import model.exceptions.ParametroInvalidoException;
 
 public class FolhaSumarizadaService {
 	
@@ -47,28 +48,32 @@ public class FolhaSumarizadaService {
 
 	
 	public void gerarTxt(Boolean oficial) {
-		lerParametros(oficial);
-		List<FolhaSumarizada> lista = pesquisarTodos();
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("AnoMes,CodCCustos,DescCCustos,QtdeImportarSim,TotalImportarSim,TotalReferenciaSim,QtdeImportarNao,TotalImportarNao");
-			bw.newLine();
-			for (FolhaSumarizada sumarioFolha : lista) {
-				String linha = sumarioFolha.getAnoMes() + "," + 
-							   String.format("%.0f", sumarioFolha.getCodCentroCustos()) + "," +
-							   sumarioFolha.getDescCentroCustos() + "," +
-							   sumarioFolha.getQdteImportarSim() + "," +
-							   String.format("%.2f", sumarioFolha.getTotalImportarSim()) + "," +
-							   String.format("%.2f", sumarioFolha.getTotalReferenciaSim()) + "," +
-							   sumarioFolha.getQdteImportarNao() + "," +
-							   String.format("%.2f", sumarioFolha.getTotalImportarNao());
-				bw.write(linha);
+		try {
+			lerParametros(oficial);
+			List<FolhaSumarizada> lista = pesquisarTodos();
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
+				bw.write("AnoMes,CodCCustos,DescCCustos,QtdeImportarSim,TotalImportarSim,TotalReferenciaSim,QtdeImportarNao,TotalImportarNao");
 				bw.newLine();
+				for (FolhaSumarizada sumarioFolha : lista) {
+					String linha = sumarioFolha.getAnoMes() + "," + 
+								   String.format("%.0f", sumarioFolha.getCodCentroCustos()) + "," +
+								   sumarioFolha.getDescCentroCustos() + "," +
+								   sumarioFolha.getQdteImportarSim() + "," +
+								   String.format("%.2f", sumarioFolha.getTotalImportarSim()) + "," +
+								   String.format("%.2f", sumarioFolha.getTotalReferenciaSim()) + "," +
+								   sumarioFolha.getQdteImportarNao() + "," +
+								   String.format("%.2f", sumarioFolha.getTotalImportarNao());
+					bw.write(linha);
+					bw.newLine();
+				}
+				if (! oficial) {
+					Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
+				}
+			} catch (IOException e) {
+				Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 			}
-			if (! oficial) {
-				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
-			}
-		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Gerando FolhaSumarizada TXT", e.getMessage(),AlertType.ERROR);
 		}
 	}
 

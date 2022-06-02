@@ -12,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.ErpDao;
 import model.dao.FabricaDeDao;
 import model.entities.Erp;
+import model.exceptions.ParametroInvalidoException;
 
 public class ErpService {
 
@@ -58,57 +59,61 @@ public class ErpService {
 	}
 	
 	public void gerarTxt(Boolean oficial) {
-		lerParametros(oficial);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		List<Erp> lista = pesquisarTodos();
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("TArq,TMov,anoMes," +
-					 "CCustos,DescCCustos,"   +
-					 "CContabil,DescCContabil," +
-					 "Material,DescMaterial,UN," +
-					 "Qtde,PUnit,VTotal," +
-					 "NumeroOS,FrotaOuCC,NumeroERP,Data," +
-					 "IMP,Observacao,Validacoes,Politicas," +
-					 "OS,VM,CM,DG," +
-					 "NumReg");
-
-			bw.newLine();
-			for (Erp dadosErp : lista) {
-
-				String linha = dadosErp.getOrigem() + "," + 
-							   dadosErp.getTipoMovimento() + "," + 
-							   dadosErp.getAnoMes() + "," + 
-							   String.format("%.0f", dadosErp.getCodCentroCustos()) + "," + 
-							   dadosErp.getDescCentroCustos() + "," + 
-							   dadosErp.getCodContaContabil() + "," + 
-							   dadosErp.getDescContaContabil() + "," + 
-							   dadosErp.getCodMaterial() + "," + 
-							   dadosErp.getDescMovimento().replace(",",".") + "," + 
-							   dadosErp.getUnidadeMedida() + "," + 
-							   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getQuantidade())  + "," + 
-							   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getPrecoUnitario())  + "," + 
-							   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getValorMovimento())  + "," + 
-							   dadosErp.getNumeroOS() + "," + 
-							   dadosErp.getFrotaOuCC() + "," + 
-							   dadosErp.getDocumentoErp() + "," + 
-							   sdf.format(dadosErp.getDataMovimento()) + "," + 
-							   dadosErp.getImportar() + "," + 
-							   dadosErp.getObservacao() + "," + 
-							   dadosErp.getValidacoesOS() + "," + 
-							   dadosErp.getPoliticas() + "," + 
-							   dadosErp.getSalvarOS_Material() + "," + 
-							   dadosErp.getSalvarCstg_IntVM() + "," + 
-							   dadosErp.getSalvarCstg_IntCM() + "," + 
-							   dadosErp.getSalvarCstg_IntDG() + "," + 
-							   dadosErp.getSequencial();
-				bw.write(linha);
+		try {
+			lerParametros(oficial);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			List<Erp> lista = pesquisarTodos();
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
+				bw.write("TArq,TMov,anoMes," +
+						 "CCustos,DescCCustos,"   +
+						 "CContabil,DescCContabil," +
+						 "Material,DescMaterial,UN," +
+						 "Qtde,PUnit,VTotal," +
+						 "NumeroOS,FrotaOuCC,NumeroERP,Data," +
+						 "IMP,Observacao,Validacoes,Politicas," +
+						 "OS,VM,CM,DG," +
+						 "NumReg");
+	
 				bw.newLine();
+				for (Erp dadosErp : lista) {
+	
+					String linha = dadosErp.getOrigem() + "," + 
+								   dadosErp.getTipoMovimento() + "," + 
+								   dadosErp.getAnoMes() + "," + 
+								   String.format("%.0f", dadosErp.getCodCentroCustos()) + "," + 
+								   dadosErp.getDescCentroCustos() + "," + 
+								   dadosErp.getCodContaContabil() + "," + 
+								   dadosErp.getDescContaContabil() + "," + 
+								   dadosErp.getCodMaterial() + "," + 
+								   dadosErp.getDescMovimento().replace(",",".") + "," + 
+								   dadosErp.getUnidadeMedida() + "," + 
+								   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getQuantidade())  + "," + 
+								   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getPrecoUnitario())  + "," + 
+								   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getValorMovimento())  + "," + 
+								   dadosErp.getNumeroOS() + "," + 
+								   dadosErp.getFrotaOuCC() + "," + 
+								   dadosErp.getDocumentoErp() + "," + 
+								   sdf.format(dadosErp.getDataMovimento()) + "," + 
+								   dadosErp.getImportar() + "," + 
+								   dadosErp.getObservacao() + "," + 
+								   dadosErp.getValidacoesOS() + "," + 
+								   dadosErp.getPoliticas() + "," + 
+								   dadosErp.getSalvarOS_Material() + "," + 
+								   dadosErp.getSalvarCstg_IntVM() + "," + 
+								   dadosErp.getSalvarCstg_IntCM() + "," + 
+								   dadosErp.getSalvarCstg_IntDG() + "," + 
+								   dadosErp.getSequencial();
+					bw.write(linha);
+					bw.newLine();
+				}
+				if (! oficial) {
+					Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
+				}
+			} catch (IOException e) {
+				Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 			}
-			if (! oficial) {
-				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
-			}
-		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Gerando Erp TXT", e.getMessage(),AlertType.ERROR);
 		}
 	}
 

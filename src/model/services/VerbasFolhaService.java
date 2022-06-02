@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.VerbasFolhaDao;
 import model.dao.FabricaDeDao;
 import model.entities.VerbasFolha;
+import model.exceptions.ParametroInvalidoException;
 
 public class VerbasFolhaService {
 
@@ -52,30 +53,38 @@ public class VerbasFolhaService {
 		return dao.contarVerbasSemDefinicao();
 	}
 	public void atualizarNovos() {
-		lerParametros(false);
-		dao.atualizarNovos(defaultImportar, defaultConsiderarReferencia);
+		try {
+			lerParametros(false);
+			dao.atualizarNovos(defaultImportar, defaultConsiderarReferencia);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Atualizar VerbaFolha", e.getMessage(),AlertType.ERROR);
+		}
 	}
 
 	public void gerarTxt(Boolean oficial) {
-		lerParametros(oficial);
-		List<VerbasFolha> lista = pesquisarTodos();
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("Codverba,DescricaoVerba,TipoVerba, ConsiderarReferencia, FlagImportar");
-			bw.newLine();
-			for (VerbasFolha verbaFolha : lista) {
-				String linha = String.format("%.0f", verbaFolha.getCodVerba()) + "," + 
-							   verbaFolha.getDescVerba() + "," + 
-							   verbaFolha.getTipoVerba() + "," +
-							   verbaFolha.getConsiderarReferencia() + "," +
-							   verbaFolha.getImportar(); 
-				bw.write(linha);
+		try {
+			lerParametros(oficial);
+			List<VerbasFolha> lista = pesquisarTodos();
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
+				bw.write("Codverba,DescricaoVerba,TipoVerba, ConsiderarReferencia, FlagImportar");
 				bw.newLine();
+				for (VerbasFolha verbaFolha : lista) {
+					String linha = String.format("%.0f", verbaFolha.getCodVerba()) + "," + 
+								   verbaFolha.getDescVerba() + "," + 
+								   verbaFolha.getTipoVerba() + "," +
+								   verbaFolha.getConsiderarReferencia() + "," +
+								   verbaFolha.getImportar(); 
+					bw.write(linha);
+					bw.newLine();
+				}
+				if (! oficial) {
+					Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
+				}
+			} catch (IOException e) {
+				Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 			}
-			if (! oficial) {
-				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
-			}
-		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. VerbasFolha", e.getMessage(),AlertType.ERROR);
 		}
 	}
 

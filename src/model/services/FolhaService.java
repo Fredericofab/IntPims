@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.FolhaDao;
 import model.dao.FabricaDeDao;
 import model.entities.Folha;
+import model.exceptions.ParametroInvalidoException;
 
 public class FolhaService {
 
@@ -44,32 +45,37 @@ public class FolhaService {
 	}
 	
 	public void gerarTxt(Boolean oficial) {
-		lerParametros(oficial);
-		List<Folha> lista = pesquisarTodos();
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("AnoMes,CodCCustos,DescCCustos,Codverba,DescVerba,ValorVerba,Referencia,Tipo,FlagImportar,ConsiderarReferencia,Observacao");
-			bw.newLine();
-			for (Folha dadosFolha : lista) {
-				String linha = dadosFolha.getAnoMes() + "," + 
-							   String.format("%.0f", dadosFolha.getCodCentroCustos()) + "," + 
-							   dadosFolha.getDescCentroCustos() + "," + 
-							   String.format("%.0f",dadosFolha.getCodVerba()) + "," + 
-							   dadosFolha.getDescVerba() + "," + 
-							   String.format("%.2f",dadosFolha.getValorVerba()) + "," + 
-							   String.format("%.2f",dadosFolha.getReferenciaVerba()) + "," + 
-							   dadosFolha.getTipoVerba() + "," + 
-							   dadosFolha.getImportar() + "," + 
-							   dadosFolha.getConsiderarReferencia() + "," + 
-							   dadosFolha.getObservacao();
-				bw.write(linha);
+		try {
+			lerParametros(oficial);
+			List<Folha> lista = pesquisarTodos();
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
+				bw.write("AnoMes,CodCCustos,DescCCustos,Codverba,DescVerba,ValorVerba,Referencia,Tipo,FlagImportar,ConsiderarReferencia,Observacao");
 				bw.newLine();
+				for (Folha dadosFolha : lista) {
+					String linha = dadosFolha.getAnoMes() + "," + 
+								   String.format("%.0f", dadosFolha.getCodCentroCustos()) + "," + 
+								   dadosFolha.getDescCentroCustos() + "," + 
+								   String.format("%.0f",dadosFolha.getCodVerba()) + "," + 
+								   dadosFolha.getDescVerba() + "," + 
+								   String.format("%.2f",dadosFolha.getValorVerba()) + "," + 
+								   String.format("%.2f",dadosFolha.getReferenciaVerba()) + "," + 
+								   dadosFolha.getTipoVerba() + "," + 
+								   dadosFolha.getImportar() + "," + 
+								   dadosFolha.getConsiderarReferencia() + "," + 
+								   dadosFolha.getObservacao();
+					bw.write(linha);
+					bw.newLine();
+				}
+				if (! oficial) {
+					Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
+				}
+			} catch (IOException e) {
+				Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 			}
-			if (! oficial) {
-				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
-			}
-		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Gerando Folha TXT", e.getMessage(),AlertType.ERROR);
 		}
+		
 	}
 
 	private void lerParametros(Boolean oficial) {

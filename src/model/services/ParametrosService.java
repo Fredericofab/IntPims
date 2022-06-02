@@ -7,9 +7,10 @@ import java.util.List;
 
 import gui.util.Alertas;
 import javafx.scene.control.Alert.AlertType;
-import model.dao.ParametrosDao;
 import model.dao.FabricaDeDao;
+import model.dao.ParametrosDao;
 import model.entities.Parametros;
+import model.exceptions.ParametroInvalidoException;
 
 public class ParametrosService {
 
@@ -24,7 +25,11 @@ public class ParametrosService {
 	}
 
 	public Parametros pesquisarPorChave(String secao, String entrada) {
-		return dao.pesquisarPorChave(secao,entrada);
+		Parametros parametros = dao.pesquisarPorChave(secao,entrada);
+		if (parametros == null) {
+			throw new ParametroInvalidoException("Parametro Não Encontrado \n Secao .. :  " + secao + "\n Entrada :  " + entrada);
+		}
+		return parametros;
 	};
 
 	public void salvarOuAtualizar(Parametros objeto) {
@@ -40,29 +45,30 @@ public class ParametrosService {
 	}
 
 	public void gerarTxt() {
-		lerParametros();
-		List<Parametros> lista = pesquisarTodos();
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("Secao,Entada,Valor,Descricao");
-			bw.newLine();
-			for (Parametros parametros : lista) {
-				String linha = parametros.getSecao() + "," + parametros.getEntrada() + "," + parametros.getValor() + "," + parametros.getDescricao(); 
-				bw.write(linha);
+		try {
+			lerParametros();
+			List<Parametros> lista = pesquisarTodos();
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
+				bw.write("Secao,Entada,Valor,Descricao");
 				bw.newLine();
+				for (Parametros parametros : lista) {
+					String linha = parametros.getSecao() + "," + parametros.getEntrada() + "," + parametros.getValor() + "," + parametros.getDescricao(); 
+					bw.write(linha);
+					bw.newLine();
+				}
+				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
+			} catch (IOException e) {
+				Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 			}
-			Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida , AlertType.INFORMATION);
-		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Parametros", e.getMessage(),AlertType.ERROR);
 		}
 	}
 
 	private void lerParametros() {
-		ParametrosService parametrosService = new ParametrosService();
-
-		String anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		String arqSaidaPasta = (parametrosService.pesquisarPorChave("Parametros", "ArqSaidaPasta")).getValor();
-		String arqSaidaNome  = (parametrosService.pesquisarPorChave("Parametros", "ArqSaidaNome")).getValor();
-		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("Parametros", "ArqSaidaTipo")).getValor();
-		saida = arqSaidaPasta + arqSaidaNome + anoMes + arqSaidaTipo ;
+		String anoMes = (pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
+		String arqSaidaPasta = (pesquisarPorChave("ArquivosTextos", "ArqSaidaPasta")).getValor();
+		String arqSaidaTipo  = (pesquisarPorChave("ArquivosTextos", "ArqSaidaTipo")).getValor();
+		saida = arqSaidaPasta + "Parametros" + anoMes + arqSaidaTipo ;
 	}
 }

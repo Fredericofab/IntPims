@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import model.entities.Funcionarios;
 import model.entities.VerbasFolha;
+import model.exceptions.ParametroInvalidoException;
 import model.exceptions.TxtIntegridadeException;
 
 public class ImportarFuncionariosService {
@@ -80,6 +81,8 @@ public class ImportarFuncionariosService {
 
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("Erro Banco Oracle", "Processo Cancelado", e.getMessage(), AlertType.ERROR);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado", e.getMessage(),AlertType.ERROR);
 		}
 
 		if ((qtdeIncluidas > 0) && (qtdeLidas - qtdeIncluidas) == 0) {

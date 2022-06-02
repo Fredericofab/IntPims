@@ -20,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.ProcessoAtual;
+import model.exceptions.ParametroInvalidoException;
 import model.services.AplicarPoliticasErpService;
 import model.services.ErpService;
 import model.services.ExportarFolhaService;
@@ -307,7 +308,12 @@ public class MainViewController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 //		testarAcessoBanco();
-		lerParametros();
+		try {
+			lerParametros();
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado", e.getMessage(),AlertType.ERROR);
+		}
+		
 	}
 
 	private <T> void criarJanelaFilha(String caminhoDaView, String titulo, Stage paiStage,
@@ -340,10 +346,14 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	private void onMenuProcessosShown() {
-		lerParametros();
-		processoAtual = processoAtualService.pesquisarPorChave(anoMes);
-		habilitarEtapas();
-		checkProcessos();
+		try {
+			lerParametros();
+			processoAtual = processoAtualService.pesquisarPorChave(anoMes);
+			habilitarEtapas();
+			checkProcessos();
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado", e.getMessage(),AlertType.ERROR);
+		}
 	}
 	private void habilitarEtapas() {
 		if (processoAtual == null) {

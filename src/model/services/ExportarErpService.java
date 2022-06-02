@@ -3,12 +3,15 @@ package model.services;
 import java.util.List;
 
 import db.DbException;
+import gui.util.Alertas;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Cstg_IntCM;
 import model.entities.Cstg_IntDG;
 import model.entities.Cstg_IntVM;
 import model.entities.Erp;
 import model.entities.FatorMedida;
 import model.entities.OS_Material;
+import model.exceptions.ParametroInvalidoException;
 
 public class ExportarErpService {
 
@@ -97,31 +100,35 @@ public class ExportarErpService {
 	}
 
 	public void processar(String destino) throws DbException{
-		lerParametros();
-		defineDatas();
-		listaErp = erpService.pesquisarTodos();
-		
-		if (destino == null || destino.equals("VM")) {
-			deletarCstgIntVM();
-			gravarCstgIntVM();
-			processoAtualService.atualizarEtapa("ExportarErpVM","S");
+		try {
+			lerParametros();
+			defineDatas();
+			listaErp = erpService.pesquisarTodos();
+			
+			if (destino == null || destino.equals("VM")) {
+				deletarCstgIntVM();
+				gravarCstgIntVM();
+				processoAtualService.atualizarEtapa("ExportarErpVM","S");
+			}
+			if (destino == null || destino.equals("CM")) {
+				deletarCstgIntCM();
+				gravarCstgIntCM();
+				processoAtualService.atualizarEtapa("ExportarErpCM","S");
+			}
+			if (destino == null || destino.equals("DG")) {
+				deletarCstgIntDG();
+				gravarCstgIntDG();
+				processoAtualService.atualizarEtapa("ExportarErpDG","S");
+			}
+			if (destino == null || destino.equals("OS")) {
+				deletarOSMaterial();
+				gravarOSMaterial();
+				processoAtualService.atualizarEtapa("ExportarErpOS","S");
+			}
+			gerarTxt();
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado", e.getMessage(),AlertType.ERROR);
 		}
-		if (destino == null || destino.equals("CM")) {
-			deletarCstgIntCM();
-			gravarCstgIntCM();
-			processoAtualService.atualizarEtapa("ExportarErpCM","S");
-		}
-		if (destino == null || destino.equals("DG")) {
-			deletarCstgIntDG();
-			gravarCstgIntDG();
-			processoAtualService.atualizarEtapa("ExportarErpDG","S");
-		}
-		if (destino == null || destino.equals("OS")) {
-			deletarOSMaterial();
-			gravarOSMaterial();
-			processoAtualService.atualizarEtapa("ExportarErpOS","S");
-		}
-		gerarTxt();
 	}
 	
 	private void deletarCstgIntVM() {

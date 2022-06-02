@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.FuncionariosDao;
 import model.dao.FabricaDeDao;
 import model.entities.Funcionarios;
+import model.exceptions.ParametroInvalidoException;
 
 public class FuncionariosService {
 
@@ -44,25 +45,29 @@ public class FuncionariosService {
 	}
 	
 	public void gerarTxt(Boolean oficial) {
-		lerParametros(oficial);
-		List<Funcionarios> lista = pesquisarTodos();
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("AnoMes,CodCCustos,DescCCustos,CodFuncionario,DescFuncionario");
-			bw.newLine();
-			for (Funcionarios funcionarios : lista) {
-				String linha = funcionarios.getAnoMes() + "," + 
-							   String.format("%.0f", funcionarios.getCodCentroCustos()) + "," +
-							   funcionarios.getDescCentroCustos() + "," + 
-							   String.format("%.0f", funcionarios.getCodFuncionario()) + "," +
-							   funcionarios.getDescFuncionario(); 
-				bw.write(linha);
+		try {
+			lerParametros(oficial);
+			List<Funcionarios> lista = pesquisarTodos();
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
+				bw.write("AnoMes,CodCCustos,DescCCustos,CodFuncionario,DescFuncionario");
 				bw.newLine();
+				for (Funcionarios funcionarios : lista) {
+					String linha = funcionarios.getAnoMes() + "," + 
+								   String.format("%.0f", funcionarios.getCodCentroCustos()) + "," +
+								   funcionarios.getDescCentroCustos() + "," + 
+								   String.format("%.0f", funcionarios.getCodFuncionario()) + "," +
+								   funcionarios.getDescFuncionario(); 
+					bw.write(linha);
+					bw.newLine();
+				}
+				if (! oficial) {
+					Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
+				}
+			} catch (IOException e) {
+				Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 			}
-			if (! oficial) {
-				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
-			}
-		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Gerando Funcionario TXT", e.getMessage(),AlertType.ERROR);
 		}
 	}
 

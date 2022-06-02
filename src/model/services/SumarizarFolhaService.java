@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gui.util.Alertas;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Folha;
 import model.entities.FolhaSumarizada;
+import model.exceptions.ParametroInvalidoException;
 
 public class SumarizarFolhaService {
 	
@@ -52,12 +55,16 @@ public class SumarizarFolhaService {
 	}
 
 	public void processar() {
-		lerParametros();
-		deletarTodosFolhaSumarizada();
-		sumarizarFolha();
-		gravarSumarioFolha();
-		processoAtualService.atualizarEtapa("SumarizarFolha","S");
-		processoAtualService.atualizarEtapa("ExportarFolha","N");
+		try {
+			lerParametros();
+			deletarTodosFolhaSumarizada();
+			sumarizarFolha();
+			gravarSumarioFolha();
+			processoAtualService.atualizarEtapa("SumarizarFolha","S");
+			processoAtualService.atualizarEtapa("ExportarFolha","N");
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado", e.getMessage(),AlertType.ERROR);
+		}
 	}
 
 	private void deletarTodosFolhaSumarizada() {

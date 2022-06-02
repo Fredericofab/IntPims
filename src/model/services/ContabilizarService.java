@@ -9,6 +9,7 @@ import gui.util.Alertas;
 import javafx.scene.control.Alert.AlertType;
 import model.entities.PlcPrim;
 import model.entities.PlcRat;
+import model.exceptions.ParametroInvalidoException;
 
 public class ContabilizarService {
 
@@ -52,6 +53,8 @@ public class ContabilizarService {
 			qtdeCCustos = setCCusto.size();
 
 			calculaCompras();
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Contabilizar", e.getMessage(),AlertType.ERROR);
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("Erro Banco Oracle", "Processo Cancelado", e.getMessage(),
 					AlertType.ERROR);

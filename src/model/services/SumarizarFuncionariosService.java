@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gui.util.Alertas;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Funcionarios;
 import model.entities.FuncionariosSumarizados;
+import model.exceptions.ParametroInvalidoException;
 
 public class SumarizarFuncionariosService {
 	
@@ -36,11 +39,15 @@ public class SumarizarFuncionariosService {
 	}
 
 	public void processar() {
-		lerParametros();
-		deletarTodosSumarioFuncionarios();
-		sumarizarFuncionarios();
-		gravarSumarioFuncionarios();
-		processoAtualService.atualizarEtapa("SumarizarFuncionario","S");
+		try {
+			lerParametros();
+			deletarTodosSumarioFuncionarios();
+			sumarizarFuncionarios();
+			gravarSumarioFuncionarios();
+			processoAtualService.atualizarEtapa("SumarizarFuncionario","S");
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. SumarizarFuncionario", e.getMessage(),AlertType.ERROR);
+		}
 	}
 
 	private void deletarTodosSumarioFuncionarios() {

@@ -19,6 +19,7 @@ import gui.util.Utilitarios;
 import javafx.scene.control.Alert.AlertType;
 import model.entities.Erp;
 import model.entities.FatorMedida;
+import model.exceptions.ParametroInvalidoException;
 
 public class ValidarErpService {
 
@@ -112,31 +113,35 @@ public class ValidarErpService {
 	}
 
 	public void validarERP() throws IOException, FileNotFoundException {
-		lerParametros(false);
-		criarArqLog();
-		erpService.limparValidacoesOS();
-		erpService.limparPoliticas();
-		politicasErpService.limparEstatisticas();
-		lista = erpService.pesquisarTodos();
-		qtdeProcessados = lista.size();
-		validarFaltaOSouFrotaCC();
-		validarOS();
-		validarMatSemOS();
-		validarCCustos();
-		validarMatSemConversao();
-		Integer totaLPendente = qtdeCCInexistentes + 
-								qtdeFaltaOSouFrotaCC + 
-								qtdeMatSemConvencao +
-								qtdeOSInexistentes +  qtdeOSIncoerentes + qtdeOSAntigas;
-		if (totaLPendente == 0) {
-			processoAtualService.atualizarEtapa("ValidarErp", "S");
-		} else {
-			processoAtualService.atualizarEtapa("ValidarErp", "N");
-			processoAtualService.atualizarEtapa("AplicarPoliticaErp", "N");
-			processoAtualService.atualizarEtapa("ExportarErpVM", "N");
-			processoAtualService.atualizarEtapa("ExportarErpCM", "N");
-			processoAtualService.atualizarEtapa("ExportarErpDG", "N");
-			processoAtualService.atualizarEtapa("ExportarErpOS", "N");
+		try {
+			lerParametros(false);
+			criarArqLog();
+			erpService.limparValidacoesOS();
+			erpService.limparPoliticas();
+			politicasErpService.limparEstatisticas();
+			lista = erpService.pesquisarTodos();
+			qtdeProcessados = lista.size();
+			validarFaltaOSouFrotaCC();
+			validarOS();
+			validarMatSemOS();
+			validarCCustos();
+			validarMatSemConversao();
+			Integer totaLPendente = qtdeCCInexistentes + 
+									qtdeFaltaOSouFrotaCC + 
+									qtdeMatSemConvencao +
+									qtdeOSInexistentes +  qtdeOSIncoerentes + qtdeOSAntigas;
+			if (totaLPendente == 0) {
+				processoAtualService.atualizarEtapa("ValidarErp", "S");
+			} else {
+				processoAtualService.atualizarEtapa("ValidarErp", "N");
+				processoAtualService.atualizarEtapa("AplicarPoliticaErp", "N");
+				processoAtualService.atualizarEtapa("ExportarErpVM", "N");
+				processoAtualService.atualizarEtapa("ExportarErpCM", "N");
+				processoAtualService.atualizarEtapa("ExportarErpDG", "N");
+				processoAtualService.atualizarEtapa("ExportarErpOS", "N");
+			}
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Validar Erp", e.getMessage(),AlertType.ERROR);
 		}
 	}
 

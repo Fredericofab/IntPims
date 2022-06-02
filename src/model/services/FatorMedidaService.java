@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.FatorMedidaDao;
 import model.dao.FabricaDeDao;
 import model.entities.FatorMedida;
+import model.exceptions.ParametroInvalidoException;
 
 public class FatorMedidaService {
 
@@ -46,38 +47,46 @@ public class FatorMedidaService {
 	}
 
 	public void atualizarNovos() {
-		lerParametros(false);
-		Double fator = Utilitarios.tentarConverterParaDouble(defaultFatorDivisao);
-		if (fator != null) {
-			dao.atualizarNovos(fator);
+		try {
+			lerParametros(false);
+			Double fator = Utilitarios.tentarConverterParaDouble(defaultFatorDivisao);
+			if (fator != null) {
+				dao.atualizarNovos(fator);
+			}
+			else {
+				Alertas.mostrarAlertas("Erro de Integridade no Parametro",
+						"Parametro: Secao = FatorMedida, Entrada =  DefaultFatorDivisao",
+						"O Parametro não é um numero válido. \n \n" + 
+						"Informe SEM vírgula e com PONTO decimal", AlertType.ERROR);
+			}	
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Gerando Erp TXT", e.getMessage(),AlertType.ERROR);
 		}
-		else {
-			Alertas.mostrarAlertas("Erro de Integridade no Parametro",
-					"Parametro: Secao = FatorMedida, Entrada =  DefaultFatorDivisao",
-					"O Parametro não é um numero válido. \n \n" + 
-					"Informe SEM vírgula e com PONTO decimal", AlertType.ERROR);
-		}	
 	}
 
 	public void gerarTxt(Boolean oficial) {
-		lerParametros(oficial);
-		List<FatorMedida> lista = pesquisarTodos();
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
-			bw.write("CodMaterial,DescricaoMaterial,UnidMed, FatorDivisao");
-			bw.newLine();
-			for (FatorMedida fatorMedida : lista) {
-				String linha = fatorMedida.getCodMaterial() + "," +
-							   fatorMedida.getDescMaterial().replace(",",".") + "," +
-							   fatorMedida.getUnidadeMedida() + "," +
-							   String.format("%.4f", fatorMedida.getFatorDivisao());
-				bw.write(linha);
+		try {
+			lerParametros(oficial);
+			List<FatorMedida> lista = pesquisarTodos();
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
+				bw.write("CodMaterial,DescricaoMaterial,UnidMed, FatorDivisao");
 				bw.newLine();
+				for (FatorMedida fatorMedida : lista) {
+					String linha = fatorMedida.getCodMaterial() + "," +
+								   fatorMedida.getDescMaterial().replace(",",".") + "," +
+								   fatorMedida.getUnidadeMedida() + "," +
+								   String.format("%.4f", fatorMedida.getFatorDivisao());
+					bw.write(linha);
+					bw.newLine();
+				}
+				if (!oficial) {
+					Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
+				}
+			} catch (IOException e) {
+				Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
 			}
-			if (!oficial) {
-				Alertas.mostrarAlertas(null, "Arquivo Gravado com Sucesso", saida, AlertType.INFORMATION);
-			}
-		} catch (IOException e) {
-			Alertas.mostrarAlertas("IOException", "Erro na Gravacao do Arquivo TXT", e.getMessage(), AlertType.ERROR);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado - Gerando FatorMedida TXT", e.getMessage(),AlertType.ERROR);
 		}
 	}
 

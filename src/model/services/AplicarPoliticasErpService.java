@@ -2,8 +2,11 @@ package model.services;
 
 import java.util.List;
 
+import gui.util.Alertas;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Erp;
 import model.entities.PoliticasErp;
+import model.exceptions.ParametroInvalidoException;
 
 public class AplicarPoliticasErpService {
 
@@ -73,13 +76,17 @@ public class AplicarPoliticasErpService {
 	}
 
 	public void aplicarTodas() {
-		lerParametros();
-		erpService.limparPoliticas();
-		listaErp = erpService.pesquisarTodos();
-		for (PoliticasErp politicaErp : politicasErpService.pesquisarTodos()) {
-			if ( politicaErp.getFlagAtiva().toUpperCase().equals("S")) {
-				aplicarPolitica(politicaErp);
+		try {
+			lerParametros();
+			erpService.limparPoliticas();
+			listaErp = erpService.pesquisarTodos();
+			for (PoliticasErp politicaErp : politicasErpService.pesquisarTodos()) {
+				if ( politicaErp.getFlagAtiva().toUpperCase().equals("S")) {
+					aplicarPolitica(politicaErp);
+				}
 			}
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Aplicar Politicas", e.getMessage(),AlertType.ERROR);
 		}
 	}
 	

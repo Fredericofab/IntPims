@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.ProcessoAtualDao;
 import model.dao.FabricaDeDao;
 import model.entities.ProcessoAtual;
+import model.exceptions.ParametroInvalidoException;
 
 public class ProcessoAtualService {
 
@@ -96,23 +97,28 @@ public class ProcessoAtualService {
 	}
 	
 	public void atualizarEtapa(String campo, String valor) {
-		lerParametros(true);
-		ProcessoAtual processoAtual = pesquisarPorChave(anoMes);
-		if (campo.equals("ImportarFolha")) processoAtual.setImportarFolha(valor); 
-		if (campo.equals("SumarizarFolha")) processoAtual.setSumarizarFolha(valor); 
-		if (campo.equals("ExportarFolha")) processoAtual.setExportarFolha(valor); 
-		if (campo.equals("ImportarFuncionario")) processoAtual.setImportarFuncionario(valor); 
-		if (campo.equals("SumarizarFuncionario")) processoAtual.setSumarizarFuncionario(valor); 
-		if (campo.equals("ImportarErpRM")) processoAtual.setImportarErpRM(valor); 
-		if (campo.equals("ImportarErpED")) processoAtual.setImportarErpED(valor); 
-		if (campo.equals("ImportarErpDF")) processoAtual.setImportarErpDF(valor); 
-		if (campo.equals("ValidarErp")) processoAtual.setValidarErp(valor); 
-		if (campo.equals("AplicarPoliticaErp")) processoAtual.setAplicarPoliticaErp(valor); 
-		if (campo.equals("ExportarErpVM")) processoAtual.setExportarErpVM(valor); 
-		if (campo.equals("ExportarErpCM")) processoAtual.setExportarErpCM(valor); 
-		if (campo.equals("ExportarErpDG")) processoAtual.setExportarErpDG(valor); 
-		if (campo.equals("ExportarErpOS")) processoAtual.setExportarErpOS(valor); 
-		salvarOuAtualizar(processoAtual);
+		try {
+			lerParametros(true);
+			ProcessoAtual processoAtual = pesquisarPorChave(anoMes);
+			if (campo.equals("ImportarFolha")) processoAtual.setImportarFolha(valor); 
+			if (campo.equals("SumarizarFolha")) processoAtual.setSumarizarFolha(valor); 
+			if (campo.equals("ExportarFolha")) processoAtual.setExportarFolha(valor); 
+			if (campo.equals("ImportarFuncionario")) processoAtual.setImportarFuncionario(valor); 
+			if (campo.equals("SumarizarFuncionario")) processoAtual.setSumarizarFuncionario(valor); 
+			if (campo.equals("ImportarErpRM")) processoAtual.setImportarErpRM(valor); 
+			if (campo.equals("ImportarErpED")) processoAtual.setImportarErpED(valor); 
+			if (campo.equals("ImportarErpDF")) processoAtual.setImportarErpDF(valor); 
+			if (campo.equals("ValidarErp")) processoAtual.setValidarErp(valor); 
+			if (campo.equals("AplicarPoliticaErp")) processoAtual.setAplicarPoliticaErp(valor); 
+			if (campo.equals("ExportarErpVM")) processoAtual.setExportarErpVM(valor); 
+			if (campo.equals("ExportarErpCM")) processoAtual.setExportarErpCM(valor); 
+			if (campo.equals("ExportarErpDG")) processoAtual.setExportarErpDG(valor); 
+			if (campo.equals("ExportarErpOS")) processoAtual.setExportarErpOS(valor); 
+			salvarOuAtualizar(processoAtual);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Atualizando Etapas Atuais", e.getMessage(),AlertType.ERROR);
+		}
+
 	}
 
 }

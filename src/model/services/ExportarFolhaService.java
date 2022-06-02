@@ -2,8 +2,11 @@ package model.services;
 
 import java.util.List;
 
+import gui.util.Alertas;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Cstg_IntFP;
 import model.entities.FolhaSumarizada;
+import model.exceptions.ParametroInvalidoException;
 
 public class ExportarFolhaService {
 
@@ -24,12 +27,16 @@ public class ExportarFolhaService {
 	Integer qtdeProcessadaFP;
 
 	public Integer processar() {
-		lerParametros();
-		dataref = "01/" + anoMes.substring(4, 6) + "/" + anoMes.substring(0, 4);
-		deletarCstgIntFP();
-		gravarCstgIntFP();
-		gerarTxt();
-		processoAtualService.atualizarEtapa("ExportarFolha","S");
+		try {
+			lerParametros();
+			dataref = "01/" + anoMes.substring(4, 6) + "/" + anoMes.substring(0, 4);
+			deletarCstgIntFP();
+			gravarCstgIntFP();
+			gerarTxt();
+			processoAtualService.atualizarEtapa("ExportarFolha","S");
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado", e.getMessage(),AlertType.ERROR);
+		}
 		return qtdeProcessadaFP;
 	}
 
