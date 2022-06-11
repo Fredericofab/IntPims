@@ -13,5 +13,8 @@ public class PlcRatService {
 	public List<PlcRat> pesquisarTodos(String anoMes, String usuarioPimsCS) {
 		return dao.listarTodos(anoMes, usuarioPimsCS);
 	}
+	public List<PlcRat> pesquisarCCusto(String anoMes, String usuarioPimsCS, Double ccusto) {
+		return dao.listarCCusto(anoMes, usuarioPimsCS, ccusto);
+	}
 
 }

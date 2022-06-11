@@ -43,14 +43,41 @@ public class PlcRatDaoJDBC implements PlcRatDao {
 		}
 	}
 
+	@Override
+	public List<PlcRat> listarCCusto(String anoMes, String usuarioPimsCS, Double ccusto) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".plcRat " +
+										  "WHERE fg_pla_cst = 'C' AND to_Char(dt_histori,'yyyymm') = ?" +
+										  "AND cd_CCPara = ?");
+			st.setString(1, anoMes);
+			st.setDouble(2, ccusto);
+			rs = st.executeQuery();
+			List<PlcRat> lista = new ArrayList<PlcRat>();
+			while (rs.next()) {
+				PlcRat plcRat = instanciaDados(rs);
+				lista.add(plcRat);
+			}
+			return lista;
+		} catch (SQLException e) {
+			throw new DbException("Tabela PlcRat \n \n" + e.getMessage());
+		} finally {
+			DB.fecharResultSet(rs);
+			DB.fecharStatement(st);
+		}
+	}
+
+	
 	private PlcRat instanciaDados(ResultSet rs) throws SQLException {
 		PlcRat plcRat = new PlcRat();
 		plcRat.setCdCCPara(rs.getDouble("Cd_CCPara"));
 		plcRat.setFgFxVr(rs.getString("Fg_Fx_Vr"));
-		plcRat.setCcCCDe(rs.getDouble("Cd_CCDe"));
+		plcRat.setCdCCDe(rs.getDouble("Cd_CCDe"));
 		plcRat.setVlTaxa(rs.getDouble("Vl_Taxa"));
 		plcRat.setVlConsum(rs.getDouble("VL_Consum"));
 		return plcRat;
 	}
+
 
 }

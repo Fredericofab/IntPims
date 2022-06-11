@@ -1,6 +1,7 @@
 package model.dao;
 
 import db.DB;
+import model.dao.impl.DadosContabilDaoJDBC;
 import model.dao.impl.Cstg_IntCMDaoJDBC;
 import model.dao.impl.Cstg_IntDGDaoJDBC;
 import model.dao.impl.Cstg_IntFPDaoJDBC;
@@ -78,5 +79,8 @@ public class FabricaDeDao {
 	}
 	public static PlcRatDao criarPlcRatDao() {
 		return new PlcRatDaoJDBC(DB.abrirConexao());
+	}
+	public static DadosContabilDao criarDadosContabilDao() {
+		return new DadosContabilDaoJDBC(DB.abrirConexao());
 	}
 }

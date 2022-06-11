@@ -4,18 +4,18 @@ public class PlcRat {
 
 	private Double cdCCPara;
 	private String fgFxVr;
-	private Double ccCCDe;
+	private Double cdCCDe;
 	private Double vlTaxa;
 	private Double vlConsum;
 	
 	public PlcRat() {
 		super();
 	}
-	public PlcRat(Double cdCCPara, String fgFxVr, Double ccCCDe, Double vlTaxa, Double vlConsum) {
+	public PlcRat(Double cdCCPara, String fgFxVr, Double cdCCDe, Double vlTaxa, Double vlConsum) {
 		super();
 		this.cdCCPara = cdCCPara;
 		this.fgFxVr = fgFxVr;
-		this.ccCCDe = ccCCDe;
+		this.cdCCDe = cdCCDe;
 		this.vlTaxa = vlTaxa;
 		this.vlConsum = vlConsum;
 	}
@@ -32,11 +32,11 @@ public class PlcRat {
 	public void setFgFxVr(String fgFxVr) {
 		this.fgFxVr = fgFxVr;
 	}
-	public Double getCcCCDe() {
-		return ccCCDe;
+	public Double getCdCCDe() {
+		return cdCCDe;
 	}
-	public void setCcCCDe(Double ccCCDe) {
-		this.ccCCDe = ccCCDe;
+	public void setCdCCDe(Double cdCCDe) {
+		this.cdCCDe = cdCCDe;
 	}
 	public Double getVlTaxa() {
 		return vlTaxa;
@@ -55,7 +55,7 @@ public class PlcRat {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((ccCCDe == null) ? 0 : ccCCDe.hashCode());
+		result = prime * result + ((cdCCDe == null) ? 0 : cdCCDe.hashCode());
 		result = prime * result + ((cdCCPara == null) ? 0 : cdCCPara.hashCode());
 		result = prime * result + ((fgFxVr == null) ? 0 : fgFxVr.hashCode());
 		return result;
@@ -69,10 +69,10 @@ public class PlcRat {
 		if (getClass() != obj.getClass())
 			return false;
 		PlcRat other = (PlcRat) obj;
-		if (ccCCDe == null) {
-			if (other.ccCCDe != null)
+		if (cdCCDe == null) {
+			if (other.cdCCDe != null)
 				return false;
-		} else if (!ccCCDe.equals(other.ccCCDe))
+		} else if (!cdCCDe.equals(other.cdCCDe))
 			return false;
 		if (cdCCPara == null) {
 			if (other.cdCCPara != null)
@@ -89,7 +89,8 @@ public class PlcRat {
 	
 	@Override
 	public String toString() {
-		return "PlcRAT [cdCCPara=" + cdCCPara + ", fgFxVr=" + fgFxVr + ", ccCCDe=" + ccCCDe + ", vlTaxa=" + vlTaxa
+		return "PlcRAT [cdCCPara=" + String.format("%.0f",cdCCPara)  + ", fgFxVr=" + fgFxVr 
+				+ ", cdCCDe=" + String.format("%.0f",cdCCDe) + ", vlTaxa=" + vlTaxa
 				+ ", vlConsum=" + vlConsum + "]";
 	}
 }
