@@ -1,30 +1,32 @@
 package model.entities;
 
+import java.util.Arrays;
+
 public class DadosContabil {
 
 	private Double ccComprador;
 	private String cdConta;
 	private String fgTpCta;
-	private String nivel;
-	private Double ccVendedorPrimeiro;
-	private Double ccVendedorUltimo;
-	private Double taxa;
-	private Double valor;
+	private Double[] ccDe = new Double[11];
+	private Double[] taxa = new Double[11];
+	private Double taxaAcum;
+	private Double valorBase;
+	private Double valorAdquirido;
 
 	public DadosContabil() {
 		super();
 	}
-	public DadosContabil(Double ccComprador, String cdConta, String fgTpCta, String nivel, Double ccVendedorPrimeiro,
-			Double ccVendedorUltimo, Double taxa, Double valor) {
+	public DadosContabil(Double ccComprador, String cdConta, String fgTpCta, Double[] ccDe, Double[] taxa,
+			Double taxaAcum, Double valorBase, Double valorAdquirido) {
 		super();
 		this.ccComprador = ccComprador;
 		this.cdConta = cdConta;
 		this.fgTpCta = fgTpCta;
-		this.nivel = nivel;
-		this.ccVendedorPrimeiro = ccVendedorPrimeiro;
-		this.ccVendedorUltimo = ccVendedorUltimo;
+		this.ccDe = ccDe;
 		this.taxa = taxa;
-		this.valor = valor;
+		this.taxaAcum = taxaAcum;
+		this.valorBase = valorBase;
+		this.valorAdquirido = valorAdquirido;
 	}
 	public Double getCcComprador() {
 		return ccComprador;
@@ -44,43 +46,40 @@ public class DadosContabil {
 	public void setFgTpCta(String fgTpCta) {
 		this.fgTpCta = fgTpCta;
 	}
-	public String getNivel() {
-		return nivel;
+	public Double[] getCcDe() {
+		return ccDe;
 	}
-	public void setNivel(String nivel) {
-		this.nivel = nivel;
+	public void setCcDe(Double[] ccDe) {
+		this.ccDe = ccDe;
 	}
-	public Double getCcVendedorPrimeiro() {
-		return ccVendedorPrimeiro;
-	}
-	public void setCcVendedorPrimeiro(Double ccVendedorPrimeiro) {
-		this.ccVendedorPrimeiro = ccVendedorPrimeiro;
-	}
-	public Double getCcVendedorUltimo() {
-		return ccVendedorUltimo;
-	}
-	public void setCcVendedorUltimo(Double ccVendedorUltimo) {
-		this.ccVendedorUltimo = ccVendedorUltimo;
-	}
-	public Double getTaxa() {
+	public Double[] getTaxa() {
 		return taxa;
 	}
-	public void setTaxa(Double taxa) {
+	public void setTaxa(Double[] taxa) {
 		this.taxa = taxa;
 	}
-	public Double getValor() {
-		return valor;
+	public Double getTaxaAcum() {
+		return taxaAcum;
 	}
-	public void setValor(Double valor) {
-		this.valor = valor;
+	public void setTaxaAcum(Double taxaAcum) {
+		this.taxaAcum = taxaAcum;
 	}
-	
+	public Double getValorBase() {
+		return valorBase;
+	}
+	public void setValorBase(Double valorBase) {
+		this.valorBase = valorBase;
+	}
+	public Double getValorAdquirido() {
+		return valorAdquirido;
+	}
+	public void setValorAdquirido(Double valorAdquirido) {
+		this.valorAdquirido = valorAdquirido;
+	}
 	@Override
 	public String toString() {
-		return "DadosContabil [ccComprador=" + String.format("%.0f",ccComprador) 
-				+ ", cdConta=" + cdConta + ", fgTpCta=" + fgTpCta + ", nivel=" + nivel
-				+ ", ccVendedorPrimeiro=" + String.format("%.0f",ccVendedorPrimeiro) 
-				+ ", ccVendedorUltimo="   + String.format("%.0f",ccVendedorUltimo) 
-				+ ", taxa=" + taxa + ", valor=" + valor + "]";
+		return "DadosContabil [ccComprador=" + String.format("%.0f",ccComprador) + ", cdConta=" + cdConta + ", fgTpCta=" + fgTpCta + ", ccDe="
+				+ Arrays.toString(ccDe) + ", taxa=" + Arrays.toString(taxa) + ", taxaAcum=" + taxaAcum + ", valorBase="
+				+ valorBase + ", valorAdquirido=" + valorAdquirido + "]";
 	}
 }

@@ -24,15 +24,23 @@ public class DadosContabilDaoJDBC implements DadosContabilDao {
 		PreparedStatement st = null;
 		try {
 			st = conexao.prepareStatement("INSERT INTO DadosContabil "
-										+ "(cc_Comprador, Cod_Conta, fg_tp_cta, Nivel, cc_Vendedor_Primeiro, cc_vendedor_ultimo, Taxa, Valor) VALUES (?,?,?,?,?,?,?,?)" );
+										+ "(cc_Comprador, Cod_Conta, fg_tp_cta, "
+										+ "cc_De01, cc_De02, cc_De03, cc_De04, cc_De05, cc_De06, cc_De07, cc_De08, cc_De09,cc_De10, "
+										+ "taxa01, taxa02, taxa03, taxa04, taxa05, taxa06, taxa07, taxa08, taxa09, taxa10, "
+										+ "taxa_Acum, valor_base, Valor_Adquirido) "
+										+ "VALUES (?,?,?,  ?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?,  ?,?,?)");
 			st.setDouble(1, objeto.getCcComprador());
 			st.setString(2, objeto.getCdConta());
 			st.setString(3, objeto.getFgTpCta());
-			st.setString(4, objeto.getNivel());
-			st.setDouble(5, objeto.getCcVendedorPrimeiro());
-			st.setDouble(6, objeto.getCcVendedorUltimo());
-			st.setDouble(7, objeto.getTaxa());
-			st.setDouble(8, objeto.getValor());
+			Double[] ccDe = objeto.getCcDe();
+			Double[] taxa = objeto.getTaxa();
+			for (int i = 1 ; i <= 10 ; i++) {
+				st.setDouble(i+03, ccDe[i]);
+				st.setDouble(i+13, taxa[i]);
+			}
+			st.setDouble(24, objeto.getTaxaAcum());
+			st.setDouble(25, objeto.getValorBase());
+			st.setDouble(26, objeto.getValorAdquirido());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela DadosContabil  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -87,11 +95,6 @@ public class DadosContabilDaoJDBC implements DadosContabilDao {
 		dadosContabil.setCcComprador(rs.getDouble("cc_Comprador"));
 		dadosContabil.setCdConta(rs.getString("Cod_Verba"));		
 		dadosContabil.setFgTpCta(rs.getString("Fg_tp_cta"));		
-		dadosContabil.setNivel(rs.getString("Nivel"));		
-		dadosContabil.setCcVendedorPrimeiro(rs.getDouble("cc_vendedor_primeiro"));		
-		dadosContabil.setCcVendedorUltimo(rs.getDouble("cc_vendedor_ultimo"));		
-		dadosContabil.setTaxa(rs.getDouble("Taxa"));		
-		dadosContabil.setValor(rs.getDouble("Valor"));		
 		return dadosContabil;
 	}
 

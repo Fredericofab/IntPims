@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="application.Main" project="intPims" file="/intPims/src/application/Main.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="650" x="429" y="-290"/>    
+    <position height="37" width="720" x="359" y="-290"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -228,7 +228,7 @@
   </class>  
   <class id="26" language="java" name="model.entities.VerbasFolha" project="intPims" 
     file="/intPims/src/model/entities/VerbasFolha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="791" y="-226"/>    
+    <position height="-1" width="-1" x="748" y="-229"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -237,7 +237,7 @@
   </class>  
   <class id="27" language="java" name="model.entities.Folha" project="intPims" 
     file="/intPims/src/model/entities/Folha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="174" x="552" y="-245"/>    
+    <position height="37" width="174" x="498" y="-247"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -246,7 +246,7 @@
   </class>  
   <class id="28" language="java" name="model.entities.FolhaSumarizada" project="intPims" 
     file="/intPims/src/model/entities/FolhaSumarizada.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="174" x="553" y="-205"/>    
+    <position height="37" width="174" x="499" y="-207"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -327,7 +327,7 @@
   </class>  
   <class id="37" language="java" name="model.entities.Parametros" project="intPims" 
     file="/intPims/src/model/entities/Parametros.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="792" y="-107"/>    
+    <position height="-1" width="-1" x="749" y="-110"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -390,7 +390,7 @@
   </class>  
   <class id="44" language="java" name="model.entities.ProcessoAtual" project="intPims" 
     file="/intPims/src/model/entities/ProcessoAtual.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="486" y="-226"/>    
+    <position height="-1" width="-1" x="413" y="-227"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -543,7 +543,7 @@
   </class>  
   <class id="61" language="java" name="model.entities.Funcionarios" project="intPims" 
     file="/intPims/src/model/entities/Funcionarios.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="173" x="554" y="-165"/>    
+    <position height="37" width="173" x="500" y="-167"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -552,7 +552,7 @@
   </class>  
   <class id="62" language="java" name="model.entities.FuncionariosSumarizados" project="intPims" 
     file="/intPims/src/model/entities/FuncionariosSumarizados.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="641" y="-107"/>    
+    <position height="-1" width="-1" x="587" y="-109"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -624,7 +624,7 @@
   </class>  
   <class id="70" language="java" name="model.entities.PoliticasErp" project="intPims" 
     file="/intPims/src/model/entities/PoliticasErp.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="792" y="-146"/>    
+    <position height="-1" width="-1" x="749" y="-149"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -633,7 +633,7 @@
   </class>  
   <class id="71" language="java" name="model.entities.Erp" project="intPims" file="/intPims/src/model/entities/Erp.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="173" x="555" y="-84"/>    
+    <position height="37" width="173" x="501" y="-86"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -678,7 +678,7 @@
   </class>  
   <class id="76" language="java" name="model.entities.FatorMedida" project="intPims" 
     file="/intPims/src/model/entities/FatorMedida.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="792" y="-186"/>    
+    <position height="-1" width="-1" x="749" y="-189"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -687,7 +687,7 @@
   </class>  
   <class id="77" language="java" name="model.entities.Cstg_IntFP" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntFP.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="94" x="862" y="-243"/>    
+    <position height="37" width="94" x="829" y="-249"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -696,7 +696,7 @@
   </class>  
   <class id="78" language="java" name="model.entities.Cstg_IntVM" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntVM.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="95" x="862" y="-202"/>    
+    <position height="37" width="95" x="829" y="-208"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -705,7 +705,7 @@
   </class>  
   <class id="79" language="java" name="model.entities.Cstg_IntCM" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntCM.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="96" x="862" y="-161"/>    
+    <position height="37" width="96" x="829" y="-167"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -714,7 +714,7 @@
   </class>  
   <class id="80" language="java" name="model.entities.Cstg_IntDG" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntDG.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="95" x="862" y="-120"/>    
+    <position height="37" width="95" x="829" y="-126"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -723,7 +723,7 @@
   </class>  
   <class id="81" language="java" name="model.entities.OS_Material" project="intPims" 
     file="/intPims/src/model/entities/OS_Material.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="909" y="-59"/>    
+    <position height="-1" width="-1" x="876" y="-65"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -1011,7 +1011,7 @@
   </class>  
   <class id="113" language="java" name="model.entities.PlcPrim" project="intPims" 
     file="/intPims/src/model/entities/PlcPrim.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="87" x="992" y="-245"/>    
+    <position height="37" width="115" x="964" y="-245"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -1020,7 +1020,7 @@
   </class>  
   <class id="114" language="java" name="model.entities.PlcRat" project="intPims" 
     file="/intPims/src/model/entities/PlcRat.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="88" x="992" y="-203"/>    
+    <position height="37" width="117" x="963" y="-203"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -1038,7 +1038,7 @@
   </class>  
   <class id="116" language="java" name="model.services.ContabilizarService" project="intPims" 
     file="/intPims/src/model/services/ContabilizarService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="443" x="67" y="2136"/>    
+    <position height="37" width="456" x="67" y="2136"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -1047,8 +1047,8 @@
   </class>  
   <class id="117" language="java" name="model.services.PlcPrimService" project="intPims" 
     file="/intPims/src/model/services/PlcPrimService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="122" y="2197"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+    <position height="37" width="118" x="254" y="2181"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
@@ -1056,8 +1056,8 @@
   </class>  
   <class id="118" language="java" name="model.services.PlcRatService" project="intPims" 
     file="/intPims/src/model/services/PlcRatService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="270" y="2197"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+    <position height="37" width="118" x="407" y="2181"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
@@ -1065,8 +1065,8 @@
   </class>  
   <interface id="119" language="java" name="model.dao.PlcRatDao" project="intPims" 
     file="/intPims/src/model/dao/PlcRatDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="262" y="2238"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+    <position height="37" width="121" x="406" y="2222"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
@@ -1074,8 +1074,8 @@
   </interface>  
   <interface id="120" language="java" name="model.dao.PlcPrimDao" project="intPims" 
     file="/intPims/src/model/dao/PlcPrimDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="109" y="2237"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+    <position height="37" width="120" x="252" y="2221"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
@@ -1083,7 +1083,7 @@
   </interface>  
   <class id="121" language="java" name="model.dao.impl.PlcPrimDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/PlcPrimDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="123" y="2279"/>    
+    <position height="-1" width="-1" x="311" y="2281"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -1092,8 +1092,8 @@
   </class>  
   <class id="122" language="java" name="model.dao.impl.PlcRatDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/PlcRatDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="280" y="2281"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+    <position height="37" width="121" x="406" y="2265"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
@@ -1126,202 +1126,42 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <association id="126">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="127" name="plcRatService">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="128" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="118" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="129">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="130" name="plcRatNivel10">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="131" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="132">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="133" name="plcRatNivel5">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="134" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="135">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="136" name="listaPlcPrim">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="137" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="113" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="138">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="139" name="plcPrimService">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="140" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="117" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="141">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="142" name="plcRatNivel2">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="143" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="144">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="145" name="pimsGeralService">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="146" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="96" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="147">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="148" name="plcRatNivel1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="149" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="150">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="151" name="plcRatNivel8">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="152" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="153">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="154" name="plcRatNivel6">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="155" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="156">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="157" name="plcRatNivel7">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="158" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="159">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="160" name="listaPlcRat">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="161" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="162">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="163" name="plcRatNivel4">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="164" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="165">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="166" name="plcRatNivel3">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="167" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="168">    
-    <end type="SOURCE" refId="116" navigable="false">      
-      <attribute id="169" name="plcRatNivel9">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="170" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="114" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <association id="171">    
-    <end type="SOURCE" refId="118" navigable="false">      
-      <attribute id="172" name="dao">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="173" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="119" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <realization id="174">    
-    <end type="SOURCE" refId="122"/>    
-    <end type="TARGET" refId="119"/>  
-  </realization>  
+  <interface id="126" language="java" name="model.dao.DadosContabilDao" project="intPims" 
+    file="/intPims/src/model/dao/DadosContabilDao.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="157" x="66" y="2221"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="127" language="java" name="model.dao.impl.DadosContabilDaoJDBC" project="intPims" 
+    file="/intPims/src/model/dao/impl/DadosContabilDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="144" y="2282"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="128" language="java" name="model.entities.DadosContabil" project="intPims" 
+    file="/intPims/src/model/entities/DadosContabil.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="118" x="964" y="-159"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="129" language="java" name="model.services.DadosContabilService" project="intPims" 
+    file="/intPims/src/model/services/DadosContabilService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="156" x="66" y="2179"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
   <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="false" package="false" protected="false" private="false" static="false"/>    

@@ -58,9 +58,6 @@ public class ContabilizarViewController implements Initializable {
 
 	private void inicializarComponentes() {
 		txtAnoMes.setText(anoMes);
-		txtAnoMes.setText("201701");
-		txtCCusto.setText("10072302");
-System.out.println("ContabilizarViewController - excluir 2 acima");		
 	}
 	
 	private void atualizarTela(ContabilizarService servico) {
