@@ -39,6 +39,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Registros Processados" GridPane.rowIndex="2">
@@ -86,6 +87,11 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
+            <Label text="Valor Total Incoerente" GridPane.rowIndex="11">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
             <Label text="Registros" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="16.0" />
@@ -100,6 +106,7 @@
             <TextField fx:id="txtOSIncoerentes" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <TextField fx:id="txtOSAntigas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <TextField fx:id="txtMatSemOS" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="txtValorIncoerente" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
             <Label fx:id="labelMsgGeral" textFill="#2600ff" GridPane.columnIndex="3">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -125,6 +132,7 @@
             <TextField fx:id="txtOSInexistentesDistintas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <TextField fx:id="txtOSIncoerentesDistintas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
             <TextField fx:id="txtOSAntigasDistintas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+            <Label fx:id="labelMsgValorIncoerente" GridPane.columnIndex="3" GridPane.rowIndex="11" />
          </children>
          <VBox.margin>
             <Insets top="30.0" />

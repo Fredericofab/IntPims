@@ -43,6 +43,7 @@ public class ErpFiltrosViewController implements Initializable {
 	private String valorMaterial;
 	private String sobreporPolitica;
 	private Boolean liberacaoDupla;
+	private Boolean valorIncoerente;
 	private String politica;
 	private String validacaoOS;
 	private String filtro;
@@ -55,6 +56,8 @@ public class ErpFiltrosViewController implements Initializable {
 	private TextField txtSobreporPolitica;
 	@FXML
 	private CheckBox checkLiberacaoDupla;
+	@FXML
+	private CheckBox checkValorIncoerente;
 	@FXML
 	private TextField txtPolitica;
 	@FXML	
@@ -83,6 +86,7 @@ public class ErpFiltrosViewController implements Initializable {
 		txtPolitica.setText(null);
 		txtAreaFiltro.setText(null);
 		checkLiberacaoDupla.setSelected(false);
+		checkValorIncoerente.setSelected(false);
 		radioNenhum.setSelected(true);
 	}
 
@@ -90,7 +94,8 @@ public class ErpFiltrosViewController implements Initializable {
 	public void onBtSalvarAction(ActionEvent evento) {
 		getDadosDoForm();
 		if (( importar != null ||  politica != null || validacaoOS != null || 
-			  valorMaterial != null || sobreporPolitica != null ||  liberacaoDupla == true ) &&
+			  valorMaterial != null || sobreporPolitica != null ||
+			  liberacaoDupla == true || valorIncoerente == true) &&
 			( filtro != null )){
 			Alertas.mostrarAlertas(null, "Filtro Básico ou Filtro Personalizado", 
 							"Limpar os filtros e \n" +
@@ -98,7 +103,7 @@ public class ErpFiltrosViewController implements Initializable {
 							AlertType.ERROR);
 		}
 		else {
-			erpFiltrosService.salvarFiltro(importar, valorMaterial, sobreporPolitica, liberacaoDupla, politica, validacaoOS, filtro);
+			erpFiltrosService.salvarFiltro(importar, valorMaterial, sobreporPolitica, liberacaoDupla, valorIncoerente, politica, validacaoOS, filtro);
 			notificarDadosAlteradosListeners();
 			Utilitarios.atualStage(evento).close();
 		}
@@ -154,6 +159,7 @@ public class ErpFiltrosViewController implements Initializable {
 		valorMaterial = Utilitarios.tentarConverterParaMaiusculo(txtValorMaterial.getText());
 		sobreporPolitica = Utilitarios.tentarConverterParaMaiusculo(txtSobreporPolitica.getText());
 		liberacaoDupla  = checkLiberacaoDupla.isSelected();
+		valorIncoerente  = checkValorIncoerente.isSelected();
 		politica  = Utilitarios.tentarConverterParaMaiusculo(txtPolitica.getText());
 		if (validacoesOS.getSelectedToggle() == null ) {
 			validacaoOS = null;

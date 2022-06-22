@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import gui.listeners.DadosAlteradosListener;
+import gui.util.Alertas;
 import gui.util.Utilitarios;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
+import model.exceptions.ParametroInvalidoException;
 import model.services.ErpScriptService;
 import model.services.ParametrosService;
 
@@ -58,8 +61,12 @@ public class ErpScriptViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		lerParametros();
-		labelMsgArqScript.setText(arqScriptPasta);
+		try {
+			lerParametros();
+			labelMsgArqScript.setText(arqScriptPasta);
+		} catch (ParametroInvalidoException e) {
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Aplicar Script no Erp", e.getMessage(),AlertType.ERROR);
+		}
 	}
 
 	private void atualizarTela(ErpScriptService servico) {

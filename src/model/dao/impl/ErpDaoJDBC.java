@@ -183,7 +183,8 @@ public class ErpDaoJDBC implements ErpDao {
 			return lista;
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp \n \n" +
-								  "erro na consulta filtrada \n"  +  e.toString());
+								  "erro na consulta filtrada \n \n"  +
+								  "filtro: " + filtro + "\n \n" +  e.toString());
 		} finally {
 			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);
@@ -204,9 +205,9 @@ public class ErpDaoJDBC implements ErpDao {
 			return lista;
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp \n \n" +
-								  "erro na consulta da politica " 
-							 	  + String.format("%04d", codPolitica)
-								  + "\n" + e.toString());
+								  "erro na consulta da politica " +
+							 	  String.format("%04d", codPolitica) + "\n \n" +
+								  "filtro: " + clausulaWhere + "\n \n" +  e.toString());
 		} finally {
 			DB.fecharResultSet(rs);
 			DB.fecharStatement(st);

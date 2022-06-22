@@ -40,6 +40,8 @@ public class ValidarErpViewController implements Initializable {
 	@FXML
 	private Label labelMsgMatSemOS;
 	@FXML
+	private Label labelMsgValorIncoerente;
+	@FXML
 	private Button btValidar;
 	@FXML
 	private Button btSair;
@@ -51,6 +53,8 @@ public class ValidarErpViewController implements Initializable {
 	private TextField txtMatSemConversao;
 	@FXML
 	private TextField txtMatSemOS;
+	@FXML
+	private TextField txtValorIncoerente;
 	@FXML
 	private TextField txtFaltaOSouFrotaCC;
 	@FXML
@@ -116,6 +120,7 @@ public class ValidarErpViewController implements Initializable {
 		Integer qtdeOSAntigas = servico.getQtdeOSAntigas();
 		Integer qtdeOSAntigasDistintas = servico.getQtdeOSAntigasDistintas();
 		Integer qtdeMatSemOS = servico.getQtdeMatSemOS();
+		Integer qtdeValorIncoerente = servico.getQtdeValorIncoerente();
 		Integer qtdeFaltaOSouFrotaCC = servico.getQtdeFaltaOSouFrotaCC();
 		Integer qtdeTotalErros = qtdeCCInexistentes + qtdeMatSemConversao + qtdeFaltaOSouFrotaCC +
 				 qtdeOSInexistentes + qtdeOSIncoerentes + qtdeOSAntigas;
@@ -135,6 +140,7 @@ public class ValidarErpViewController implements Initializable {
 		txtOSAntigasDistintas.setText(qtdeOSAntigasDistintas.toString());
 		txtFaltaOSouFrotaCC.setText(qtdeFaltaOSouFrotaCC.toString());
 		txtMatSemOS.setText(qtdeMatSemOS.toString());
+		txtValorIncoerente.setText(qtdeValorIncoerente.toString());
 		
 		if ( (qtdeProcessados > 0) && (qtdeTotalErros == 0 )) {
 			labelMsgGeral.setText("Processo Concluido com Sucesso");
@@ -152,6 +158,7 @@ public class ValidarErpViewController implements Initializable {
 		labelMsgOSIncoerentes.setText(null);
 		labelMsgOSAntigas.setText(null);
 		labelMsgMatSemOS.setText(null);
+		labelMsgValorIncoerente.setText(null);
 		labelMsgFaltaOSouFrotaCC.setText(null);
 
 		if (qtdeProcessados > 0) {
@@ -179,6 +186,9 @@ public class ValidarErpViewController implements Initializable {
 		
 		if (qtdeMatSemOS > 0) {
 			labelMsgMatSemOS.setText("ALERTA: Existem Movimentos para Oficina que nao tem OS. Ver LogOS.");
+		}
+		if (qtdeValorIncoerente > 0) {
+			labelMsgValorIncoerente.setText("ALERTA: Valor Incoerente (Qtde x Unitário é diferente do Valor Total). Ver LogVI.");
 		}
 		if (qtdeFaltaOSouFrotaCC > 0) {
 			labelMsgFaltaOSouFrotaCC.setText("PENDENCIA: Se preenchido, necessário os dois campos. Ver LogOS.");

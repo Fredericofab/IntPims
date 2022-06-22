@@ -35,8 +35,10 @@ public class ValidarErpService {
 	String qtdeDiasOS;
 	String matPossiveisFator;
 	String matOficinaSemOS;
+	String valorIncoerente;
 	String arqLogCC;
 	String arqLogOS;
+	String arqLogVI;
 	
 	char aspas = '"';
 	
@@ -46,6 +48,7 @@ public class ValidarErpService {
 	Integer qtdeMatSemConversaoDistintos;
 	Integer qtdeMatSemConvencao;
 	Integer qtdeMatSemOS;
+	Integer qtdeValorIncoerente;
 	Integer qtdeFaltaOSouFrotaCC;;
 	Integer qtdeOSValidas;
 	Integer qtdeOSValidasDistintas;
@@ -83,6 +86,9 @@ public class ValidarErpService {
 	}
 	public Integer getQtdeMatSemOS() {
 		return qtdeMatSemOS;
+	}
+	public Integer getQtdeValorIncoerente() {
+		return qtdeValorIncoerente;
 	}
 	public Integer getQtdeFaltaOSouFrotaCC() {
 		return qtdeFaltaOSouFrotaCC;
@@ -124,6 +130,7 @@ public class ValidarErpService {
 			validarFaltaOSouFrotaCC();
 			validarOS();
 			validarMatSemOS();
+			validarValorIncoerente();
 			validarCCustos();
 			validarMatSemConversao();
 			Integer totaLPendente = qtdeCCInexistentes + 
@@ -145,7 +152,7 @@ public class ValidarErpService {
 		}
 	}
 
-//9 Rotinas Auxiliares de Validacao (Inicio)	
+//	10 Rotinas Auxiliares de Validacao (Inicio)	
 	
 	private void validarFaltaOSouFrotaCC() throws IOException {
 		qtdeFaltaOSouFrotaCC = 0;
@@ -303,6 +310,15 @@ public class ValidarErpService {
 		}
 	}
 	
+	private void validarValorIncoerente() throws IOException {
+		qtdeValorIncoerente = 0;
+		listaFiltrada = erpService.pesquisarTodosFiltrado(valorIncoerente);
+		for (Erp erp : listaFiltrada) {
+			qtdeValorIncoerente += 1;
+			gravaLogVIDetalhe("Valor Incoerente.", erp);
+		}
+	}
+
 	private void validarCCustos() throws IOException {
 		qtdeCCInexistentes = 0;
 		Integer qtde;
@@ -356,9 +372,9 @@ public class ValidarErpService {
 		}
 	}
 
-//9 Rotinas Auxiliares de Validacao (Termino)	
+//	10 Rotinas Auxiliares de Validacao (Termino)	
 	
-//3 Rotinas do Arquivo de Log (Inicio)
+//	4 Rotinas do Arquivo de Log (Inicio)
 	
 	private void criarArqLog() throws IOException, FileNotFoundException {
 		BufferedWriter bwCC = new BufferedWriter(new FileWriter(arqLogCC, false));
@@ -383,8 +399,22 @@ public class ValidarErpService {
 				 "NumeroOS,FrotaOuCC,NumeroERP,DataMov");
 		bwOS.newLine();
 		bwOS.close();
-	}
 
+		BufferedWriter bwVI = new BufferedWriter(new FileWriter(arqLogVI, false));
+		bwVI.write("ALERTA: Movimentos Qtde x Preço é diferente do Valor Total.");
+		bwVI.newLine();
+		bwVI.write("AnoMes de Referencia: " + anoMes);
+		bwVI.newLine();
+		bwVI.write("TArq,TMov," +
+				 "CCustos,DescCCustos,"   +
+				 "CContabil,DescCContabil," +
+				 "Material,DescMaterial,UN," +
+				 "Qtde,PUnit,VTotal," +
+				 "NumeroERP,DataMov");
+		bwVI.newLine();
+		bwVI.close();
+	}
+	
 	private void gravaLogOSDetalhe(String secao, Erp erp) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogOS, true));	
 		String linha = erp.getValidacoesOS() + "," + 
@@ -418,8 +448,30 @@ public class ValidarErpService {
 		bw.newLine();
 		bw.close();
 	}
+	
+	private void gravaLogVIDetalhe(String secao, Erp erp) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogVI, true));	
+		String linha = erp.getOrigem() + "," + 
+					   erp.getTipoMovimento() + "," + 
+					   String.format("%.0f", erp.getCodCentroCustos()) + "," + 
+					   erp.getDescCentroCustos() + "," + 
+					   erp.getCodContaContabil() + "," + 
+					   erp.getDescContaContabil() + "," + 
+					   aspas + erp.getCodMaterial() + aspas + "," + 
+					   erp.getDescMovimento().replace(",",".") + "," + 
+					   erp.getUnidadeMedida() + "," + 
+					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getQuantidade()) + "," + 
+					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
+					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getValorMovimento()) + "," + 
+					   erp.getDocumentoErp() + "," + 
+					   sdf.format(erp.getDataMovimento());
+		bw.write(linha);
+		bw.newLine();
+		bw.close();
+	}
 
-//	3 Rotinas do Arquivo de Log (Termino)
+
+//	4 Rotinas do Arquivo de Log (Termino)
 	
 //	3 Rotinas de Apoio (Inicio)
 
@@ -457,10 +509,14 @@ public class ValidarErpService {
 		matPossiveisFator = (parametrosService.pesquisarPorChave("ValidarErp", "MatPossiveisFator")).getValor();	
 		matOficinaSemOS = (parametrosService.pesquisarPorChave("ValidarErp", "MatOficinaSemOS")).getValor();
 
+		valorIncoerente = (parametrosService.pesquisarPorChave("ValidarErp", "ValorIncoerente")).getValor();
+				
 		String arqLogPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogPasta")).getValor();
 		String arqLogTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogTipo")).getValor();
 		arqLogCC = arqLogPasta + "LogCC" + anoMes + arqLogTipo ;
 		arqLogOS = arqLogPasta + "LogOS" + anoMes + arqLogTipo ;
+		arqLogVI = arqLogPasta + "LogVI" + anoMes + arqLogTipo ;
+
 	}
 
 //	3 Rotinas de Apoio (termino)	

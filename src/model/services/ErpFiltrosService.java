@@ -14,17 +14,17 @@ public class ErpFiltrosService {
 	String anoMes;
 
 	
-	public void salvarFiltro(String importar, String valorMaterial, String sobreporPolitica, Boolean liberacaoDupla, String politica, String validacaoOS, String filtro) {
+	public void salvarFiltro(String importar, String valorMaterial, String sobreporPolitica, Boolean liberacaoDupla, Boolean valorIncoerente, String politica, String validacaoOS, String filtro) {
 		String clausulaWhere;
 		if (filtro != null) {
 			clausulaWhere = filtro;
 		} else {
-			clausulaWhere = montarFiltro(importar, valorMaterial, sobreporPolitica, liberacaoDupla, politica, validacaoOS);
+			clausulaWhere = montarFiltro(importar, valorMaterial, sobreporPolitica, liberacaoDupla, valorIncoerente, politica, validacaoOS);
 		}
 		gravarWhere(clausulaWhere);
 	}	
 	
-	private String montarFiltro(String importar, String valorMaterial, String sobreporPolitica, Boolean liberacaoDupla, String politica, String validacaoOS) {
+	private String montarFiltro(String importar, String valorMaterial, String sobreporPolitica, Boolean liberacaoDupla, Boolean valorIncoerente, String politica, String validacaoOS) {
 		String clausulaWhere  = "";
 		String filtroImportar = "";;
 		String filtroValorMaterial = "";;
@@ -32,6 +32,7 @@ public class ErpFiltrosService {
 		String filtroPolitica  = "";
 		String filtroValidacaoOS  = "";
 		String filtroLiberacaoDupla = "";
+		String filtroValorIncoerente = "";
 
 		if (importar != null) {
 			if (importar.toUpperCase().equals("X") ) {
@@ -55,6 +56,12 @@ public class ErpFiltrosService {
 									"( SALVAR_CSTG_INTCM = 'S' AND SALVAR_OS_MATERIAL = 'S') OR " +
 									"( SALVAR_CSTG_INTDG = 'S' AND SALVAR_OS_MATERIAL = 'S')   )" ;
 		}
+		
+		if (valorIncoerente) {
+			filtroValorIncoerente = "((( QUANTIDADE * PRECO_UNITARIO - VALOR_MOVIMENTO ) > 1.00  ) OR " + 
+					                 "(( QUANTIDADE * PRECO_UNITARIO - VALOR_MOVIMENTO ) < -1.00 )    )";
+		}
+		
 		filtroSobreporPolitica = (sobreporPolitica != null) ? "SOBREPOR_POLITICAS = '" + sobreporPolitica + "'" : "";
 		filtroPolitica = (politica != null) ? "POLITICAS LIKE '%" + politica + "%'" : "";
 		filtroValidacaoOS = (validacaoOS != null) ? "VALIDACOES_OS = '" + validacaoOS + "'" : "";
@@ -77,6 +84,9 @@ public class ErpFiltrosService {
 		}
 		if (liberacaoDupla ) {
 			clausulaWhere = ( clausulaWhere == null ) ? filtroLiberacaoDupla : clausulaWhere + " AND " + filtroLiberacaoDupla;
+		}
+		if (valorIncoerente ) {
+			clausulaWhere = ( clausulaWhere == null ) ? filtroValorIncoerente : clausulaWhere + " AND " + filtroValorIncoerente;
 		}
 
 		return clausulaWhere;
