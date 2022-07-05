@@ -136,7 +136,8 @@ public class ValidarErpService {
 			Integer totaLPendente = qtdeCCInexistentes + 
 									qtdeFaltaOSouFrotaCC + 
 									qtdeMatSemConvencao +
-									qtdeOSInexistentes +  qtdeOSIncoerentes + qtdeOSAntigas;
+									qtdeOSInexistentes +  qtdeOSIncoerentes + qtdeOSAntigas +
+									qtdeValorIncoerente;
 			if (totaLPendente == 0) {
 				processoAtualService.atualizarEtapa("ValidarErp", "S");
 			} else {
@@ -312,10 +313,15 @@ public class ValidarErpService {
 	
 	private void validarValorIncoerente() throws IOException {
 		qtdeValorIncoerente = 0;
-		listaFiltrada = erpService.pesquisarTodosFiltrado(valorIncoerente);
-		for (Erp erp : listaFiltrada) {
-			qtdeValorIncoerente += 1;
-			gravaLogVIDetalhe("Valor Incoerente.", erp);
+		Double limiteSuperior = 1.00 + Double.parseDouble(valorIncoerente)/100;
+		Double limiteInferior = 1.00 - Double.parseDouble(valorIncoerente)/100;
+
+		for (Erp erp : lista) {
+			Double calculo = ( erp.getValorMovimento() == 0.00 ? 0.00 : erp.getQuantidade() * erp.getPrecoUnitario() / erp.getValorMovimento());
+			if ( calculo > limiteSuperior || calculo < limiteInferior ) {
+				qtdeValorIncoerente += 1;
+				gravaLogVIDetalhe("Valor Incoerente.", erp);
+			}	
 		}
 	}
 
@@ -401,7 +407,7 @@ public class ValidarErpService {
 		bwOS.close();
 
 		BufferedWriter bwVI = new BufferedWriter(new FileWriter(arqLogVI, false));
-		bwVI.write("ALERTA: Movimentos Qtde x Preço é diferente do Valor Total.");
+		bwVI.write("VALIDAÇÃO: Movimentos Qtde x Valor Unitário é diferente do Valor Total.");
 		bwVI.newLine();
 		bwVI.write("AnoMes de Referencia: " + anoMes);
 		bwVI.newLine();
@@ -423,13 +429,13 @@ public class ValidarErpService {
 					   String.format("%.0f", erp.getCodCentroCustos()) + "," + 
 					   erp.getDescCentroCustos() + "," + 
 					   erp.getCodContaContabil() + "," + 
-					   erp.getDescContaContabil() + "," + 
+					   erp.getDescContaContabil().replace(",", " ")  + "," + 
 					   aspas + erp.getCodMaterial() + aspas + "," + 
-					   erp.getDescMovimento().replace(",",".") + "," + 
+					   erp.getDescMovimento().replace(",", " ") + "," + 
 					   erp.getUnidadeMedida() + "," + 
-					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getQuantidade()) + "," + 
-					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
-					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getValorMovimento()) + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getQuantidade()) + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getValorMovimento()) + "," + 
 					   erp.getNumeroOS() + "," + 
 					   erp.getFrotaOuCC() + "," + 
 					   erp.getDocumentoErp() + "," + 
@@ -456,13 +462,13 @@ public class ValidarErpService {
 					   String.format("%.0f", erp.getCodCentroCustos()) + "," + 
 					   erp.getDescCentroCustos() + "," + 
 					   erp.getCodContaContabil() + "," + 
-					   erp.getDescContaContabil() + "," + 
+					   erp.getDescContaContabil().replace(",", " ") +  "," + 
 					   aspas + erp.getCodMaterial() + aspas + "," + 
-					   erp.getDescMovimento().replace(",",".") + "," + 
+					   erp.getDescMovimento().replace(",", " ") +  "," + 
 					   erp.getUnidadeMedida() + "," + 
-					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getQuantidade()) + "," + 
-					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
-					   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(erp.getValorMovimento()) + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getQuantidade()) + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getValorMovimento()) + "," + 
 					   erp.getDocumentoErp() + "," + 
 					   sdf.format(erp.getDataMovimento());
 		bw.write(linha);
@@ -510,7 +516,7 @@ public class ValidarErpService {
 		matOficinaSemOS = (parametrosService.pesquisarPorChave("ValidarErp", "MatOficinaSemOS")).getValor();
 
 		valorIncoerente = (parametrosService.pesquisarPorChave("ValidarErp", "ValorIncoerente")).getValor();
-				
+		
 		String arqLogPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogPasta")).getValor();
 		String arqLogTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogTipo")).getValor();
 		arqLogCC = arqLogPasta + "LogCC" + anoMes + arqLogTipo ;

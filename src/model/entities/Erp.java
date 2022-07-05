@@ -14,6 +14,7 @@ public class Erp implements Serializable {
 	private String descCentroCustos;
 	private String codContaContabil;
 	private String descContaContabil;
+	private String codNatureza;
 	private String codMaterial;
 	private String descMovimento;
 	private String unidadeMedida;
@@ -38,11 +39,11 @@ public class Erp implements Serializable {
 	public Erp() {
 	}
 	public Erp(String origem, String tipoMovimento, String anoMes, Double codCentroCustos, String descCentroCustos,
-			String codContaContabil, String descContaContabil, String codMaterial, String descMovimento,
-			String unidadeMedida, Double quantidade, Double precoUnitario, Double valorMovimento, String numeroOS,
-			String frotaOuCC, String documentoErp, Date dataMovimento, String sobreporPoliticas, String importar,
-			String observacao, String validacoesOS, String politicas, String salvarOS_Material, String salvarCstg_IntVM,
-			String salvarCstg_IntCM, String salvarCstg_IntDG, Integer sequencial) {
+			String codContaContabil, String descContaContabil, String codNatureza, String codMaterial,
+			String descMovimento, String unidadeMedida, Double quantidade, Double precoUnitario, Double valorMovimento,
+			String numeroOS, String frotaOuCC, String documentoErp, Date dataMovimento, String sobreporPoliticas,
+			String importar, String observacao, String validacoesOS, String politicas, String salvarOS_Material,
+			String salvarCstg_IntVM, String salvarCstg_IntCM, String salvarCstg_IntDG, Integer sequencial) {
 		super();
 		this.origem = origem;
 		this.tipoMovimento = tipoMovimento;
@@ -51,6 +52,7 @@ public class Erp implements Serializable {
 		this.descCentroCustos = descCentroCustos;
 		this.codContaContabil = codContaContabil;
 		this.descContaContabil = descContaContabil;
+		this.codNatureza = codNatureza;
 		this.codMaterial = codMaterial;
 		this.descMovimento = descMovimento;
 		this.unidadeMedida = unidadeMedida;
@@ -113,6 +115,12 @@ public class Erp implements Serializable {
 	}
 	public void setDescContaContabil(String descContaContabil) {
 		this.descContaContabil = descContaContabil;
+	}
+	public String getCodNatureza() {
+		return codNatureza;
+	}
+	public void setCodNatureza(String codNatureza) {
+		this.codNatureza = codNatureza;
 	}
 	public String getCodMaterial() {
 		return codMaterial;
@@ -257,14 +265,13 @@ public class Erp implements Serializable {
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
 		return "Erp [origem=" + origem + ", tipoMovimento=" + tipoMovimento + ", anoMes=" + anoMes
 				+ ", codCentroCustos=" + codCentroCustos + ", descCentroCustos=" + descCentroCustos
 				+ ", codContaContabil=" + codContaContabil + ", descContaContabil=" + descContaContabil
-				+ ", codMaterial=" + codMaterial + ", descMovimento=" + descMovimento + ", unidadeMedida="
-				+ unidadeMedida + ", quantidade=" + quantidade + ", precoUnitario=" + precoUnitario
+				+ ", codNatureza=" + codNatureza + ", codMaterial=" + codMaterial + ", descMovimento=" + descMovimento
+				+ ", unidadeMedida=" + unidadeMedida + ", quantidade=" + quantidade + ", precoUnitario=" + precoUnitario
 				+ ", valorMovimento=" + valorMovimento + ", numeroOS=" + numeroOS + ", frotaOuCC=" + frotaOuCC
 				+ ", documentoErp=" + documentoErp + ", dataMovimento=" + dataMovimento + ", sobreporPoliticas="
 				+ sobreporPoliticas + ", importar=" + importar + ", observacao=" + observacao + ", validacoesOS="

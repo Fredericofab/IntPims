@@ -188,7 +188,7 @@ public class ValidarErpViewController implements Initializable {
 			labelMsgMatSemOS.setText("ALERTA: Existem Movimentos para Oficina que nao tem OS. Ver LogOS.");
 		}
 		if (qtdeValorIncoerente > 0) {
-			labelMsgValorIncoerente.setText("ALERTA: Valor Incoerente (Qtde x Unitário é diferente do Valor Total). Ver LogVI.");
+			labelMsgValorIncoerente.setText("PENDENCIA: Valor Incoerente (Qtde x Unitário é diferente do Valor Total). Ver LogVI.");
 		}
 		if (qtdeFaltaOSouFrotaCC > 0) {
 			labelMsgFaltaOSouFrotaCC.setText("PENDENCIA: Se preenchido, necessário os dois campos. Ver LogOS.");

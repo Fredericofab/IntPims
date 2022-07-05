@@ -63,6 +63,8 @@ public class ErpFormController implements Initializable {
 	@FXML
 	private TextField txtDescContaContabil;
 	@FXML
+	private TextField txtCodNatureza;
+	@FXML
 	private TextField txtCodMaterial;
 	@FXML
 	private TextField txtDescMovimento;
@@ -186,6 +188,7 @@ public class ErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescCentroCustos, 50);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodContaContabil,20);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescContaContabil,50);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodNatureza, 9);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodMaterial, 10);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtUnidadeMedida,5);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescMovimento,255);
@@ -230,6 +233,7 @@ public class ErpFormController implements Initializable {
 		txtDescCentroCustos.setDisable(b);
 		txtCodContaContabil.setDisable(b);
 		txtDescContaContabil.setDisable(b);
+		txtCodNatureza.setDisable(b);
 		txtCodMaterial.setDisable(b);
 		txtDescMovimento.setDisable(b);
 		txtUnidadeMedida.setDisable(b);
@@ -263,12 +267,13 @@ public class ErpFormController implements Initializable {
 		txtDescCentroCustos.setText(entidade.getDescCentroCustos());
 		txtCodContaContabil.setText(entidade.getCodContaContabil());
 		txtDescContaContabil.setText(entidade.getDescContaContabil());
+		txtCodNatureza.setText(entidade.getCodNatureza());
 		txtCodMaterial.setText(entidade.getCodMaterial());
 		txtDescMovimento.setText(entidade.getDescMovimento());
 		txtUnidadeMedida.setText(entidade.getUnidadeMedida());
-		txtQuantidade.setText(String.format("%.2f", entidade.getQuantidade()));
-		txtPrecoUnitario.setText(String.format("%.2f", entidade.getPrecoUnitario()));
-		txtValorMovimento.setText(String.format("%.2f", entidade.getValorMovimento()));
+		txtQuantidade.setText(String.format("%.4f", entidade.getQuantidade()));
+		txtPrecoUnitario.setText(String.format("%.4f", entidade.getPrecoUnitario()));
+		txtValorMovimento.setText(String.format("%.4f", entidade.getValorMovimento()));
 		txtNumeroOS.setText(entidade.getNumeroOS());
 		txtFrotaOuCC.setText(entidade.getFrotaOuCC());
 		txtValidacoesOS.setText(entidade.getValidacoesOS());
@@ -309,6 +314,7 @@ public class ErpFormController implements Initializable {
 		objeto.setDescCentroCustos(txtDescCentroCustos.getText());
 		objeto.setCodContaContabil(txtCodContaContabil.getText());
 		objeto.setDescContaContabil(txtDescContaContabil.getText());
+		objeto.setCodNatureza(txtCodNatureza.getText());
 		objeto.setCodMaterial(txtCodMaterial.getText());
 		objeto.setDescMovimento(txtDescMovimento.getText());
 		objeto.setUnidadeMedida(txtUnidadeMedida.getText());

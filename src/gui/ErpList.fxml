@@ -15,11 +15,12 @@
 
 <VBox prefHeight="594.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ErpListController">
    <children>
-      <ToolBar prefHeight="7.0" prefWidth="1965.0">
+      <ToolBar prefHeight="58.0" prefWidth="1106.0">
         <items>
           <Button fx:id="btIncluir" mnemonicParsing="false" onAction="#onBtIncluirAction" text="Incluir" />
             <Button fx:id="btFiltrar" mnemonicParsing="false" onAction="#onBtFiltrarAction" prefHeight="25.0" prefWidth="56.0" text="Filtro" />
             <Button fx:id="btAplicarScript" mnemonicParsing="false" onAction="#onBtAplicarScriptAction" text="Aplicar Script" />
+            <Button fx:id="btRecalcularValor" mnemonicParsing="false" onAction="#onRecalcularValorAction" text="Recalcular Valor Unit." />
             <Button fx:id="btGerarTxt" mnemonicParsing="false" onAction="#onGerarTxtAction" text="GerarTXT" />
             <Button disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="479.0" text="Button" visible="false" />
             <Button fx:id="btSair" mnemonicParsing="false" onAction="#onBtSairAction" prefHeight="25.0" prefWidth="63.0" text="Sair" />
@@ -67,7 +68,8 @@
             <TableColumn fx:id="tableColumnDescCentroCustos" prefWidth="10.0" text="Desc. C.Custos" />
             <TableColumn fx:id="tableColumnCodContaContabil" prefWidth="70.0" text="C.Contabil" />
             <TableColumn fx:id="tableColumnDescContaContabil" prefWidth="10.0" text="Desc. C.Contabil" />
-            <TableColumn fx:id="tableColumnCodMaterial" text="Material" />
+            <TableColumn fx:id="tableColumnCodNatureza" prefWidth="10.0" text="Natureza" />
+            <TableColumn fx:id="tableColumnCodMaterial" prefWidth="132.0" text="Material" />
             <TableColumn fx:id="tableColumnDescMovimento" prefWidth="10.0" text="Desc Movimento" />
             <TableColumn fx:id="tableColumnUnidadeMedida" prefWidth="10.0" text="UN" />
             <TableColumn fx:id="tableColumnQuantidade" prefWidth="56.0" text="Qtde" />

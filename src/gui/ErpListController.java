@@ -74,6 +74,8 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private TableColumn<Erp, String> tableColumnDescContaContabil;
 	@FXML
+	private TableColumn<Erp, String> tableColumnCodNatureza;
+	@FXML
 	private TableColumn<Erp, Double> tableColumnCodMaterial;
 	@FXML
 	private TableColumn<Erp, String> tableColumnDescMovimento;
@@ -129,6 +131,8 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 	@FXML
 	private Button btAplicarScript;
 	@FXML
+	private Button btRecalcularValor;
+	@FXML
 	private Button btGerarTxt;
 	@FXML
 	private Button btSair;
@@ -167,6 +171,12 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		criarJanelaFilha(caminhoDaView, "Aplicar Script no Erp", parentStage,
 				(ErpScriptViewController controle) -> { controle.serOuvinteDeDadosAlteradosListener(this);	});
 	}
+	
+	@FXML
+	public void onRecalcularValorAction(ActionEvent evento) {
+		servico.recalcularValor();
+		onBtLimparFiltroAction(evento);
+	}
 
 	@FXML
 	public void onGerarTxtAction(ActionEvent evento) {
@@ -198,6 +208,7 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnDescCentroCustos.setCellValueFactory(new PropertyValueFactory<>("descCentroCustos"));
 		tableColumnCodContaContabil.setCellValueFactory(new PropertyValueFactory<>("codContaContabil"));
 		tableColumnDescContaContabil.setCellValueFactory(new PropertyValueFactory<>("descContaContabil"));
+		tableColumnCodNatureza.setCellValueFactory(new PropertyValueFactory<>("codNatureza"));
 		tableColumnCodMaterial.setCellValueFactory(new PropertyValueFactory<>("codMaterial"));
 		tableColumnDescMovimento.setCellValueFactory(new PropertyValueFactory<>("descMovimento"));
 		tableColumnUnidadeMedida.setCellValueFactory(new PropertyValueFactory<>("unidadeMedida"));
@@ -219,9 +230,9 @@ public class ErpListController implements Initializable, DadosAlteradosListener 
 		tableColumnObservacao.setCellValueFactory(new PropertyValueFactory<>("observacao"));
 		
 		Utilitarios.formatarTableColumnDouble(tableColumnCodCentroCustos, 0);
-		Utilitarios.formatarTableColumnDouble(tableColumnQuantidade, 2);
-		Utilitarios.formatarTableColumnDouble(tableColumnPrecoUnitario, 2);
-		Utilitarios.formatarTableColumnDouble(tableColumnValorMovimento, 2);
+		Utilitarios.formatarTableColumnDouble(tableColumnQuantidade, 4);
+		Utilitarios.formatarTableColumnDouble(tableColumnPrecoUnitario, 4);
+		Utilitarios.formatarTableColumnDouble(tableColumnValorMovimento, 4);
 		Utilitarios.formatarTableColumnDate(tableColumnDataMovimento, "dd/MM/yyyy");
 
 		tableColumnCodCentroCustos.setStyle("-fx-alignment: TOP-RIGHT");

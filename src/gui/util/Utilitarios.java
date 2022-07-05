@@ -129,16 +129,28 @@ public class Utilitarios {
 		});
 	}
 
-	public static NumberFormat formatarNumeroDecimalComMilhar(char decimal, char milhar ) {
+	public static NumberFormat formatarNumeroDecimal2ComMilhar(char decimal, char milhar ) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
         symbols.setDecimalSeparator(decimal);
         symbols.setGroupingSeparator(milhar);
         return new DecimalFormat("#,##0.00", symbols);
     }
-	public static NumberFormat formatarNumeroDecimalSemMilhar(char decimal) {
+	public static NumberFormat formatarNumeroDecimal4ComMilhar(char decimal, char milhar ) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
+        symbols.setDecimalSeparator(decimal);
+        symbols.setGroupingSeparator(milhar);
+        return new DecimalFormat("#,##0.0000", symbols);
+    }
+	public static NumberFormat formatarNumeroDecimal2SemMilhar(char decimal) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
         symbols.setDecimalSeparator(decimal);
         return new DecimalFormat("#0.00", symbols);
+    }
+
+	public static NumberFormat formatarNumeroDecimal4SemMilhar(char decimal) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
+        symbols.setDecimalSeparator(decimal);
+        return new DecimalFormat("#0.0000", symbols);
     }
 	public static NumberFormat formatarNumeroInteiroComMilhar(char milhar) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);

@@ -47,6 +47,7 @@ public class ImportarErpService {
 	String descCentroCustos;
 	String codContaContabil;
 	String descContaContabil;
+	String codNatureza;
 	String codMaterial;
 	String descMovimento;
 	String unidadeMedida;
@@ -181,7 +182,7 @@ public class ImportarErpService {
 				throw new TxtIntegridadeException("Registro nao Coerente com o Mês de Referencia");
 			}
 			Erp dadosErp = new Erp(origem, tipoMovimento, anoMes, codCentroCustos, descCentroCustos, codContaContabil,
-					descContaContabil, codMaterial, descMovimento, unidadeMedida, quantidade, precoUnitario,
+					descContaContabil, codNatureza, codMaterial, descMovimento, unidadeMedida, quantidade, precoUnitario,
 					valorMovimento, manfroOS, frotaOuCC, documentoErp, dataMovimento, sobreporPoliticas, importar, observacao, validacoes, politicas,
 					salvarOS_Material, salvarCstg_IntVM, salvarCstg_IntCM, salvarCstg_IntDG, sequencial);
 			return dadosErp;
@@ -218,6 +219,7 @@ public class ImportarErpService {
 	}
 
 	private void converteRegistroRM(String[] campos) throws ParseException {
+		codNatureza = "FRED RM";
 		if (campos.length == 16) {
 			tipoMovimento = campos[0];
 			documentoErp = campos[1];
@@ -243,6 +245,7 @@ public class ImportarErpService {
 	}
 
 	private void converteRegistroED(String[] campos) throws ParseException {
+		codNatureza = "FRED ED";
 		if (campos.length == 16) {
 			tipoMovimento = campos[0];
 			documentoErp = campos[1];
@@ -268,6 +271,7 @@ public class ImportarErpService {
 	}
 
 	private void converteRegistroDF(String[] campos) throws ParseException {
+		codNatureza = "FRED DF";
 		if (campos.length == 10 || campos.length == 11 ) {
 //			As vezes o usuário digita com um ";" no meio da descricao do movimento
 			documentoErp = campos[0];

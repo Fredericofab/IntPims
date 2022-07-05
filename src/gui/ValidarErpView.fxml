@@ -121,6 +121,7 @@
             <Label fx:id="labelMsgOSIncoerentes" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="8" />
             <Label fx:id="labelMsgOSAntigas" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="9" />
             <Label fx:id="labelMsgMatSemOS" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+            <Label fx:id="labelMsgValorIncoerente" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="11" />
             <Label text="Distintos" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="20.0" />
@@ -132,7 +133,6 @@
             <TextField fx:id="txtOSInexistentesDistintas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <TextField fx:id="txtOSIncoerentesDistintas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
             <TextField fx:id="txtOSAntigasDistintas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-            <Label fx:id="labelMsgValorIncoerente" GridPane.columnIndex="3" GridPane.rowIndex="11" />
          </children>
          <VBox.margin>
             <Insets top="30.0" />

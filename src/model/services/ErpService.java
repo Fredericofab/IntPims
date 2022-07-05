@@ -12,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.dao.ErpDao;
 import model.dao.FabricaDeDao;
 import model.entities.Erp;
+import model.entities.ProcessoAtual;
 import model.exceptions.ParametroInvalidoException;
 
 public class ErpService {
@@ -23,6 +24,8 @@ public class ErpService {
 
 //	parametros
 	String saida;
+	String valorIncoerente;
+	String anoMes;
 
 	public List<Erp> pesquisarTodos() {
 		return dao.listarTodos();
@@ -57,16 +60,37 @@ public class ErpService {
 	public void executarScript(String linha) {
 		dao.executarScript(linha);
 	}
+	public void recalcularValor() {
+		lerParametros(false);
+		Double limiteSuperior = 1.00 + Double.parseDouble(valorIncoerente)/100;
+		Double limiteInferior = 1.00 - Double.parseDouble(valorIncoerente)/100;
+		List<Erp> lista = pesquisarTodos();
+		for (Erp erp : lista) {
+			Double calculo = ( erp.getValorMovimento() == 0.00 ? 0.00 : erp.getQuantidade() * erp.getPrecoUnitario() / erp.getValorMovimento());
+			if ( calculo > limiteSuperior || calculo < limiteInferior ) {
+				if (erp.getObservacao() == null) {
+					erp.setObservacao("Preço Unitario Anterior: " + erp.getPrecoUnitario());
+				}
+				else{
+					erp.setObservacao("Preço Unitario Anterior: " + erp.getPrecoUnitario() + " . " + erp.getObservacao());
+				}
+				erp.setPrecoUnitario(erp.getValorMovimento() / erp.getQuantidade());
+				dao.atualizar(erp);
+			}	 
+		}
+	}
+
 	
 	public void gerarTxt(Boolean oficial) {
 		try {
 			lerParametros(oficial);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			List<Erp> lista = pesquisarTodos();
+			String filtro = lerFiltroMovimentoErp();
+			List<Erp> lista = ((filtro == null || oficial ) ? pesquisarTodos() : pesquisarTodosFiltrado(filtro));
 			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
 				bw.write("TArq,TMov,anoMes," +
 						 "CCustos,DescCCustos,"   +
-						 "CContabil,DescCContabil," +
+						 "CContabil,DescCContabil,Natureza" +
 						 "Material,DescMaterial,UN," +
 						 "Qtde,PUnit,VTotal," +
 						 "NumeroOS,FrotaOuCC,NumeroERP,Data," +
@@ -84,12 +108,13 @@ public class ErpService {
 								   dadosErp.getDescCentroCustos() + "," + 
 								   dadosErp.getCodContaContabil() + "," + 
 								   dadosErp.getDescContaContabil() + "," + 
+								   dadosErp.getCodNatureza() + "," + 
 								   dadosErp.getCodMaterial() + "," + 
 								   dadosErp.getDescMovimento().replace(",",".") + "," + 
 								   dadosErp.getUnidadeMedida() + "," + 
-								   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getQuantidade())  + "," + 
-								   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getPrecoUnitario())  + "," + 
-								   Utilitarios.formatarNumeroDecimalSemMilhar('.').format(dadosErp.getValorMovimento())  + "," + 
+								   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(dadosErp.getQuantidade())  + "," + 
+								   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(dadosErp.getPrecoUnitario())  + "," + 
+								   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(dadosErp.getValorMovimento())  + "," + 
 								   dadosErp.getNumeroOS() + "," + 
 								   dadosErp.getFrotaOuCC() + "," + 
 								   dadosErp.getDocumentoErp() + "," + 
@@ -117,16 +142,25 @@ public class ErpService {
 		}
 	}
 
+	private String lerFiltroMovimentoErp() {
+		ProcessoAtualService processoAtualService = new ProcessoAtualService();
+		ProcessoAtual processoAtual = processoAtualService.pesquisarPorChave(anoMes);
+		return processoAtual.getFiltroErp();
+	}
+	
 	private void lerParametros(Boolean oficial) {
-		String anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
+		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
 		String arqSaidaPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaPasta")).getValor();
 		String arqSaidaTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqSaidaTipo")).getValor();
+
 		if (oficial) {
 			saida = arqSaidaPasta + "DadosErp" + anoMes + "_oficial" + arqSaidaTipo ;
 		}
 		else {
 			saida = arqSaidaPasta + "DadosErp" + anoMes + arqSaidaTipo ;
 		}
+		
+		valorIncoerente = (parametrosService.pesquisarPorChave("ValidarErp", "ValorIncoerente")).getValor();
 	}
 
 	private void reatualizarEtapaDoProcesso() {

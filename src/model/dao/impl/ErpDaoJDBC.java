@@ -31,8 +31,9 @@ public class ErpDaoJDBC implements ErpDao {
 							+ "quantidade,preco_Unitario,valor_Movimento,"
 							+ "numero_OS,frota_ou_cc,documento_Erp,data_Movimento,"
 							+ "sobrepor_Politicas,importar,observacao,validacoes_OS,politicas,"
-							+ "salvar_OS_Material,salvar_Cstg_IntVM,salvar_Cstg_intCM,salvar_Cstg_intDG," + "sequencial)"
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+							+ "salvar_OS_Material,salvar_Cstg_IntVM,salvar_Cstg_intCM,salvar_Cstg_intDG,"
+							+ "codigo_Natureza,sequencial)"
+					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			st.setString(1, objeto.getOrigem().toUpperCase());
 			st.setString(2, objeto.getTipoMovimento());
 			st.setString(3, objeto.getAnoMes());
@@ -59,7 +60,8 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setString(24, objeto.getSalvarCstg_IntVM());
 			st.setString(25, objeto.getSalvarCstg_IntCM());
 			st.setString(26, objeto.getSalvarCstg_IntDG());
-			st.setInt(27, objeto.getSequencial());
+			st.setString(27, objeto.getCodNatureza());
+			st.setInt(28, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -77,7 +79,8 @@ public class ErpDaoJDBC implements ErpDao {
 					+ "quantidade = ?,	preco_Unitario = ?,	valor_Movimento = ?, "
 					+ "numero_OS = ?,	frota_ou_cc = ?, documento_Erp = ?,	data_Movimento = ?,	"
 					+ "sobrepor_Politicas = ?,importar = ?,	observacao = ?, validacoes_OS = ?,	politicas = ?,	"
-					+ "salvar_OS_Material = ?, salvar_Cstg_IntVM = ?, salvar_Cstg_intCM = ?, salvar_Cstg_intDG = ?"
+					+ "salvar_OS_Material = ?, salvar_Cstg_IntVM = ?, salvar_Cstg_intCM = ?, salvar_Cstg_intDG = ?,"
+					+ "codigo_natureza = ?"
 					+ "WHERE sequencial = ?");
 
 			st.setString(1, objeto.getOrigem().toUpperCase());
@@ -106,7 +109,8 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setString(24, objeto.getSalvarCstg_IntVM());
 			st.setString(25, objeto.getSalvarCstg_IntCM());
 			st.setString(26, objeto.getSalvarCstg_IntDG());
-			st.setInt(27, objeto.getSequencial());
+			st.setString(27, objeto.getCodNatureza());
+			st.setInt(28, objeto.getSequencial());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException("Tabela Erp  \n \n" + e.getMessage() + "\n \n" + objeto);
@@ -579,6 +583,7 @@ public class ErpDaoJDBC implements ErpDao {
 		dadosErp.setSalvarCstg_IntVM(rs.getString("Salvar_Cstg_IntVM"));
 		dadosErp.setSalvarCstg_IntCM(rs.getString("Salvar_Cstg_intCM"));
 		dadosErp.setSalvarCstg_IntDG(rs.getString("Salvar_Cstg_intDG"));
+		dadosErp.setCodNatureza(rs.getString("Codigo_Natureza"));
 		dadosErp.setSequencial(rs.getInt("Sequencial"));
 		return dadosErp;
 	}
