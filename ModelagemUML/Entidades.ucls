@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="model.entities.Cstg_IntFP" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntFP.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="146" y="2627"/>    
+    <position height="-1" width="-1" x="132" y="2647"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="model.entities.ProcessoAtual" project="intPims" 
     file="/intPims/src/model/entities/ProcessoAtual.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="611" y="-1382"/>    
+    <position height="-1" width="-1" x="581" y="-1436"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="model.entities.FuncionariosSumarizados" project="intPims" 
     file="/intPims/src/model/entities/FuncionariosSumarizados.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="422" y="341"/>    
+    <position height="-1" width="-1" x="420" y="350"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="model.entities.Erp" project="intPims" file="/intPims/src/model/entities/Erp.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="452" y="1497"/>    
+    <position height="-1" width="-1" x="453" y="1528"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -102,7 +102,7 @@
   </class>  
   <class id="12" language="java" name="model.entities.Cstg_IntCM" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntCM.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="552" y="2758"/>    
+    <position height="-1" width="-1" x="545" y="2782"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -111,7 +111,7 @@
   </class>  
   <class id="13" language="java" name="model.entities.Cstg_IntDG" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntDG.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="954" y="2620"/>    
+    <position height="-1" width="-1" x="952" y="2650"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -120,7 +120,7 @@
   </class>  
   <class id="14" language="java" name="model.entities.Cstg_IntVM" project="intPims" 
     file="/intPims/src/model/entities/Cstg_IntVM.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1252" y="2590"/>    
+    <position height="-1" width="-1" x="1250" y="2620"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -129,7 +129,7 @@
   </class>  
   <class id="15" language="java" name="model.entities.OS_Material" project="intPims" 
     file="/intPims/src/model/entities/OS_Material.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1620" y="2718"/>    
+    <position height="-1" width="-1" x="1618" y="2751"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -138,7 +138,7 @@
   </class>  
   <class id="16" language="java" name="model.entities.PlcPrim" project="intPims" 
     file="/intPims/src/model/entities/PlcPrim.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="110" y="3333"/>    
+    <position height="-1" width="-1" x="111" y="3437"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -147,7 +147,7 @@
   </class>  
   <class id="17" language="java" name="model.entities.PlcRat" project="intPims" 
     file="/intPims/src/model/entities/PlcRat.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="368" y="3360"/>    
+    <position height="-1" width="-1" x="354" y="3464"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -156,7 +156,16 @@
   </class>  
   <class id="18" language="java" name="model.entities.DadosContabil" project="intPims" 
     file="/intPims/src/model/entities/DadosContabil.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="696" y="3423"/>    
+    <position height="-1" width="-1" x="696" y="3525"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="model.entities.Comp_Mat" project="intPims" 
+    file="/intPims/src/model/entities/Comp_Mat.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2001" y="2615"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

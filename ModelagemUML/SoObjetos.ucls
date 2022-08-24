@@ -795,7 +795,7 @@
   </class>  
   <class id="89" language="java" name="model.services.Cstg_IntCMService" project="intPims" 
     file="/intPims/src/model/services/Cstg_IntCMService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="149" x="928" y="1960"/>    
+    <position height="37" width="149" x="726" y="1958"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -804,7 +804,7 @@
   </class>  
   <class id="90" language="java" name="model.services.Cstg_IntDGService" project="intPims" 
     file="/intPims/src/model/services/Cstg_IntDGService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="146" x="618" y="1959"/>    
+    <position height="37" width="146" x="519" y="1959"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -822,7 +822,7 @@
   </class>  
   <class id="92" language="java" name="model.services.Cstg_IntVMService" project="intPims" 
     file="/intPims/src/model/services/Cstg_IntVMService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="153" x="327" y="1959"/>    
+    <position height="37" width="153" x="303" y="1958"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -876,7 +876,7 @@
   </class>  
   <interface id="98" language="java" name="model.dao.Cstg_IntDGDao" project="intPims" 
     file="/intPims/src/model/dao/Cstg_IntDGDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="39" width="145" x="619" y="2000"/>    
+    <position height="39" width="145" x="520" y="2000"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -894,7 +894,7 @@
   </interface>  
   <interface id="100" language="java" name="model.dao.Cstg_IntVMDao" project="intPims" 
     file="/intPims/src/model/dao/Cstg_IntVMDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="153" x="327" y="2000"/>    
+    <position height="37" width="153" x="303" y="1999"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -903,7 +903,7 @@
   </interface>  
   <interface id="101" language="java" name="model.dao.Cstg_IntCMDao" project="intPims" 
     file="/intPims/src/model/dao/Cstg_IntCMDao.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="148" x="928" y="2001"/>    
+    <position height="37" width="148" x="726" y="1999"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -948,7 +948,7 @@
   </class>  
   <class id="106" language="java" name="model.dao.impl.Cstg_IntCMDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/Cstg_IntCMDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="148" x="928" y="2042"/>    
+    <position height="37" width="148" x="726" y="2040"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -957,7 +957,7 @@
   </class>  
   <class id="107" language="java" name="model.dao.impl.Cstg_IntVMDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/Cstg_IntVMDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="154" x="327" y="2041"/>    
+    <position height="37" width="154" x="303" y="2040"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -993,7 +993,7 @@
   </class>  
   <class id="111" language="java" name="model.dao.impl.Cstg_IntDGDaoJDBC" project="intPims" 
     file="/intPims/src/model/dao/impl/Cstg_IntDGDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="37" width="146" x="618" y="2041"/>    
+    <position height="37" width="146" x="519" y="2041"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -1156,6 +1156,42 @@
   <class id="129" language="java" name="model.services.DadosContabilService" project="intPims" 
     file="/intPims/src/model/services/DadosContabilService.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="37" width="156" x="66" y="2179"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="130" language="java" name="model.entities.Comp_Mat" project="intPims" 
+    file="/intPims/src/model/entities/Comp_Mat.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="98" x="826" y="-36"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="131" language="java" name="model.services.Comp_MatService" project="intPims" 
+    file="/intPims/src/model/services/Comp_MatService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="139" x="936" y="1960"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="132" language="java" name="model.dao.Comp_MatDao" project="intPims" 
+    file="/intPims/src/model/dao/Comp_MatDao.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="138" x="935" y="1999"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="133" language="java" name="model.dao.impl.Comp_MatDaoJDBC" project="intPims" 
+    file="/intPims/src/model/dao/impl/Comp_MatDaoJDBC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="142" x="935" y="2042"/>    
     <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      

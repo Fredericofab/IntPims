@@ -2,6 +2,7 @@ package model.dao;
 
 import db.DB;
 import model.dao.impl.DadosContabilDaoJDBC;
+import model.dao.impl.Comp_MatDaoJDBC;
 import model.dao.impl.Cstg_IntCMDaoJDBC;
 import model.dao.impl.Cstg_IntDGDaoJDBC;
 import model.dao.impl.Cstg_IntFPDaoJDBC;
@@ -74,6 +75,9 @@ public class FabricaDeDao {
 	public static OS_MaterialDao criarOS_MaterialDao() {
 		return new OS_MaterialDaoJDBC(DB.abrirConexao());
 	}
+	public static Comp_MatDao criarComp_MatDao() {
+		return new Comp_MatDaoJDBC(DB.abrirConexao());
+	}
 	public static PlcPrimDao criarPlcPrimDao() {
 		return new PlcPrimDaoJDBC(DB.abrirConexao());
 	}
@@ -83,4 +87,5 @@ public class FabricaDeDao {
 	public static DadosContabilDao criarDadosContabilDao() {
 		return new DadosContabilDaoJDBC(DB.abrirConexao());
 	}
+
 }

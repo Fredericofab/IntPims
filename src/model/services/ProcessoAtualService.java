@@ -54,7 +54,7 @@ public class ProcessoAtualService {
 					 "importarFuncionario,sumarizarFuncionario," +
 					 "importarErpMT,importarErpCD,importarErpDG," +
 					 "validarErp,aplicarPoliticaErp,exportarErpVM," +
-					 "exportarErpCM, exportarErpDG, exportarErpOS");
+					 "exportarErpCM, exportarErpDG, exportarErpOS, AtualizarCompo");
 						bw.newLine();
 			for (ProcessoAtual processoAtual : lista) {
 				String linha = processoAtual.getAnoMes() + "," +
@@ -71,7 +71,8 @@ public class ProcessoAtualService {
 						processoAtual.getExportarErpVM() + "," +
 						processoAtual.getExportarErpCM() + "," +
 						processoAtual.getExportarErpDG() + "," +
-						processoAtual.getExportarErpOS();
+						processoAtual.getExportarErpOS() + "," +
+						processoAtual.getAtualizarCompo();
 			bw.write(linha);
 				bw.newLine();
 			}
@@ -114,6 +115,7 @@ public class ProcessoAtualService {
 			if (campo.equals("ExportarErpCM")) processoAtual.setExportarErpCM(valor); 
 			if (campo.equals("ExportarErpDG")) processoAtual.setExportarErpDG(valor); 
 			if (campo.equals("ExportarErpOS")) processoAtual.setExportarErpOS(valor); 
+			if (campo.equals("AtualizarCompo")) processoAtual.setAtualizarCompo(valor); 
 			salvarOuAtualizar(processoAtual);
 		} catch (ParametroInvalidoException e) {
 			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Atualizando Etapas Atuais", e.getMessage(),AlertType.ERROR);

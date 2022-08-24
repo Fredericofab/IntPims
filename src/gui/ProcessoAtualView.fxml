@@ -68,6 +68,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Label text="Importar Folha" GridPane.columnIndex="1">
@@ -171,6 +172,12 @@
             <Label text="Exportar Erp CM - Consumo Material" GridPane.columnIndex="3" GridPane.rowIndex="6" />
             <Label text="Exportar Erp DG - Despesas Gerais" GridPane.columnIndex="3" GridPane.rowIndex="7" />
             <Label text="Exportar Erp OS - Ordem de Serviço" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+            <TextField fx:id="txtAtualizarCompo" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.rowIndex="9">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text="Atualizar os Produtos dos Componentes" GridPane.columnIndex="3" GridPane.rowIndex="9" />
          </children>
       </GridPane>
    </children>

@@ -36,6 +36,8 @@ public class ExportarErpViewController implements Initializable {
 	@FXML
 	private TextField txtQtdeProcessadaOS;
 	@FXML
+	private TextField txtQtdeProcessadaCompo;
+	@FXML
 	private TextField txtQtdeIncluidaVM;
 	@FXML
 	private TextField txtQtdeIncluidaCM;
@@ -43,6 +45,8 @@ public class ExportarErpViewController implements Initializable {
 	private TextField txtQtdeIncluidaDG;
 	@FXML
 	private TextField txtQtdeIncluidaOS;
+	@FXML
+	private TextField txtQtdeIncluidaCompo;
 	@FXML
 	private TextField txtQtdeAtualizadaVM;
 	@FXML
@@ -60,6 +64,8 @@ public class ExportarErpViewController implements Initializable {
 	private Label labelDG;
 	@FXML
 	private Label labelOS;
+	@FXML
+	private Label labelCompo;
 
 	@FXML
 	private Button btExportar;
@@ -71,6 +77,8 @@ public class ExportarErpViewController implements Initializable {
 	private Button btExportarCM;
 	@FXML
 	private Button btExportarDG;
+	@FXML
+	private Button btAtualizarCompo;
 	@FXML
 	private Button btSair;
 
@@ -125,6 +133,16 @@ public class ExportarErpViewController implements Initializable {
 					AlertType.ERROR);
 		}
 	}
+	@FXML
+	public void onBtAtualizarCompoAction(ActionEvent evento) {
+		try {
+			servico.processar("COMPO");
+			atualizarTela(servico);
+		} catch (DbException e) {
+			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
+					AlertType.ERROR);
+		}
+	}
 
 	private void atualizarTela(ExportarErpService servico) {
 		Integer qtdeDeletadaVM = servico.getQtdeDeletadaVM();
@@ -135,10 +153,12 @@ public class ExportarErpViewController implements Initializable {
 		Integer qtdeProcessadaCM = servico.getQtdeProcessadaCM();
 		Integer qtdeProcessadaDG = servico.getQtdeProcessadaDG();
 		Integer qtdeProcessadaOS = servico.getQtdeProcessadaOS();
+		Integer qtdeProcessadaCompo = servico.getQtdeProcessadaCompo();
 		Integer qtdeIncluidaVM = servico.getQtdeIncluidaVM();
 		Integer qtdeIncluidaCM = servico.getQtdeIncluidaCM();
 		Integer qtdeIncluidaDG = servico.getQtdeIncluidaDG();
 		Integer qtdeIncluidaOS = servico.getQtdeIncluidaOS();
+		Integer qtdeIncluidaCompo = servico.getQtdeIncluidaCompo();
 		Integer qtdeAtualizadaVM = servico.getQtdeAtualizadaVM();
 		Integer qtdeAtualizadaCM = servico.getQtdeAtualizadaCM();
 		Integer qtdeAtualizadaDG = servico.getQtdeAtualizadaDG();
@@ -152,10 +172,12 @@ public class ExportarErpViewController implements Initializable {
 		if (qtdeProcessadaCM != null) txtQtdeProcessadaCM.setText(qtdeProcessadaCM.toString());
 		if (qtdeProcessadaDG != null) txtQtdeProcessadaDG.setText(qtdeProcessadaDG.toString());
 		if (qtdeProcessadaOS != null) txtQtdeProcessadaOS.setText(qtdeProcessadaOS.toString());
+		if (qtdeProcessadaCompo != null) txtQtdeProcessadaCompo.setText(qtdeProcessadaCompo.toString());
 		if (qtdeIncluidaVM != null) txtQtdeIncluidaVM.setText(qtdeIncluidaVM.toString()); 
 		if (qtdeIncluidaCM != null) txtQtdeIncluidaCM.setText(qtdeIncluidaCM.toString()); 
 		if (qtdeIncluidaDG != null) txtQtdeIncluidaDG.setText(qtdeIncluidaDG.toString()); 
 		if (qtdeIncluidaOS != null) txtQtdeIncluidaOS.setText(qtdeIncluidaOS.toString()); 
+		if (qtdeIncluidaCompo != null) txtQtdeIncluidaCompo.setText(qtdeIncluidaCompo.toString()); 
 		if (qtdeAtualizadaVM != null) txtQtdeAtualizadaVM.setText(qtdeAtualizadaVM.toString()); 
 		if (qtdeAtualizadaCM != null) txtQtdeAtualizadaCM.setText(qtdeAtualizadaCM.toString()); 
 		if (qtdeAtualizadaDG != null) txtQtdeAtualizadaDG.setText(qtdeAtualizadaDG.toString()); 
@@ -184,7 +206,13 @@ public class ExportarErpViewController implements Initializable {
 		qtInc  = ( qtdeIncluidaOS == null ? 0 : qtdeIncluidaOS) ;
 		qtAtu  = ( qtdeAtualizadaOS == null ? 0 : qtdeAtualizadaOS) ;
 		if (qtPro > 0) labelOS.setText(( qtPro == qtInc + qtAtu ) ? "Processado com Sucesso" : "" );
-	}
+
+		qtPro  = ( qtdeProcessadaCompo == null ? 0 : qtdeProcessadaCompo) ;
+		qtInc  = ( qtdeIncluidaCompo == null ? 0 : qtdeIncluidaCompo) ;
+//		qtAtu  = ( qtdeAtualizadaOS == null ? 0 : qtdeAtualizadaOS) ;
+		if (qtPro > 0) labelCompo.setText("Processado com Sucesso");
+//		if (qtPro > 0) labelCompo.setText(( qtPro == qtInc + qtAtu ) ? "Processado com Sucesso" : "" );
+}
 
 	@FXML
 	public void onBtSairAction(ActionEvent evento) {

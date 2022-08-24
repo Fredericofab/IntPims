@@ -140,7 +140,7 @@ public class ErpDaoJDBC implements ErpDao {
 			st.setInt(1, sequencial);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Erp dadosErp = instanciaDadosErp(rs);
+				Erp dadosErp = instanciarDadosErp(rs);
 				return dadosErp;
 			}
 			return null;
@@ -161,7 +161,7 @@ public class ErpDaoJDBC implements ErpDao {
 			rs = st.executeQuery();
 			List<Erp> lista = new ArrayList<Erp>();
 			while (rs.next()) {
-				Erp dadosErp = instanciaDadosErp(rs);
+				Erp dadosErp = instanciarDadosErp(rs);
 				lista.add(dadosErp);
 			}
 			return lista;
@@ -181,7 +181,7 @@ public class ErpDaoJDBC implements ErpDao {
 			rs = st.executeQuery();
 			List<Erp> lista = new ArrayList<Erp>();
 			while (rs.next()) {
-				Erp dadosErp = instanciaDadosErp(rs);
+				Erp dadosErp = instanciarDadosErp(rs);
 				lista.add(dadosErp);
 			}
 			return lista;
@@ -203,7 +203,7 @@ public class ErpDaoJDBC implements ErpDao {
 			rs = st.executeQuery();
 			List<Erp> lista = new ArrayList<Erp>();
 			while (rs.next()) {
-				Erp dadosErp = instanciaDadosErp(rs);
+				Erp dadosErp = instanciarDadosErp(rs);
 				lista.add(dadosErp);
 			}
 			return lista;
@@ -554,7 +554,7 @@ public class ErpDaoJDBC implements ErpDao {
 	}
 
 
-	private Erp instanciaDadosErp(ResultSet rs) throws SQLException {
+	private Erp instanciarDadosErp(ResultSet rs) throws SQLException {
 		Erp dadosErp = new Erp();
 		dadosErp.setAnoMes(rs.getString("Ano_Mes"));
 		dadosErp.setTipoMovimento(rs.getString("Tipo_Movimento"));

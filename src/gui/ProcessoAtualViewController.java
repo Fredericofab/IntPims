@@ -62,6 +62,8 @@ public class ProcessoAtualViewController implements Initializable {
 	private TextField txtExportarErpDG;
 	@FXML
 	private TextField txtExportarErpOS;
+	@FXML
+	private TextField txtAtualizarCompo;
 
 	@FXML
 	private Label labelErroAnoMes;
@@ -146,6 +148,7 @@ public class ProcessoAtualViewController implements Initializable {
 		entidade.setExportarErpCM("N");
 		entidade.setExportarErpDG("N");
 		entidade.setExportarErpOS("N");
+		entidade.setAtualizarCompo("N");
 	}
 
 	private void atualizarTela() {
@@ -164,6 +167,7 @@ public class ProcessoAtualViewController implements Initializable {
 		txtExportarErpCM.setText(entidade.getExportarErpCM());
 		txtExportarErpDG.setText(entidade.getExportarErpDG());
 		txtExportarErpOS.setText(entidade.getExportarErpOS());
+		txtAtualizarCompo.setText(entidade.getAtualizarCompo());
 	}
 
 	private void inicializarComponentes() {
@@ -183,6 +187,7 @@ public class ProcessoAtualViewController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErpCM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErpDG, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtExportarErpOS, 1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtAtualizarCompo, 1);
 	}
 
 	private ProcessoAtual getDadosDoForm() {
@@ -205,6 +210,7 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setExportarErpCM(txtExportarErpCM.getText());
 		objeto.setExportarErpDG(txtExportarErpDG.getText());
 		objeto.setExportarErpOS(txtExportarErpOS.getText());
+		objeto.setAtualizarCompo(txtAtualizarCompo.getText());
 
 		objeto.setImportarFolha(Utilitarios.tentarConverterParaMaiusculo(txtImportarFolha.getText()));
 		objeto.setSumarizarFolha(Utilitarios.tentarConverterParaMaiusculo(txtSumarizarFolha.getText()));
@@ -220,6 +226,7 @@ public class ProcessoAtualViewController implements Initializable {
 		objeto.setExportarErpCM(Utilitarios.tentarConverterParaMaiusculo(txtExportarErpCM.getText()));
 		objeto.setExportarErpDG(Utilitarios.tentarConverterParaMaiusculo(txtExportarErpDG.getText()));
 		objeto.setExportarErpOS(Utilitarios.tentarConverterParaMaiusculo(txtExportarErpOS.getText()));
+		objeto.setAtualizarCompo(Utilitarios.tentarConverterParaMaiusculo(txtAtualizarCompo.getText()));
 
 		if (txtAnoMes.getText() == null || txtAnoMes.getText().trim().equals("")) {
 			validacao.adicionarErro("txtAnoMes", "Informe o Ano e Mes de referencia");

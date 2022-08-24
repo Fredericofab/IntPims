@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ProcessoAtual implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String anoMes;
 	private String importarFolha;
 	private String sumarizarFolha;
@@ -21,18 +21,15 @@ public class ProcessoAtual implements Serializable {
 	private String exportarErpCM;
 	private String exportarErpDG;
 	private String exportarErpOS;
-	private String verbaAlterada;
-	private String folhaAlterada;
-	private String funcionarioAlterado;
+	private String atualizarCompo;
 	private String filtroErp;
-	
+
 	public ProcessoAtual() {
 	}
 	public ProcessoAtual(String anoMes, String importarFolha, String sumarizarFolha, String exportarFolha,
 			String importarFuncionario, String sumarizarFuncionario, String importarErpRM, String importarErpED,
 			String importarErpDF, String validarErp, String aplicarPoliticaErp, String exportarErpVM,
-			String exportarErpCM, String exportarErpDG, String exportarErpOS, String verbaAlterada,
-			String folhaAlterada, String funcionarioAlterado, String filtroErp) {
+			String exportarErpCM, String exportarErpDG, String exportarErpOS, String atualizarCompo, String filtroErp) {
 		super();
 		this.anoMes = anoMes;
 		this.importarFolha = importarFolha;
@@ -49,12 +46,10 @@ public class ProcessoAtual implements Serializable {
 		this.exportarErpCM = exportarErpCM;
 		this.exportarErpDG = exportarErpDG;
 		this.exportarErpOS = exportarErpOS;
-		this.verbaAlterada = verbaAlterada;
-		this.folhaAlterada = folhaAlterada;
-		this.funcionarioAlterado = funcionarioAlterado;
+		this.atualizarCompo = atualizarCompo;
 		this.filtroErp = filtroErp;
 	}
-	
+
 	public String getAnoMes() {
 		return anoMes;
 	}
@@ -145,23 +140,11 @@ public class ProcessoAtual implements Serializable {
 	public void setExportarErpOS(String exportarErpOS) {
 		this.exportarErpOS = exportarErpOS;
 	}
-	public String getVerbaAlterada() {
-		return verbaAlterada;
+	public String getAtualizarCompo() {
+		return atualizarCompo;
 	}
-	public void setVerbaAlterada(String verbaAlterada) {
-		this.verbaAlterada = verbaAlterada;
-	}
-	public String getFolhaAlterada() {
-		return folhaAlterada;
-	}
-	public void setFolhaAlterada(String folhaAlterada) {
-		this.folhaAlterada = folhaAlterada;
-	}
-	public String getFuncionarioAlterado() {
-		return funcionarioAlterado;
-	}
-	public void setFuncionarioAlterado(String funcionarioAlterado) {
-		this.funcionarioAlterado = funcionarioAlterado;
+	public void setAtualizarCompo(String atualizarCompo) {
+		this.atualizarCompo = atualizarCompo;
 	}
 	public String getFiltroErp() {
 		return filtroErp;
@@ -192,7 +175,7 @@ public class ProcessoAtual implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ProcessoAtual [anoMes=" + anoMes + ", importarFolha=" + importarFolha + ", sumarizarFolha="
@@ -201,8 +184,6 @@ public class ProcessoAtual implements Serializable {
 				+ ", importarErpED=" + importarErpED + ", importarErpDF=" + importarErpDF + ", validarErp=" + validarErp
 				+ ", aplicarPoliticaErp=" + aplicarPoliticaErp + ", exportarErpVM=" + exportarErpVM + ", exportarErpCM="
 				+ exportarErpCM + ", exportarErpDG=" + exportarErpDG + ", exportarErpOS=" + exportarErpOS
-				+ ", verbaAlterada=" + verbaAlterada + ", folhaAlterada=" + folhaAlterada + ", funcionarioAlterado="
-				+ funcionarioAlterado + ", filtroErp=" + filtroErp + "]";
+				+ ", atualizarCompo=" + atualizarCompo + ", filtroErp=" + filtroErp + "]";
 	}
-
 }
