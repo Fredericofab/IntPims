@@ -1,8 +1,11 @@
 package model.services;
 
-import java.util.HashSet;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Set;
 
 import db.DbException;
 import gui.util.Alertas;
@@ -35,16 +38,21 @@ public class ExportarErpService {
 	String usuarioPimsCS;
 	String cdEmpresa;
 	String cadastrarTipoV;
+	String arqLogComponentes;
 
+	char aspas = '"';
+	
 	List<Erp> listaErp;
+	List<Double> listaComponente;
 	List<Comp_Mat> listaComp_mat;
-	Set<Double> setComponente;
+//	Set<Double> setComponente;
 	String dataInicio;
 	String dataFim;
 	Integer qtdeDeletadaVM;
 	Integer qtdeDeletadaCM;
 	Integer qtdeDeletadaDG;
 	Integer qtdeDeletadaOS;
+	Integer qtdeDeletadaCompMat;
 	Integer qtdeProcessadaVM;
 	Integer qtdeProcessadaCM;
 	Integer qtdeProcessadaDG;
@@ -59,6 +67,7 @@ public class ExportarErpService {
 	Integer qtdeAtualizadaCM;
 	Integer qtdeAtualizadaDG;
 	Integer qtdeAtualizadaOS;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public Integer getQtdeDeletadaVM() {
 		return qtdeDeletadaVM;
@@ -74,6 +83,10 @@ public class ExportarErpService {
 
 	public Integer getQtdeDeletadaOS() {
 		return qtdeDeletadaOS;
+	}
+
+	public Integer getQtdeDeletadaCompMat() {
+		return qtdeDeletadaCompMat;
 	}
 
 	public Integer getQtdeProcessadaVM() {
@@ -131,7 +144,6 @@ public class ExportarErpService {
 	public Integer getQtdeAtualizadaOS() {
 		return qtdeAtualizadaOS;
 	}
-
 	public void processar(String destino) throws DbException {
 		try {
 			lerParametros();
@@ -159,6 +171,7 @@ public class ExportarErpService {
 				processoAtualService.atualizarEtapa("ExportarErpOS", "S");
 			}
 			if (destino == null || destino.equals("COMPO")) {
+				deletarProdutoComponente();
 				gravarProdutoComponente();
 				processoAtualService.atualizarEtapa("AtualizarCompo", "S");
 			}
@@ -166,6 +179,12 @@ public class ExportarErpService {
 		} catch (ParametroInvalidoException e) {
 			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado", e.getMessage(),
 					AlertType.ERROR);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -183,6 +202,11 @@ public class ExportarErpService {
 
 	private void deletarOSMaterial() {
 		qtdeDeletadaOS = os_MaterialService.deletarPeriodo(dataInicio, dataFim, usuarioPimsCS);
+	}
+
+	private void deletarProdutoComponente() {
+		Double anoMesReferencia = Utilitarios.tentarConverterParaDouble(anoMes.substring(2, 6) + "1");
+		qtdeDeletadaCompMat = comp_MatService.deletarPeriodo(anoMesReferencia, usuarioPimsCS);
 	}
 
 	private void gravarCstgIntVM() {
@@ -294,14 +318,17 @@ public class ExportarErpService {
 		qtdeAtualizadaOS = os_MaterialService.getQtdeAtualizada();
 	}
 
-	private void gravarProdutoComponente() {
+	private void gravarProdutoComponente() throws IOException, FileNotFoundException{
 		qtdeProcessadaCompo = 0;
 		comp_MatService.setQtdeIncluida(0);
+		criarArqLogComponentes();
 		if (cadastrarTipoV.contentEquals("S")) {
 			montarListas();
 			for (Erp erp : listaErp) {
+				if (    (erp.getSalvarCstg_IntCM()  != null && erp.getSalvarCstg_IntCM().equals("S")) 
+					 ||	(erp.getSalvarOS_Material() != null && erp.getSalvarOS_Material().equals("S"))	){
 				Double componente = montarComponente(erp);
-				if (setComponente.contains(componente)) {
+				if (listaComponente.contains(componente)) {
 					qtdeProcessadaCompo += 1;
 					Boolean cadastrar = true;
 					for (Comp_Mat comp_Mat : listaComp_mat) {
@@ -320,8 +347,18 @@ public class ExportarErpService {
 						comp_Mat.setRowVersion(Utilitarios.tentarConverterParaDouble(anoMes.substring(2, 6) + "1"));
 						comp_MatService.inserir(comp_Mat, usuarioPimsCS);
 						listaComp_mat.add(comp_Mat);
+						
+						String CodMaterialSemMascara = erp.getCodMaterial().substring(0, 2) +
+													   erp.getCodMaterial().substring(3, 5) +
+													   erp.getCodMaterial().substring(6, 10);
+						comp_Mat.setCdMatIni(CodMaterialSemMascara);
+						comp_Mat.setCdMatFim(CodMaterialSemMascara);
+						comp_MatService.inserir(comp_Mat, usuarioPimsCS);
 					}
+				} else {
+					gravaLogComponentes(erp);
 				}
+			}
 			}
 		}
 		qtdeIncluidaCompo = comp_MatService.getQtdeIncluida();
@@ -329,24 +366,24 @@ public class ExportarErpService {
 
 	private void montarListas() {
 		String tipo = "V";
+		listaComponente = comp_MatService.listarComponentes(tipo, usuarioPimsCS);
 		listaComp_mat = comp_MatService.listarTodosDoTipo(tipo, usuarioPimsCS);
-		setComponente = new HashSet<>();
-		for (Comp_Mat x : listaComp_mat) {
-			setComponente.add(x.getCdCompo());
-		}
 	}
 
 	private Double montarComponente(Erp erp) {
 		Double componente = null;
 		if ((erp.getCodMaterial() != null) && (erp.getCodNatureza() != null)) {
-			if (erp.getCodNatureza().length() == 9) {
-				String montagem = "3000" + erp.getCodNatureza().substring(4, 6) + erp.getCodNatureza().substring(7, 9);
+			if (erp.getCodNatureza().length() == 8) {
+				String montagem = "3000" + erp.getCodNatureza().substring(3, 5) + erp.getCodNatureza().substring(6, 8);
 				componente = Utilitarios.tentarConverterParaDouble(montagem);
 			}
 		}
 		return componente;
 	}
 
+
+
+	
 	private void defineDatas() {
 		String mes = anoMes.substring(4, 6);
 		String ano = anoMes.substring(0, 4);
@@ -367,6 +404,42 @@ public class ExportarErpService {
 		politicasErpService.relatorioTxt(oficial);
 		fatorMedidaService.gerarTxt(oficial);
 	}
+	
+	private void criarArqLogComponentes() throws IOException, FileNotFoundException{
+		BufferedWriter bwComponentes = new BufferedWriter(new FileWriter(arqLogComponentes, false));
+		bwComponentes.write("VALIDAÇÃO: Registros sem Componentes Associados.");
+		bwComponentes.newLine();
+		bwComponentes.write("AnoMes de Referencia: " + anoMes);
+		bwComponentes.newLine();
+		bwComponentes.write("TArq,TMov," +
+				 "CCustos,DescCCustos,"   +
+				 "CContabil,DescCContabil," +
+				 "Material,DescMaterial,UN," +
+				 "Qtde,PUnit,VTotal," +
+				 "NumeroERP,DataMov");
+		bwComponentes.newLine();
+		bwComponentes.close();
+	}
+	private void gravaLogComponentes(Erp erp)  throws IOException{
+		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogComponentes, true));	
+		String linha = erp.getOrigem() + "," + 
+					   erp.getTipoMovimento() + "," + 
+					   String.format("%.0f", erp.getCodCentroCustos()) + "," + 
+					   erp.getDescCentroCustos() + "," + 
+					   erp.getCodContaContabil() + "," + 
+					   erp.getDescContaContabil().replace(",", " ") +  "," + 
+					   aspas + erp.getCodMaterial() + aspas + "," + 
+					   erp.getDescMovimento().replace(",", " ") +  "," + 
+					   erp.getUnidadeMedida() + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getQuantidade()) + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
+					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getValorMovimento()) + "," + 
+					   erp.getDocumentoErp() + "," + 
+					   sdf.format(erp.getDataMovimento());
+		bw.write(linha);
+		bw.newLine();
+		bw.close();
+	}
 
 	private void lerParametros() {
 		ParametrosService parametrosService = new ParametrosService();
@@ -375,5 +448,9 @@ public class ExportarErpService {
 		usuarioPimsCS = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
 		cdEmpresa = (parametrosService.pesquisarPorChave("AmbienteOracle", "EmpresaPadrao")).getValor();
 		cadastrarTipoV = (parametrosService.pesquisarPorChave("ExportarErp", "CadastrarTipoV")).getValor();
+		String arqLogPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogPasta")).getValor();
+		String arqLogTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogTipo")).getValor();
+		arqLogComponentes = arqLogPasta + "LogComponentes" + anoMes + arqLogTipo ;
+
 	}
 }

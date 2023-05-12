@@ -73,7 +73,8 @@ public class Comp_MatDaoJDBC implements Comp_MatDao {
 		PreparedStatement st = null;
 		try {
 			st = conexao.prepareStatement("DELETE FROM " +  usuarioPimsCS + ".comp_mat " +
-										  "WHERE rowVersion = ?");
+										  "WHERE cd_compo BETWEEN 30000000 AND 30009999 " + 
+										  "AND rowVersion = ?");
 			st.setDouble(1, AnoMesReferencia);
 			st.executeUpdate();
 			Integer contagem = st.getUpdateCount();
@@ -97,4 +98,52 @@ public class Comp_MatDaoJDBC implements Comp_MatDao {
 		return comp_Mat;
 	}
 
+	@Override
+	public List<Double> listarComponentes(String tipo, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT cd_compo "  + 
+										  "FROM  " + usuarioPimsCS + ".componen "  + 
+										  "WHERE cd_compo BETWEEN 30000000 AND 30009999 " + 
+										  "AND fg_tp_comp = ?");
+			st.setString(1, tipo);
+			rs = st.executeQuery();
+			List<Double> lista = new ArrayList<Double>();
+			while (rs.next()) {
+				Double componente = rs.getDouble("cd_compo");
+				lista.add(componente);
+			}
+			return lista;
+		} catch (SQLException e) {
+			throw new DbException("Tabela COMPONEN \n \n" + e.getMessage());
+		} finally {
+			DB.fecharResultSet(rs);
+			DB.fecharStatement(st);
+		}
+	}
+
+	@Override
+	public Comp_Mat pesquisarPorChave(Double cdCompo, String cdMatIni, String usuarioPimsCS) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT * FROM " +  usuarioPimsCS + ".comp_mat " 
+										+ "WHERE cd_compo = ? AND cd_mat_ini = ? ");
+			st.setDouble(1, cdCompo);
+			st.setString(2, cdMatIni);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				Comp_Mat comp_Mat = instanciarComp_Mat(rs);
+				return comp_Mat;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException("Tabela COMP_MAT \n \n" + e.getMessage() + "\n \n" +
+								  "Pesquisando Componente " + cdCompo + " Material " + cdMatIni );
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+	}
 }

@@ -207,6 +207,7 @@
                   <TextField fx:id="txtSalvarOS_Material" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
                   <TextField fx:id="txtSalvarCstg_IntCM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
                   <TextField fx:id="txtSalvarCstg_IntDG" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="31.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                  <Label fx:id="labelErroDataMovimento" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                   <Label fx:id="labelErroSobreporPoliticas" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                   <Label fx:id="labelErroImportar" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="7" />
                </children>

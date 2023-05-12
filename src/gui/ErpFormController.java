@@ -115,6 +115,8 @@ public class ErpFormController implements Initializable {
 	@FXML
 	private Label labelErroSobreporPoliticas;
 	@FXML
+	private Label labelErroDataMovimento;
+	@FXML
 	private Label labelErroImportar;
 	@FXML
 	private Label labelErroObservacao;
@@ -127,14 +129,13 @@ public class ErpFormController implements Initializable {
 	public void onBtSalvarAction(ActionEvent evento) {
 		try {
 			entidade = getDadosDoForm();
-			entidade = substituirNull(entidade);
 			Boolean atualizarEtapaDoProcesso = true;
 			servico.salvarOuAtualizar(entidade, atualizarEtapaDoProcesso);
 			notificarDadosAlteradosListeners();
 			Utilitarios.atualStage(evento).close();
 		} catch (ValidacaoException e) {
 			mostrarErrosDeDigitacao(e.getErros());
-		} catch (DbException e) {
+		} catch (DbException | IllegalArgumentException e) {
 			Alertas.mostrarAlertas("erro Salvando DadosErp", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
@@ -186,16 +187,16 @@ public class ErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtTipoMovimento, 6);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodCentroCustos, 20);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescCentroCustos, 50);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodContaContabil,20);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescContaContabil,50);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodContaContabil, 20);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescContaContabil, 50);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodNatureza, 9);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtCodMaterial, 10);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtUnidadeMedida,5);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescMovimento,255);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtUnidadeMedida, 5);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtDescMovimento, 255);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSobreporPoliticas, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtImportar, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtObservacao, 255);
-		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarOS_Material,1);
+		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarOS_Material, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntVM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntCM, 1);
 		RestricoesDeDigitacao.soPermiteTextFieldTamanhoMax(txtSalvarCstg_IntDG, 1);
@@ -206,7 +207,7 @@ public class ErpFormController implements Initializable {
 		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntCM);
 		RestricoesDeDigitacao.soPermiteTextFieldNullSNInterrogacao(txtSalvarCstg_IntDG);
 		Utilitarios.formatarDatePicker(dpDataMovimento, "dd/MM/yyyy");
-	
+
 		if (flagIncluir.equals("S")) {
 			desabilitarCompoenentes(false);
 		} else {
@@ -281,9 +282,10 @@ public class ErpFormController implements Initializable {
 
 //		dpDataMovimento.setValue(entidade.getDataMovimento()); erro de compilação Date x LocalDate
 		if (entidade.getDataMovimento() != null) {
-			dpDataMovimento.setValue(LocalDate.ofInstant(entidade.getDataMovimento().toInstant(), ZoneId.systemDefault()));
+			dpDataMovimento
+					.setValue(LocalDate.ofInstant(entidade.getDataMovimento().toInstant(), ZoneId.systemDefault()));
 		}
-		
+
 		txtSobreporPoliticas.setText(entidade.getSobreporPoliticas());
 		txtPoliticas.setText(entidade.getPoliticas());
 		txtImportar.setText(entidade.getImportar());
@@ -325,7 +327,7 @@ public class ErpFormController implements Initializable {
 		objeto.setFrotaOuCC(txtFrotaOuCC.getText());
 		objeto.setValidacoesOS(txtValidacoesOS.getText());
 		objeto.setDocumentoErp(txtDocumentoErp.getText());
-		if(dpDataMovimento.getValue() != null) {
+		if (dpDataMovimento.getValue() != null) {
 			Instant instant = Instant.from(dpDataMovimento.getValue().atStartOfDay(ZoneId.systemDefault()));
 			objeto.setDataMovimento(Date.from(instant));
 		}
@@ -338,57 +340,57 @@ public class ErpFormController implements Initializable {
 		objeto.setSalvarCstg_IntDG(Utilitarios.tentarConverterParaMaiusculo(txtSalvarCstg_IntDG.getText()));
 		objeto.setObservacao(txtObservacao.getText());
 
+		objeto = substituirNull(objeto);
+
 		if (txtAnoMes.getText() == null || txtAnoMes.getText().trim().equals("")) {
 			validacao.adicionarErro("txtAnoMes", "Informe o Ano e Mes de referencia");
 		}
 		if (txtAnoMes.getText() != null && txtAnoMes.getText().length() < 6) {
 			validacao.adicionarErro("txtAnoMes", "Informe no formato AAAAMM");
 		}
-		if ((txtOrigem.getText() == null) || txtOrigem.getText().trim().equals("") ||
-			(( ! txtOrigem.getText().toUpperCase().equals("RM") ) &&
-			 ( ! txtOrigem.getText().toUpperCase().equals("ED") ) && 
-			 ( ! txtOrigem.getText().toUpperCase().equals("DF")))) {
+		if ((txtOrigem.getText() == null) || txtOrigem.getText().trim().equals("")
+				|| ((!txtOrigem.getText().toUpperCase().equals("RM"))
+						&& (!txtOrigem.getText().toUpperCase().equals("ED"))
+						&& (!txtOrigem.getText().toUpperCase().equals("DF")))) {
 			validacao.adicionarErro("txtOrigem", "Informe a Origem: RM, ED ou DF");
 		}
 		if (txtCodCentroCustos.getText() == null || txtCodCentroCustos.getText().trim().equals("")) {
 			validacao.adicionarErro("txtCodCentroCustos", "Informe o Centro de Custos");
 		}
-		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("DF")) && 
-			(txtCodContaContabil.getText() == null || txtCodContaContabil.getText().trim().equals(""))) {
+		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("DF"))
+				&& (txtCodContaContabil.getText() == null || txtCodContaContabil.getText().trim().equals(""))) {
 			validacao.adicionarErro("txtCodContaContabil", "Origem DF - Informe a Conta Contabil");
 		}
-		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("RM")) && 
-				(txtCodMaterial.getText() == null || txtCodMaterial.getText().trim().equals(""))) {
-				validacao.adicionarErro("txtCodMaterial", "Origem RM - Informe o Material");
+		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("RM"))
+				&& (txtCodMaterial.getText() == null || txtCodMaterial.getText().trim().equals(""))) {
+			validacao.adicionarErro("txtCodMaterial", "Origem RM - Informe o Material");
 		}
-		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("ED")) && 
-				(txtCodMaterial.getText() == null || txtCodMaterial.getText().trim().equals(""))) {
-				validacao.adicionarErro("txtCodMaterial", "Origem ED - Informe o Material/Serviço");
+		if ((txtOrigem.getText() != null) && (txtOrigem.getText().toUpperCase().equals("ED"))
+				&& (txtCodMaterial.getText() == null || txtCodMaterial.getText().trim().equals(""))) {
+			validacao.adicionarErro("txtCodMaterial", "Origem ED - Informe o Material/Serviço");
 		}
-
 
 		if (txtSobreporPoliticas.getText() != null && txtSobreporPoliticas.getText().toUpperCase().equals("S")) {
-			if ((txtImportar.getText() == null         || txtImportar.getText().equals("")) 		 &&
-				(txtSalvarCstg_IntVM.getText() == null || txtSalvarCstg_IntVM.getText().equals("")) &&
-				(txtSalvarCstg_IntCM.getText() == null || txtSalvarCstg_IntCM.getText().equals("")) && 
-				(txtSalvarCstg_IntDG.getText() == null || txtSalvarCstg_IntDG.getText().equals("")) && 
-				(txtSalvarOS_Material.getText()== null || txtSalvarOS_Material.getText().equals(""))   ) {
+			if ((txtImportar.getText() == null || txtImportar.getText().equals(""))
+					&& (txtSalvarCstg_IntVM.getText() == null || txtSalvarCstg_IntVM.getText().equals(""))
+					&& (txtSalvarCstg_IntCM.getText() == null || txtSalvarCstg_IntCM.getText().equals(""))
+					&& (txtSalvarCstg_IntDG.getText() == null || txtSalvarCstg_IntDG.getText().equals(""))
+					&& (txtSalvarOS_Material.getText() == null || txtSalvarOS_Material.getText().equals(""))) {
 				validacao.adicionarErro("txtSobreporPoliticas", "Sobrepor Politica 'S' - Informe as politicas abaixo");
 			}
 		}
-		
+
 		int acoesSim = contarAcoes("S");
 		int acoesInterrogacao = contarAcoes("?");
 		if (txtImportar.getText() != null) {
-			if (txtImportar.getText().toUpperCase().equals("S") && ( (acoesSim + acoesInterrogacao) != 1 ) ) { 
+			if (txtImportar.getText().toUpperCase().equals("S") && ((acoesSim + acoesInterrogacao) != 1)) {
 				validacao.adicionarErro("txtImportar", "Importar SIM. Então infome um, e apenas um, Salvar");
-				}
-			if ( txtImportar.getText().toUpperCase().equals("N")  &&  (acoesSim + acoesInterrogacao) != 0 ) {
+			}
+			if (txtImportar.getText().toUpperCase().equals("N") && (acoesSim + acoesInterrogacao) != 0) {
 				validacao.adicionarErro("txtImportar", "Importar NAO. Então nao faz sentido ter algum Salvar");
 			}
 		}
-		
-		
+
 		if (txtObservacao.getText() == null || txtObservacao.getText().trim().equals("")) {
 			if (flagObservacao.equals("S")) {
 				validacao.adicionarErro("txtObservacao",
@@ -402,47 +404,57 @@ public class ErpFormController implements Initializable {
 	}
 
 	private Erp substituirNull(Erp objeto) {
-		if (objeto.getQuantidade() == null) { objeto.setQuantidade(0.00);	}
-		if (objeto.getPrecoUnitario() == null) { objeto.setPrecoUnitario(0.00);	}
-		if (objeto.getValorMovimento() == null) { objeto.setValorMovimento(0.00);	}
-		if (objeto.getDataMovimento() == null) { 
-			try {
+		if (objeto.getQuantidade() == null) {
+			objeto.setQuantidade(0.00);
+		}
+		if (objeto.getPrecoUnitario() == null) {
+			objeto.setPrecoUnitario(0.00);
+		}
+		if (objeto.getValorMovimento() == null) {
+			objeto.setValorMovimento(0.00);
+		}
+
+		try {
+			if (objeto.getDataMovimento() == null) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				Date dataMovimento;
 				dataMovimento = sdf.parse(txtAnoMes.getText() + "01");
 				objeto.setDataMovimento(dataMovimento);
-			} catch (ParseException e) {
-				e.printStackTrace();
 			}
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 		return objeto;
 	}
 
-	private int contarAcoes(String simNaoInterogacao) {
+	private int contarAcoes(String simNaoInterrogacao) {
 		int contaOS = 0;
 		int contaCM = 0;
 		int contaDG = 0;
-		if ( txtSalvarOS_Material.getText() != null ) {
-			contaOS = (txtSalvarOS_Material.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		if (txtSalvarOS_Material.getText() != null) {
+			contaOS = (txtSalvarOS_Material.getText().toUpperCase().equals(simNaoInterrogacao) ? 1 : 0);
 		}
-		if ( txtSalvarCstg_IntCM.getText() != null ) {
-			contaCM = (txtSalvarCstg_IntCM.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		if (txtSalvarCstg_IntCM.getText() != null) {
+			contaCM = (txtSalvarCstg_IntCM.getText().toUpperCase().equals(simNaoInterrogacao) ? 1 : 0);
 		}
-		if ( txtSalvarCstg_IntDG.getText() != null ) {
-			contaDG = (txtSalvarCstg_IntDG.getText().toUpperCase().equals(simNaoInterogacao) ? 1 : 0);
+		if (txtSalvarCstg_IntDG.getText() != null) {
+			contaDG = (txtSalvarCstg_IntDG.getText().toUpperCase().equals(simNaoInterrogacao) ? 1 : 0);
 		}
 		return contaOS + contaCM + contaDG;
 	}
-
 
 	private void mostrarErrosDeDigitacao(Map<String, String> erros) {
 		Set<String> campos = erros.keySet();
 		labelErroAnoMes.setText((campos.contains("txtAnoMes") ? erros.get("txtAnoMes") : ""));
 		labelErroOrigem.setText((campos.contains("txtOrigem") ? erros.get("txtOrigem") : ""));
-		labelErroCodCentroCustos.setText((campos.contains("txtCodCentroCustos") ? erros.get("txtCodCentroCustos") : ""));
-		labelErroCodContaContabil.setText((campos.contains("txtCodContaContabil") ? erros.get("txtCodContaContabil") : ""));
+		labelErroCodCentroCustos
+				.setText((campos.contains("txtCodCentroCustos") ? erros.get("txtCodCentroCustos") : ""));
+		labelErroCodContaContabil
+				.setText((campos.contains("txtCodContaContabil") ? erros.get("txtCodContaContabil") : ""));
 		labelErroCodMaterial.setText((campos.contains("txtCodMaterial") ? erros.get("txtCodMaterial") : ""));
-		labelErroSobreporPoliticas.setText((campos.contains("txtSobreporPoliticas") ? erros.get("txtSobreporPoliticas") : ""));
+		labelErroSobreporPoliticas
+				.setText((campos.contains("txtSobreporPoliticas") ? erros.get("txtSobreporPoliticas") : ""));
+		labelErroDataMovimento.setText((campos.contains("txtDataMovimento") ? erros.get("txtDataMovimento") : ""));
 		labelErroImportar.setText((campos.contains("txtImportar") ? erros.get("txtImportar") : ""));
 		labelErroObservacao.setText((campos.contains("txtObservacao") ? erros.get("txtObservacao") : ""));
 	}

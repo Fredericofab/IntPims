@@ -1,4 +1,4 @@
 driver=oracle.jdbc.driver.OracleDriver
-url=jdbc:oracle:thin:@192.168.5.160:1521:PIMSTESTE
+url=jdbc:oracle:thin:@127.0.0.1:1521:dbfred
 usuario=INTPIMS
 senha=INTPIMS

@@ -42,7 +42,7 @@ public class Cstg_IntFPDaoJDBC implements Cstg_IntFPDao {
 		try {
 			st = conexao.prepareStatement("INSERT INTO " +  usuarioPimsCS + ".cstg_intFP " +
 										 "(Cd_empresa, dt_refer, cd_func, qt_horas, qt_valor, instancia) " +
-										 "VALUES (?,?,?,?,?,?)" );
+										 "VALUES (?,TO_DATE(?,'dd/mm/yyyy'),?,?,?,?)" );
 			st.setString(1, objeto.getCdEmpresa());
 			st.setString(2, objeto.getDtRefer());
 			st.setDouble(3, objeto.getCdFunc());

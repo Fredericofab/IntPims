@@ -219,8 +219,7 @@ public class ImportarErpService {
 	}
 
 	private void converteRegistroRM(String[] campos) throws ParseException {
-		codNatureza = "FRED RM";
-		if (campos.length == 16) {
+		if (campos.length == 17) {
 			tipoMovimento = campos[0];
 			documentoErp = campos[1];
 			anoMes = campos[2];
@@ -236,17 +235,17 @@ public class ImportarErpService {
 			descContaContabil = campos[12];
 			manfroOS = campos[13];
 			frotaOuCC = campos[14];
+			codNatureza = campos[15];
 			sdf = new SimpleDateFormat(arqEntradaFormatoData);
-			dataMovimento = (Date) sdf.parse(campos[15]);
+			dataMovimento = (Date) sdf.parse(campos[16]);
 			sequencial = sequencial + 1;
 		} else {
-			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado 16 recebido " + campos.length );
+			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado 17 recebido " + campos.length );
 		}
 	}
 
 	private void converteRegistroED(String[] campos) throws ParseException {
-		codNatureza = "FRED ED";
-		if (campos.length == 16) {
+		if (campos.length == 17) {
 			tipoMovimento = campos[0];
 			documentoErp = campos[1];
 			anoMes = campos[2];
@@ -262,17 +261,17 @@ public class ImportarErpService {
 			descContaContabil = campos[12];
 			manfroOS = campos[13];
 			frotaOuCC = campos[14];
+			codNatureza = campos[15];
 			sdf = new SimpleDateFormat(arqEntradaFormatoData);
-			dataMovimento = (Date) sdf.parse(campos[15]);
+			dataMovimento = (Date) sdf.parse(campos[16]);
 			sequencial = sequencial + 1;
 		} else {
-			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado 16 recebido " + campos.length );
+			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado 17 recebido " + campos.length );
 		}
 	}
 
 	private void converteRegistroDF(String[] campos) throws ParseException {
-		codNatureza = "FRED DF";
-		if (campos.length == 10 || campos.length == 11 ) {
+		if (campos.length == 12 || campos.length == 13 ) {
 //			As vezes o usuário digita com um ";" no meio da descricao do movimento
 			documentoErp = campos[0];
 			codCentroCustos = Double.parseDouble(campos[1]);
@@ -283,15 +282,17 @@ public class ImportarErpService {
 			codContaContabil = campos[5];
 			descContaContabil = campos[6];
 			valorMovimento = Double.parseDouble(campos[7]);
-			descMovimento = ( campos.length == 10 ? campos[8] : campos[8] + "-" + campos[9] );
-			anoMes = ( campos.length == 10 ? campos[9] : campos[10] );
+			manfroOS = campos[8];
+			frotaOuCC = campos[9];
+			descMovimento = ( campos.length == 12 ? campos[10] : campos[10] + "-" + campos[11] );
+			anoMes = ( campos.length == 12 ? campos[11] : campos[12] );
 
 			quantidade = 1.00;
 			precoUnitario = valorMovimento;
 
 			sequencial = sequencial + 1;
 		} else {
-			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (10 ou 11) recebido " + campos.length );
+			throw new TxtIntegridadeException("Quantidade de Campos Diferente do Esperado (12 ou 13) recebido " + campos.length );
 		}
 	}
 

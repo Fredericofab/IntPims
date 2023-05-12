@@ -28,6 +28,8 @@ public class ExportarErpViewController implements Initializable {
 	@FXML
 	private TextField txtQtdeDeletadaOS;
 	@FXML
+	private TextField txtQtdeDeletadaCompMat;
+	@FXML
 	private TextField txtQtdeProcessadaVM;
 	@FXML
 	private TextField txtQtdeProcessadaCM;
@@ -90,6 +92,8 @@ public class ExportarErpViewController implements Initializable {
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
 					AlertType.ERROR);
+		} catch (RuntimeException e) {
+			Utilitarios.mostrarErroGenerico(e);
 		}
 	}
 	
@@ -101,6 +105,8 @@ public class ExportarErpViewController implements Initializable {
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
 					AlertType.ERROR);
+		} catch (RuntimeException e) {
+			Utilitarios.mostrarErroGenerico(e);
 		}
 	}
 	@FXML
@@ -111,7 +117,10 @@ public class ExportarErpViewController implements Initializable {
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
 					AlertType.ERROR);
+		} catch (RuntimeException e) {
+			Utilitarios.mostrarErroGenerico(e);
 		}
+
 	}
 	@FXML
 	public void onBtExportarDGAction(ActionEvent evento) {
@@ -121,6 +130,8 @@ public class ExportarErpViewController implements Initializable {
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
 					AlertType.ERROR);
+		} catch (RuntimeException e) {
+			Utilitarios.mostrarErroGenerico(e);
 		}
 	}
 	@FXML
@@ -131,6 +142,8 @@ public class ExportarErpViewController implements Initializable {
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
 					AlertType.ERROR);
+		} catch (RuntimeException e) {
+			Utilitarios.mostrarErroGenerico(e);
 		}
 	}
 	@FXML
@@ -141,6 +154,8 @@ public class ExportarErpViewController implements Initializable {
 		} catch (DbException e) {
 			Alertas.mostrarAlertas("DbException", "Erro no Processamento do Arquivo", e.getMessage(),
 					AlertType.ERROR);
+		} catch (RuntimeException e) {
+			Utilitarios.mostrarErroGenerico(e);
 		}
 	}
 
@@ -149,6 +164,7 @@ public class ExportarErpViewController implements Initializable {
 		Integer qtdeDeletadaCM = servico.getQtdeDeletadaCM();
 		Integer qtdeDeletadaDG = servico.getQtdeDeletadaDG();
 		Integer qtdeDeletadaOS = servico.getQtdeDeletadaOS();
+		Integer qtdeDeletadaCompMat = servico.getQtdeDeletadaCompMat();
 		Integer qtdeProcessadaVM = servico.getQtdeProcessadaVM();
 		Integer qtdeProcessadaCM = servico.getQtdeProcessadaCM();
 		Integer qtdeProcessadaDG = servico.getQtdeProcessadaDG();
@@ -168,6 +184,7 @@ public class ExportarErpViewController implements Initializable {
 		if (qtdeDeletadaCM != null) txtQtdeDeletadaCM.setText(qtdeDeletadaCM.toString());
 		if (qtdeDeletadaDG != null) txtQtdeDeletadaDG.setText(qtdeDeletadaDG.toString());
 		if (qtdeDeletadaOS != null) txtQtdeDeletadaOS.setText(qtdeDeletadaOS.toString());
+		if (qtdeDeletadaCompMat != null) txtQtdeDeletadaCompMat.setText(qtdeDeletadaCompMat.toString());
 		if (qtdeProcessadaVM != null) txtQtdeProcessadaVM.setText(qtdeProcessadaVM.toString()); 
 		if (qtdeProcessadaCM != null) txtQtdeProcessadaCM.setText(qtdeProcessadaCM.toString());
 		if (qtdeProcessadaDG != null) txtQtdeProcessadaDG.setText(qtdeProcessadaDG.toString());

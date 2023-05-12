@@ -27,7 +27,6 @@ public class Main extends Application {
 			primaryStage.setTitle("Interfaces do PimsCS");
 //			primaryStage.setMaximized(true);
 			primaryStage.show();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

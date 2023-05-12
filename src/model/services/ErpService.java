@@ -90,7 +90,7 @@ public class ErpService {
 			try (BufferedWriter bw = new BufferedWriter(new FileWriter(saida))) {
 				bw.write("TArq,TMov,anoMes," +
 						 "CCustos,DescCCustos,"   +
-						 "CContabil,DescCContabil,Natureza" +
+						 "CContabil,DescCContabil,Natureza," +
 						 "Material,DescMaterial,UN," +
 						 "Qtde,PUnit,VTotal," +
 						 "NumeroOS,FrotaOuCC,NumeroERP,Data," +
@@ -107,7 +107,7 @@ public class ErpService {
 								   String.format("%.0f", dadosErp.getCodCentroCustos()) + "," + 
 								   dadosErp.getDescCentroCustos() + "," + 
 								   dadosErp.getCodContaContabil() + "," + 
-								   dadosErp.getDescContaContabil() + "," + 
+								   dadosErp.getDescContaContabil().replace(",",".") + "," + 
 								   dadosErp.getCodNatureza() + "," + 
 								   dadosErp.getCodMaterial() + "," + 
 								   dadosErp.getDescMovimento().replace(",",".") + "," + 
