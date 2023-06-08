@@ -40,6 +40,8 @@ public class ValidarErpViewController implements Initializable {
 	@FXML
 	private Label labelMsgMatSemOS;
 	@FXML
+	private Label labelMsgDesconsiderarCombLubr;
+	@FXML
 	private Label labelMsgValorIncoerente;
 	@FXML
 	private Button btValidar;
@@ -53,6 +55,8 @@ public class ValidarErpViewController implements Initializable {
 	private TextField txtMatSemConversao;
 	@FXML
 	private TextField txtMatSemOS;
+	@FXML
+	private TextField txtDesconsiderarCombLubr;
 	@FXML
 	private TextField txtValorIncoerente;
 	@FXML
@@ -120,6 +124,7 @@ public class ValidarErpViewController implements Initializable {
 		Integer qtdeOSAntigas = servico.getQtdeOSAntigas();
 		Integer qtdeOSAntigasDistintas = servico.getQtdeOSAntigasDistintas();
 		Integer qtdeMatSemOS = servico.getQtdeMatSemOS();
+		Integer qtdeDesconsiderarCombustLubr = servico.getQtdeDesconsiderarCombustLubr();
 		Integer qtdeValorIncoerente = servico.getQtdeValorIncoerente();
 		Integer qtdeFaltaOSouFrotaCC = servico.getQtdeFaltaOSouFrotaCC();
 		Integer qtdeTotalErros = qtdeCCInexistentes + qtdeMatSemConversao + qtdeFaltaOSouFrotaCC +
@@ -140,6 +145,7 @@ public class ValidarErpViewController implements Initializable {
 		txtOSAntigasDistintas.setText(qtdeOSAntigasDistintas.toString());
 		txtFaltaOSouFrotaCC.setText(qtdeFaltaOSouFrotaCC.toString());
 		txtMatSemOS.setText(qtdeMatSemOS.toString());
+		txtDesconsiderarCombLubr.setText(qtdeDesconsiderarCombustLubr.toString());
 		txtValorIncoerente.setText(qtdeValorIncoerente.toString());
 		
 		if ( (qtdeProcessados > 0) && (qtdeTotalErros == 0 )) {
@@ -158,6 +164,7 @@ public class ValidarErpViewController implements Initializable {
 		labelMsgOSIncoerentes.setText(null);
 		labelMsgOSAntigas.setText(null);
 		labelMsgMatSemOS.setText(null);
+		labelMsgDesconsiderarCombLubr.setText(null);
 		labelMsgValorIncoerente.setText(null);
 		labelMsgFaltaOSouFrotaCC.setText(null);
 
@@ -186,6 +193,9 @@ public class ValidarErpViewController implements Initializable {
 		
 		if (qtdeMatSemOS > 0) {
 			labelMsgMatSemOS.setText("ALERTA: Existem Movimentos para Oficina que nao tem OS. Ver LogOS.");
+		}
+		if (qtdeDesconsiderarCombustLubr > 0) {
+			labelMsgDesconsiderarCombLubr.setText("ALERTA: Existem Movimentos de Combustivel ou Lubrificantes Desconsiderados. Ver LogOS.");
 		}
 		if (qtdeValorIncoerente > 0) {
 			labelMsgValorIncoerente.setText("PENDENCIA: Valor Incoerente (Qtde x Unitário é diferente do Valor Total). Ver LogVI.");

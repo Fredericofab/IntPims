@@ -326,7 +326,8 @@ public class ExportarErpService {
 			montarListas();
 			for (Erp erp : listaErp) {
 				if (    (erp.getSalvarCstg_IntCM()  != null && erp.getSalvarCstg_IntCM().equals("S")) 
-					 ||	(erp.getSalvarOS_Material() != null && erp.getSalvarOS_Material().equals("S"))	){
+					 ||	(erp.getSalvarOS_Material() != null && erp.getSalvarOS_Material().equals("S"))
+					 || (erp.getSalvarCstg_IntVM() != null && erp.getSalvarCstg_IntVM().equals("S"))   ){
 				Double componente = montarComponente(erp);
 				if (listaComponente.contains(componente)) {
 					qtdeProcessadaCompo += 1;

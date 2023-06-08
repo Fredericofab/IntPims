@@ -15,10 +15,10 @@ import java.util.Locale;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.exceptions.ParametroInvalidoException;
@@ -213,6 +213,7 @@ public class Utilitarios {
 		listaCamposOracle.add("Descricao Centro de Custos	DESC_CENTRO_CUSTOS		C50");
 		listaCamposOracle.add("Codigo Conta Contabil		COD_CONTA_CONTABIL		C20");
 		listaCamposOracle.add("Descricao Conta Contabil	DESC_CONTA_CONTABIL	C50");
+		listaCamposOracle.add("Codigo Natureza Contabil	CODIGO_NATUREZA		C08");
 		listaCamposOracle.add("Codigo Material			COD_MATERIAL			C10");
 		listaCamposOracle.add("Desc.  Material / Movimento	DESC_MOVIMENTO			C255");
 		listaCamposOracle.add("Unidade de Medida			UNIDADE_MEDIDA			C05");

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="388.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ValidarErpViewController">
+<VBox prefHeight="432.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ValidarErpViewController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -36,6 +36,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -87,7 +88,12 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <Label text="Valor Total Incoerente" GridPane.rowIndex="11">
+            <Label text="Desconsiderados Comb. e Lubr." GridPane.rowIndex="11">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Label text="Valor Total Incoerente" GridPane.rowIndex="12">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -106,7 +112,8 @@
             <TextField fx:id="txtOSIncoerentes" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <TextField fx:id="txtOSAntigas" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <TextField fx:id="txtMatSemOS" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <TextField fx:id="txtValorIncoerente" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <TextField fx:id="txtDesconsiderarCombLubr" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <TextField fx:id="txtValorIncoerente" disable="true" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
             <Label fx:id="labelMsgGeral" textFill="#2600ff" GridPane.columnIndex="3">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -121,7 +128,8 @@
             <Label fx:id="labelMsgOSIncoerentes" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="8" />
             <Label fx:id="labelMsgOSAntigas" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="9" />
             <Label fx:id="labelMsgMatSemOS" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-            <Label fx:id="labelMsgValorIncoerente" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+            <Label fx:id="labelMsgDesconsiderarCombLubr" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+            <Label fx:id="labelMsgValorIncoerente" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="12" />
             <Label text="Distintos" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="20.0" />

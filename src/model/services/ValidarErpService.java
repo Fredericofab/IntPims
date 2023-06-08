@@ -28,25 +28,27 @@ public class ValidarErpService {
 	private PimsGeralService pimsGeralService = new PimsGeralService();
 	private FatorMedidaService fatorMedidaService = new FatorMedidaService();
 	private ProcessoAtualService processoAtualService = new ProcessoAtualService();
-	
+
 //	parametros
 	String usuarioPimsCS;
 	String anoMes;
 	String qtdeDiasOS;
 	String matPossiveisFator;
+	String desconsiderarCombLubr;
 	String matOficinaSemOS;
 	String valorIncoerente;
 	String arqLogCC;
 	String arqLogOS;
 	String arqLogVI;
-	
+
 	char aspas = '"';
-	
+
 	Integer qtdeProcessados;
 	Integer qtdeCCInexistentes;
 	Integer qtdeCCInexistentesDistintos;
 	Integer qtdeMatSemConversaoDistintos;
 	Integer qtdeMatSemConvencao;
+	Integer qtdeDesconsiderarCombustLubr;
 	Integer qtdeMatSemOS;
 	Integer qtdeValorIncoerente;
 	Integer qtdeFaltaOSouFrotaCC;;
@@ -72,48 +74,67 @@ public class ValidarErpService {
 	public Integer getQtdeProcessados() {
 		return qtdeProcessados;
 	}
+
 	public Integer getQtdeCCInexistentes() {
 		return qtdeCCInexistentes;
 	}
+
 	public Integer getQtdeCCInexistentesDistintos() {
 		return qtdeCCInexistentesDistintos;
 	}
+
 	public Integer getQtdeMatSemConversao() {
 		return qtdeMatSemConvencao;
 	}
+
 	public Integer getQtdeMatSemConversaoDistintos() {
 		return qtdeMatSemConversaoDistintos;
 	}
+
 	public Integer getQtdeMatSemOS() {
 		return qtdeMatSemOS;
 	}
+
+	public Integer getQtdeDesconsiderarCombustLubr() {
+		return qtdeDesconsiderarCombustLubr;
+	}
+
 	public Integer getQtdeValorIncoerente() {
 		return qtdeValorIncoerente;
 	}
+
 	public Integer getQtdeFaltaOSouFrotaCC() {
 		return qtdeFaltaOSouFrotaCC;
 	}
+
 	public Integer getQtdeOSValidas() {
 		return qtdeOSValidas;
 	}
+
 	public Integer getQtdeOSValidasDistintas() {
 		return qtdeOSValidasDistintas;
 	}
+
 	public Integer getQtdeOSInexistentes() {
 		return qtdeOSInexistentes;
 	}
+
 	public Integer getQtdeOSInexistentesDistintas() {
 		return qtdeOSInexistentesDistintas;
 	}
+
 	public Integer getQtdeOSIncoerentes() {
 		return qtdeOSIncoerentes;
 	}
+
 	public Integer getQtdeOSIncoerentesDistintas() {
 		return qtdeOSIncoerentesDistintas;
 	}
+
 	public Integer getQtdeOSAntigas() {
 		return qtdeOSAntigas;
 	}
+
 	public Integer getQtdeOSAntigasDistintas() {
 		return qtdeOSAntigasDistintas;
 	}
@@ -125,6 +146,7 @@ public class ValidarErpService {
 			erpService.limparValidacoesOS();
 			erpService.limparPoliticas();
 			politicasErpService.limparEstatisticas();
+			desconsiderarCombustLubr();
 			lista = erpService.pesquisarTodos();
 			qtdeProcessados = lista.size();
 			validarFaltaOSouFrotaCC();
@@ -133,12 +155,9 @@ public class ValidarErpService {
 			validarValorIncoerente();
 			validarCCustos();
 			validarMatSemConversao();
-			Integer totaLPendente = qtdeCCInexistentes + 
-									qtdeFaltaOSouFrotaCC + 
-									qtdeMatSemConvencao +
-									qtdeOSInexistentes +  qtdeOSIncoerentes + qtdeOSAntigas +
-									qtdeValorIncoerente;
-			if (totaLPendente == 0) {
+			Integer totalPendente = qtdeCCInexistentes + qtdeFaltaOSouFrotaCC + qtdeMatSemConvencao + qtdeOSInexistentes
+					+ qtdeOSIncoerentes + qtdeOSAntigas + qtdeValorIncoerente;
+			if (totalPendente == 0) {
 				processoAtualService.atualizarEtapa("ValidarErp", "S");
 			} else {
 				processoAtualService.atualizarEtapa("ValidarErp", "N");
@@ -149,22 +168,40 @@ public class ValidarErpService {
 				processoAtualService.atualizarEtapa("ExportarErpOS", "N");
 			}
 		} catch (ParametroInvalidoException e) {
-			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Validar Erp", e.getMessage(),AlertType.ERROR);
+			Alertas.mostrarAlertas("Erro no Cadastro de Parametros", "Processo Cancelado. Validar Erp", e.getMessage(),
+					AlertType.ERROR);
 		}
 	}
 
 //	10 Rotinas Auxiliares de Validacao (Inicio)	
-	
+
+	private void desconsiderarCombustLubr() throws IOException {
+		qtdeDesconsiderarCombustLubr = 0;
+		listaFiltrada = erpService.pesquisarTodosFiltrado(desconsiderarCombLubr);
+		for (Erp erp : listaFiltrada) {
+			qtdeDesconsiderarCombustLubr += 1;
+			erp.setValidacoesOS("Desconsiderado Comb.e Lubr.");
+			Boolean atualizarEtapaDoProcesso = false;
+			erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
+			gravaLogOSDetalhe("Desconsiderado Comb.e Lubr.", erp);
+		}
+	}
+
 	private void validarFaltaOSouFrotaCC() throws IOException {
 		qtdeFaltaOSouFrotaCC = 0;
 		for (Erp erp : lista) {
-			if (( erp.getNumeroOS() == null && erp.getFrotaOuCC() != null ) ||
-			    ( erp.getNumeroOS() != null && erp.getFrotaOuCC() == null )    ){
-				qtdeFaltaOSouFrotaCC += 1;
-				erp.setValidacoesOS("Falta OS ou FrotaCC.");
-				Boolean atualizarEtapaDoProcesso = false;
-				erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
-				gravaLogOSDetalhe("Falta OS ou FrotaCC", erp);
+			if (erp.getValidacoesOS() != null &&
+				erp.getValidacoesOS().equals("Desconsiderado Comb.e Lubr.")) {
+//				não valida
+			} else {
+				if ((erp.getNumeroOS() == null && erp.getFrotaOuCC() != null)
+						|| (erp.getNumeroOS() != null && erp.getFrotaOuCC() == null)) {
+					qtdeFaltaOSouFrotaCC += 1;
+					erp.setValidacoesOS("Falta OS ou FrotaCC.");
+					Boolean atualizarEtapaDoProcesso = false;
+					erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
+					gravaLogOSDetalhe("Falta OS ou FrotaCC", erp);
+				}
 			}
 		}
 	}
@@ -175,15 +212,20 @@ public class ValidarErpService {
 		qtdeOSIncoerentes = 0;
 		qtdeOSAntigas = 0;
 		for (Erp erp : lista) {
-			if (erp.getNumeroOS() != null) {
-				if (pimsGeralService.existeApt_os_he(erp.getNumeroOS(), usuarioPimsCS) == false ) {
-					osInexistentes(erp);
-				}
-				else {
-					Boolean flagOSIncoerentes = osIncoerentes(erp);
-					Boolean flagOSAntigas = osAntigas(erp);
-					if ((flagOSIncoerentes == false) && (flagOSAntigas == false) ) {
-						osValidas(erp);
+			if (erp.getValidacoesOS() != null &&
+				erp.getValidacoesOS().equals("Desconsiderado Comb.e Lubr.")) {
+//					não valida
+			} else {
+
+				if ((erp.getNumeroOS() != null) && (erp.getFrotaOuCC() != null)) {
+					if (pimsGeralService.existeApt_os_he(erp.getNumeroOS(), usuarioPimsCS) == false) {
+						osInexistentes(erp);
+					} else {
+						Boolean flagOSIncoerentes = osIncoerentes(erp);
+						Boolean flagOSAntigas = osAntigas(erp);
+						if ((flagOSIncoerentes == false) && (flagOSAntigas == false)) {
+							osValidas(erp);
+						}
 					}
 				}
 			}
@@ -192,24 +234,24 @@ public class ValidarErpService {
 		qtdeOSIncoerentesDistintas = mapOSIncoerentes.size();
 		qtdeOSAntigasDistintas = mapOSAntigas.size();
 		qtdeOSValidasDistintas = mapOSValidas.size();
-		
-		for (String numeroOS : mapOSInexistentes.keySet() ) {
+
+		for (String numeroOS : mapOSInexistentes.keySet()) {
 			for (Erp erp : lista) {
-				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
+				if (numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null) {
 					gravaLogOSDetalhe("OS Inexistente.", erp);
 				}
 			}
 		}
-		for (String numeroOS : mapOSIncoerentes.keySet() ) {
+		for (String numeroOS : mapOSIncoerentes.keySet()) {
 			for (Erp erp : lista) {
-				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
+				if (numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null) {
 					gravaLogOSDetalhe("OS Incoerente.", erp);
 				}
 			}
 		}
-		for (String numeroOS : mapOSAntigas.keySet() ) {
+		for (String numeroOS : mapOSAntigas.keySet()) {
 			for (Erp erp : lista) {
-				if ( numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null ) {
+				if (numeroOS.equals(erp.getNumeroOS()) && erp.getValidacoesOS() != null) {
 					gravaLogOSDetalhe("OS Antiga.", erp);
 				}
 			}
@@ -224,8 +266,7 @@ public class ValidarErpService {
 		Integer qtde;
 		if (mapOSInexistentes.get(erp.getNumeroOS()) == null) {
 			qtde = 1;
-		}
-		else {
+		} else {
 			qtde = mapOSInexistentes.get(erp.getNumeroOS()) + 1;
 		}
 		mapOSInexistentes.put(erp.getNumeroOS(), qtde);
@@ -233,11 +274,11 @@ public class ValidarErpService {
 
 	private Boolean osIncoerentes(Erp erp) {
 		Boolean flagOSIncoerentes = false;
-		Double codEquipto = pimsGeralService.codEquiptoApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
-		Double codCCusto  = pimsGeralService.codCCustoApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
+		Double codEquipto = pimsGeralService.codEquiptoApt_os_he(erp.getNumeroOS(), usuarioPimsCS);
+		Double codCCusto = pimsGeralService.codCCustoApt_os_he(erp.getNumeroOS(), usuarioPimsCS);
 		Double codObjeto = ((codEquipto != 0) ? codEquipto : codCCusto);
 		Double frotaOuCC = Utilitarios.tentarConverterParaDouble(erp.getFrotaOuCC());
-		if (( frotaOuCC == null ) || ((frotaOuCC - codObjeto) != 0.00) ) {
+		if ((frotaOuCC == null) || ((frotaOuCC - codObjeto) != 0.00)) {
 			qtdeOSIncoerentes += 1;
 			erp.setValidacoesOS("OS Incoerente.");
 			Boolean atualizarEtapaDoProcesso = false;
@@ -245,8 +286,7 @@ public class ValidarErpService {
 			Integer qtde;
 			if (mapOSIncoerentes.get(erp.getNumeroOS()) == null) {
 				qtde = 1;
-			}
-			else {
+			} else {
 				qtde = mapOSIncoerentes.get(erp.getNumeroOS()) + 1;
 			}
 			mapOSIncoerentes.put(erp.getNumeroOS(), qtde);
@@ -257,7 +297,7 @@ public class ValidarErpService {
 
 	private Boolean osAntigas(Erp erp) {
 		Boolean flagOSAntigas = false;
-		Date dataSaida    = pimsGeralService.dataSaidaApt_os_he(erp.getNumeroOS(), usuarioPimsCS);					
+		Date dataSaida = pimsGeralService.dataSaidaApt_os_he(erp.getNumeroOS(), usuarioPimsCS);
 		Long maxDiasOS = Utilitarios.tentarConverterParaLong(qtdeDiasOS);
 		if (maxDiasOS != null) {
 			if ((dataSaida != null) && (diferencaDias(dataSaida) > maxDiasOS)) {
@@ -268,21 +308,18 @@ public class ValidarErpService {
 				Integer qtde;
 				if (mapOSAntigas.get(erp.getNumeroOS()) == null) {
 					qtde = 1;
-				}
-				else {
+				} else {
 					qtde = mapOSAntigas.get(erp.getNumeroOS()) + 1;
 				}
 				mapOSAntigas.put(erp.getNumeroOS(), qtde);
 				flagOSAntigas = true;
 			}
-		}
-		else {
+		} else {
 			Alertas.mostrarAlertas("Erro de Integridade no Parametro",
 					"Parametro: Secao = ValidarErp, Entrada =  QtdeDiasOS",
-					"O Parametro não é um numero válido. \n \n" + 
-					"Informe um número Inteiro", AlertType.ERROR);
+					"O Parametro não é um numero válido. \n \n" + "Informe um número Inteiro", AlertType.ERROR);
 		}
-		return flagOSAntigas;	
+		return flagOSAntigas;
 	}
 
 	private void osValidas(Erp erp) {
@@ -290,8 +327,7 @@ public class ValidarErpService {
 		Integer qtde;
 		if (mapOSValidas.get(erp.getNumeroOS()) == null) {
 			qtde = 1;
-		}
-		else {
+		} else {
 			qtde = mapOSValidas.get(erp.getNumeroOS()) + 1;
 		}
 		mapOSValidas.put(erp.getNumeroOS(), qtde);
@@ -301,27 +337,34 @@ public class ValidarErpService {
 		qtdeMatSemOS = 0;
 		listaFiltrada = erpService.pesquisarTodosFiltrado(matOficinaSemOS);
 		for (Erp erp : listaFiltrada) {
-			if ( erp.getNumeroOS() == null && erp.getFrotaOuCC() == null )  {
-				qtdeMatSemOS += 1;
-				erp.setValidacoesOS("Material sem OS.");
-				Boolean atualizarEtapaDoProcesso = false;
-				erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
-				gravaLogOSDetalhe("Material sem OS.", erp);
+			if (erp.getValidacoesOS() != null &&
+				erp.getValidacoesOS().equals("Desconsiderado Comb.e Lubr.")) {
+//						não valida
+			} else {
+
+				if (erp.getNumeroOS() == null && erp.getFrotaOuCC() == null) {
+					qtdeMatSemOS += 1;
+					erp.setValidacoesOS("Material sem OS.");
+					Boolean atualizarEtapaDoProcesso = false;
+					erpService.salvarOuAtualizar(erp, atualizarEtapaDoProcesso);
+					gravaLogOSDetalhe("Material sem OS.", erp);
+				}
 			}
 		}
 	}
-	
+
 	private void validarValorIncoerente() throws IOException {
 		qtdeValorIncoerente = 0;
-		Double limiteSuperior = 1.00 + Double.parseDouble(valorIncoerente)/100;
-		Double limiteInferior = 1.00 - Double.parseDouble(valorIncoerente)/100;
+		Double limiteSuperior = 1.00 + Double.parseDouble(valorIncoerente) / 100;
+		Double limiteInferior = 1.00 - Double.parseDouble(valorIncoerente) / 100;
 
 		for (Erp erp : lista) {
-			Double calculo = ( erp.getValorMovimento() == 0.00 ? 0.00 : erp.getQuantidade() * erp.getPrecoUnitario() / erp.getValorMovimento());
-			if ( calculo > limiteSuperior || calculo < limiteInferior ) {
+			Double calculo = (erp.getValorMovimento() == 0.00 ? 0.00
+					: erp.getQuantidade() * erp.getPrecoUnitario() / erp.getValorMovimento());
+			if (calculo > limiteSuperior || calculo < limiteInferior) {
 				qtdeValorIncoerente += 1;
 				gravaLogVIDetalhe("Valor Incoerente.", erp);
-			}	
+			}
 		}
 	}
 
@@ -329,22 +372,21 @@ public class ValidarErpService {
 		qtdeCCInexistentes = 0;
 		Integer qtde;
 		for (Erp erp : lista) {
-			if (pimsGeralService.existeCCustos(erp.getCodCentroCustos(), usuarioPimsCS) == false ) {
+			if (pimsGeralService.existeCCustos(erp.getCodCentroCustos(), usuarioPimsCS) == false) {
 				qtdeCCInexistentes += 1;
 				if (mapCCInexistentes.get(erp.getCodCentroCustos()) == null) {
 					qtde = 1;
-				}
-				else {
+				} else {
 					qtde = mapCCInexistentes.get(erp.getCodCentroCustos()) + 1;
 				}
 				mapCCInexistentes.put(erp.getCodCentroCustos(), qtde);
-				}
+			}
 		}
 		qtdeCCInexistentesDistintos = mapCCInexistentes.size();
-		for (Double codCentroCustos :  mapCCInexistentes.keySet()) {
+		for (Double codCentroCustos : mapCCInexistentes.keySet()) {
 			qtde = mapCCInexistentes.get(codCentroCustos);
 			for (Erp erp : lista) {
-				if ( codCentroCustos == erp.getCodCentroCustos()) {
+				if (codCentroCustos == erp.getCodCentroCustos()) {
 					gravaLogCCDetalhe("CC Inexistentes", qtde, erp);
 					break;
 				}
@@ -354,10 +396,10 @@ public class ValidarErpService {
 
 	private void validarMatSemConversao() {
 		listaFiltrada = erpService.pesquisarTodosFiltrado(matPossiveisFator);
-		setFatorMedida  = new HashSet<>();
+		setFatorMedida = new HashSet<>();
 		for (Erp erp : listaFiltrada) {
-			FatorMedida fatorMedida = new FatorMedida(erp.getCodMaterial(), 
-								erp.getDescMovimento(),	erp.getUnidadeMedida(), 0.00);
+			FatorMedida fatorMedida = new FatorMedida(erp.getCodMaterial(), erp.getDescMovimento(),
+					erp.getUnidadeMedida(), 0.00);
 			setFatorMedida.add(fatorMedida);
 		}
 		if (setFatorMedida.size() > 0) {
@@ -370,7 +412,7 @@ public class ValidarErpService {
 			if (fatorMedida.getFatorDivisao() == 0.00) {
 				qtdeMatSemConversaoDistintos += 1;
 				for (Erp erp : listaFiltrada) {
-					if (fatorMedida.getCodMaterial().equals(erp.getCodMaterial()) ) {
+					if (fatorMedida.getCodMaterial().equals(erp.getCodMaterial())) {
 						qtdeMatSemConvencao += 1;
 					}
 				}
@@ -379,16 +421,16 @@ public class ValidarErpService {
 	}
 
 //	10 Rotinas Auxiliares de Validacao (Termino)	
-	
+
 //	4 Rotinas do Arquivo de Log (Inicio)
-	
+
 	private void criarArqLog() throws IOException, FileNotFoundException {
 		BufferedWriter bwCC = new BufferedWriter(new FileWriter(arqLogCC, false));
 		bwCC.write("VALIDAÇÃO: Centros de Custos Inexistentes no PimsCS.");
 		bwCC.newLine();
 		bwCC.write("AnoMes de Referencia: " + anoMes);
 		bwCC.newLine();
-		bwCC.write("CCustos,DescCCustos,qtde" );
+		bwCC.write("CCustos,DescCCustos,qtde");
 		bwCC.newLine();
 		bwCC.close();
 
@@ -397,12 +439,8 @@ public class ValidarErpService {
 		bwOS.newLine();
 		bwOS.write("AnoMes de Referencia: " + anoMes);
 		bwOS.newLine();
-		bwOS.write("Validacoes,TArq,TMov," +
-				 "CCustos,DescCCustos,"   +
-				 "CContabil,DescCContabil," +
-				 "Material,DescMaterial,UN," +
-				 "Qtde,PUnit,VTotal," +
-				 "NumeroOS,FrotaOuCC,NumeroERP,DataMov");
+		bwOS.write("Validacoes,TArq,TMov," + "CCustos,DescCCustos," + "CContabil,DescCContabil,"
+				+ "Material,DescMaterial,UN," + "Qtde,PUnit,VTotal," + "NumeroOS,FrotaOuCC,NumeroERP,DataMov");
 		bwOS.newLine();
 		bwOS.close();
 
@@ -411,74 +449,55 @@ public class ValidarErpService {
 		bwVI.newLine();
 		bwVI.write("AnoMes de Referencia: " + anoMes);
 		bwVI.newLine();
-		bwVI.write("TArq,TMov," +
-				 "CCustos,DescCCustos,"   +
-				 "CContabil,DescCContabil," +
-				 "Material,DescMaterial,UN," +
-				 "Qtde,PUnit,VTotal," +
-				 "NumeroERP,DataMov");
+		bwVI.write("TArq,TMov," + "CCustos,DescCCustos," + "CContabil,DescCContabil," + "Material,DescMaterial,UN,"
+				+ "Qtde,PUnit,VTotal," + "NumeroERP,DataMov");
 		bwVI.newLine();
 		bwVI.close();
 	}
-	
+
 	private void gravaLogOSDetalhe(String secao, Erp erp) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogOS, true));	
-		String linha = erp.getValidacoesOS() + "," + 
-					   erp.getOrigem() + "," + 
-					   erp.getTipoMovimento() + "," + 
-					   String.format("%.0f", erp.getCodCentroCustos()) + "," + 
-					   erp.getDescCentroCustos() + "," + 
-					   erp.getCodContaContabil() + "," + 
-					   erp.getDescContaContabil().replace(",", " ")  + "," + 
-					   aspas + erp.getCodMaterial() + aspas + "," + 
-					   erp.getDescMovimento().replace(",", " ") + "," + 
-					   erp.getUnidadeMedida() + "," + 
-					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getQuantidade()) + "," + 
-					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
-					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getValorMovimento()) + "," + 
-					   erp.getNumeroOS() + "," + 
-					   erp.getFrotaOuCC() + "," + 
-					   erp.getDocumentoErp() + "," + 
-					   sdf.format(erp.getDataMovimento());
+		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogOS, true));
+		String linha = erp.getValidacoesOS() + "," + erp.getOrigem() + "," + erp.getTipoMovimento() + ","
+				+ String.format("%.0f", erp.getCodCentroCustos()) + "," + erp.getDescCentroCustos() + ","
+				+ erp.getCodContaContabil() + "," + erp.getDescContaContabil().replace(",", " ") + "," + aspas
+				+ erp.getCodMaterial() + aspas + "," + erp.getDescMovimento().replace(",", " ") + ","
+				+ erp.getUnidadeMedida() + ","
+				+ Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getQuantidade()) + ","
+				+ Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getPrecoUnitario()) + ","
+				+ Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getValorMovimento()) + ","
+				+ erp.getNumeroOS() + "," + erp.getFrotaOuCC() + "," + erp.getDocumentoErp() + ","
+				+ sdf.format(erp.getDataMovimento());
 		bw.write(linha);
 		bw.newLine();
 		bw.close();
 	}
 
 	private void gravaLogCCDetalhe(String secao, Integer qtde, Erp erp) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogCC, true));	
-		String linha = String.format("%.0f", erp.getCodCentroCustos()) + "," + 
-					   erp.getDescCentroCustos() + "," + 
-					   qtde;
-		bw.write(linha);
-		bw.newLine();
-		bw.close();
-	}
-	
-	private void gravaLogVIDetalhe(String secao, Erp erp) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogVI, true));	
-		String linha = erp.getOrigem() + "," + 
-					   erp.getTipoMovimento() + "," + 
-					   String.format("%.0f", erp.getCodCentroCustos()) + "," + 
-					   erp.getDescCentroCustos() + "," + 
-					   erp.getCodContaContabil() + "," + 
-					   erp.getDescContaContabil().replace(",", " ") +  "," + 
-					   aspas + erp.getCodMaterial() + aspas + "," + 
-					   erp.getDescMovimento().replace(",", " ") +  "," + 
-					   erp.getUnidadeMedida() + "," + 
-					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getQuantidade()) + "," + 
-					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getPrecoUnitario()) + "," + 
-					   Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getValorMovimento()) + "," + 
-					   erp.getDocumentoErp() + "," + 
-					   sdf.format(erp.getDataMovimento());
+		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogCC, true));
+		String linha = String.format("%.0f", erp.getCodCentroCustos()) + "," + erp.getDescCentroCustos() + "," + qtde;
 		bw.write(linha);
 		bw.newLine();
 		bw.close();
 	}
 
+	private void gravaLogVIDetalhe(String secao, Erp erp) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(arqLogVI, true));
+		String linha = erp.getOrigem() + "," + erp.getTipoMovimento() + ","
+				+ String.format("%.0f", erp.getCodCentroCustos()) + "," + erp.getDescCentroCustos() + ","
+				+ erp.getCodContaContabil() + "," + erp.getDescContaContabil().replace(",", " ") + "," + aspas
+				+ erp.getCodMaterial() + aspas + "," + erp.getDescMovimento().replace(",", " ") + ","
+				+ erp.getUnidadeMedida() + ","
+				+ Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getQuantidade()) + ","
+				+ Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getPrecoUnitario()) + ","
+				+ Utilitarios.formatarNumeroDecimal4SemMilhar('.').format(erp.getValorMovimento()) + ","
+				+ erp.getDocumentoErp() + "," + sdf.format(erp.getDataMovimento());
+		bw.write(linha);
+		bw.newLine();
+		bw.close();
+	}
 
 //	4 Rotinas do Arquivo de Log (Termino)
-	
+
 //	3 Rotinas de Apoio (Inicio)
 
 	private void gravarFatorMedida() {
@@ -509,19 +528,20 @@ public class ValidarErpService {
 
 	private void lerParametros(Boolean oficial) {
 		ParametrosService parametrosService = new ParametrosService();
-		usuarioPimsCS  = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
+		usuarioPimsCS = (parametrosService.pesquisarPorChave("AmbienteOracle", "UsuarioPimsCS")).getValor();
 		anoMes = (parametrosService.pesquisarPorChave("ControleProcesso", "AnoMes")).getValor();
-		qtdeDiasOS = (parametrosService.pesquisarPorChave("ValidarErp", "QtdeDiasOS")).getValor();	
-		matPossiveisFator = (parametrosService.pesquisarPorChave("ValidarErp", "MatPossiveisFator")).getValor();	
+		qtdeDiasOS = (parametrosService.pesquisarPorChave("ValidarErp", "QtdeDiasOS")).getValor();
+		matPossiveisFator = (parametrosService.pesquisarPorChave("ValidarErp", "MatPossiveisFator")).getValor();
 		matOficinaSemOS = (parametrosService.pesquisarPorChave("ValidarErp", "MatOficinaSemOS")).getValor();
+		desconsiderarCombLubr = (parametrosService.pesquisarPorChave("ValidarErp", "DesconsiderarCombLubr")).getValor();
 
 		valorIncoerente = (parametrosService.pesquisarPorChave("ValidarErp", "ValorIncoerente")).getValor();
-		
+
 		String arqLogPasta = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogPasta")).getValor();
-		String arqLogTipo  = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogTipo")).getValor();
-		arqLogCC = arqLogPasta + "LogCC" + anoMes + arqLogTipo ;
-		arqLogOS = arqLogPasta + "LogOS" + anoMes + arqLogTipo ;
-		arqLogVI = arqLogPasta + "LogVI" + anoMes + arqLogTipo ;
+		String arqLogTipo = (parametrosService.pesquisarPorChave("ArquivosTextos", "ArqLogTipo")).getValor();
+		arqLogCC = arqLogPasta + "LogCC" + anoMes + arqLogTipo;
+		arqLogOS = arqLogPasta + "LogOS" + anoMes + arqLogTipo;
+		arqLogVI = arqLogPasta + "LogVI" + anoMes + arqLogTipo;
 
 	}
 
